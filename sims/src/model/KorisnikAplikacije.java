@@ -3,7 +3,7 @@
  * Author:  Dragan
  * Purpose: Defines the Class KorisnikAplikacije
  ***********************************************************************/
-
+package model;
 import java.util.*;
 
 /** @pdOid d00188b7-a297-4fca-8ad3-4a5e996aa205 */

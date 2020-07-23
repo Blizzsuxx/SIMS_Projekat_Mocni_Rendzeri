@@ -3,8 +3,9 @@
  * Author:  Dragan
  * Purpose: Defines the Class WindowsMenadzer
  ***********************************************************************/
-
+package controler;
 import java.util.*;
+import javax.swing.JFrame;
 
 /** @pdOid 44436f95-77bb-4d8e-8e28-6cda04520ab4 */
 public class WindowsMenadzer {

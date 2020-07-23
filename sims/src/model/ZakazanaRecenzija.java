@@ -3,7 +3,7 @@
  * Author:  Dragan
  * Purpose: Defines the Class ZakazanaRecenzija
  ***********************************************************************/
-
+package model;
 import java.util.*;
 
 /** @pdOid 1aed17a0-74ed-476f-886a-73eca8c0108a */

@@ -3,7 +3,7 @@
  * Author:  Dragan
  * Purpose: Defines the Class Izvodjac
  ***********************************************************************/
-
+package model;
 import java.util.*;
 
 /** @pdOid 20a31e0c-cbdd-4a1e-956e-0c8ed03fce3d */

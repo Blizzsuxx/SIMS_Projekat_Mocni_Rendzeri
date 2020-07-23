@@ -3,7 +3,7 @@
  * Author:  Dragan
  * Purpose: Defines the Class Nalog
  ***********************************************************************/
-
+package model;
 import java.util.*;
 
 /** @pdOid 160f1d49-ad7d-4dbd-ad61-a747a8aa941a */

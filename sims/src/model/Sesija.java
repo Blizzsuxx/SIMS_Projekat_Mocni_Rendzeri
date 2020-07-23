@@ -3,8 +3,10 @@
  * Author:  Dragan
  * Purpose: Defines the Class Sesija
  ***********************************************************************/
-
+package model;
 import java.util.*;
+
+import controler.KorisniciMenadzer;
 
 /** @pdOid a6536d8d-e436-4d30-9c5d-e31219285ea3 */
 public class Sesija {

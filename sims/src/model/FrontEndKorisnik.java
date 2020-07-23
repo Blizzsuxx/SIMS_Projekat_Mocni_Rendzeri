@@ -3,7 +3,7 @@
  * Author:  Dragan
  * Purpose: Defines the Class FrontEndKorisnik
  ***********************************************************************/
-
+package model;
 import java.util.*;
 
 /** @pdOid a9c9f365-ca2f-446b-9e3e-06fdc25de877 */

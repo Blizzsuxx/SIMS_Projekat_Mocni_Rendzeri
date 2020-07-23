@@ -3,7 +3,7 @@
  * Author:  Dragan
  * Purpose: Defines the Class LoginMenadzer
  ***********************************************************************/
-
+package controler;
 import java.util.*;
 
 /** @pdOid 2b1b06aa-dc54-4379-b514-e1647f805308 */

@@ -3,7 +3,7 @@
  * Author:  Dragan
  * Purpose: Defines the Class Ocena
  ***********************************************************************/
-
+package model;
 import java.util.*;
 
 /** @pdOid d7d7bf7a-b03b-41f8-b51f-f0668c0cb763 */

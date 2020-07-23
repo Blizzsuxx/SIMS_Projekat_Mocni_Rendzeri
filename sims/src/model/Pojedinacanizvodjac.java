@@ -3,7 +3,7 @@
  * Author:  Dragan
  * Purpose: Defines the Class Pojedinacanizvodjac
  ***********************************************************************/
-
+package model;
 import java.util.*;
 
 /** @pdOid 2fc12510-acfe-4d29-b294-58047091b3ba */

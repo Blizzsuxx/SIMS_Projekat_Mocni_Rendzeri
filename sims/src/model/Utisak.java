@@ -3,7 +3,7 @@
  * Author:  Dragan
  * Purpose: Defines the Class Utisak
  ***********************************************************************/
-
+package model;
 import java.util.*;
 
 /** @pdOid 860c919d-adfe-4aab-be94-4c35f03d3cb9 */

@@ -3,7 +3,7 @@
  * Author:  Dragan
  * Purpose: Defines the Class Komentar
  ***********************************************************************/
-
+package model;
 import java.util.*;
 
 /** @pdOid 10543295-3d2a-49e5-876e-e10dbe844cf8 */

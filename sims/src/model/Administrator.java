@@ -1,3 +1,5 @@
+package model;
+
 /***********************************************************************
  * Module:  Administrator.java
  * Author:  Dragan

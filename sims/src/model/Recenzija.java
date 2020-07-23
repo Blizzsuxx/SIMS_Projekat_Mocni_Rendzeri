@@ -3,7 +3,7 @@
  * Author:  Dragan
  * Purpose: Defines the Class Recenzija
  ***********************************************************************/
-
+package model;
 import java.util.*;
 
 /** @pdOid 7bbc8580-778f-4a3f-8306-57c0cbc02cce */

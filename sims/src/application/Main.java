@@ -1,11 +1,12 @@
 package application;
 
+import view.LoginProzor;
+
 public class Main {
 
 	public static void main(String[] args) {
-		System.out.println("Provjera.");
-		System.out.println("Provjera.");
-		System.out.println("Provjera.");
+		LoginProzor lp = new LoginProzor();
+		lp.setVisible(true);
 	}
 
 }

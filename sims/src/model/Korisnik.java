@@ -1,0 +1,42 @@
+/***********************************************************************
+ * Module:  Korisnik.java
+ * Author:  Dragan
+ * Purpose: Defines the Class Korisnik
+ ***********************************************************************/
+package model;
+import java.util.*;
+
+/** @pdOid 821f1adf-c3a0-4478-9680-7e8b2f65437c */
+public abstract class Korisnik {
+   /** @pdOid 5b9ed12b-0833-4281-ba9d-e989c84e9fbd */
+   private String ime;
+   /** @pdOid d2e5ef38-cdba-4f7a-b70f-76396bcb5fd7 */
+   private String prezime;
+   /** @pdOid f11b3d2c-7948-4480-a3a5-e2b538401f1e */
+   private String eMail;
+   /** @pdOid ad4c25d9-b484-4817-9c0d-49b8d544ad3b */
+   private Pol pol;
+   /** @pdOid ea30ec0d-001e-493f-b70c-002d616633a3 */
+   private Date datumRodjenja;
+   /** @pdOid be0f0d3c-a6da-4bed-98e0-397c13d099f8 */
+   private boolean status;
+   
+   /** @pdRoleInfo migr=no name=Nalog assc=association26 mult=1 */
+   public Nalog nalog;
+   
+   /** @pdOid b5db7dcd-9237-4763-b6ad-4f21f00ab10c */
+   public void promeniSifru() {
+      // TODO: implement
+   }
+   
+   /** @pdOid 8a10c116-d1f6-4b12-ba00-78128209a21b */
+   public void promeniPodatke() {
+      // TODO: implement
+   }
+   
+   /** @pdOid e64ea0ca-f330-4fc5-870a-633e6a03731f */
+   public void odjaviSe() {
+      // TODO: implement
+   }
+
+}

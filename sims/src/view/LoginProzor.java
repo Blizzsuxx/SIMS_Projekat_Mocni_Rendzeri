@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import model.Uloga;
 import net.miginfocom.swing.MigLayout;
 
 public class LoginProzor extends JFrame {
@@ -62,7 +63,8 @@ public class LoginProzor extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+				LoginDialog ld = new LoginDialog(LoginProzor.this);
+				ld.setVisible(true);
 				
 			}
 			
@@ -72,7 +74,8 @@ public class LoginProzor extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				KorisnikAddEdit kae = new KorisnikAddEdit(null, "Registracija Korisnika", Uloga.KORISNIK);
+				kae.setVisible(true);
 				
 			}
 			

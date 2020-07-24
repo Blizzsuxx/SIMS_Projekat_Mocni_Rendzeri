@@ -17,10 +17,55 @@ public class Nalog {
    /** @pdOid 49827b69-4bc5-4dbd-8c57-60c7bb1fa9f5 */
    private boolean status;
    
-   /** @pdOid 449db2fa-018a-4b03-8896-77483d6d08f5 */
+   
+   public Nalog() {}
+   
+   public Nalog(String sifra, String korisnickoIme, Date datumKreiranja, boolean status) {
+		super();
+		this.sifra = sifra;
+		this.korisnickoIme = korisnickoIme;
+		this.datumKreiranja = datumKreiranja;
+		this.status = status;
+   }
+
+
+/** @pdOid 449db2fa-018a-4b03-8896-77483d6d08f5 */
    public boolean potvrdiSifru() {
       // TODO: implement
       return false;
    }
 
+	public String getSifra() {
+		return sifra;
+	}
+	
+	public void setSifra(String sifra) {
+		this.sifra = sifra;
+	}
+	
+	public String getKorisnickoIme() {
+		return korisnickoIme;
+	}
+	
+	public void setKorisnickoIme(String korisnickoIme) {
+		this.korisnickoIme = korisnickoIme;
+	}
+	
+	public Date getDatumKreiranja() {
+		return datumKreiranja;
+	}
+	
+	public void setDatumKreiranja(Date datumKreiranja) {
+		this.datumKreiranja = datumKreiranja;
+	}
+	
+	public boolean isStatus() {
+		return status;
+	}
+	
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+   
 }

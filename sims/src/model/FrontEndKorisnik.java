@@ -13,9 +13,28 @@ public abstract class FrontEndKorisnik extends Korisnik {
    /** @pdRoleInfo migr=no name=Zanr assc=association36 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
    public java.util.Collection<Zanr> preferiraniZanrovi;
    /** @pdRoleInfo migr=no name=KorisnikAplikacije assc=pracenjeKorisnika mult=0..* side=A */
-   public KorisnikAplikacije[] pratilac;
+   public Collection<KorisnikAplikacije> pratilac; 
    
-   /** @pdOid 2764179e-3960-4723-809e-5c4cf97d9e27 */
+   public FrontEndKorisnik(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, boolean status,
+		Nalog nalog, Collection<MuzickoDjelo> muzickoDjelo, Collection<Zanr> preferiraniZanrovi,
+		Collection<KorisnikAplikacije> pratilac) {
+	   super(ime, prezime, eMail, pol, datumRodjenja, status, nalog);
+	   this.muzickoDjelo = muzickoDjelo;
+	   this.preferiraniZanrovi = preferiraniZanrovi;
+	   this.pratilac = pratilac;
+   }
+
+   
+   public FrontEndKorisnik(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, boolean status,
+		Nalog nalog) {
+	   super(ime, prezime, eMail, pol, datumRodjenja, status, nalog);
+	   this.muzickoDjelo = new ArrayList<>();
+	   this.preferiraniZanrovi = new ArrayList<>();
+	   this.pratilac = new ArrayList<>();
+   }
+
+
+/** @pdOid 2764179e-3960-4723-809e-5c4cf97d9e27 */
    public void izbrisiNalog() {
       // TODO: implement
    }

@@ -13,7 +13,26 @@ public class KorisnikAplikacije extends FrontEndKorisnik {
    /** @pdRoleInfo migr=no name=Izvodjac assc=association16 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
    public java.util.Collection<Izvodjac> onajKogaPrati;
    
-   /** @pdOid 570b1cab-dcf3-4bfc-a491-be5540c78efd */
+   public KorisnikAplikacije(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, boolean status,
+		Nalog nalog, Collection<MuzickoDjelo> muzickoDjelo, Collection<Zanr> preferiraniZanrovi,
+		Collection<KorisnikAplikacije> pratilac, Collection<FrontEndKorisnik> pratite,
+		Collection<Izvodjac> onajKogaPrati) {
+	   super(ime, prezime, eMail, pol, datumRodjenja, status, nalog, muzickoDjelo, preferiraniZanrovi, pratilac);
+	   this.pratite = pratite;
+	   this.onajKogaPrati = onajKogaPrati;
+   }
+
+   
+   public KorisnikAplikacije(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, boolean status,
+		Nalog nalog, Collection<MuzickoDjelo> muzickoDjelo, Collection<Zanr> preferiraniZanrovi,
+		Collection<KorisnikAplikacije> pratilac) {
+	   super(ime, prezime, eMail, pol, datumRodjenja, status, nalog, muzickoDjelo, preferiraniZanrovi, pratilac);
+	   this.pratite = new ArrayList<>();
+	   this.onajKogaPrati = new ArrayList<>();
+   }
+
+
+/** @pdOid 570b1cab-dcf3-4bfc-a491-be5540c78efd */
    public void komentarisi() {
       // TODO: implement
    }

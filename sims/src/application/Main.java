@@ -11,7 +11,6 @@ public class Main {
 		// TODO Auto-generated method stub
 		CitacDatoteka datoteke = new CitacDatoteka();
 		datoteke.inicijalizuj();
-		System.out.println("Test");
 		LoginMenadzer login = new LoginMenadzer(datoteke.getKorisnici());
 		boolean radi = true;
 		while(radi) {

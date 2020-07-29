@@ -4,7 +4,7 @@
  * Purpose: Defines the Class ZakazanaRecenzija
  ***********************************************************************/
 package model;
-import java.util.*;
+import java.util.Date;
 
 /** @pdOid 1aed17a0-74ed-476f-886a-73eca8c0108a */
 public class ZakazanaRecenzija {
@@ -17,9 +17,9 @@ public class ZakazanaRecenzija {
    /** @pdOid 28e9db3a-2a42-458d-96be-d5d604fb4f26 */
    private Date rok;
    
-   /** @pdRoleInfo migr=no name=Recenzija assc=association34 mult=1 */
+   /** @pdRoleInfo migr=no name=Recenzija assc=association34 mult=1..1 */
    public Recenzija recenzija;
-   /** @pdRoleInfo migr=no name=Urednik assc=association10 mult=1 side=A */
+   /** @pdRoleInfo migr=no name=Urednik assc=association10 mult=1..1 side=A */
    public Urednik urednik;
    
    

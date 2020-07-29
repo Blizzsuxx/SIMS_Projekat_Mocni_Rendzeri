@@ -4,8 +4,7 @@
  * Purpose: Defines the Class Grupa
  ***********************************************************************/
 package model;
-import java.util.*;
-
+import java.util.Date;
 /** @pdOid 38a4054e-e6d7-430f-83e2-c22dad90681d */
 public class Grupa extends Izvodjac {
    /** @pdOid 4ad9e500-3e23-4910-a130-75d40fcd6374 */

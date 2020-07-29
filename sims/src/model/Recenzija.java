@@ -4,11 +4,9 @@
  * Purpose: Defines the Class Recenzija
  ***********************************************************************/
 package model;
-import java.util.*;
-
 /** @pdOid 7bbc8580-778f-4a3f-8306-57c0cbc02cce */
 public class Recenzija extends Utisak {
-   /** @pdRoleInfo migr=no name=Urednik assc=association9 mult=1 side=A */
+   /** @pdRoleInfo migr=no name=Urednik assc=association9 mult=1..1 side=A */
    public Urednik urednik;
    
    

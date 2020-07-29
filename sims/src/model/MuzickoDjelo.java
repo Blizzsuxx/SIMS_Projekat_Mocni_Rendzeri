@@ -4,8 +4,7 @@
  * Purpose: Defines the Class MuzickoDjelo
  ***********************************************************************/
 package model;
-import java.util.*;
-
+import java.util.Date;
 /** @pdOid fe24355d-b240-471a-9a18-0672095a63e6 */
 public class MuzickoDjelo {
    /** @pdOid 85e700ff-acf1-4663-ad34-fb23a5477991 */

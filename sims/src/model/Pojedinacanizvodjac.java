@@ -4,8 +4,7 @@
  * Purpose: Defines the Class Pojedinacanizvodjac
  ***********************************************************************/
 package model;
-import java.util.*;
-
+import java.util.Date;
 /** @pdOid 2fc12510-acfe-4d29-b294-58047091b3ba */
 public class Pojedinacanizvodjac extends Izvodjac {
    /** @pdOid d1866ad1-9677-405a-85a4-d344052641a8 */

@@ -1,12 +1,10 @@
-package model;
-
 /***********************************************************************
  * Module:  Clan.java
  * Author:  Dragan
  * Purpose: Defines the Class Clan
  ***********************************************************************/
-
-import java.util.*;
+package model;
+import java.util.Date;
 
 /** @pdOid 2bdbbe03-46e7-43b8-86a3-41039d253a69 */
 public class Clan {

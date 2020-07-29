@@ -4,8 +4,6 @@
  * Purpose: Defines the Class Izvodjac
  ***********************************************************************/
 package model;
-import java.util.*;
-
 /** @pdOid 20a31e0c-cbdd-4a1e-956e-0c8ed03fce3d */
 public abstract class Izvodjac {
    /** @pdOid 515ac754-9ea8-45bb-bc6e-0b899ea103d8 */

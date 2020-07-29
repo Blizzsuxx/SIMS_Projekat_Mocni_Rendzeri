@@ -4,22 +4,27 @@
  * Purpose: Defines the Class Sesija
  ***********************************************************************/
 package model;
-import java.util.*;
+import java.util.Collection;
 
+import controler.CitacDatoteka;
 import controler.KorisniciMenadzer;
 
 /** @pdOid a6536d8d-e436-4d30-9c5d-e31219285ea3 */
 public class Sesija {
-   /** @pdRoleInfo migr=no name=KorisniciMenadzer assc=association29 mult=1 */
-   public KorisniciMenadzer korisnici;
+   /** @pdRoleInfo migr=no name=KorisniciMenadzer assc=association29 mult=1..1 */
+   private KorisniciMenadzer korisnici;
    /** @pdRoleInfo migr=no name=MuzickoDjelo assc=association38 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
-   public java.util.Collection<MuzickoDjelo> dela;
+   private java.util.Collection<MuzickoDjelo> dela;
    /** @pdRoleInfo migr=no name=Grupa assc=association42 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
-   public java.util.Collection<Grupa> grupe;
+   private java.util.Collection<Grupa> grupe;
    /** @pdRoleInfo migr=no name=Pojedinacanizvodjac assc=association43 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
-   public java.util.Collection<Pojedinacanizvodjac> umetnici;
+   private java.util.Collection<Pojedinacanizvodjac> umetnici;
    /** @pdRoleInfo migr=no name=Recenzija assc=association44 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
-   public java.util.Collection<Recenzija> recenzije;
+   private java.util.Collection<Recenzija> recenzije;
+   
+   private Korisnik trenutniKorisnik;
+   
+   private static Sesija trenutnaSesija;
    
    /** @pdOid 2750728b-3647-44d9-803c-9a8cbcd00047 */
    public void odjava() {
@@ -219,5 +224,36 @@ public class Sesija {
       if (recenzije != null)
          recenzije.clear();
    }
+
+
+public static Sesija namestiSesiju(Korisnik korisnik, CitacDatoteka datoteke) {
+	// TODO Auto-generated method stub
+	if(trenutnaSesija != null) {
+		return trenutnaSesija;
+	} else {
+		trenutnaSesija = new Sesija(korisnik, datoteke.getKorisnici(), datoteke.getMuzickaDela(), datoteke.getGrupe(), datoteke.getIzvodjaci(), datoteke.getRecenzije());
+		return trenutnaSesija;
+	}
+}
+
+private Sesija(Korisnik trenutniKorisnik, KorisniciMenadzer korisnici, Collection<MuzickoDjelo> dela, Collection<Grupa> grupe,
+		Collection<Pojedinacanizvodjac> umetnici, Collection<Recenzija> recenzije) {
+	super();
+	this.korisnici = korisnici;
+	this.dela = dela;
+	this.grupe = grupe;
+	this.umetnici = umetnici;
+	this.recenzije = recenzije;
+	this.trenutniKorisnik = trenutniKorisnik;
+}
+
+
+public boolean izvrsi() {
+	// TODO Auto-generated method stub
+	return false;
+}
+
+
+
 
 }

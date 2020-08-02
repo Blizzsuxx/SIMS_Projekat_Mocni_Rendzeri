@@ -4,9 +4,12 @@
  * Purpose: Defines the Class Sesija
  ***********************************************************************/
 package model;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import controler.CitacDatoteka;
+import controler.IzvestajSvihIzvodjacaMenadzer;
+import controler.IzvestajSvihZanrovaMenadzer;
 import controler.KorisniciMenadzer;
 
 /** @pdOid a6536d8d-e436-4d30-9c5d-e31219285ea3 */
@@ -21,6 +24,13 @@ public class Sesija {
    private java.util.Collection<Pojedinacanizvodjac> umetnici;
    /** @pdRoleInfo migr=no name=Recenzija assc=association44 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
    private java.util.Collection<Recenzija> recenzije;
+   
+ public java.util.Collection<Urednik> urednici;
+   
+   public IzvestajSvihZanrovaMenadzer izvestajSvihZanrovaa;//ovo ne treba da bude inicijalizovano, inic se u izvestajima kod admina
+   public ArrayList<Zanr> sviZanrovi;//ali ovo mora biti inic !!! pre ovog gore
+   public IzvestajSvihZanrova jedanZanr;
+   public IzvestajSvihIzvodjacaMenadzer menIzvodjaca;//ovo ne treba biti inic, nego tek kad se pokrene izv
    
    private Korisnik trenutniKorisnik;
    
@@ -254,6 +264,67 @@ public boolean izvrsi() {
 }
 
 
+public IzvestajSvihZanrovaMenadzer namestiIzvestaj() {
+	   this.izvestajSvihZanrovaa=new IzvestajSvihZanrovaMenadzer(dela, recenzije, sviZanrovi);
+	   
+	return izvestajSvihZanrovaa;
+	   
+}
+public IzvestajSvihZanrova pronadjiPodatkejednogZanra(String naziv) {
+	   jedanZanr=new IzvestajSvihZanrova(naziv);
+	   pronadiDela(naziv);
+	   return jedanZanr;
+}
 
+
+private void pronadiDela(String naziv) {
+	for(MuzickoDjelo d:dela) {
+		for(Zanr z:d.getZanrovi()) {
+			if(z.getNazivZanra().equals(naziv)) {
+				for(Utisak u:d.getUtisci()) {
+					if(u instanceof Recenzija) {
+				jedanZanr.setBrojRecenzija(jedanZanr.getBrojRecenzija()+1);
+					}else {
+						jedanZanr.setBrojKOmentara(jedanZanr.getBrojKOmentara()+1);
+					}
+				jedanZanr.setBrojMuzdela(jedanZanr.getBrojMuzdela()+1);
+				break;
+			}
+		}
+	}
+	
+}
+}
+public IzvestajSvihIzvodjacaMenadzer namestiIzvestajIzvodjaca() {
+	   this.menIzvodjaca=new IzvestajSvihIzvodjacaMenadzer();
+	   ArrayList<Izvodjac> sviizv=new ArrayList<Izvodjac>();
+	   for(Grupa g:this.grupe) { sviizv.add(g);}
+	   for(Pojedinacanizvodjac p:this.umetnici) {sviizv.add(p);}
+	   this.menIzvodjaca.namestiIzvestaj(sviizv);
+	   
+	   return this.menIzvodjaca;
+}
+public IzvestajJednogIzvodjaca namestiJedanizvestaj(Izvodjac i) {
+	   IzvestajJednogIzvodjaca jedan=new IzvestajJednogIzvodjaca(i.getUmetnickoIme());
+	   jedan.setIzvodjacReferenca(i);
+		jedan.setBrojDela(i.getMuzickaDela().size());
+		double ocenaKo=0;
+		double ocenaUr=0; 
+		for(MuzickoDjelo m:i.getMuzickaDela()) {
+			ocenaKo+=m.getProsecnaOcenaKorisnika();
+			ocenaUr+=m.getProsecnaOcenaUrednika();
+			for(Utisak u:m.getUtisci()) {
+				if(u instanceof Recenzija) {
+					jedan.setBrojRecenzija(jedan.getBrojRecenzija()+1);
+				}else {
+					jedan.setBrojKomentara(jedan.getBrojKomentara()+1);
+				}
+			}
+		}
+		jedan.setOcenaKorisnika(ocenaKo/i.muzickaDela.size());
+		jedan.setOcenaUrednika(ocenaUr/i.muzickaDela.size());
+	   return jedan;
+	   
+}
 
 }

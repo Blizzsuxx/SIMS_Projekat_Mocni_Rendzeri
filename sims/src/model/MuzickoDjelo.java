@@ -5,6 +5,7 @@
  ***********************************************************************/
 package model;
 
+import java.util.ArrayList;
 import java.util.Date;
 /** @pdOid fe24355d-b240-471a-9a18-0672095a63e6 */
 public class MuzickoDjelo {
@@ -23,5 +24,93 @@ public class MuzickoDjelo {
    
    /** @pdRoleInfo migr=no name=Utisak assc=association5 mult=0..* */
    public Utisak[] utisci;
+   
+   private ArrayList<Zanr> zanrovi;
+   
+
+   public ArrayList<Zanr> getZanrovi() {
+   	return zanrovi;
+   }
+
+   public void setZanrovi(ArrayList<Zanr> zanrovi) {
+   	this.zanrovi = zanrovi;
+   }
+
+   /** @pdRoleInfo migr=no name=Utisak assc=association5 mult=0..* */
+      public Utisak[] utisci;
+
+   public String getNaziv() {
+   	return naziv;
+   }
+
+   public void setNaziv(String naziv) {
+   	this.naziv = naziv;
+   }
+
+   public String getOpis() {
+   	return opis;
+   }
+
+   public void setOpis(String opis) {
+   	this.opis = opis;
+   }
+
+   public Date getDatumIzdavanja() {
+   	return datumIzdavanja;
+   }
+
+   public void setDatumIzdavanja(Date datumIzdavanja) {
+   	this.datumIzdavanja = datumIzdavanja;
+   }
+
+   public boolean isStatus() {
+   	return status;
+   }
+
+   public void setStatus(boolean status) {
+   	this.status = status;
+   }
+
+   public float getProsecnaOcenaKorisnika() {
+   	return prosecnaOcenaKorisnika;
+   }
+
+   public void setProsecnaOcenaKorisnika(float prosecnaOcenaKorisnika) {
+   	this.prosecnaOcenaKorisnika = prosecnaOcenaKorisnika;
+   }
+
+   public float getProsecnaOcenaUrednika() {
+   	return prosecnaOcenaUrednika;
+   }
+
+   public void setProsecnaOcenaUrednika(float prosecnaOcenaUrednika) {
+   	this.prosecnaOcenaUrednika = prosecnaOcenaUrednika;
+   }
+
+   public Utisak[] getUtisci() {
+   	return utisci;
+   }
+
+   public void setUtisci(Utisak[] utisci) {
+   	this.utisci = utisci;
+   }
+
+   public MuzickoDjelo(String naziv, String opis, Date datumIzdavanja, boolean status, float prosecnaOcenaKorisnika,
+   		float prosecnaOcenaUrednika, Utisak[] utisci) {
+   	super();
+   	this.naziv = naziv;
+   	this.opis = opis;
+   	this.datumIzdavanja = datumIzdavanja;
+   	this.status = status;
+   	this.prosecnaOcenaKorisnika = prosecnaOcenaKorisnika;
+   	this.prosecnaOcenaUrednika = prosecnaOcenaUrednika;
+   	this.utisci = utisci;
+   }
+
+   public MuzickoDjelo() {
+   	super();
+   }
+      
+      
 
 }

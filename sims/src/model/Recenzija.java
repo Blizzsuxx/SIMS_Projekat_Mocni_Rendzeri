@@ -9,29 +9,44 @@ public class Recenzija extends Utisak {
    /** @pdRoleInfo migr=no name=Urednik assc=association9 mult=1..1 side=A */
    public Urednik urednik;
    
-   
-   /** @pdGenerated default parent getter */
-   public Urednik getUrednik() {
-      return urednik;
-   }
-   
-   /** @pdGenerated default parent setter
-     * @param newUrednik */
-   public void setUrednik(Urednik newUrednik) {
-      if (this.urednik == null || !this.urednik.equals(newUrednik))
-      {
-         if (this.urednik != null)
-         {
-            Urednik oldUrednik = this.urednik;
-            this.urednik = null;
-            oldUrednik.removeIstorijaRecenzija(this);
-         }
-         if (newUrednik != null)
-         {
-            this.urednik = newUrednik;
-            this.urednik.addIstorijaRecenzija(this);
-         }
-      }
-   }
+   public String naslov;
+   public Recenzija(Urednik urednik, String naslov) {
+		super();
+		this.urednik = urednik;
+		this.naslov = naslov;
+	}
+
+	   
+	public String getNaslov() {
+		return naslov;
+	}
+
+	public void setNaslov(String naslov) {
+		this.naslov = naslov;
+	}
+
+	/** @pdGenerated default parent getter */
+	   public Urednik getUrednik() {
+	      return urednik;
+	   }
+	   
+	   /** @pdGenerated default parent setter
+	     * @param newUrednik */
+	   public void setUrednik(Urednik newUrednik) {
+	      if (this.urednik == null || !this.urednik.equals(newUrednik))
+	      {
+	         if (this.urednik != null)
+	         {
+	            Urednik oldUrednik = this.urednik;
+	            this.urednik = null;
+	            oldUrednik.removeIstorijaRecenzija(this);
+	         }
+	         if (newUrednik != null)
+	         {
+	            this.urednik = newUrednik;
+	            this.urednik.addIstorijaRecenzija(this);
+	         }
+	      }
+	   }
 
 }

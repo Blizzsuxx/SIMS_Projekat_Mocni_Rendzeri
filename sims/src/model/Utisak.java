@@ -16,5 +16,47 @@ public abstract class Utisak {
    
    /** @pdRoleInfo migr=no name=MuzickoDjelo assc=association5 mult=1..1 side=A */
    public MuzickoDjelo delo;
+   public String getText() {
+		return text;
+	}
 
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public Date getDatumUpisa() {
+		return datumUpisa;
+	}
+
+	public void setDatumUpisa(Date datumUpisa) {
+		this.datumUpisa = datumUpisa;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+	public MuzickoDjelo getDelo() {
+		return delo;
+	}
+
+	public void setDelo(MuzickoDjelo delo) {
+		this.delo = delo;
+	}
+
+	public Utisak(String text, Date datumUpisa, boolean status, MuzickoDjelo delo) {
+		super();
+		this.text = text;
+		this.datumUpisa = datumUpisa;
+		this.status = status;
+		this.delo = delo;
+	}
+
+	public Utisak() {
+		super();
+	}
 }

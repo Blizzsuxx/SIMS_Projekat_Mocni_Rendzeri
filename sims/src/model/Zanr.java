@@ -10,5 +10,27 @@ public class Zanr {
    private String nazivZanra;
    /** @pdOid 0338ddb0-c2e7-4d8d-9920-408569676b79 */
    private boolean status;
+   
+   public String getNazivZanra() {
+		return nazivZanra;
+	}
+	public void setNazivZanra(String nazivZanra) {
+		this.nazivZanra = nazivZanra;
+	}
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+	public Zanr(String nazivZanra, boolean status) {
+		super();
+		this.nazivZanra = nazivZanra;
+		this.status = status;
+	}
+	public Zanr() {
+		super();
+	}
+
 
 }

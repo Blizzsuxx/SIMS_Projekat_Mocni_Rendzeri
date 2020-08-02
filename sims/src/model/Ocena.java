@@ -11,5 +11,29 @@ public class Ocena {
    
    /** @pdRoleInfo migr=no name=FrontEndKorisnik assc=association30 mult=1..1 side=A */
    public FrontEndKorisnik ocenitelj;
+   
+   public float getOcena() {
+		return ocena;
+	}
+
+	public void setOcena(float ocena) {
+		this.ocena = ocena;
+	}
+
+	public FrontEndKorisnik getOcenitelj() {
+		return ocenitelj;
+	}
+
+	public void setOcenitelj(FrontEndKorisnik ocenitelj) {
+		this.ocenitelj = ocenitelj;
+	}
+
+	public Ocena(float ocena, FrontEndKorisnik ocenitelj) {
+		super();
+		this.ocena = ocena;
+		this.ocenitelj = ocenitelj;
+	}
+	   
+	   
 
 }

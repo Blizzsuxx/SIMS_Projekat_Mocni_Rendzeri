@@ -5,6 +5,8 @@
  ***********************************************************************/
 package model;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 /** @pdOid d7b7dd3e-6a5f-4c47-ad28-32c0171650d0 */
@@ -21,6 +23,25 @@ public class Urednik extends FrontEndKorisnik {
    public java.util.Collection<ZakazanaRecenzija> zakazaneRecenzije;
    /** @pdRoleInfo migr=no name=RecezijaZaIzmenu assc=association41 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
    public java.util.Collection<RecezijaZaIzmenu> recezijaZaIzmenu;
+   
+   public Urednik(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, boolean status, Nalog nalog,
+			Collection<MuzickoDjelo> muzickoDjelo, Collection<Zanr> preferiraniZanrovi,
+			Collection<KorisnikAplikacije> pratilac, Collection<Recenzija> istorijaRecenzija,
+			Collection<ZakazanaRecenzija> zakazaneRecenzije, Collection<RecezijaZaIzmenu> recezijaZaIzmenu) {
+		   super(ime, prezime, eMail, pol, datumRodjenja, status, nalog, muzickoDjelo, preferiraniZanrovi, pratilac);
+		   this.istorijaRecenzija = istorijaRecenzija;
+		   this.zakazaneRecenzije = zakazaneRecenzije;
+		   this.recezijaZaIzmenu = recezijaZaIzmenu;
+	   }
+	   
+	   public Urednik(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, boolean status, Nalog nalog,
+			Collection<MuzickoDjelo> muzickoDjelo, Collection<Zanr> preferiraniZanrovi,
+			Collection<KorisnikAplikacije> pratilac) {
+		   super(ime, prezime, eMail, pol, datumRodjenja, status, nalog, muzickoDjelo, preferiraniZanrovi, pratilac);
+		   this.istorijaRecenzija = new ArrayList<>();
+		   this.zakazaneRecenzije = new ArrayList<>();
+		   this.recezijaZaIzmenu = new ArrayList<>();
+	   }
    
    /** @pdOid f9c63904-e42a-4710-8822-3e3f1e173c5e */
    public void pokreniGlasanje() {

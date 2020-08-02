@@ -13,5 +13,40 @@ public class RecezijaZaIzmenu {
    
    /** @pdRoleInfo migr=no name=Recenzija assc=association40 mult=1..1 */
    public Recenzija recenzija;
+   
+   public boolean uradeno;
+
+   public boolean isUradeno() {
+   	return uradeno;
+   }
+
+   public void setUradeno(boolean uradeno) {
+   	this.uradeno = uradeno;
+   }
+
+   public boolean isMenjanje() {
+   	return menjanje;
+   }
+
+   public void setMenjanje(boolean menjanje) {
+   	this.menjanje = menjanje;
+   }
+
+   public boolean isBrisanje() {
+   	return brisanje;
+   }
+
+   public void setBrisanje(boolean brisanje) {
+   	this.brisanje = brisanje;
+   }
+
+   public Recenzija getRecenzija() {
+   	return recenzija;
+   }
+
+   public void setRecenzija(Recenzija recenzija) {
+   	this.recenzija = recenzija;
+   }
+      
 
 }

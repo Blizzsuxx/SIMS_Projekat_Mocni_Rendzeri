@@ -25,10 +25,10 @@ import model.Sesija;
 import net.miginfocom.swing.MigLayout;
 
 public class IzvestajViseZanrova extends JFrame {
-	//smisli nesto pametno.....
+	
 	private JTable table;
 	private Sesija sesija;
-	private JButton btnBack;
+	private JButton btnBack, btnPregled;
 	ArrayList<IzvestajSvihZanrova> lista;
 	public IzvestajViseZanrova(Sesija s) {
 		this.sesija=s;//potrebna da kazem lista zanrova sa nekim podacima kao, broj dela, prosecna ocena zanra preko dela, nesto tako?
@@ -52,10 +52,27 @@ public class IzvestajViseZanrova extends JFrame {
 
 			
 		});
+        btnPregled.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int rInd=table.getSelectedRow();
+				Zanr ur=s.pronadiZanr(rInd);
+				if(ur==null) {JOptionPane.showMessageDialog(RestoranFrame.this, "Morate selektovati bar jedan red", "Info", JOptionPane.INFORMATION_MESSAGE);
+				}else {
+					IzvestajZanra nov=new IzvestajZanra(this.sesija, ur);
+					nov.setVisible(true);
+					
+				}
+				
+			}
+
+			
+		});
 		
 	}
 	private void initGui() {
-		MigLayout mig =  new MigLayout("wrap 2", "[]10[]", "[]"); 
+		MigLayout mig =  new MigLayout("wrap 2", "[]10[]", "[]10[]"); 
 		setLayout(mig);
 		
 		table = new JTable(new ViseZanrovaModel(lista));
@@ -101,6 +118,9 @@ public class IzvestajViseZanrova extends JFrame {
 			}
 			
 		});
+		btnPregled.setText("Pregledaj jedan zanr");
+		add(btnPregled);
+		
 		
 	}
 

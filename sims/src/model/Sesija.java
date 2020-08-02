@@ -326,5 +326,15 @@ public IzvestajJednogIzvodjaca namestiJedanizvestaj(Izvodjac i) {
 	   return jedan;
 	   
 }
+public Urednik pronadiUrednika(int rInd){
+	if(rInd<0 || rInd> (ArrayList<Urednici>)urednici.size() ) {
+		return null;
+	}else {return (ArrayList<Urednici>)urednici.get(rind);}
+}
 
+public Zanr pronadiZanr(int rInd) {
+	if(rInd<0 || rInd> sviZanrovi.size() ) {
+		return null;
+	}else {return sviZanrovi.get(rind);}
+}
 }

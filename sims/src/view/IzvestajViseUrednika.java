@@ -35,7 +35,7 @@ import net.miginfocom.swing.MigLayout;
 
 public class IzvestajViseUrednika extends JFrame {
 	private Collection<Urednik> urednici;
-	private JButton btnBack, btnOk;
+	private JButton btnBack, btnOk, btnPregled;
 	private JTable table;
 	private JDatePickerImpl DatePicker2, DatePicker1;
 	private UtilDateModel model1, model2;
@@ -116,6 +116,9 @@ public class IzvestajViseUrednika extends JFrame {
 	add(DatePicker2);
 	btnOk.setText("Filtriraj");
 	add(btnOk);
+	btnPregledaj.setText("Pregled jednog");
+	add(btnPregled);
+	
 	}
 	private void initActions() {
 		btnBack.addActionListener(new ActionListener() {
@@ -130,6 +133,23 @@ public class IzvestajViseUrednika extends JFrame {
 			
 		});
 		
+       btnPregled.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int rInd=table.getSelectedRow();
+				Urednik ur=s.pronadiUrednika(rInd);
+				if(ur==null) {JOptionPane.showMessageDialog(RestoranFrame.this, "Morate selektovati bar jedan red", "Info", JOptionPane.INFORMATION_MESSAGE);
+				}else {
+					IzvestajUrednika nov=new IzvestajUrednika(this.sesija, ur);
+					nov.setVisible(true);
+					
+				}
+				
+			}
+
+			
+		});
 		btnOk.addActionListener(new ActionListener() {
 			
 			@Override

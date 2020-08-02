@@ -154,7 +154,7 @@ public class IzvestajViseIzvodjaca extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				int rInd=table.getSelectedRow();
 				Izvodjac izv=men.pronadjiRed(rInd);
-				if(izv==null) {JOptionPane.showMessageDialog(RestoranFrame.this, "Morate selektovati bar jedan restoran", "Info", JOptionPane.INFORMATION_MESSAGE);
+				if(izv==null) {JOptionPane.showMessageDialog(RestoranFrame.this, "Morate selektovati bar jedan red", "Info", JOptionPane.INFORMATION_MESSAGE);
 				}else {
 					IzvestajIzvodjaca nov=new IzvestajIzvodjaca(this.sesija, izv);
 					nov.setVisible(true);

@@ -13,7 +13,7 @@ public class Grupa extends Izvodjac {
    private Date datumOsnivanja;
    /** @pdOid e4429194-5897-4195-9b98-cdf8a48f2c45 */
    private Date datumRaspada;
-   
+   //novo
    public int getBrojClanova() {
 		return brojClanova;
 	}

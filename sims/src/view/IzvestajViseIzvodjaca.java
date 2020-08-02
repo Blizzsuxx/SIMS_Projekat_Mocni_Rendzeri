@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -36,12 +37,13 @@ import model.Pojedinacanizvodjac;
 import model.Sesija;
 import model.Zanr;
 import net.miginfocom.swing.MigLayout;
+import pogled.RestoranFrame;
 import view.DataLabelFormatter;
 
 public class IzvestajViseIzvodjaca extends JFrame{
 	private Sesija sesija;
 	private IzvestajSvihIzvodjacaMenadzer men;
-	private JButton btnBack, btnOk;
+	private JButton btnBack, btnOk, btnPregled;
 	private JTable  table1;
 	private JComboBox<Zanr> cbZanr;
 	private JDatePickerImpl DatePicker1;
@@ -132,6 +134,7 @@ public class IzvestajViseIzvodjaca extends JFrame{
 		add(btnBack);
 		btnOk.setName("Filtriraj");
 		add(btnOk);//dugme za filtriranje
+		add(btnPregled);
 	}
 	private void initActions() {
 		btnBack.addActionListener(new ActionListener() {
@@ -144,6 +147,23 @@ public class IzvestajViseIzvodjaca extends JFrame{
 			}
 
 			
+		});
+		btnPregled.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int rInd=table.getSelectedRow();
+				Izvodjac izv=men.pronadjiRed(rInd);
+				if(izv==null) {JOptionPane.showMessageDialog(RestoranFrame.this, "Morate selektovati bar jedan restoran", "Info", JOptionPane.INFORMATION_MESSAGE);
+				}else {
+					IzvestajIzvodjaca nov=new IzvestajIzvodjaca(this.sesija, izv);
+					nov.setVisible(true);
+					
+				}
+				
+				
+				
+			}
 		});
 	
 		btnOk.addActionListener(new ActionListener() {

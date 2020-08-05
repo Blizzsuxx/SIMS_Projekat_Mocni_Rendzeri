@@ -12,6 +12,7 @@ import java.util.Properties;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -39,10 +40,10 @@ public class IzvestajViseUrednika extends JFrame {
 	private JTable table;
 	private JDatePickerImpl DatePicker2, DatePicker1;
 	private UtilDateModel model1, model2;
-	private Sesija s;
+	private Sesija sesija;
 	
 	public IzvestajViseUrednika(Sesija s) {
-		this.s=s;
+		this.sesija=s;
 		this.urednici=s.getUrednici();
 		initGui();
 		setSize(700, 700);
@@ -116,7 +117,7 @@ public class IzvestajViseUrednika extends JFrame {
 	add(DatePicker2);
 	btnOk.setText("Filtriraj");
 	add(btnOk);
-	btnPregledaj.setText("Pregled jednog");
+	btnPregled.setText("Pregled jednog");
 	add(btnPregled);
 	
 	}
@@ -138,10 +139,10 @@ public class IzvestajViseUrednika extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int rInd=table.getSelectedRow();
-				Urednik ur=s.pronadiUrednika(rInd);
-				if(ur==null) {JOptionPane.showMessageDialog(RestoranFrame.this, "Morate selektovati bar jedan red", "Info", JOptionPane.INFORMATION_MESSAGE);
+				Urednik ur=sesija.pronadiUrednika(rInd);
+				if(ur==null) {JOptionPane.showMessageDialog(null, "Morate selektovati bar jedan red", "Info", JOptionPane.INFORMATION_MESSAGE);
 				}else {
-					IzvestajUrednika nov=new IzvestajUrednika(this.sesija, ur);
+					IzvestajUrednika nov=new IzvestajUrednika(sesija, ur);
 					nov.setVisible(true);
 					
 				}
@@ -164,7 +165,7 @@ public class IzvestajViseUrednika extends JFrame {
 				LocalDate dan=convertToLocalDateViaInstant(d1, month, year); //uzima datume i pretrazuje koliko je recenzija svaki imao u odredenom preiodu, i ostalih stvari, i ocena u tom periodu?
 				//TODO mozda ne radi??? i proveri da li moze ovako ili mora preko sesije??
 				LocalDate dan1=convertToLocalDateViaInstant(d2, month2, year2);
-				IzvestajViseUrednikaMenadzer men=new IzvestajViseUrednikaMenadzer(dan, dan1, (ArrayList<Urednik>)s.getUrednici());
+				IzvestajViseUrednikaMenadzer men=new IzvestajViseUrednikaMenadzer(dan, dan1, (ArrayList<Urednik>)sesija.getUrednici());
 				table=new JTable(new UrednikModel(men.getPodaci()));
 				refreshData();
 				

@@ -18,9 +18,9 @@ public class ZakazanaRecenzija {
    private Date rok;
    
    /** @pdRoleInfo migr=no name=Recenzija assc=association34 mult=1..1 */
-   public Recenzija recenzija;
+   private Recenzija recenzija;
    /** @pdRoleInfo migr=no name=Urednik assc=association10 mult=1..1 side=A */
-   public Urednik urednik;
+   private Urednik urednik;
    
    
    /** @pdGenerated default parent getter */
@@ -46,5 +46,15 @@ public class ZakazanaRecenzija {
          }
       }
    }
+
+public Date getDatumZakazivanja() {
+	// TODO Auto-generated method stub
+	return this.datumZakazivanja;
+}
+
+public boolean isUradeno() {
+	// TODO Auto-generated method stub
+	return this.uradeno;
+}
 
 }

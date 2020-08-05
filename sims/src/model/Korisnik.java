@@ -32,7 +32,7 @@ public abstract class Korisnik {
    }
    
    @SuppressWarnings("deprecation")
-public void setKorisnickoIme(String korisnickoIme) {
+   public void setKorisnickoIme(String korisnickoIme) {
 	   if(nalog == null) {
 		   nalog = new Nalog("password123", korisnickoIme, new Date(), true);
 		   

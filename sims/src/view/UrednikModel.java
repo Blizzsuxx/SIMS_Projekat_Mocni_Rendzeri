@@ -6,21 +6,21 @@ import java.util.Collection;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
-import model.POdaciUrednikaZaIzvestaj;
+import model.PodaciUrednikaZaIzvestaj;
 import model.Recenzija;
 import model.Urednik;
 
 public class UrednikModel extends AbstractTableModel implements TableModel {
 	private String[] naslovi= {"Ime urednika", "Broj recenzija", "Broj zadatih uradenih recenzija", "Broj recenzija za izmenu"};
 	private ArrayList<Urednik> urednici;
-	private ArrayList<POdaciUrednikaZaIzvestaj> izvestaj;
+	private ArrayList<PodaciUrednikaZaIzvestaj> izvestaj;
 	
 	public UrednikModel(Collection<Urednik> urednici) {
 		this.urednici=(ArrayList<Urednik>) urednici;
 		this.izvestaj=null;
 	}
 	
-	public UrednikModel(ArrayList<POdaciUrednikaZaIzvestaj> izvestaj) {
+	public UrednikModel(ArrayList<PodaciUrednikaZaIzvestaj> izvestaj) {
 		super();
 		this.izvestaj = izvestaj;
 		this.urednici=null;
@@ -60,7 +60,7 @@ public class UrednikModel extends AbstractTableModel implements TableModel {
 		}
 		return null;}
 		else {
-			POdaciUrednikaZaIzvestaj p=izvestaj.get(rowIndex);
+			PodaciUrednikaZaIzvestaj p=izvestaj.get(rowIndex);
 			switch(columnIndex) {
 			case 0:
 				return p.getIme();

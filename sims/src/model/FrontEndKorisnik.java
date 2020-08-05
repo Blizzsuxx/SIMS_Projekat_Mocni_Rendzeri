@@ -18,11 +18,11 @@ public abstract class FrontEndKorisnik extends Korisnik {
    public FrontEndKorisnik() {}
 
 /** @pdRoleInfo migr=no name=MuzickoDjelo assc=association32 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
-   public java.util.Collection<MuzickoDjelo> muzickoDjelo;
+   private java.util.Collection<MuzickoDjelo> muzickoDjelo;
    /** @pdRoleInfo migr=no name=Zanr assc=association36 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
-   public java.util.Collection<Zanr> preferiraniZanrovi;
+   private java.util.Collection<Zanr> preferiraniZanrovi;
    /** @pdRoleInfo migr=no name=KorisnikAplikacije assc=pracenjeKorisnika mult=0..* side=A */
-   public KorisnikAplikacije[] pratilac;
+   private KorisnikAplikacije[] pratilac;
    
    /** @pdOid 2764179e-3960-4723-809e-5c4cf97d9e27 */
    public void izbrisiNalog() {

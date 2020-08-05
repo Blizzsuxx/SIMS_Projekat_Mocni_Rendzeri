@@ -10,7 +10,7 @@ public class Ocena {
    private float ocena;
    
    /** @pdRoleInfo migr=no name=FrontEndKorisnik assc=association30 mult=1..1 side=A */
-   public FrontEndKorisnik ocenitelj;
+   private FrontEndKorisnik ocenitelj;
    
    public float getOcena() {
 		return ocena;

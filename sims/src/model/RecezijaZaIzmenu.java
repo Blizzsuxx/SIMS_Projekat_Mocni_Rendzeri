@@ -12,9 +12,9 @@ public class RecezijaZaIzmenu {
    private boolean brisanje;
    
    /** @pdRoleInfo migr=no name=Recenzija assc=association40 mult=1..1 */
-   public Recenzija recenzija;
+   private Recenzija recenzija;
    
-   public boolean uradeno;
+   private boolean uradeno;
 
    public boolean isUradeno() {
    	return uradeno;

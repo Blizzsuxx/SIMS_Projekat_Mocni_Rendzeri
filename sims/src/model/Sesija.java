@@ -25,12 +25,12 @@ public class Sesija {
    /** @pdRoleInfo migr=no name=Recenzija assc=association44 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
    private java.util.Collection<Recenzija> recenzije;
    
- public java.util.Collection<Urednik> urednici;
+   private java.util.List<Urednik> urednici;
    
-   public IzvestajSvihZanrovaMenadzer izvestajSvihZanrovaa;//ovo ne treba da bude inicijalizovano, inic se u izvestajima kod admina
-   public ArrayList<Zanr> sviZanrovi;//ali ovo mora biti inic !!! pre ovog gore
-   public IzvestajSvihZanrova jedanZanr;
-   public IzvestajSvihIzvodjacaMenadzer menIzvodjaca;//ovo ne treba biti inic, nego tek kad se pokrene izv
+   private IzvestajSvihZanrovaMenadzer izvestajSvihZanrova;//ovo ne treba da bude inicijalizovano, inic se u izvestajima kod admina
+   private ArrayList<Zanr> sviZanrovi;//ali ovo mora biti inic !!! pre ovog gore
+   private IzvestajSvihZanrova jedanZanr;
+   private IzvestajSvihIzvodjacaMenadzer menIzvodjaca;//ovo ne treba biti inic, nego tek kad se pokrene izv
    
    private Korisnik trenutniKorisnik;
    
@@ -265,11 +265,16 @@ public boolean izvrsi() {
 
 
 public IzvestajSvihZanrovaMenadzer namestiIzvestaj() {
-	   this.izvestajSvihZanrovaa=new IzvestajSvihZanrovaMenadzer(dela, recenzije, sviZanrovi);
+	   this.izvestajSvihZanrova=new IzvestajSvihZanrovaMenadzer(dela, recenzije, sviZanrovi);
 	   
-	return izvestajSvihZanrovaa;
+	return izvestajSvihZanrova;
 	   
 }
+public IzvestajSvihZanrovaMenadzer getIzvestajSvihZanrova() {
+	return izvestajSvihZanrova;
+}
+
+
 public IzvestajSvihZanrova pronadjiPodatkejednogZanra(String naziv) {
 	   jedanZanr=new IzvestajSvihZanrova(naziv);
 	   pronadiDela(naziv);
@@ -327,14 +332,20 @@ public IzvestajJednogIzvodjaca namestiJedanizvestaj(Izvodjac i) {
 	   
 }
 public Urednik pronadiUrednika(int rInd){
-	if(rInd<0 || rInd> (ArrayList<Urednici>)urednici.size() ) {
+	if(rInd < 0 || rInd > urednici.size() ) {
 		return null;
-	}else {return (ArrayList<Urednici>)urednici.get(rind);}
+	} else {return urednici.get(rInd);}
 }
 
 public Zanr pronadiZanr(int rInd) {
 	if(rInd<0 || rInd> sviZanrovi.size() ) {
 		return null;
-	}else {return sviZanrovi.get(rind);}
+	}else {return sviZanrovi.get(rInd);}
+}
+
+
+public Collection<Urednik> getUrednici() {
+	// TODO Auto-generated method stub
+	return this.urednici;
 }
 }

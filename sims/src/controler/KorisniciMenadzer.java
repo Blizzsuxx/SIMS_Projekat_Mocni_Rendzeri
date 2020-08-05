@@ -19,7 +19,7 @@ import model.Pol;
 /** @pdOid 121daa1d-b073-437c-95b7-7f061b5ef5df */
 public class KorisniciMenadzer {
    /** @pdRoleInfo migr=no name=Korisnik assc=association25 mult=1..1 type=Aggregation */
-   public HashMap<String, Korisnik> korisnici;
+	private HashMap<String, Korisnik> korisnici;
    
    public KorisniciMenadzer(List<String[]> readAll) {
 	// TODO Auto-generated constructor stub
@@ -50,7 +50,7 @@ public class KorisniciMenadzer {
 		   String uloga = s[9];
 		   switch(uloga) {
 		   case "a":
-			   korisnici.put(korisnickoIme, new Administrator(ime, prezime, eMail, pol, datumRodjenja, sifra, korisnickoIme, datum, status));
+			   getKorisnici().put(korisnickoIme, new Administrator(ime, prezime, eMail, pol, datumRodjenja, sifra, korisnickoIme, datum, status));
 		   }
 	   }
 }
@@ -71,5 +71,9 @@ public class KorisniciMenadzer {
       // TODO: implement
       return null;
    }
+
+public HashMap<String, Korisnik> getKorisnici() {
+	return korisnici;
+}
 
 }

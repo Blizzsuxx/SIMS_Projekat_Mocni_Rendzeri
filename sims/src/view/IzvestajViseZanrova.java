@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -22,6 +23,7 @@ import javax.swing.table.TableRowSorter;
 
 import model.IzvestajSvihZanrova;
 import model.Sesija;
+import model.Zanr;
 import net.miginfocom.swing.MigLayout;
 
 public class IzvestajViseZanrova extends JFrame {
@@ -33,7 +35,7 @@ public class IzvestajViseZanrova extends JFrame {
 	public IzvestajViseZanrova(Sesija s) {
 		this.sesija=s;//potrebna da kazem lista zanrova sa nekim podacima kao, broj dela, prosecna ocena zanra preko dela, nesto tako?
 		s.namestiIzvestaj();
-	    lista=s.getIzvestajSvihZanrovaa().getSviZanrovi();
+	    lista=s.getIzvestajSvihZanrova().getSviZanrovi();
 		setSize(700, 700);
 		setResizable(false);
 		initGui();
@@ -57,10 +59,10 @@ public class IzvestajViseZanrova extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int rInd=table.getSelectedRow();
-				Zanr ur=s.pronadiZanr(rInd);
-				if(ur==null) {JOptionPane.showMessageDialog(RestoranFrame.this, "Morate selektovati bar jedan red", "Info", JOptionPane.INFORMATION_MESSAGE);
+				Zanr ur=sesija.pronadiZanr(rInd);
+				if(ur==null) {JOptionPane.showMessageDialog(null, "Morate selektovati bar jedan red", "Info", JOptionPane.INFORMATION_MESSAGE);
 				}else {
-					IzvestajZanra nov=new IzvestajZanra(this.sesija, ur);
+					IzvestajZanra nov=new IzvestajZanra(sesija, ur);
 					nov.setVisible(true);
 					
 				}

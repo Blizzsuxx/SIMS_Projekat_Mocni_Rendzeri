@@ -77,8 +77,8 @@ public class LoginMenadzer {
 			} else {
 				novKorisnik.setPol(Pol.zenski);
 			}
-			if(novKorisnik.getNalog() != null && !korisnici.korisnici.containsKey(novKorisnik.getKorisnickoIme())) {
-				korisnici.korisnici.put(novKorisnik.getKorisnickoIme(), novKorisnik);
+			if(novKorisnik.getNalog() != null && !korisnici.getKorisnici().containsKey(novKorisnik.getKorisnickoIme())) {
+				korisnici.getKorisnici().put(novKorisnik.getKorisnickoIme(), novKorisnik);
 				dialog.dispose();
 			} else {
 				JOptionPane.showMessageDialog(dialog, "Molimo vas da popunite sva polja.");
@@ -132,7 +132,7 @@ public class LoginMenadzer {
 		   prozor.dispose();
 		   return;
 	   }
-	   korisnik = korisnici.korisnici.get(korisnickoIme);
+	   korisnik = korisnici.getKorisnici().get(korisnickoIme);
 	   if(korisnik == null || !korisnik.getNalog().potvrdiSifru(sifra)){
 		   return;
 	   }

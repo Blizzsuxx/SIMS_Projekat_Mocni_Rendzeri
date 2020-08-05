@@ -15,7 +15,7 @@ public abstract class Utisak {
    private boolean status;
    
    /** @pdRoleInfo migr=no name=MuzickoDjelo assc=association5 mult=1..1 side=A */
-   public MuzickoDjelo delo;
+   private MuzickoDjelo delo;
    public String getText() {
 		return text;
 	}

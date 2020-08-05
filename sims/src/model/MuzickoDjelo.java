@@ -7,6 +7,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 /** @pdOid fe24355d-b240-471a-9a18-0672095a63e6 */
 public class MuzickoDjelo {
    /** @pdOid 85e700ff-acf1-4663-ad34-fb23a5477991 */
@@ -23,21 +24,18 @@ public class MuzickoDjelo {
    private float prosecnaOcenaUrednika;
    
    /** @pdRoleInfo migr=no name=Utisak assc=association5 mult=0..* */
-   public Utisak[] utisci;
+   private List<Utisak> utisci;
    
-   private ArrayList<Zanr> zanrovi;
+   private List<Zanr> zanrovi;
    
 
-   public ArrayList<Zanr> getZanrovi() {
+   public List<Zanr> getZanrovi() {
    	return zanrovi;
    }
 
-   public void setZanrovi(ArrayList<Zanr> zanrovi) {
+   public void setZanrovi(List<Zanr> zanrovi) {
    	this.zanrovi = zanrovi;
    }
-
-   /** @pdRoleInfo migr=no name=Utisak assc=association5 mult=0..* */
-      public Utisak[] utisci;
 
    public String getNaziv() {
    	return naziv;
@@ -87,16 +85,16 @@ public class MuzickoDjelo {
    	this.prosecnaOcenaUrednika = prosecnaOcenaUrednika;
    }
 
-   public Utisak[] getUtisci() {
+   public List<Utisak> getUtisci() {
    	return utisci;
    }
 
-   public void setUtisci(Utisak[] utisci) {
+   public void setUtisci(List<Utisak> utisci) {
    	this.utisci = utisci;
    }
 
    public MuzickoDjelo(String naziv, String opis, Date datumIzdavanja, boolean status, float prosecnaOcenaKorisnika,
-   		float prosecnaOcenaUrednika, Utisak[] utisci) {
+   		float prosecnaOcenaUrednika, List<Utisak> utisci) {
    	super();
    	this.naziv = naziv;
    	this.opis = opis;

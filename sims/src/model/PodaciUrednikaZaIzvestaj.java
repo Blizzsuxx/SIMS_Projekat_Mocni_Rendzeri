@@ -6,13 +6,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class POdaciUrednikaZaIzvestaj {
+public class PodaciUrednikaZaIzvestaj {
 	
-	public LocalDate danPocetka;
-	public LocalDate danKraja;
-	public String Ime;
-	public int brojRecenzija, brojZadatihRecenzija, brojZaIzmenu;
-	public LocalDate getDanPocetka() {
+	private LocalDate danPocetka;
+	private LocalDate danKraja;
+	private String Ime;
+	private int brojRecenzija, brojZadatihRecenzija, brojZaIzmenu;
+	private LocalDate getDanPocetka() {
 		return danPocetka;
 	}
 	public void setDanPocetka(LocalDate danPocetka) {
@@ -48,7 +48,7 @@ public class POdaciUrednikaZaIzvestaj {
 	public void setBrojZaIzmenu(int brojZaIzmenu) {
 		this.brojZaIzmenu = brojZaIzmenu;
 	}
-	public POdaciUrednikaZaIzvestaj(LocalDate danPocetka, LocalDate danKraja, String ime, int brojRecenzija,
+	public PodaciUrednikaZaIzvestaj(LocalDate danPocetka, LocalDate danKraja, String ime, int brojRecenzija,
 			int brojZadatihRecenzija, int brojZaIzmenu) {
 		super();
 		this.danPocetka = danPocetka;
@@ -58,10 +58,10 @@ public class POdaciUrednikaZaIzvestaj {
 		this.brojZadatihRecenzija = brojZadatihRecenzija;
 		this.brojZaIzmenu = brojZaIzmenu;
 	}
-	public POdaciUrednikaZaIzvestaj() {
+	public PodaciUrednikaZaIzvestaj() {
 		super();
 	}
-	public POdaciUrednikaZaIzvestaj(LocalDate danPocetka, LocalDate danKraja, Urednik u) {
+	public PodaciUrednikaZaIzvestaj(LocalDate danPocetka, LocalDate danKraja, Urednik u) {
 		super();
 		this.danPocetka = danPocetka;
 		this.danKraja = danKraja;
@@ -85,7 +85,7 @@ public class POdaciUrednikaZaIzvestaj {
 		}
 		ArrayList<RecezijaZaIzmenu> rIz=(ArrayList<RecezijaZaIzmenu>)u.getRecezijaZaIzmenu();
 		for(int i=0; i<rIz.size(); i++) {
-			if(rIz.get(i).uradeno==false) {
+			if(rIz.get(i).isUradeno()==false) {
 				brojZaIzmenu++;
 			}
 		}

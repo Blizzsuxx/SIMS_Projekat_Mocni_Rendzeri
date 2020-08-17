@@ -4,8 +4,12 @@
  * Purpose: Defines the Class Sesija
  ***********************************************************************/
 package model;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import controler.CitacDatoteka;
 import controler.IzvestajSvihIzvodjacaMenadzer;
@@ -347,5 +351,58 @@ public Zanr pronadiZanr(int rInd) {
 public Collection<Urednik> getUrednici() {
 	// TODO Auto-generated method stub
 	return this.urednici;
+}
+
+public String[] izvadiImenaIzvodjaca() {
+	   String[] imena= new String[this.grupe.size()+this.umetnici.size()];
+	   int j=0;
+	   for(Grupa i:this.grupe) {
+		   imena[j]=i.getUmetnickoIme();
+		   j++;
+	   }
+	   for(Pojedinacanizvodjac p:this.umetnici) {
+		   imena[j]=p.getUmetnickoIme();
+		   j++;
+	   }
+	   return imena;
+	   
+	   
+}
+public String[] izvadiImenaDela(String i) {
+	for(Izvodjac iz:this.getGrupe()) {
+		if(iz.getUmetnickoIme().equals(i)) {return iz.getImenaDela();}
+	}
+	for(Izvodjac iz:this.getUmetnici()) {
+		if(iz.getUmetnickoIme().equals(i)) {return iz.getImenaDela();}
+	}
+	String[] s= {""};
+	return s;
+	
+}
+
+
+public Izvodjac getIzvodjac(String i) {
+	for(Izvodjac iz:this.getGrupe()) {
+		if(iz.getUmetnickoIme().equals(i)) {return iz;}
+	}
+	for(Izvodjac iz:this.getUmetnici()) {
+		if(iz.getUmetnickoIme().equals(i)) {return iz;}
+	}
+	return null;
+}
+
+
+public boolean napraviDelo(String datumIzdavanja, String naslov, String opis, Izvodjac izv, ArrayList<Zanr> zanrovi) {
+	try {
+	DateTimeFormatter form=DateTimeFormatter.ofPattern("dd.mm.yyyy.");
+	LocalDate datum=LocalDate.parse(datumIzdavanja, form);
+	Date dan=new Date(datum.getYear(), datum.getMonthValue(), datum.getDayOfMonth());
+	MuzickoDjelo md=new MuzickoDjelo(naslov, opis, dan, true, zanrovi);
+	izv.getMuzickaDela().add(md);
+	this.getDela().add(md);
+	return true;
+	}catch(DateTimeException e) {
+		return false;
+	}
 }
 }

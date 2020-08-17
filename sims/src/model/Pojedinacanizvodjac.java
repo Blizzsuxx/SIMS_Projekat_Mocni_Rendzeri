@@ -70,17 +70,5 @@ public class Pojedinacanizvodjac extends Izvodjac {
 		super(umetnickoIme, status, prati);
 	}
 
-	@Override
-	protected String[] getImenaDela() {
-		
-		if(this.getMuzickaDela()==null) {String[] imena= {""};return imena;}
-		String[] imena=new String[this.getMuzickaDela().size()];
-		if(this.getMuzickaDela().size()==0) {String[] imenaa= {""};return imenaa;}
-		int j=0;
-		for(MuzickoDjelo m:this.getMuzickaDela()) {
-			imena[j]=m.getNaziv();
-			j++;
-		}
-		return imena;
-	}
+
 }

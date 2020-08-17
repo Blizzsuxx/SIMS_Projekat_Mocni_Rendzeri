@@ -63,14 +63,5 @@ public abstract class Izvodjac {
    public Izvodjac() {
    	super();
    }
-   protected abstract String[] getImenaDela();
-
-   public MuzickoDjelo pronadiDelo(String br1) {
-   	if(this.muzickaDela==null) {return null;}
-   	for(MuzickoDjelo md:this.muzickaDela) {
-   		if(md.getNaziv().equals(br1)) {return md;}
-   	}
-   	return null;
-   }
 
 }

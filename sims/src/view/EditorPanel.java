@@ -49,10 +49,20 @@ public class EditorPanel extends JPanel {
 	public void dodajRed(Par<String, Boolean> par) {
 		JLabel nazivAtributa = new JLabel(par.getElement0());
 		JTextField editorAtributa = new JTextField(25);
+		editorAtributa.setName(par.getElement0());
 		add(nazivAtributa);
 		add(editorAtributa, "wrap");
 		editorAtributa.setEditable(par.getElement1());
 		redovi.add(editorAtributa);
+	}
+	
+	public void setEditable(String ime, boolean b) {
+		for(JTextField red : redovi) {
+			if(red.getName().equals(ime)) {
+				red.setEditable(b);
+				return;
+			}
+		}
 	}
 
 	public List<JTextField> getTekstFields() {

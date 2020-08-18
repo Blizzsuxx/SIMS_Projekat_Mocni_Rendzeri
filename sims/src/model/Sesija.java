@@ -4,6 +4,8 @@
  * Purpose: Defines the Class Sesija
  ***********************************************************************/
 package model;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -11,6 +13,8 @@ import controler.CitacDatoteka;
 import controler.IzvestajSvihIzvodjacaMenadzer;
 import controler.IzvestajSvihZanrovaMenadzer;
 import controler.KorisniciMenadzer;
+import controler.LoginMenadzer;
+import view.KorisnikAplikacijeHomepage;
 
 /** @pdOid a6536d8d-e436-4d30-9c5d-e31219285ea3 */
 public class Sesija {
@@ -31,7 +35,7 @@ public class Sesija {
    private ArrayList<Zanr> sviZanrovi;//ali ovo mora biti inic !!! pre ovog gore
    private IzvestajSvihZanrova jedanZanr;
    private IzvestajSvihIzvodjacaMenadzer menIzvodjaca;//ovo ne treba biti inic, nego tek kad se pokrene izv
-   
+   private LoginMenadzer loginMenadzer;
    private Korisnik trenutniKorisnik;
    
    private static Sesija trenutnaSesija;
@@ -236,18 +240,19 @@ public class Sesija {
    }
 
 
-public static Sesija namestiSesiju(Korisnik korisnik, CitacDatoteka datoteke) {
+public static Sesija namestiSesiju(Korisnik korisnik, CitacDatoteka datoteke, LoginMenadzer menadzer) {
 	// TODO Auto-generated method stub
 	if(trenutnaSesija != null) {
+		trenutnaSesija.trenutniKorisnik = korisnik;
 		return trenutnaSesija;
 	} else {
-		trenutnaSesija = new Sesija(korisnik, datoteke.getKorisnici(), datoteke.getMuzickaDela(), datoteke.getGrupe(), datoteke.getIzvodjaci(), datoteke.getRecenzije());
+		trenutnaSesija = new Sesija(korisnik, datoteke.getKorisnici(), datoteke.getMuzickaDela(), datoteke.getGrupe(), datoteke.getIzvodjaci(), datoteke.getRecenzije(), menadzer);
 		return trenutnaSesija;
 	}
 }
 
 private Sesija(Korisnik trenutniKorisnik, KorisniciMenadzer korisnici, Collection<MuzickoDjelo> dela, Collection<Grupa> grupe,
-		Collection<Pojedinacanizvodjac> umetnici, Collection<Recenzija> recenzije) {
+		Collection<Pojedinacanizvodjac> umetnici, Collection<Recenzija> recenzije, LoginMenadzer loginMenadzer) {
 	super();
 	this.korisnici = korisnici;
 	this.dela = dela;
@@ -255,12 +260,24 @@ private Sesija(Korisnik trenutniKorisnik, KorisniciMenadzer korisnici, Collectio
 	this.umetnici = umetnici;
 	this.recenzije = recenzije;
 	this.trenutniKorisnik = trenutniKorisnik;
+	this.loginMenadzer = loginMenadzer;
 }
 
 
-public boolean izvrsi() {
+public void izvrsi() {
 	// TODO Auto-generated method stub
-	return false;
+	
+	
+	KorisnikAplikacijeHomepage homepage = new KorisnikAplikacijeHomepage(this);
+	homepage.setVisible(true);
+	homepage.addWindowListener(new WindowAdapter() {
+		@Override
+		public void windowClosed(WindowEvent e) {
+			// TODO Auto-generated method stub
+			loginMenadzer.uloguj();
+		}
+	});
+	
 }
 
 

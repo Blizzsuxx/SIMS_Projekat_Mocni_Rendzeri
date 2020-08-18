@@ -58,6 +58,10 @@ public class DijalogKorisnickihInformacija extends MojDialog {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void setFieldEditable(String fieldName, boolean editable) {
+		this.panel.setEditable(fieldName, editable);
+	}
 
 
 	public DijalogKorisnickihInformacija(JFrame parent, String ime, int dimension1, int dimension2, Korisnik korisnik) {

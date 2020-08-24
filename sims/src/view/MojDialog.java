@@ -6,14 +6,15 @@ import java.awt.Toolkit;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
-public class MojDialog extends JDialog {
+public abstract class MojDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
 
-	public MojDialog(JFrame parent, String ime, int dimension1, int dimension2) {
-		super(parent, ime, true);
+	public MojDialog(String ime, int dimension1, int dimension2) {
+		this.setTitle(ime);
 		this.setSize(dimension1, dimension2);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setResizable(false);
+		this.setModal(true);
 		
 		// Za centriranje dijaloga
 		Toolkit toolkit = Toolkit.getDefaultToolkit();

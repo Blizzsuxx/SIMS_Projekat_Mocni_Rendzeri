@@ -4,8 +4,7 @@
  * Purpose: Defines the Class Izvodjac
  ***********************************************************************/
 package model;
-
-import java.util.ArrayList;
+import java.util.*;
 
 /** @pdOid 20a31e0c-cbdd-4a1e-956e-0c8ed03fce3d */
 public abstract class Izvodjac {
@@ -18,50 +17,76 @@ public abstract class Izvodjac {
    public KorisnikAplikacije[] prati;
    
    public ArrayList<MuzickoDjelo> muzickaDela;
+   public ArrayList<Album> izdatiAlbumi;
    
    
 
-   public ArrayList<MuzickoDjelo> getMuzickaDela() {
-   	return muzickaDela;
-   }
+public ArrayList<Album> getIzdatiAlbumi() {
+	return izdatiAlbumi;
+}
 
-   public void setMuzickaDela(ArrayList<MuzickoDjelo> muzickaDela) {
-   	this.muzickaDela = muzickaDela;
-   }
+public void setIzdatiAlbumi(ArrayList<Album> izdatiAlbumi) {
+	this.izdatiAlbumi = izdatiAlbumi;
+}
 
-   public String getUmetnickoIme() {
-   	return umetnickoIme;
-   }
+public ArrayList<MuzickoDjelo> getMuzickaDela() {
+	return muzickaDela;
+}
 
-   public void setUmetnickoIme(String umetnickoIme) {
-   	this.umetnickoIme = umetnickoIme;
-   }
+public void setMuzickaDela(ArrayList<MuzickoDjelo> muzickaDela) {
+	this.muzickaDela = muzickaDela;
+}
 
-   public boolean isStatus() {
-   	return status;
-   }
+public String getUmetnickoIme() {
+	return umetnickoIme;
+}
 
-   public void setStatus(boolean status) {
-   	this.status = status;
-   }
+public void setUmetnickoIme(String umetnickoIme) {
+	this.umetnickoIme = umetnickoIme;
+}
 
-   public KorisnikAplikacije[] getPrati() {
-   	return prati;
-   }
+public boolean isStatus() {
+	return status;
+}
 
-   public void setPrati(KorisnikAplikacije[] prati) {
-   	this.prati = prati;
-   }
+public void setStatus(boolean status) {
+	this.status = status;
+}
 
-   public Izvodjac(String umetnickoIme, boolean status, KorisnikAplikacije[] prati) {
-   	super();
-   	this.umetnickoIme = umetnickoIme;
-   	this.status = status;
-   	this.prati = prati;
-   }
+public KorisnikAplikacije[] getPrati() {
+	return prati;
+}
 
-   public Izvodjac() {
-   	super();
-   }
+public void setPrati(KorisnikAplikacije[] prati) {
+	this.prati = prati;
+}
+
+public Izvodjac(String umetnickoIme, boolean status, KorisnikAplikacije[] prati) {
+	super();
+	this.umetnickoIme = umetnickoIme;
+	this.status = status;
+	this.prati = prati;
+}
+
+public Izvodjac() {
+	super();
+}
+
+public Izvodjac(String umetnickoIme2, boolean status2) {
+	this.umetnickoIme = umetnickoIme2;
+	this.status = status2;
+}
+
+protected abstract String[] getImenaDela();
+
+public MuzickoDjelo pronadiDelo(String br1) {
+	if(this.muzickaDela==null) {return null;}
+	for(MuzickoDjelo md:this.muzickaDela) {
+		if(md.getNaziv().equals(br1)) {return md;}
+	}
+	return null;
+}
+
+public abstract String toFileString();
 
 }

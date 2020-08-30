@@ -4,101 +4,43 @@
  * Purpose: Defines the Class Sesija
  ***********************************************************************/
 package model;
-import java.text.DateFormat;
-import java.time.DateTimeException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.Collection;
 
-import javax.swing.ComboBoxModel;
-import javax.swing.JTextField;
-
+import controler.CitacDatoteka;
 import controler.IzvestajSvihIzvodjacaMenadzer;
 import controler.IzvestajSvihZanrovaMenadzer;
 import controler.KorisniciMenadzer;
+import controler.LoginMenadzer;
+import view.KorisnikAplikacijeHomepage;
 
 /** @pdOid a6536d8d-e436-4d30-9c5d-e31219285ea3 */
 public class Sesija {
-   /** @pdRoleInfo migr=no name=KorisniciMenadzer assc=association29 mult=1 */
-   public KorisniciMenadzer korisnici;
+   /** @pdRoleInfo migr=no name=KorisniciMenadzer assc=association29 mult=1..1 */
+   private KorisniciMenadzer korisnici;
    /** @pdRoleInfo migr=no name=MuzickoDjelo assc=association38 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
-   public java.util.Collection<MuzickoDjelo> dela;
+   private java.util.Collection<MuzickoDjelo> dela;
    /** @pdRoleInfo migr=no name=Grupa assc=association42 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
-   public java.util.Collection<Grupa> grupe;
+   private java.util.Collection<Grupa> grupe;
    /** @pdRoleInfo migr=no name=Pojedinacanizvodjac assc=association43 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
-   public java.util.Collection<Pojedinacanizvodjac> umetnici;
+   private java.util.Collection<Pojedinacanizvodjac> umetnici;
    /** @pdRoleInfo migr=no name=Recenzija assc=association44 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
-   public java.util.Collection<Recenzija> recenzije;
-   public java.util.Collection<Urednik> urednici;
+   private java.util.Collection<Recenzija> recenzije;
    
-   public IzvestajSvihZanrovaMenadzer izvestajSvihZanrovaa;//ovo ne treba da bude inicijalizovano, inic se u izvestajima kod admina
-   public ArrayList<Zanr> sviZanrovi;//ali ovo mora biti inic !!! pre ovog gore
-   public IzvestajSvihZanrova jedanZanr;
-   public IzvestajSvihIzvodjacaMenadzer menIzvodjaca;//ovo ne treba biti inic, nego tek kad se pokrene izv
+   private java.util.List<Urednik> urednici;
    
+   private IzvestajSvihZanrovaMenadzer izvestajSvihZanrova;//ovo ne treba da bude inicijalizovano, inic se u izvestajima kod admina
+   private ArrayList<Zanr> sviZanrovi;//ali ovo mora biti inic !!! pre ovog gore
+   private IzvestajSvihZanrova jedanZanr;
+   private IzvestajSvihIzvodjacaMenadzer menIzvodjaca;//ovo ne treba biti inic, nego tek kad se pokrene izv
+   private LoginMenadzer loginMenadzer;
+   private Korisnik trenutniKorisnik;
    
+   private static Sesija trenutnaSesija;
    
-public IzvestajSvihZanrova getJedanZanr() {
-	return jedanZanr;
-}
-
-
-public void setJedanZanr(IzvestajSvihZanrova jedanZanr) {
-	this.jedanZanr = jedanZanr;
-}
-
-
-public IzvestajSvihIzvodjacaMenadzer getMenIzvodjaca() {
-	return menIzvodjaca;
-}
-
-
-public void setMenIzvodjaca(IzvestajSvihIzvodjacaMenadzer menIzvodjaca) {
-	this.menIzvodjaca = menIzvodjaca;
-}
-
-
-public IzvestajSvihZanrovaMenadzer getIzvestajSvihZanrovaa() {
-	return izvestajSvihZanrovaa;
-}
-
-
-public void setIzvestajSvihZanrovaa(IzvestajSvihZanrovaMenadzer izvestajSvihZanrovaa) {
-	this.izvestajSvihZanrovaa = izvestajSvihZanrovaa;
-}
-
-
-public ArrayList<Zanr> getSviZanrovi() {
-	return sviZanrovi;
-}
-
-
-public void setSviZanrovi(ArrayList<Zanr> sviZanrovi) {
-	this.sviZanrovi = sviZanrovi;
-}
-
-
-public KorisniciMenadzer getKorisnici() {
-	return korisnici;
-}
-
-
-public void setKorisnici(KorisniciMenadzer korisnici) {
-	this.korisnici = korisnici;
-}
-
-
-public java.util.Collection<Urednik> getUrednici() {
-	return urednici;
-}
-
-
-public void setUrednici(java.util.Collection<Urednik> urednici) {
-	this.urednici = urednici;
-}
-
-
-/** @pdOid 2750728b-3647-44d9-803c-9a8cbcd00047 */
+   /** @pdOid 2750728b-3647-44d9-803c-9a8cbcd00047 */
    public void odjava() {
       // TODO: implement
    }
@@ -298,17 +240,63 @@ public void setUrednici(java.util.Collection<Urednik> urednici) {
    }
 
 
-   public IzvestajSvihZanrovaMenadzer namestiIzvestaj() {
-	   this.izvestajSvihZanrovaa=new IzvestajSvihZanrovaMenadzer(dela, recenzije, sviZanrovi);
+public static Sesija namestiSesiju(Korisnik korisnik, CitacDatoteka datoteke, LoginMenadzer menadzer) {
+	// TODO Auto-generated method stub
+	if(trenutnaSesija != null) {
+		trenutnaSesija.trenutniKorisnik = korisnik;
+		return trenutnaSesija;
+	} else {
+		trenutnaSesija = new Sesija(korisnik, datoteke.getKorisnici(), datoteke.getMuzickaDela(), datoteke.getGrupe(), datoteke.getIzvodjaci(), datoteke.getRecenzije(), menadzer);
+		return trenutnaSesija;
+	}
+}
+
+private Sesija(Korisnik trenutniKorisnik, KorisniciMenadzer korisnici, Collection<MuzickoDjelo> dela, Collection<Grupa> grupe,
+		Collection<Pojedinacanizvodjac> umetnici, Collection<Recenzija> recenzije, LoginMenadzer loginMenadzer) {
+	super();
+	this.korisnici = korisnici;
+	this.dela = dela;
+	this.grupe = grupe;
+	this.umetnici = umetnici;
+	this.recenzije = recenzije;
+	this.trenutniKorisnik = trenutniKorisnik;
+	this.loginMenadzer = loginMenadzer;
+}
+
+
+public void izvrsi() {
+	// TODO Auto-generated method stub
+	
+	
+	KorisnikAplikacijeHomepage homepage = new KorisnikAplikacijeHomepage(this);
+	homepage.setVisible(true);
+	homepage.addWindowListener(new WindowAdapter() {
+		@Override
+		public void windowClosed(WindowEvent e) {
+			// TODO Auto-generated method stub
+			loginMenadzer.uloguj();
+		}
+	});
+	
+}
+
+
+public IzvestajSvihZanrovaMenadzer namestiIzvestaj() {
+	   this.izvestajSvihZanrova=new IzvestajSvihZanrovaMenadzer(dela, recenzije, sviZanrovi);
 	   
-	return izvestajSvihZanrovaa;
+	return izvestajSvihZanrova;
 	   
-   }
-   public IzvestajSvihZanrova pronadjiPodatkejednogZanra(String naziv) {
+}
+public IzvestajSvihZanrovaMenadzer getIzvestajSvihZanrova() {
+	return izvestajSvihZanrova;
+}
+
+
+public IzvestajSvihZanrova pronadjiPodatkejednogZanra(String naziv) {
 	   jedanZanr=new IzvestajSvihZanrova(naziv);
 	   pronadiDela(naziv);
 	   return jedanZanr;
-   }
+}
 
 
 private void pronadiDela(String naziv) {
@@ -329,7 +317,7 @@ private void pronadiDela(String naziv) {
 	
 }
 }
-   public IzvestajSvihIzvodjacaMenadzer namestiIzvestajIzvodjaca() {
+public IzvestajSvihIzvodjacaMenadzer namestiIzvestajIzvodjaca() {
 	   this.menIzvodjaca=new IzvestajSvihIzvodjacaMenadzer();
 	   ArrayList<Izvodjac> sviizv=new ArrayList<Izvodjac>();
 	   for(Grupa g:this.grupe) { sviizv.add(g);}
@@ -337,8 +325,8 @@ private void pronadiDela(String naziv) {
 	   this.menIzvodjaca.namestiIzvestaj(sviizv);
 	   
 	   return this.menIzvodjaca;
-   }
-   public IzvestajJednogIzvodjaca namestiJedanizvestaj(Izvodjac i) {
+}
+public IzvestajJednogIzvodjaca namestiJedanizvestaj(Izvodjac i) {
 	   IzvestajJednogIzvodjaca jedan=new IzvestajJednogIzvodjaca(i.getUmetnickoIme());
 	   jedan.setIzvodjacReferenca(i);
 		jedan.setBrojDela(i.getMuzickaDela().size());
@@ -359,59 +347,22 @@ private void pronadiDela(String naziv) {
 		jedan.setOcenaUrednika(ocenaUr/i.muzickaDela.size());
 	   return jedan;
 	   
-   }
-   public String[] izvadiImenaIzvodjaca() {
-	   String[] imena= new String[this.grupe.size()+this.umetnici.size()];
-	   int j=0;
-	   for(Grupa i:this.grupe) {
-		   imena[j]=i.getUmetnickoIme();
-		   j++;
-	   }
-	   for(Pojedinacanizvodjac p:this.umetnici) {
-		   imena[j]=p.getUmetnickoIme();
-		   j++;
-	   }
-	   return imena;
-	   
-	   
-   }
-public String[] izvadiImenaDela(String i) {
-	for(Izvodjac iz:this.getGrupe()) {
-		if(iz.getUmetnickoIme().equals(i)) {return iz.getImenaDela();}
-	}
-	for(Izvodjac iz:this.getUmetnici()) {
-		if(iz.getUmetnickoIme().equals(i)) {return iz.getImenaDela();}
-	}
-	String[] s= {""};
-	return s;
-	
+}
+public Urednik pronadiUrednika(int rInd){
+	if(rInd < 0 || rInd > urednici.size() ) {
+		return null;
+	} else {return urednici.get(rInd);}
+}
+
+public Zanr pronadiZanr(int rInd) {
+	if(rInd<0 || rInd> sviZanrovi.size() ) {
+		return null;
+	}else {return sviZanrovi.get(rInd);}
 }
 
 
-public Izvodjac getIzvodjac(String i) {
-	for(Izvodjac iz:this.getGrupe()) {
-		if(iz.getUmetnickoIme().equals(i)) {return iz;}
-	}
-	for(Izvodjac iz:this.getUmetnici()) {
-		if(iz.getUmetnickoIme().equals(i)) {return iz;}
-	}
-	return null;
+public Collection<Urednik> getUrednici() {
+	// TODO Auto-generated method stub
+	return this.urednici;
 }
-
-
-public boolean napraviDelo(String datumIzdavanja, String naslov, String opis, Izvodjac izv, ArrayList<Zanr> zanrovi) {
-	try {
-	DateTimeFormatter form=DateTimeFormatter.ofPattern("dd.mm.yyyy.");
-	LocalDate datum=LocalDate.parse(datumIzdavanja, form);
-	Date dan=new Date(datum.getYear(), datum.getMonthValue(), datum.getDayOfMonth());
-	MuzickoDjelo md=new MuzickoDjelo(naslov, opis, dan, true, zanrovi);
-	izv.getMuzickaDela().add(md);
-	this.getDela().add(md);
-	return true;
-	}catch(DateTimeException e) {
-		return false;
-	}
-}
-
-
 }

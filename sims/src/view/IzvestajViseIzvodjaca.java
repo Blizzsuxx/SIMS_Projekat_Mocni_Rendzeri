@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -41,8 +42,8 @@ import view.DataLabelFormatter;
 public class IzvestajViseIzvodjaca extends JFrame{
 	private Sesija sesija;
 	private IzvestajSvihIzvodjacaMenadzer men;
-	private JButton btnBack, btnOk;
-	private JTable  table1;
+	private JButton btnBack, btnOk, btnPregled;
+	private JTable  table;
 	private JComboBox<Zanr> cbZanr;
 	private JDatePickerImpl DatePicker1;
 	private JDatePickerImpl DatePicker2;
@@ -83,16 +84,16 @@ public class IzvestajViseIzvodjaca extends JFrame{
 		add(this.DatePicker1);
 		add(this.DatePicker2);
 		
-		table1 = new JTable(new SinglIzvodjaciModel(men.getIzvodjaci()));
-		table1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table1.getTableHeader().setReorderingAllowed(false);
-		JScrollPane sp1 = new JScrollPane(table1);
+		table = new JTable(new SinglIzvodjaciModel(men.getIzvodjaci()));
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.getTableHeader().setReorderingAllowed(false);
+		JScrollPane sp1 = new JScrollPane(table);
 		//this.
 		add(sp1);
 		
 		TableRowSorter<TableModel> tableSorter1=new TableRowSorter<TableModel>();
-		tableSorter1.setModel(table1.getModel());
-		table1.setRowSorter(tableSorter1);
+		tableSorter1.setModel(table.getModel());
+		table.setRowSorter(tableSorter1);
 		
 		JPanel pSerch1=new JPanel(new FlowLayout(FlowLayout.LEFT));
         pSerch1.add(new JLabel("Pretraga:"));
@@ -132,6 +133,7 @@ public class IzvestajViseIzvodjaca extends JFrame{
 		add(btnBack);
 		btnOk.setName("Filtriraj");
 		add(btnOk);//dugme za filtriranje
+		add(btnPregled);
 	}
 	private void initActions() {
 		btnBack.addActionListener(new ActionListener() {
@@ -144,6 +146,23 @@ public class IzvestajViseIzvodjaca extends JFrame{
 			}
 
 			
+		});
+		btnPregled.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int rInd = table.getSelectedRow();
+				Izvodjac izv=men.pronadjiRed(rInd);
+				if(izv==null) {JOptionPane.showMessageDialog(null, "Morate selektovati bar jedan red", "Info", JOptionPane.INFORMATION_MESSAGE);
+				}else {
+					IzvestajIzvodjaca nov=new IzvestajIzvodjaca(sesija, izv);
+					nov.setVisible(true);
+					
+				}
+				
+				
+				
+			}
 		});
 	
 		btnOk.addActionListener(new ActionListener() {
@@ -177,7 +196,7 @@ public class IzvestajViseIzvodjaca extends JFrame{
 	public void refreshData() {
 		
 		 
-		SinglIzvodjaciModel si=(SinglIzvodjaciModel) table1.getModel();
+		SinglIzvodjaciModel si=(SinglIzvodjaciModel) table.getModel();
 		si.fireTableDataChanged();
 			
 	}

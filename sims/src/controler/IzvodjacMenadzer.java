@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -71,64 +73,47 @@ public class IzvodjacMenadzer {
 
 
 
-	public void ucitajIzvodjace(Collection<Grupa> grupe, Collection<Pojedinacanizvodjac> izvodjaciSolo) {
+	public void ucitajIzvodjace(Collection<Grupa> grupe, Collection<Pojedinacanizvodjac> izvodjaciSolo) throws ParseException {
 		//potrebno je i pratioce???
-		String sep=System.getProperty("file.separator");
-		String putanja ="."+sep+"fajlovi"+sep+"izvodjaci.txt";
+		String sep = System.getProperty("file.separator");
+		String putanja ="." + sep + "fajlovi" + sep + "izvodjaci.txt";
 			svi = new ArrayList<>();
 			try {
 				BufferedReader br = new BufferedReader(new FileReader(putanja));
 				String linija = "";
-				while ( (linija = br.readLine()) != null)
+				while ((linija = br.readLine()) != null)
 				{
-					
 					if (linija.trim().equals("")) {
-					continue;}
-					DateTimeFormatter df=DateTimeFormatter.ofPattern("dd.MM.yyyy.");
-					
+						continue;
+					}
 					String[] linije = linija.trim().split(";");
-					if(linije.length==8){
-						//poj
-						Date smrt=null;
-						LocalDate dan=LocalDate.parse(linije[4].trim(), df);
-						Date rodjenje=new Date(dan.getYear(), dan.getMonthValue(), dan.getDayOfMonth());
-						if(linije[5].trim().equals("/")) {
-							
-						}else {
-						LocalDate dan2=LocalDate.parse(linije[5].trim(),df);
-						smrt=new Date(dan2.getYear(), dan2.getMonthValue(), dan2.getDayOfMonth());
+					if(linije.length == 8){
+						Date smrt = null;
+						Date rodjenje= new SimpleDateFormat("dd.MM.yyyy").parse(linije[4].trim());
+						if(!linije[5].trim().equals("/")) {
+							smrt = new SimpleDateFormat("dd.MM.yyyy").parse(linije[5].trim());
 						}
-						Pol p=Pol.zenski;
-						if(linije[7].trim().equals("musko")) {p=Pol.muski;}
-						Pojedinacanizvodjac a = new Pojedinacanizvodjac(linije[0].trim(), true, linije[2].trim(), linije[3].trim(), rodjenje, smrt,linije[6].trim(), p );
-							if (linije[1].trim().equals("true")) {
-							a.setStatus(true);
-							}else {
-								a.setStatus(false);
-							}
-							svi.add( a);
-							this.getSolo().add(a);
-					}else if(linije.length==5) {
-						Date smrt=null;
-						LocalDate dan=LocalDate.parse(linije[3].trim(), df);
-						Date rodjenje=new Date(dan.getYear(), dan.getMonthValue(), dan.getDayOfMonth());
-						if(linije[4].trim().equals("/")) {
-							
-						}else {
-						LocalDate dan2=LocalDate.parse(linije[5].trim(),df);
-						smrt=new Date(dan2.getYear(), dan2.getMonthValue(), dan2.getDayOfMonth());
+						Pol p = Pol.zenski;
+						if(linije[7].trim().equals(Pol.muski.name())) {p = Pol.muski;}
+						boolean status = linije[1].trim().equals("true");
+						Pojedinacanizvodjac a = new Pojedinacanizvodjac(linije[0].trim(), status, linije[2].trim(), linije[3].trim(), rodjenje, smrt,linije[6].trim(), p );
+						svi.add(a);
+						this.getSolo().add(a);
+					}
+					else if(linije.length == 5) {
+						Date smrt = null;
+						Date rodjenje = new SimpleDateFormat("dd.MM.yyyy").parse(linije[3].trim());
+						if(!linije[4].trim().equals("/")) {
+							smrt = new SimpleDateFormat("dd.MM.yyyy").parse(linije[4].trim());
 						}
-						Integer br1=Integer.parseInt(linije[2].trim());
-						Grupa a = new Grupa(linije[0].trim(), true, br1, rodjenje, smrt );
-							if (linije[1].trim().equals("true")) {
-							a.setStatus(true);
-							}else {
-								a.setStatus(false);
-							}
-							svi.add( a);
-							this.getGrupe().add(a);
+						Integer br1 = Integer.parseInt(linije[2].trim());
+						boolean status = linije[1].trim().equals("true");
+						Grupa a = new Grupa(linije[0].trim(), status, br1, rodjenje, smrt );
+						svi.add(a);
+						this.getGrupe().add(a);
 						
-					}else {
+					}
+					else {
 						System.out.println("Greska pri ucitavanju izvodjaca.");
 					}
 					
@@ -153,26 +138,47 @@ public class IzvodjacMenadzer {
 
 
 
-	public void sacuvaj() {
-		PrintWriter pw=null;
-		String sep=System.getProperty("file.separator");
-		String putanja ="."+sep+"fajlovi"+sep+"izvodjaci.txt";
+	public void sacuvaj(Izvodjac iz, boolean dodaj) throws ParseException {
+		ucitajIzvodjace(null, null);
+		PrintWriter pw = null;
+		String sep = System.getProperty("file.separator");
+		String putanja ="." + sep + "fajlovi" + sep + "izvodjaci.txt";
 		try {
+			pw = new PrintWriter(new FileWriter(putanja, false));
+			for(Izvodjac i : svi) {
+				if (dodaj || !iz.getUmetnickoIme().equals(i.getUmetnickoIme()))
+				{
+					if (i.getClass() == Pojedinacanizvodjac.class)
+						pw.println(Pojedinacanizvodjac.PojedinacniIzvodjac2String((Pojedinacanizvodjac)i));
+					else
+						pw.println(Grupa.Grupa2String((Grupa)i));
+				}
+			}
+			if (iz.getClass() == Pojedinacanizvodjac.class)
+				pw.println(Pojedinacanizvodjac.PojedinacniIzvodjac2String((Pojedinacanizvodjac)iz));
+			else
+				pw.println(Grupa.Grupa2String((Grupa)iz));
 			
-			pw=new PrintWriter(new FileWriter(putanja, false));
-			for(Izvodjac a:svi) {
-				pw.println(a.toFileString());
-				
-			}pw.close();
-			
-		}catch(IOException e) {
+			pw.close();	
+		}
+		catch(IOException e) {
 			e.printStackTrace();
-		}finally {
-			if(pw!=null) {
+		}
+		finally {
+			if(pw != null) {
 				pw.close();
 			}
 		}
-		
 	}
-
+	
+	public boolean proveriDuplikat(String umetnickoIme) throws ParseException
+	{
+		ucitajIzvodjace(null, null);
+		for (Izvodjac i : svi)
+		{
+			if (i.getUmetnickoIme().equals(umetnickoIme))
+				return false;
+		}
+		return true;
+	}
 }

@@ -6,13 +6,16 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import view.TableModelWrapper;
 import model.Korisnik;
 import model.Nalog;
 import model.Ocena;
@@ -114,6 +117,53 @@ public class NalogMenadzer {
 			}
 		}
 		
+	}
+	
+	public void sacuvajNaloge(ArrayList<Nalog> nalozi) {
+		PrintWriter pw = null;
+		String sep = System.getProperty("file.separator");
+		String putanja = "."+ sep + "fajlovi" + sep + "nalozi.txt";
+		try {
+			pw = new PrintWriter(new FileWriter(putanja, false));
+			for(Nalog n : nalozi) {
+				pw.println(Nalog.Nalog2String(n));	
+			}
+			pw.close();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(pw != null) {
+				pw.close();
+			}
+		}
+	}
+	
+	public TableModelWrapper getTabelaNaloga()  throws Exception {
+		String[] columns = { "Korisnicko ime", "Datum kreiranja", "Status"};
+		Class<?>[] columnTypes = { String.class, Date.class, Boolean.class};
+		boolean[] editableColumns = { false, false, false};
+		int[] columnWidths = { 120, 100, 80};
+		ArrayList<Nalog> nalozi = getNalozi();
+		ArrayList<Object[]> data = new ArrayList<Object[]>();
+		for (Nalog n : nalozi)
+		{
+			data.add(new Object[] {n.getKorisnickoIme(), n.getDatumKreiranja(), n.isStatus()});
+		}
+		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
+	}
+	
+	public void setujStatus(String korisnickoIme, boolean status)
+	{
+		ArrayList<Nalog> nalozi = getNalozi();
+		for (Nalog n : nalozi) {
+			if (n.getKorisnickoIme().equals(korisnickoIme)) {
+				n.setStatus(status);
+				break;
+			}
+		}
+		sacuvajNaloge(nalozi);
 	}
 
 }

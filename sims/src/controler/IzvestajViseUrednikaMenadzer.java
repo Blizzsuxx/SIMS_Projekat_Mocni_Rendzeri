@@ -3,21 +3,21 @@ package controler;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import model.POdaciUrednikaZaIzvestaj;
+import model.PodaciUrednikaZaIzvestaj;
 import model.Urednik;
 
 public class IzvestajViseUrednikaMenadzer {
-	private ArrayList<POdaciUrednikaZaIzvestaj> podaci;
+	private ArrayList<PodaciUrednikaZaIzvestaj> podaci;
 
-	public ArrayList<POdaciUrednikaZaIzvestaj> getPodaci() {
+	public ArrayList<PodaciUrednikaZaIzvestaj> getPodaci() {
 		return podaci;
 	}
 
-	public void setPodaci(ArrayList<POdaciUrednikaZaIzvestaj> podaci) {
+	public void setPodaci(ArrayList<PodaciUrednikaZaIzvestaj> podaci) {
 		this.podaci = podaci;
 	}
 
-	public IzvestajViseUrednikaMenadzer(ArrayList<POdaciUrednikaZaIzvestaj> podaci) {
+	public IzvestajViseUrednikaMenadzer(ArrayList<PodaciUrednikaZaIzvestaj> podaci) {
 		super();
 		this.podaci = podaci;
 	}
@@ -27,9 +27,9 @@ public class IzvestajViseUrednikaMenadzer {
 	}
 	
 	public IzvestajViseUrednikaMenadzer(LocalDate danPocetka, LocalDate danKraja, ArrayList<Urednik> sviUrednici) {
-		podaci=new ArrayList<POdaciUrednikaZaIzvestaj>();
+		podaci=new ArrayList<PodaciUrednikaZaIzvestaj>();
 		for(Urednik u: sviUrednici) {
-			POdaciUrednikaZaIzvestaj i=new POdaciUrednikaZaIzvestaj(danPocetka, danKraja, u);
+			PodaciUrednikaZaIzvestaj i=new PodaciUrednikaZaIzvestaj(danPocetka, danKraja, u);
 			podaci.add(i);
 		}
 		

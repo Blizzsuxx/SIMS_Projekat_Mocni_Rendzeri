@@ -1,12 +1,10 @@
-package model;
-
 /***********************************************************************
  * Module:  Clan.java
  * Author:  Dragan
  * Purpose: Defines the Class Clan
  ***********************************************************************/
-
-import java.util.*;
+package model;
+import java.util.Date;
 
 /** @pdOid 2bdbbe03-46e7-43b8-86a3-41039d253a69 */
 public class Clan {
@@ -14,53 +12,5 @@ public class Clan {
    private Date datumPrikljucivanja;
    /** @pdOid 1e9b541c-bb08-41f3-8538-31041cc92a96 */
    private Date datumNapustanja;
-   private Pojedinacanizvodjac izvodjac;
-   private Grupa grupa;
-   
-public Grupa getGrupa() {
-	return grupa;
-}
-public void setGrupa(Grupa grupa) {
-	this.grupa = grupa;
-}
-public Date getDatumPrikljucivanja() {
-	return datumPrikljucivanja;
-}
-public void setDatumPrikljucivanja(Date datumPrikljucivanja) {
-	this.datumPrikljucivanja = datumPrikljucivanja;
-}
-public Date getDatumNapustanja() {
-	return datumNapustanja;
-}
-public void setDatumNapustanja(Date datumNapustanja) {
-	this.datumNapustanja = datumNapustanja;
-}
-public Pojedinacanizvodjac getIzvodjac() {
-	return izvodjac;
-}
-public void setIzvodjac(Pojedinacanizvodjac izvodjac) {
-	this.izvodjac = izvodjac;
-}
-public Clan(Date datumPrikljucivanja, Date datumNapustanja, Pojedinacanizvodjac izvodjac) {
-	super();
-	this.datumPrikljucivanja = datumPrikljucivanja;
-	this.datumNapustanja = datumNapustanja;
-	this.izvodjac = izvodjac;
-}
-public String toFileString() {
-	String ad="";
-	ad+=this.getDatumPrikljucivanja().getDay()+"."+this.getDatumPrikljucivanja().getMonth()+"."+this.getDatumPrikljucivanja().getYear()+".,";//
-	if(this.getDatumNapustanja()==null) {
-		ad+="/,";
-	}else {
-		ad+=this.getDatumNapustanja().getDay()+"."+this.getDatumNapustanja().getMonth()+"."+this.getDatumNapustanja().getYear()+".,";//	
-	}
-	ad+=this.getIzvodjac().getUmetnickoIme()+",";
-	ad+=this.getGrupa().getUmetnickoIme();
-	return ad;
-}
-
-   
-   
 
 }

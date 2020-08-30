@@ -71,7 +71,6 @@ public class Album {
 		this.danRegistracije = danRegistracije;
 		this.odobreno = odobreno;
 		this.izvodjac=izv;
-		this.izbrisi=false;
 	}
 	public Album(String naziv, ArrayList<MuzickoDjelo> listaPesama, Urednik urednik, Izvodjac izv) {
 		super();
@@ -81,16 +80,6 @@ public class Album {
 		this.danRegistracije=new Date();
 		this.odobreno=false;
 		this.izvodjac=izv;
-		this.izbrisi=false;
-	}
-	public Album(Izvodjac iz, String ime) {
-		this.naslov=ime;
-		this.listaPesama = new ArrayList();
-		this.urednik = null;
-		this.danRegistracije=new Date();
-		this.odobreno=false;
-		this.izvodjac=iz;
-		this.izbrisi=false;
 	}
 
 	public String toFileString() {

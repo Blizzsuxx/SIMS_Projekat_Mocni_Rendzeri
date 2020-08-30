@@ -4,27 +4,39 @@
  * Purpose: Defines the Class KorisnikAplikacije
  ***********************************************************************/
 package model;
-
-import java.util.Date;
+import java.util.*;
 
 /** @pdOid d00188b7-a297-4fca-8ad3-4a5e996aa205 */
 public class KorisnikAplikacije extends FrontEndKorisnik {
-   public KorisnikAplikacije(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, String sifra,
-			String korisnickoIme, Date datum, boolean status) {
-		super(ime, prezime, eMail, pol, datumRodjenja, sifra, korisnickoIme, datum, status);
-		// TODO Auto-generated constructor stub
-	}
-
-public KorisnikAplikacije() {
-	// TODO Auto-generated constructor stub
-}
-
-/** @pdRoleInfo migr=no name=FrontEndKorisnik assc=pracenjeKorisnika coll=java.util.Collection impl=java.util.HashSet mult=0..* */
+   /** @pdRoleInfo migr=no name=FrontEndKorisnik assc=pracenjeKorisnika coll=java.util.Collection impl=java.util.HashSet mult=0..* */
    public java.util.Collection<FrontEndKorisnik> pratite;
    /** @pdRoleInfo migr=no name=Izvodjac assc=association16 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
    public java.util.Collection<Izvodjac> onajKogaPrati;
    
-   /** @pdOid 570b1cab-dcf3-4bfc-a491-be5540c78efd */
+
+
+
+public KorisnikAplikacije(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, boolean status,int sifra,
+		Nalog nalog, Collection<MuzickoDjelo> muzickoDjelo, Collection<Zanr> preferiraniZanrovi,
+		Collection<KorisnikAplikacije> pratilac, Collection<FrontEndKorisnik> pratite,
+		Collection<Izvodjac> onajKogaPrati) {
+	   super(ime, prezime, eMail, pol, datumRodjenja, status, nalog, muzickoDjelo, preferiraniZanrovi, sifra, pratilac);
+	   this.pratite = pratite;
+	   this.onajKogaPrati = onajKogaPrati;
+
+   }
+
+   
+   public KorisnikAplikacije(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, boolean status,
+		Nalog nalog, Collection<MuzickoDjelo> muzickoDjelo, Collection<Zanr> preferiraniZanrovi, int sifra,
+		Collection<KorisnikAplikacije> pratilac) {
+	   super(ime, prezime, eMail, pol, datumRodjenja, status, nalog, muzickoDjelo, preferiraniZanrovi, sifra, pratilac);
+	   this.pratite = new ArrayList<>();
+	   this.onajKogaPrati = new ArrayList<>();
+   }
+
+
+/** @pdOid 570b1cab-dcf3-4bfc-a491-be5540c78efd */
    public void komentarisi() {
       // TODO: implement
    }

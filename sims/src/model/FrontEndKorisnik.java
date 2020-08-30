@@ -4,27 +4,37 @@
  * Purpose: Defines the Class FrontEndKorisnik
  ***********************************************************************/
 package model;
-
-import java.util.Date;
+import java.util.*;
 
 /** @pdOid a9c9f365-ca2f-446b-9e3e-06fdc25de877 */
 public abstract class FrontEndKorisnik extends Korisnik {
-   public FrontEndKorisnik(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, String sifra,
-			String korisnickoIme, Date datum, boolean status) {
-		super(ime, prezime, eMail, pol, datumRodjenja, sifra, korisnickoIme, datum, status);
-		// TODO Auto-generated constructor stub
-	}
-   
-   public FrontEndKorisnik() {}
-
-/** @pdRoleInfo migr=no name=MuzickoDjelo assc=association32 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
-   private java.util.Collection<MuzickoDjelo> muzickoDjelo;
+   /** @pdRoleInfo migr=no name=MuzickoDjelo assc=association32 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
+   public java.util.Collection<MuzickoDjelo> muzickoDjelo;
    /** @pdRoleInfo migr=no name=Zanr assc=association36 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
-   private java.util.Collection<Zanr> preferiraniZanrovi;
+   public java.util.Collection<Zanr> preferiraniZanrovi;
    /** @pdRoleInfo migr=no name=KorisnikAplikacije assc=pracenjeKorisnika mult=0..* side=A */
-   private KorisnikAplikacije[] pratilac;
+   public Collection<KorisnikAplikacije> pratilac; 
    
-   /** @pdOid 2764179e-3960-4723-809e-5c4cf97d9e27 */
+   public FrontEndKorisnik(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, boolean status,
+		Nalog nalog, Collection<MuzickoDjelo> muzickoDjelo, Collection<Zanr> preferiraniZanrovi,int sifra,
+		Collection<KorisnikAplikacije> pratilac) {
+	   super(ime, prezime, eMail, pol, datumRodjenja, status, nalog, sifra);
+	   this.muzickoDjelo = muzickoDjelo;
+	   this.preferiraniZanrovi = preferiraniZanrovi;
+	   this.pratilac = pratilac;
+   }
+
+   
+   public FrontEndKorisnik(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, boolean status,int sifra,
+		Nalog nalog) {
+	   super(ime, prezime, eMail, pol, datumRodjenja, status, nalog, sifra);
+	   this.muzickoDjelo = new ArrayList<>();
+	   this.preferiraniZanrovi = new ArrayList<>();
+	   this.pratilac = new ArrayList<>();
+   }
+
+
+/** @pdOid 2764179e-3960-4723-809e-5c4cf97d9e27 */
    public void izbrisiNalog() {
       // TODO: implement
    }

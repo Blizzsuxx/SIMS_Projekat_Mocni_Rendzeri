@@ -14,10 +14,8 @@ import java.util.Date;
 
 import model.Izvodjac;
 import model.MuzickoDjelo;
-import model.Nalog;
 import model.Ocena;
 import model.Zanr;
-import view.TableModelWrapper;
 
 public class MuzickoDeloMenadzer {
 	private ArrayList<MuzickoDjelo> dela;
@@ -130,20 +128,6 @@ public class MuzickoDeloMenadzer {
 			}
 		}
 		
-	}
-	
-	public TableModelWrapper getTabelaMuzickihDela()  throws Exception {
-		String[] columns = { "Naziv", "Datum izdavanja", "Opis"};
-		Class<?>[] columnTypes = { String.class, Date.class, String.class};
-		boolean[] editableColumns = { false, false, false};
-		int[] columnWidths = { 120, 100, 80};
-		ArrayList<MuzickoDjelo> muzickaDela = getDela();
-		ArrayList<Object[]> data = new ArrayList<Object[]>();
-		for (MuzickoDjelo md : muzickaDela)
-		{
-			data.add(new Object[] {md.getNaziv(), md.getDatumIzdavanja(), md.getOpis()});
-		}
-		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
 	}
 
 }

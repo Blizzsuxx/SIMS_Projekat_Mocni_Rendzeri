@@ -84,26 +84,8 @@ public class RegistarcijaAlbuma extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String imeAlbuma=naslov.getText();
-				if(imeAlbuma==null) {
-					JOptionPane.showMessageDialog(RegistarcijaAlbuma.this, "Morate uneti naslov", "Info", JOptionPane.INFORMATION_MESSAGE);
-					
-				}
-				else if(imeAlbuma=="") {
-					JOptionPane.showMessageDialog(RegistarcijaAlbuma.this, "Morate uneti naslov", "Info", JOptionPane.INFORMATION_MESSAGE);
-					
-				}
-				else { //TODO: prosledi urednika nekako!!!!!!!!
-				Album album=new Album(trenutnoSelektovan,imeAlbuma );
-				for(int row=0;row<table.getRow();row++) {
-					if(table.getModel().getValueAt(row, 4)) {
-						//ako je selektovan, cekiran uzmi taj elem
-						MuzickoDjelo novoDelo=table.getDelo(row);
-						album.getListaPesama().add(novoDelo);
-					}
-				}
-				trenutnioSelektovan.getNeizdatiAlbumi().add(album);
-			}}
+				//TODO:
+			}
 		});
 		listaIzvodjaca.addActionListener(new ActionListener() {
 			

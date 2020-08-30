@@ -3,27 +3,20 @@ package view;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import java.awt.Color;
-import java.util.Date;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.ListSelectionModel;
 import org.jdatepicker.impl.*;
-import org.jdatepicker.util.*;
 
 import controler.IzvodjacMenadzer;
-import controler.MuzickoDeloMenadzer;
 import model.Grupa;
 import model.Izvodjac;
 import model.Pojedinacanizvodjac;
 import model.Pol;
-
-import org.jdatepicker.*;
 
 import javax.swing.JRadioButton;
 import javax.swing.JPanel;
@@ -118,7 +111,7 @@ public class RegistracijaIzvodjaca extends JFrame {
 		p.put("text.month", "Mesec");
 		p.put("text.year", "Godina");
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
-		JDatePickerImpl dtDob = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		JDatePickerImpl dtDob = new JDatePickerImpl(datePanel, new DataLabelFormatter());
 		sl_dtDob.putConstraint(SpringLayout.NORTH, dtDob.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDob);
 		sl_dtDob.putConstraint(SpringLayout.WEST, dtDob.getJFormattedTextField(), 33, SpringLayout.WEST, dtDob);
 		sl_dtDob.putConstraint(SpringLayout.EAST, dtDob.getJFormattedTextField(), 211, SpringLayout.WEST, dtDob);
@@ -131,7 +124,7 @@ public class RegistracijaIzvodjaca extends JFrame {
 		pnlPojedinacniIzvodjac.add(lblNewLabel_1);
 		
 		JDatePanelImpl date2Panel = new JDatePanelImpl(model, p);
-		JDatePickerImpl dtDod = new JDatePickerImpl(date2Panel, new DateLabelFormatter());
+		JDatePickerImpl dtDod = new JDatePickerImpl(date2Panel, new DataLabelFormatter());
 		sl_dtDod.putConstraint(SpringLayout.NORTH, dtDod.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDod);
 		sl_dtDod.putConstraint(SpringLayout.WEST, dtDod.getJFormattedTextField(), 33, SpringLayout.WEST, dtDod);
 		sl_dtDod.putConstraint(SpringLayout.EAST, dtDod.getJFormattedTextField(), 211, SpringLayout.WEST, dtDod);
@@ -188,7 +181,7 @@ public class RegistracijaIzvodjaca extends JFrame {
 		pnlGrupa.add(lblDatumOsnivanja);
 		
 		JDatePanelImpl date3Panel = new JDatePanelImpl(model, p);
-		JDatePickerImpl dtDof = new JDatePickerImpl(date3Panel, new DateLabelFormatter());
+		JDatePickerImpl dtDof = new JDatePickerImpl(date3Panel, new DataLabelFormatter());
 		sl_dtDof.putConstraint(SpringLayout.NORTH, dtDof.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDof);
 		sl_dtDof.putConstraint(SpringLayout.WEST, dtDof.getJFormattedTextField(), 33, SpringLayout.WEST, dtDof);
 		sl_dtDof.putConstraint(SpringLayout.EAST, dtDof.getJFormattedTextField(), 211, SpringLayout.WEST, dtDof);
@@ -197,7 +190,7 @@ public class RegistracijaIzvodjaca extends JFrame {
 		pnlGrupa.add(dtDof);
 		
 		JDatePanelImpl date4Panel = new JDatePanelImpl(model, p);
-		JDatePickerImpl dtDor = new JDatePickerImpl(date4Panel, new DateLabelFormatter());
+		JDatePickerImpl dtDor = new JDatePickerImpl(date4Panel, new DataLabelFormatter());
 		sl_dtDor.putConstraint(SpringLayout.NORTH, dtDor.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDor);
 		sl_dtDor.putConstraint(SpringLayout.WEST, dtDor.getJFormattedTextField(), 33, SpringLayout.WEST, dtDor);
 		sl_dtDor.putConstraint(SpringLayout.EAST, dtDor.getJFormattedTextField(), 211, SpringLayout.WEST, dtDor);

@@ -24,7 +24,6 @@ import model.ZakazanaRecenzija;
 import model.Zanr;
 
 public class CitacDatoteka {
-	
 	private KorisniciMenadzer korisnici;
 	private NalogMenadzer nalogMenadzer;
 	private Collection<Nalog> nalozi;

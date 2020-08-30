@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -23,19 +22,18 @@ import javax.swing.table.TableRowSorter;
 
 import model.IzvestajSvihZanrova;
 import model.Sesija;
-import model.Zanr;
 import net.miginfocom.swing.MigLayout;
 
 public class IzvestajViseZanrova extends JFrame {
-	
+	//smisli nesto pametno.....
 	private JTable table;
 	private Sesija sesija;
-	private JButton btnBack, btnPregled;
+	private JButton btnBack;
 	ArrayList<IzvestajSvihZanrova> lista;
 	public IzvestajViseZanrova(Sesija s) {
 		this.sesija=s;//potrebna da kazem lista zanrova sa nekim podacima kao, broj dela, prosecna ocena zanra preko dela, nesto tako?
 		s.namestiIzvestaj();
-	    lista=s.getIzvestajSvihZanrova().getSviZanrovi();
+	    lista=s.getIzvestajSvihZanrovaa().getSviZanrovi();
 		setSize(700, 700);
 		setResizable(false);
 		initGui();
@@ -54,27 +52,10 @@ public class IzvestajViseZanrova extends JFrame {
 
 			
 		});
-        btnPregled.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int rInd=table.getSelectedRow();
-				Zanr ur=sesija.pronadiZanr(rInd);
-				if(ur==null) {JOptionPane.showMessageDialog(null, "Morate selektovati bar jedan red", "Info", JOptionPane.INFORMATION_MESSAGE);
-				}else {
-					IzvestajZanra nov=new IzvestajZanra(sesija, ur);
-					nov.setVisible(true);
-					
-				}
-				
-			}
-
-			
-		});
 		
 	}
 	private void initGui() {
-		MigLayout mig =  new MigLayout("wrap 2", "[]10[]", "[]10[]"); 
+		MigLayout mig =  new MigLayout("wrap 2", "[]10[]", "[]"); 
 		setLayout(mig);
 		
 		table = new JTable(new ViseZanrovaModel(lista));
@@ -120,9 +101,6 @@ public class IzvestajViseZanrova extends JFrame {
 			}
 			
 		});
-		btnPregled.setText("Pregledaj jedan zanr");
-		add(btnPregled);
-		
 		
 	}
 

@@ -23,7 +23,7 @@ import net.miginfocom.swing.MigLayout;
 public class DodavanjeRecenzije extends JFrame{
 	public Urednik urednik;
 	public JTextField naslov;
-	public JTextField text;
+	public JTextArea text;
 	public JButton btnZavrsi, btnBack;
 	public Recenzija novaRecenzija;
 	public JComboBox listaizvodjaca;
@@ -117,7 +117,7 @@ public class DodavanjeRecenzije extends JFrame{
 		naslov=new JTextField(30);
 		add(new JLabel("Naslov: "));
 		add(naslov);
-		text=new JTextField(100);
+		text=new JTextArea(15,50);
 		add(new JLabel("Tekst: "));//TODO: napraviti lepo za text
 		add(text, "span 2 3");
 		if(oznaka!=2) {

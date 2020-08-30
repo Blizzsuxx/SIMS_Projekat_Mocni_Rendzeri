@@ -49,6 +49,7 @@ public abstract class Homepage extends JFrame {
 		menu.add(profil);
 		menu.add(odjava);
 		menubar.add(menu);
+		
 
 		
 		JTextField search = new JTextField(50);

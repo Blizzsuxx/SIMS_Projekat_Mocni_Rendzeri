@@ -60,7 +60,7 @@ public class CitacDatoteka {
 	public Collection<Pojedinacanizvodjac> getIzvodjaci() {
 		return izvodjaciSolo;
 	}
-
+ 
 	public Collection<Recenzija> getRecenzije() {
 		return recenzije;
 	}

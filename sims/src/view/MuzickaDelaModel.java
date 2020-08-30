@@ -44,12 +44,25 @@ public class MuzickaDelaModel extends AbstractTableModel {
 		return null;
 	}
 	 @Override
-     public Class getColumnClass(int columnIndex) {
-		 if(columnIndex==4) {
-        return Boolean.class;}
-		 else {
-        	return String.class;
-        }
+     public Class getColumnClass(int column) {
+		 switch (column) {
+         case 0:
+             return String.class;
+         case 1:
+             return String.class;
+         case 2:
+             return String.class;
+         case 3:
+             return String.class;
+         case 4: 
+        	 return Boolean.class;
+         default:
+             return Boolean.class;
      }
-
+     }
+	 
+	 public MuzickoDjelo getDelo(int row) {
+		 return muzickaDela.get(row);
+		 
+	 }
 }

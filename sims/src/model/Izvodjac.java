@@ -18,8 +18,14 @@ public abstract class Izvodjac {
    
    public ArrayList<MuzickoDjelo> muzickaDela;
    public ArrayList<Album> izdatiAlbumi;
+   public ArrayList<Albumi> neizdatiAlbumi;
    
-   
+   public ArrayList<Albumi> getNeizdatiAlbumi(){
+	   return neizdatiAlbumi;
+	   }
+   public void setNeizdatiAlbumi(ArrayList<Albumi> a) {
+	   this.neizdatiAlbumi=a;
+   }
 
 public ArrayList<Album> getIzdatiAlbumi() {
 	return izdatiAlbumi;
@@ -66,6 +72,7 @@ public Izvodjac(String umetnickoIme, boolean status, KorisnikAplikacije[] prati)
 	this.umetnickoIme = umetnickoIme;
 	this.status = status;
 	this.prati = prati;
+	this.neizdatiAlbumi=new ArrayList();
 }
 
 public Izvodjac() {
@@ -75,6 +82,7 @@ public Izvodjac() {
 public Izvodjac(String umetnickoIme2, boolean status2) {
 	this.umetnickoIme = umetnickoIme2;
 	this.status = status2;
+	this.neizdatiAlbumi=new ArrayList();
 }
 
 protected abstract String[] getImenaDela();

@@ -20,9 +20,9 @@ public KorisnikAplikacije() {
 }
 
 /** @pdRoleInfo migr=no name=FrontEndKorisnik assc=pracenjeKorisnika coll=java.util.Collection impl=java.util.HashSet mult=0..* */
-   public java.util.Collection<FrontEndKorisnik> pratite;
+   private java.util.Collection<FrontEndKorisnik> pratite;
    /** @pdRoleInfo migr=no name=Izvodjac assc=association16 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
-   public java.util.Collection<Izvodjac> onajKogaPrati;
+   private java.util.Collection<Izvodjac> onajKogaPrati;
    
    /** @pdOid 570b1cab-dcf3-4bfc-a491-be5540c78efd */
    public void komentarisi() {
@@ -48,7 +48,7 @@ public KorisnikAplikacije() {
    }
    
    /** @pdGenerated default iterator getter */
-   public java.util.Iterator getIteratorPratite() {
+   public java.util.Iterator<FrontEndKorisnik> getIteratorPratite() {
       if (pratite == null)
          pratite = new java.util.HashSet<FrontEndKorisnik>();
       return pratite.iterator();
@@ -58,7 +58,7 @@ public KorisnikAplikacije() {
      * @param newPratite */
    public void setPratite(java.util.Collection<FrontEndKorisnik> newPratite) {
       removeAllPratite();
-      for (java.util.Iterator iter = newPratite.iterator(); iter.hasNext();)
+      for (java.util.Iterator<FrontEndKorisnik> iter = newPratite.iterator(); iter.hasNext();)
          addPratite((FrontEndKorisnik)iter.next());
    }
    
@@ -96,7 +96,7 @@ public KorisnikAplikacije() {
    }
    
    /** @pdGenerated default iterator getter */
-   public java.util.Iterator getIteratorOnajKogaPrati() {
+   public java.util.Iterator<Izvodjac> getIteratorOnajKogaPrati() {
       if (onajKogaPrati == null)
          onajKogaPrati = new java.util.HashSet<Izvodjac>();
       return onajKogaPrati.iterator();
@@ -106,7 +106,7 @@ public KorisnikAplikacije() {
      * @param newOnajKogaPrati */
    public void setOnajKogaPrati(java.util.Collection<Izvodjac> newOnajKogaPrati) {
       removeAllOnajKogaPrati();
-      for (java.util.Iterator iter = newOnajKogaPrati.iterator(); iter.hasNext();)
+      for (java.util.Iterator<Izvodjac>  iter = newOnajKogaPrati.iterator(); iter.hasNext();)
          addOnajKogaPrati((Izvodjac)iter.next());
    }
    

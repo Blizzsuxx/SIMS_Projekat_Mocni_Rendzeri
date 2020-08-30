@@ -65,7 +65,7 @@ public class Administrator extends Korisnik {
    }
    
    /** @pdGenerated default iterator getter */
-   public java.util.Iterator getIteratorZakazaneRecenzije() {
+   public java.util.Iterator<ZakazanaRecenzija> getIteratorZakazaneRecenzije() {
       if (zakazaneRecenzije == null)
          zakazaneRecenzije = new java.util.HashSet<ZakazanaRecenzija>();
       return zakazaneRecenzije.iterator();
@@ -75,7 +75,7 @@ public class Administrator extends Korisnik {
      * @param newZakazaneRecenzije */
    public void setZakazaneRecenzije(java.util.Collection<ZakazanaRecenzija> newZakazaneRecenzije) {
       removeAllZakazaneRecenzije();
-      for (java.util.Iterator iter = newZakazaneRecenzije.iterator(); iter.hasNext();)
+      for (java.util.Iterator<ZakazanaRecenzija> iter = newZakazaneRecenzije.iterator(); iter.hasNext();)
          addZakazaneRecenzije((ZakazanaRecenzija)iter.next());
    }
    
@@ -113,7 +113,7 @@ public class Administrator extends Korisnik {
    }
    
    /** @pdGenerated default iterator getter */
-   public java.util.Iterator getIteratorRecenzijeZaIzmene() {
+   public java.util.Iterator<RecezijaZaIzmenu> getIteratorRecenzijeZaIzmene() {
       if (recenzijeZaIzmene == null)
          recenzijeZaIzmene = new java.util.HashSet<RecezijaZaIzmenu>();
       return recenzijeZaIzmene.iterator();
@@ -123,7 +123,7 @@ public class Administrator extends Korisnik {
      * @param newRecenzijeZaIzmene */
    public void setRecenzijeZaIzmene(java.util.Collection<RecezijaZaIzmenu> newRecenzijeZaIzmene) {
       removeAllRecenzijeZaIzmene();
-      for (java.util.Iterator iter = newRecenzijeZaIzmene.iterator(); iter.hasNext();)
+      for (java.util.Iterator<RecezijaZaIzmenu> iter = newRecenzijeZaIzmene.iterator(); iter.hasNext();)
          addRecenzijeZaIzmene((RecezijaZaIzmenu)iter.next());
    }
    

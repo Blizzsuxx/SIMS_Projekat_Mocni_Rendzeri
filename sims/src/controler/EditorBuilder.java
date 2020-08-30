@@ -14,11 +14,6 @@ import view.EditorPanel;
 
 public class EditorBuilder {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	private Object objekatZaIzmeniti;
 	private Collection<Par<String, Boolean>> redovi;
 	private Collection<String> atributi;

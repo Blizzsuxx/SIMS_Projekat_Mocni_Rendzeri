@@ -70,7 +70,7 @@ public class Urednik extends Korisnik {
    }
    
    /** @pdGenerated default iterator getter */
-   public java.util.Iterator getIteratorIstorijaRecenzija() {
+   public java.util.Iterator<Recenzija> getIteratorIstorijaRecenzija() {
       if (istorijaRecenzija == null)
          istorijaRecenzija = new java.util.HashSet<Recenzija>();
       return istorijaRecenzija.iterator();
@@ -80,7 +80,7 @@ public class Urednik extends Korisnik {
      * @param newIstorijaRecenzija */
    public void setIstorijaRecenzija(java.util.Collection<Recenzija> newIstorijaRecenzija) {
       removeAllIstorijaRecenzija();
-      for (java.util.Iterator iter = newIstorijaRecenzija.iterator(); iter.hasNext();)
+      for (java.util.Iterator<Recenzija> iter = newIstorijaRecenzija.iterator(); iter.hasNext();)
          addIstorijaRecenzija((Recenzija)iter.next());
    }
    
@@ -116,7 +116,7 @@ public class Urednik extends Korisnik {
       if (istorijaRecenzija != null)
       {
          Recenzija oldRecenzija;
-         for (java.util.Iterator iter = getIteratorIstorijaRecenzija(); iter.hasNext();)
+         for (java.util.Iterator<Recenzija> iter = getIteratorIstorijaRecenzija(); iter.hasNext();)
          {
             oldRecenzija = (Recenzija)iter.next();
             iter.remove();
@@ -132,7 +132,7 @@ public class Urednik extends Korisnik {
    }
    
    /** @pdGenerated default iterator getter */
-   public java.util.Iterator getIteratorZakazaneRecenzije() {
+   public java.util.Iterator<ZakazanaRecenzija> getIteratorZakazaneRecenzije() {
       if (zakazaneRecenzije == null)
          zakazaneRecenzije = new java.util.HashSet<ZakazanaRecenzija>();
       return zakazaneRecenzije.iterator();
@@ -142,7 +142,7 @@ public class Urednik extends Korisnik {
      * @param newZakazaneRecenzije */
    public void setZakazaneRecenzije(java.util.Collection<ZakazanaRecenzija> newZakazaneRecenzije) {
       removeAllZakazaneRecenzije();
-      for (java.util.Iterator iter = newZakazaneRecenzije.iterator(); iter.hasNext();)
+      for (java.util.Iterator<ZakazanaRecenzija> iter = newZakazaneRecenzije.iterator(); iter.hasNext();)
          addZakazaneRecenzije((ZakazanaRecenzija)iter.next());
    }
    
@@ -178,7 +178,7 @@ public class Urednik extends Korisnik {
       if (zakazaneRecenzije != null)
       {
          ZakazanaRecenzija oldZakazanaRecenzija;
-         for (java.util.Iterator iter = getIteratorZakazaneRecenzije(); iter.hasNext();)
+         for (java.util.Iterator<ZakazanaRecenzija> iter = getIteratorZakazaneRecenzije(); iter.hasNext();)
          {
             oldZakazanaRecenzija = (ZakazanaRecenzija)iter.next();
             iter.remove();
@@ -194,7 +194,7 @@ public class Urednik extends Korisnik {
    }
    
    /** @pdGenerated default iterator getter */
-   public java.util.Iterator getIteratorRecezijaZaIzmenu() {
+   public java.util.Iterator<RecezijaZaIzmenu> getIteratorRecezijaZaIzmenu() {
       if (recezijaZaIzmenu == null)
          recezijaZaIzmenu = new java.util.HashSet<RecezijaZaIzmenu>();
       return recezijaZaIzmenu.iterator();
@@ -204,7 +204,7 @@ public class Urednik extends Korisnik {
      * @param newRecezijaZaIzmenu */
    public void setRecezijaZaIzmenu(java.util.Collection<RecezijaZaIzmenu> newRecezijaZaIzmenu) {
       removeAllRecezijaZaIzmenu();
-      for (java.util.Iterator iter = newRecezijaZaIzmenu.iterator(); iter.hasNext();)
+      for (java.util.Iterator<RecezijaZaIzmenu> iter = newRecezijaZaIzmenu.iterator(); iter.hasNext();)
          addRecezijaZaIzmenu((RecezijaZaIzmenu)iter.next());
    }
    

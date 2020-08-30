@@ -2,9 +2,7 @@ package model;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class PodaciUrednikaZaIzvestaj {
 	
@@ -12,7 +10,8 @@ public class PodaciUrednikaZaIzvestaj {
 	private LocalDate danKraja;
 	private String Ime;
 	private int brojRecenzija, brojZadatihRecenzija, brojZaIzmenu;
-	private LocalDate getDanPocetka() {
+
+	public LocalDate getDanPocetka() {
 		return danPocetka;
 	}
 	public void setDanPocetka(LocalDate danPocetka) {

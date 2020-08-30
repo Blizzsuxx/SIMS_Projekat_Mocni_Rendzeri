@@ -1,43 +1,49 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.RowFilter;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 
 import model.Recenzija;
 import model.Sesija;
-import model.Urednik;
 import net.miginfocom.swing.MigLayout;
 
 public class IzvestajRecenzije extends JFrame {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private Sesija sesija;
 	private Recenzija recenzija;
 	private JButton btnBack;
-	
+
 	private JTextField tfImeUrednika, tfNaslov, tfdatum, tfDelo, tfIzvodjac;
-	
+
 	public IzvestajRecenzije(Sesija s, Recenzija r) {
-		this.sesija=s;
-		this.recenzija=r;
+		this.setSesija(s);
+		this.recenzija = r;
 		setSize(400, 400);
 		setResizable(false);
 		initGui();
 		initActions();
+	}
+
+	/**
+	 * @return the sesija
+	 */
+	public Sesija getSesija() {
+		return sesija;
+	}
+
+	/**
+	 * @param sesija the sesija to set
+	 */
+	public void setSesija(Sesija sesija) {
+		this.sesija = sesija;
 	}
 
 	private void initActions() {

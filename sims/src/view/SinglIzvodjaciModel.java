@@ -1,16 +1,18 @@
 package view;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
 
 import model.IzvestajJednogIzvodjaca;
-import model.Pojedinacanizvodjac;
 
-public class SinglIzvodjaciModel extends AbstractTableModel implements TableModel { //srediti
-	String[] naslovi= {"Izvodjac",  "Broj dela", "Broj recenzija", "Broj komentara", "Ocena urednika", "Ocena korisnika"};
+public class SinglIzvodjaciModel extends AbstractTableModel { //srediti
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+	String[] naslovi = { "Izvodjac", "Broj dela", "Broj recenzija", "Broj komentara", "Ocena urednika",
+			"Ocena korisnika" };
 	ArrayList<IzvestajJednogIzvodjaca> sviIzv;
 	
 	

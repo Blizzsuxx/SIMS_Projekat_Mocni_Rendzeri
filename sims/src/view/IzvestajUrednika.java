@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -20,26 +19,56 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-
 import model.Sesija;
 import model.Urednik;
 import net.miginfocom.swing.MigLayout;
 
-
-public class IzvestajUrednika extends JFrame { //izvestaj o odabranom uredniku
+public class IzvestajUrednika extends JFrame { // izvestaj o odabranom uredniku
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private Sesija sesija;
 	private Urednik urednik;
 	private JButton btnBack;
 	private JTable table;
 	private JTextField tfImeUrednika, tfUkupno, tfZadate, tfZaIzmenu;
-	
+
 	public IzvestajUrednika(Sesija s, Urednik u) {
-		this.sesija=s;
-		this.urednik=u;
+		this.setSesija(s);
+		this.urednik = u;
 		setSize(400, 400);
 		setResizable(false);
 		initGui();
 		initActions();
+	}
+
+	/**
+	 * @return the tfZaIzmenu
+	 */
+	public JTextField getTfZaIzmenu() {
+		return tfZaIzmenu;
+	}
+
+	/**
+	 * @param tfZaIzmenu the tfZaIzmenu to set
+	 */
+	public void setTfZaIzmenu(JTextField tfZaIzmenu) {
+		this.tfZaIzmenu = tfZaIzmenu;
+	}
+
+	/**
+	 * @return the sesija
+	 */
+	public Sesija getSesija() {
+		return sesija;
+	}
+
+	/**
+	 * @param sesija the sesija to set
+	 */
+	public void setSesija(Sesija sesija) {
+		this.sesija = sesija;
 	}
 
 	private void initGui() {

@@ -3,15 +3,17 @@ package view;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
 
 import model.Recenzija;
 
 
 public class RecenzijeOdUrednikaModel extends AbstractTableModel{
-	private String[] kolone= {"Datum upisa", "Naslov recenzije", "Naziv dela"};
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+	private String[] kolone = { "Datum upisa", "Naslov recenzije", "Naziv dela" };
 	private Collection<Recenzija> odradene;
 
 	

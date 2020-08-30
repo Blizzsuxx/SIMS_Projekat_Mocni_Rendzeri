@@ -5,8 +5,8 @@
  ***********************************************************************/
 package model;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import controler.Constants;
 
 /** @pdOid 821f1adf-c3a0-4478-9680-7e8b2f65437c */
@@ -27,11 +27,11 @@ public abstract class Korisnik {
    
    /** @pdOid b5db7dcd-9237-4763-b6ad-4f21f00ab10c */
    public void setSifra(String sifra) {
-      // TODO: implement
+      
 	   nalog.setSifra(sifra);
    }
    
-   @SuppressWarnings("deprecation")
+
    public void setKorisnickoIme(String korisnickoIme) {
 	   if(nalog == null) {
 		   nalog = new Nalog("password123", korisnickoIme, new Date(), true);

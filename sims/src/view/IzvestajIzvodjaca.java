@@ -25,21 +25,39 @@ import model.Sesija;
 import net.miginfocom.swing.MigLayout;
 
 public class IzvestajIzvodjaca extends JFrame {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private Sesija sesija;
 	private Izvodjac izvodjac;
 	private JButton btnBack;
 	private JTable table1;
 	private JTextField tfImeUrednika, tfUkupnoDela, tfbrojRec, tfBrojkom, tfOcenaUr, tfOcenaKor;
 	private IzvestajJednogIzvodjaca jedan;
-	
+
 	public IzvestajIzvodjaca(Sesija s, Izvodjac i) {
-		this.sesija=s;
-		this.izvodjac=i;
-		this.jedan=s.namestiJedanizvestaj(i);
+		this.setSesija(s);
+		this.izvodjac = i;
+		this.jedan = s.namestiJedanizvestaj(i);
 		setSize(600, 600);
 		setResizable(false);
 		initGui();
 		initActions();
+	}
+
+	/**
+	 * @return the sesija
+	 */
+	public Sesija getSesija() {
+		return sesija;
+	}
+
+	/**
+	 * @param sesija the sesija to set
+	 */
+	public void setSesija(Sesija sesija) {
+		this.sesija = sesija;
 	}
 
 	private void initGui() {

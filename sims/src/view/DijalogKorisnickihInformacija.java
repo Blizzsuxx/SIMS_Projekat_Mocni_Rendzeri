@@ -4,19 +4,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 
 import controler.Constants;
 import controler.EditorBuilder;
 import model.Korisnik;
-import model.KorisnikAplikacije;
 import model.Pol;
 
 public class DijalogKorisnickihInformacija extends MojDialog {
 	
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private EditorPanel panel;
 	private EditorBuilder editor;
 	
@@ -25,7 +26,7 @@ public class DijalogKorisnickihInformacija extends MojDialog {
 		   EditorPanel panel = new EditorPanel();
 		   JRadioButton muski = new JRadioButton("Muski");
 		   JRadioButton zenski = new JRadioButton("Zenski");
-		   if(korisnik.getPol().equals(Pol.zenski)) {
+		   if(korisnik.getPol() == (Pol.zenski)) {
 			   zenski.setSelected(true);
 		   } else {
 			   muski.setSelected(true);

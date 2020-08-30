@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
 
 import model.PodaciUrednikaZaIzvestaj;
-import model.Recenzija;
 import model.Urednik;
 
-public class UrednikModel extends AbstractTableModel implements TableModel {
-	private String[] naslovi= {"Ime urednika", "Broj recenzija", "Broj zadatih uradenih recenzija", "Broj recenzija za izmenu"};
+public class UrednikModel extends AbstractTableModel {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+	private String[] naslovi = { "Ime urednika", "Broj recenzija", "Broj zadatih uradenih recenzija",
+			"Broj recenzija za izmenu" };
 	private ArrayList<Urednik> urednici;
 	private ArrayList<PodaciUrednikaZaIzvestaj> izvestaj;
 	

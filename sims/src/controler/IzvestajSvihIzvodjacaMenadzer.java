@@ -2,16 +2,14 @@ package controler;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 
 import model.IzvestajJednogIzvodjaca;
 import model.Izvodjac;
-import model.MuzickoDjelo;
+import model.MuzickoDelo;
 import model.Recenzija;
 import model.Utisak;
 import model.Zanr;
-import view.IzvestajIzvodjaca;
 
 public class IzvestajSvihIzvodjacaMenadzer {
 	private ArrayList<IzvestajJednogIzvodjaca> izvodjaci;
@@ -44,10 +42,10 @@ public class IzvestajSvihIzvodjacaMenadzer {
 		}
 	}
 
-	private void pretraziDela(ArrayList<MuzickoDjelo> muzickaDela, IzvestajJednogIzvodjaca nov) {
+	private void pretraziDela(ArrayList<MuzickoDelo> muzickaDela, IzvestajJednogIzvodjaca nov) {
 		double ocenaKo=0;
 		double ocenaUr=0; 
-		for(MuzickoDjelo m:muzickaDela) {
+		for(MuzickoDelo m:muzickaDela) {
 			ocenaKo+=m.getProsecnaOcenaKorisnika();
 			ocenaUr+=m.getProsecnaOcenaUrednika();
 			for(Utisak u:m.getUtisci()) {
@@ -76,14 +74,14 @@ public class IzvestajSvihIzvodjacaMenadzer {
 		
 	}
 
-	private void proveriPoDatumima(ArrayList<MuzickoDjelo> muzickaDela, LocalDate dan, LocalDate dan1,
+	private void proveriPoDatumima(ArrayList<MuzickoDelo> muzickaDela, LocalDate dan, LocalDate dan1,
 			String imeZanra, IzvestajJednogIzvodjaca iz) {
 		double ocenaKo=0;
 		double ocenaUr=0; 
 		int brD=0;
 		Date danPocetka=new Date(dan.getYear(), dan.getMonthValue(), dan.getDayOfMonth());
 		Date dankraja=new Date(dan1.getYear(), dan1.getMonthValue(), dan1.getDayOfMonth());
-		for(MuzickoDjelo m: muzickaDela) {
+		for(MuzickoDelo m: muzickaDela) {
 			if(m.getDatumIzdavanja().after(danPocetka) && m.getDatumIzdavanja().before(dankraja)) {
 				for(Zanr z:m.getZanrovi()) {
 					if(z.getNazivZanra().equals(imeZanra)) {

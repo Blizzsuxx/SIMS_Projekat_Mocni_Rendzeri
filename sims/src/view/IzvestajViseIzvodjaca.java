@@ -5,7 +5,6 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.Properties;
 
 import javax.swing.JButton;
@@ -24,22 +23,22 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import org.jdatepicker.JDatePicker;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import controler.IzvestajSvihIzvodjacaMenadzer;
 import controler.ZanroviMenadzer;
-import model.Grupa;
 import model.Izvodjac;
-import model.Pojedinacanizvodjac;
 import model.Sesija;
 import model.Zanr;
 import net.miginfocom.swing.MigLayout;
-import view.DataLabelFormatter;
 
 public class IzvestajViseIzvodjaca extends JFrame{
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private Sesija sesija;
 	private IzvestajSvihIzvodjacaMenadzer men;
 	private JButton btnBack, btnOk, btnPregled;

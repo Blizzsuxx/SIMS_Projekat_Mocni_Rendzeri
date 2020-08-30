@@ -3,12 +3,15 @@ package view;
 import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
 
 import model.IzvestajSvihZanrova;
 
-public class ViseZanrovaModel extends AbstractTableModel implements TableModel {
-	String[] naslovi= {"Naziv", "Broj muzickih dela", "Broj recenzija"};
+public class ViseZanrovaModel extends AbstractTableModel {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+	String[] naslovi = { "Naziv", "Broj muzickih dela", "Broj recenzija" };
 	ArrayList<IzvestajSvihZanrova> lista;
 
 	public ViseZanrovaModel(ArrayList<IzvestajSvihZanrova> lista) {

@@ -1,10 +1,12 @@
 package controler;
 
+import java.awt.image.BufferedImage;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import model.MuzickoDelo;
 import model.Par;
 
 public abstract class Constants {
@@ -18,5 +20,9 @@ public abstract class Constants {
 		    Arrays.asList(new String[] {"Ime", "Prezime", "EMail", "DatumRodjenja", "KorisnickoIme", "Sifra"}));
 	
 	public static final SimpleDateFormat FORMAT_ZA_DATUM = new SimpleDateFormat("dd/MM/yyyy");
+
+	public static BufferedImage MUZICKA_IKONA;
+
+	public static final MuzickoDelo BARBIE_GIRL = new MuzickoDelo("Aqua - Barbie Girl", "Barbi devojka");
 	
 }

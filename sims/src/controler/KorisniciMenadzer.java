@@ -4,7 +4,7 @@
  * Purpose: Defines the Class KorisniciMenadzer
  ***********************************************************************/
 package controler;
-import java.text.DateFormat;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;

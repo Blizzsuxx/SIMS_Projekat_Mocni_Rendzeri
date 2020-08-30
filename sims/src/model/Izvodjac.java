@@ -17,15 +17,15 @@ public abstract class Izvodjac {
    /** @pdRoleInfo migr=no name=KorisnikAplikacije assc=association16 mult=0..* side=A */
    public KorisnikAplikacije[] prati;
    
-   public ArrayList<MuzickoDjelo> muzickaDela;
+   public ArrayList<MuzickoDelo> muzickaDela;
    
    
 
-   public ArrayList<MuzickoDjelo> getMuzickaDela() {
+   public ArrayList<MuzickoDelo> getMuzickaDela() {
    	return muzickaDela;
    }
 
-   public void setMuzickaDela(ArrayList<MuzickoDjelo> muzickaDela) {
+   public void setMuzickaDela(ArrayList<MuzickoDelo> muzickaDela) {
    	this.muzickaDela = muzickaDela;
    }
 

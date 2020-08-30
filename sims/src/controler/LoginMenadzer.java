@@ -4,28 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
-import javax.swing.ButtonGroup;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 
 import model.Korisnik;
 import model.KorisnikAplikacije;
-import model.Par;
-import model.Pol;
 import model.Sesija;
 import view.DijalogKorisnickihInformacija;
-import view.EditorPanel;
 import view.LoginWindow;
-import view.MojDialog;
 
 /***********************************************************************
  * Module:  LoginMenadzer.java
@@ -120,6 +106,8 @@ public class LoginMenadzer {
 				}
 		   }
 	   };
+	   prozor.setVisible(false);
+	   dijalog.setVisible(true);
    }
    
    /** @pdOid e473b5cd-a8f2-4a1b-914c-5ab62e48c45f */

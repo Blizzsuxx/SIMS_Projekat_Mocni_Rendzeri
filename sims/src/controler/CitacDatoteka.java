@@ -1,5 +1,7 @@
 package controler;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -7,21 +9,23 @@ import java.io.Reader;
 import java.util.Collection;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
 import au.com.bytecode.opencsv.CSVReader;
 import model.Grupa;
-import model.MuzickoDjelo;
+import model.MuzickoDelo;
 import model.Pojedinacanizvodjac;
 import model.Recenzija;
 
 public class CitacDatoteka {
 	
 	private KorisniciMenadzer korisnici;
-	private Collection<MuzickoDjelo> muzickaDela;
+	private Collection<MuzickoDelo> muzickaDela;
 	private Collection<Grupa> grupe;
 	private Collection<Pojedinacanizvodjac> izvodjaci;
 	private Collection<Recenzija> recenzije;
 	
-	public Collection<MuzickoDjelo> getMuzickaDela() {
+	public Collection<MuzickoDelo> getMuzickaDela() {
 		return muzickaDela;
 	}
 
@@ -41,10 +45,14 @@ public class CitacDatoteka {
 		// TODO Auto-generated method stub
 		FileReader reader = null;
 		try {
-			reader = new FileReader("./fajlovi/Korisnici.txt");
+			reader = new FileReader("./fajlovi/korisnici.txt");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			try {
+				reader = new FileReader("./sims/fajlovi/korisnici.txt");
+			} catch (FileNotFoundException e2) {
+				//TODO: handle exception
+			}
 		}
 		try {
 			korisnici = new KorisniciMenadzer(readAll(reader));
@@ -53,6 +61,27 @@ public class CitacDatoteka {
 			e.printStackTrace();
 		}
 		
+
+		Constants.MUZICKA_IKONA  = procitajSliku("fajlovi/muzika.png");
+
+	}
+
+	public static BufferedImage procitajSliku(String path){
+
+
+		try {
+			return ImageIO.read(new File(path));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			try {
+				return ImageIO.read(new File("sims/"+path));
+			} catch (IOException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+		}
+		return null;
+
 	}
 
 	public KorisniciMenadzer getKorisnici() {

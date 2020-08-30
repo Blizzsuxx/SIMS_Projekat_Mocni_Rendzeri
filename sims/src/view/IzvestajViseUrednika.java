@@ -35,6 +35,10 @@ import net.miginfocom.swing.MigLayout;
 
 
 public class IzvestajViseUrednika extends JFrame {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private Collection<Urednik> urednici;
 	private JButton btnBack, btnOk, btnPregled;
 	private JTable table;

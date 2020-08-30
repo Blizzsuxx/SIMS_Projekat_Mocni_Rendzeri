@@ -4,14 +4,18 @@ import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
-import model.MuzickoDjelo;
+import model.MuzickoDelo;
 
 public class MuzickaDelaModel extends AbstractTableModel {
-	String[] naslovi= {"Naziv", "Datum izdavanja", "Prosecna ocena urednika", "Prosecna ocena korisnika"};
-	ArrayList<MuzickoDjelo> muzickaDela;
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+	String[] naslovi = { "Naziv", "Datum izdavanja", "Prosecna ocena urednika", "Prosecna ocena korisnika" };
+	ArrayList<MuzickoDelo> muzickaDela;
 	
 	
-	public MuzickaDelaModel(ArrayList<MuzickoDjelo> muzickaDela) {
+	public MuzickaDelaModel(ArrayList<MuzickoDelo> muzickaDela) {
 		super();
 		this.muzickaDela = muzickaDela;
 	}
@@ -30,7 +34,7 @@ public class MuzickaDelaModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		MuzickoDjelo m=muzickaDela.get(rowIndex);
+		MuzickoDelo m=muzickaDela.get(rowIndex);
 		switch (columnIndex) {
 		case 0:
 			return m.getNaziv();

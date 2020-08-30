@@ -28,6 +28,10 @@ import net.miginfocom.swing.MigLayout;
 
 public class IzvestajViseZanrova extends JFrame {
 	
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTable table;
 	private Sesija sesija;
 	private JButton btnBack, btnPregled;

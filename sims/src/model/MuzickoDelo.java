@@ -1,15 +1,14 @@
 /***********************************************************************
- * Module:  MuzickoDjelo.java
+ * Module:  MuzickoDelo.java
  * Author:  Dragan
- * Purpose: Defines the Class MuzickoDjelo
+ * Purpose: Defines the Class MuzickoDelo
  ***********************************************************************/
 package model;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 /** @pdOid fe24355d-b240-471a-9a18-0672095a63e6 */
-public class MuzickoDjelo {
+public class MuzickoDelo {
    /** @pdOid 85e700ff-acf1-4663-ad34-fb23a5477991 */
    private String naziv;
    /** @pdOid a2b90104-3b01-42b5-94c2-45a2042c4750 */
@@ -93,7 +92,7 @@ public class MuzickoDjelo {
    	this.utisci = utisci;
    }
 
-   public MuzickoDjelo(String naziv, String opis, Date datumIzdavanja, boolean status, float prosecnaOcenaKorisnika,
+   public MuzickoDelo(String naziv, String opis, Date datumIzdavanja, boolean status, float prosecnaOcenaKorisnika,
    		float prosecnaOcenaUrednika, List<Utisak> utisci) {
    	super();
    	this.naziv = naziv;
@@ -105,10 +104,16 @@ public class MuzickoDjelo {
    	this.utisci = utisci;
    }
 
-   public MuzickoDjelo() {
+   public MuzickoDelo() {
    	super();
    }
       
+
+   public MuzickoDelo(String naziv, String opis) {
+      this.naziv = naziv;
+      this.opis = opis;
+      this.status = true;
+   }
       
 
 }

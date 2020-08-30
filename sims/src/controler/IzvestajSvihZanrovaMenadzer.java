@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import model.IzvestajSvihZanrova;
-import model.MuzickoDjelo;
+import model.MuzickoDelo;
 import model.Recenzija;
 import model.Utisak;
 import model.Zanr;
@@ -25,18 +25,18 @@ public class IzvestajSvihZanrovaMenadzer {
 		this.sviZanrovi = sviZanrovi;
 	}
 
-	public IzvestajSvihZanrovaMenadzer(Collection<MuzickoDjelo> dela, Collection<Recenzija> recenzije, ArrayList<Zanr> z) {
+	public IzvestajSvihZanrovaMenadzer(Collection<MuzickoDelo> dela, Collection<Recenzija> recenzije, ArrayList<Zanr> z) {
 		for(Zanr za:z) {
 			IzvestajSvihZanrova iz=new IzvestajSvihZanrova(za.getNazivZanra());
 			this.sviZanrovi.add(iz);
-			ArrayList<MuzickoDjelo> md=pronadiDela(dela, iz);
+			ArrayList<MuzickoDelo> md=pronadiDela(dela, iz);
 			pronadiRecenzije(md,iz);
 		}
 		
 	}
 
-	private void pronadiRecenzije(ArrayList<MuzickoDjelo> md, IzvestajSvihZanrova iz) {
-		for(MuzickoDjelo m:md) {
+	private void pronadiRecenzije(ArrayList<MuzickoDelo> md, IzvestajSvihZanrova iz) {
+		for(MuzickoDelo m:md) {
 			for(Utisak u:m.getUtisci()) {
 				if(u instanceof Recenzija) {iz.setBrojRecenzija(iz.getBrojRecenzija()+1);}
 			}
@@ -44,9 +44,9 @@ public class IzvestajSvihZanrovaMenadzer {
 		
 	}
 
-	private ArrayList<MuzickoDjelo> pronadiDela(Collection<MuzickoDjelo> dela, IzvestajSvihZanrova iz) {
-		ArrayList<MuzickoDjelo> mD=new ArrayList<MuzickoDjelo>();
-		for(MuzickoDjelo m:dela) {
+	private ArrayList<MuzickoDelo> pronadiDela(Collection<MuzickoDelo> dela, IzvestajSvihZanrova iz) {
+		ArrayList<MuzickoDelo> mD=new ArrayList<MuzickoDelo>();
+		for(MuzickoDelo m:dela) {
 			int i=0;
 			for(Zanr z:m.getZanrovi()) {
 				if(z.getNazivZanra()==iz.getNaziv()) {

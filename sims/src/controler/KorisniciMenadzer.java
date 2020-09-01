@@ -7,15 +7,19 @@ package controler;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 
 import model.Administrator;
 import model.Korisnik;
 import model.KorisnikAplikacije;
 import model.Pol;
 import model.Urednik;
+import view.TableModelWrapper;
 
 /** @pdOid 121daa1d-b073-437c-95b7-7f061b5ef5df */
 public class KorisniciMenadzer {
@@ -64,7 +68,33 @@ public class KorisniciMenadzer {
 	}
    
    
+   public HashMap<String, Korisnik> getKorisnici()
+   {
+	   return this.korisnici;
+   }
    
+   public void setKorisnici(HashMap<String, Korisnik> korisnici)
+   {
+	   this.korisnici = korisnici;
+   }
+   
+   public TableModelWrapper getTabelaKorisnika()  throws Exception {
+		String[] columns = { "Korisnicko ime" ,"Ime", "Prezime", "Datum rodjenja", "Status"};
+		Class<?>[] columnTypes = { String.class, String.class, String.class, Date.class, Boolean.class};
+		boolean[] editableColumns = { false, false, false, false, false};
+		int[] columnWidths = { 120, 120, 100, 80, 80};
+		ArrayList<Object[]> data = new ArrayList<Object[]>();
+		Iterator<Entry<String, Korisnik>> it = korisnici.entrySet().iterator();
+		while (it.hasNext()) 
+		{
+			@SuppressWarnings("rawtypes")
+			HashMap.Entry pair = (HashMap.Entry)it.next();
+			Korisnik k = (Korisnik)pair.getValue();
+			data.add(new Object[] {k.getNalog().getKorisnickoIme(), k.getIme(), k.getPrezime(), k.getDatumRodjenja(), k.isStatus()});
+	        it.remove();
+		}
+		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
+	}
    
    public boolean provjeriKorisnickoIme(String korisnickoIme) {
 	   return korisnici.containsKey(korisnickoIme);

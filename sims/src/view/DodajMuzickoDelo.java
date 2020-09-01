@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import model.Izvodjac;
-import model.MuzickoDjelo;
 import model.Sesija;
 import model.Zanr;
 import net.miginfocom.swing.MigLayout;

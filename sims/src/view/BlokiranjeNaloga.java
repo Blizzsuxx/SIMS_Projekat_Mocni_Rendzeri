@@ -2,11 +2,18 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+
+import controler.KorisniciMenadzer;
+import model.Korisnik;
+import model.Sesija;
 
 
 public class BlokiranjeNaloga extends JFrame {
@@ -15,8 +22,10 @@ public class BlokiranjeNaloga extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTable nalozi;
+	public Sesija sesija;
 	
-	public BlokiranjeNaloga() throws Exception {
+	public BlokiranjeNaloga(Sesija sesija) throws Exception {
+		this.sesija = sesija;
 		setTitle("Blokiranje naloga");
 		getContentPane().setLayout(null);
 		
@@ -31,7 +40,7 @@ public class BlokiranjeNaloga extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int selektovaniRed = nalozi.getSelectedRow();
-				//setujStatus(selektovaniRed, false);
+				setujStatus(selektovaniRed, false);
 			}
 			
 		});
@@ -42,7 +51,7 @@ public class BlokiranjeNaloga extends JFrame {
 		btnOdblokiraj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int selektovaniRed = nalozi.getSelectedRow();
-				//setujStatus(selektovaniRed, true);
+				setujStatus(selektovaniRed, true);
 			}
 		});
 		btnOdblokiraj.setBounds(109, 227, 89, 23);
@@ -53,19 +62,31 @@ public class BlokiranjeNaloga extends JFrame {
 	
 	private void ucitajNaloge() throws Exception
 	{
-		/*
-		NalogMenadzer nm = new NalogMenadzer();
-		TableModelWrapper tmw = nm.getTabelaNaloga();
+		KorisniciMenadzer km = sesija.getKorisnici();
+		TableModelWrapper tmw = km.getTabelaKorisnika();
 		nalozi.setModel(tmw);
-		*/
 	}
 	
 	private void setujStatus(int selektovaniRed, boolean status)
 	{
-		/*
-		nalozi.setValueAt(false, selektovaniRed, 2);
-		NalogMenadzer nm = new NalogMenadzer();
-		nm.setujStatus((String)nalozi.getValueAt(selektovaniRed, 0), status);
-		*/
+		nalozi.setValueAt(status, selektovaniRed, 4);
+		KorisniciMenadzer km = sesija.getKorisnici();
+		HashMap<String,Korisnik> korisnici = km.getKorisnici();
+		Iterator<Entry<String, Korisnik>> it = korisnici.entrySet().iterator();
+		while (it.hasNext()) 
+		{
+			@SuppressWarnings("rawtypes")
+			HashMap.Entry pair = (HashMap.Entry)it.next();
+			Korisnik k = (Korisnik)pair.getValue();
+			if (nalozi.getValueAt(selektovaniRed, 0).equals(pair.getKey()))
+			{
+				k.setStatus(status);
+				korisnici.replace((String)pair.getKey(), k);
+				break;
+			}
+	        it.remove();
+	    }
+		km.setKorisnici(korisnici);
+		sesija.setKorisnici(km);
 	}
 }

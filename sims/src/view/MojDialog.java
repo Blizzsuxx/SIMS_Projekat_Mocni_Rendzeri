@@ -40,4 +40,8 @@ public class MojDialog extends JDialog {
 	public MojDialog(JFrame parent, String naziv){
 		this(parent, naziv, 450, 450);
 	}
+
+	public MojDialog(String ime, int dimension1, int dimension2){
+		this(null, ime, dimension1, dimension2);
+	}
 }

@@ -1,27 +1,27 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Date;
-
-/***********************************************************************
- * Module:  Administrator.java
- * Author:  Dragan
- * Purpose: Defines the Class Administrator
- ***********************************************************************/
 
 /** @pdOid 016eeff6-23c0-4cd3-b64b-7d02c2eef130 */
 public class Administrator extends Korisnik {
+   /** @pdRoleInfo migr=no name=ZakazanaRecenzija assc=association11 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
+   private java.util.Collection<ZakazanaRecenzija> zakazaneRecenzije;
+   /** @pdRoleInfo migr=no name=RecezijaZaIzmenu assc=association39 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
+   private java.util.Collection<RecezijaZaIzmenu> recenzijeZaIzmene;
+   
+   
    public Administrator(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, String sifra,
 			String korisnickoIme, Date datum, boolean status) {
-		super(ime, prezime, eMail, pol, datumRodjenja, sifra, korisnickoIme, datum, status);
+      super(ime, prezime, eMail, pol, datumRodjenja, sifra, korisnickoIme, datum, status);
+      zakazaneRecenzije = new ArrayList<>();
+      recenzijeZaIzmene = new ArrayList<>();
 		// TODO Auto-generated constructor stub
 	}
 
-/** @pdRoleInfo migr=no name=ZakazanaRecenzija assc=association11 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
-   public java.util.Collection<ZakazanaRecenzija> zakazaneRecenzije;
-   /** @pdRoleInfo migr=no name=RecezijaZaIzmenu assc=association39 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
-   public java.util.Collection<RecezijaZaIzmenu> recenzijeZaIzmene;
-   
-   /** @pdOid dce443f0-0a05-4abd-8baa-cb9387af0879 */
+
+
+/** @pdOid dce443f0-0a05-4abd-8baa-cb9387af0879 */
    public void brisanjeNaloga() {
       // TODO: implement
    }
@@ -154,4 +154,5 @@ public class Administrator extends Korisnik {
          recenzijeZaIzmene.clear();
    }
 
+   
 }

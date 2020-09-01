@@ -20,7 +20,7 @@ public class KomentarView extends JPanel{
     
 
     public void addKomentar(Komentar komentar){
-        JLabel username = new JLabel(komentar.getKomentator().getKorisnickoIme());
+        JLabel username = new JLabel(komentar.getKomentator().getNalog().getKorisnickoIme());
         JTextArea sadrzaj = new JTextArea(komentar.getText());
         sadrzaj.setEditable(false);
         JScrollPane skrol = new JScrollPane(sadrzaj);

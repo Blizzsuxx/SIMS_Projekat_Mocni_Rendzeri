@@ -98,8 +98,8 @@ public class LoginMenadzer {
 	   DijalogKorisnickihInformacija dijalog = new DijalogKorisnickihInformacija(prozor, novKorisnik) {
 		   @Override
 		   protected void buttonTriggered() {
-			   if(novKorisnik.getNalog() != null && !korisnici.getKorisnici().containsKey(novKorisnik.getKorisnickoIme())) {
-					korisnici.getKorisnici().put(novKorisnik.getKorisnickoIme(), novKorisnik);
+			   if(novKorisnik.getNalog() != null && !korisnici.provjeriKorisnickoIme(novKorisnik.getNalog().getKorisnickoIme())) {
+					korisnici.dodaj(novKorisnik);
 					this.dispose();
 				} else {
 					JOptionPane.showMessageDialog(this, "Molimo vas da popunite sva polja.");
@@ -123,7 +123,7 @@ public class LoginMenadzer {
 		   zapocniSesiju(null);
 		   return;
 	   }
-	   korisnik = korisnici.getKorisnici().get(korisnickoIme);
+	   korisnik = korisnici.trazi(korisnickoIme);
 	   if(korisnik == null || !korisnik.getNalog().potvrdiSifru(sifra)){
 		   return;
 	   }

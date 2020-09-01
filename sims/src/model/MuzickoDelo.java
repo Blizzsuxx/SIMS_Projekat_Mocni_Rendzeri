@@ -4,9 +4,10 @@
  * Purpose: Defines the Class MuzickoDelo
  ***********************************************************************/
 package model;
-
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 /** @pdOid fe24355d-b240-471a-9a18-0672095a63e6 */
 public class MuzickoDelo {
    /** @pdOid 85e700ff-acf1-4663-ad34-fb23a5477991 */
@@ -22,98 +23,168 @@ public class MuzickoDelo {
    /** @pdOid 1fc30649-4984-4545-831e-01357cd4cb19 */
    private float prosecnaOcenaUrednika;
    
-   /** @pdRoleInfo migr=no name=Utisak assc=association5 mult=0..* */
+   private ArrayList<Zanr> zanrovi;
+   
+   private ArrayList<Integer> dosadasnjeOceneKorisnika;
+   private ArrayList<Integer> dosadasnjeOceneUrednika;
+   
+
+public ArrayList<Integer> getDosadasnjeOceneKorisnika() {
+	return dosadasnjeOceneKorisnika;
+}
+
+public void setDosadasnjeOceneKorisnika(ArrayList<Integer> dosadasnjeOceneKorisnika) {
+	this.dosadasnjeOceneKorisnika = dosadasnjeOceneKorisnika;
+}
+
+public ArrayList<Integer> getDosadasnjeOceneUrednika() {
+	return dosadasnjeOceneUrednika;
+}
+
+public void setDosadasnjeOceneUrednika(ArrayList<Integer> dosadasnjeOceneUrednika) {
+	this.dosadasnjeOceneUrednika = dosadasnjeOceneUrednika;
+}
+
+public ArrayList<Zanr> getZanrovi() {
+	return zanrovi;
+}
+
+public void setZanrovi(ArrayList<Zanr> zanrovi) {
+	this.zanrovi = zanrovi;
+}
+
+/** @pdRoleInfo migr=no name=Utisak assc=association5 mult=0..* */
    private List<Utisak> utisci;
+
+public String getNaziv() {
+	return naziv;
+}
+
+public void setNaziv(String naziv) {
+	this.naziv = naziv;
+}
+
+public String getOpis() {
+	return opis;
+}
+
+public void setOpis(String opis) {
+	this.opis = opis;
+}
+
+public Date getDatumIzdavanja() {
+	return datumIzdavanja;
+}
+
+public void setDatumIzdavanja(Date datumIzdavanja) {
+	this.datumIzdavanja = datumIzdavanja;
+}
+
+public boolean isStatus() {
+	return status;
+}
+
+public void setStatus(boolean status) {
+	this.status = status;
+}
+
+public float getProsecnaOcenaKorisnika() {
+	return prosecnaOcenaKorisnika;
+}
+
+public void setProsecnaOcenaKorisnika(float prosecnaOcenaKorisnika) {
+	this.prosecnaOcenaKorisnika = prosecnaOcenaKorisnika;
+}
+
+public float getProsecnaOcenaUrednika() {
+	return prosecnaOcenaUrednika;
+}
+
+public void setProsecnaOcenaUrednika(float prosecnaOcenaUrednika) {
+	this.prosecnaOcenaUrednika = prosecnaOcenaUrednika;
+}
+
+public List<Utisak> getUtisci() {
+	return utisci;
+}
+
+
+public MuzickoDelo(String naziv, String opis, Date datumIzdavanja, boolean status, float prosecnaOcenaKorisnika,
+		float prosecnaOcenaUrednika, List<Utisak> utisci) {
+	super();
+	this.naziv = naziv;
+	this.opis = opis;
+	this.datumIzdavanja = datumIzdavanja;
+	this.status = status;
+	this.prosecnaOcenaKorisnika = prosecnaOcenaKorisnika;
+	this.prosecnaOcenaUrednika = prosecnaOcenaUrednika;
+	this.utisci = utisci;
+	this.dosadasnjeOceneKorisnika=new ArrayList<Integer>();
+	this.dosadasnjeOceneUrednika=new ArrayList<Integer>();
+}
+
+public MuzickoDelo() {
+	super();
+	this.dosadasnjeOceneKorisnika=new ArrayList<Integer>();
+	this.dosadasnjeOceneUrednika=new ArrayList<Integer>();
+}
    
-   private List<Zanr> zanrovi;
+public MuzickoDelo(String naslov, String opis2, Date datumIzdavanja2, boolean b, ArrayList<Zanr> zanrovi) {
+	this.dosadasnjeOceneKorisnika=new ArrayList<Integer>();
+	this.dosadasnjeOceneUrednika=new ArrayList<Integer>();
+	this.naziv=naslov;
+	this.opis=opis2;
+	this.prosecnaOcenaKorisnika=0;
+	this.prosecnaOcenaUrednika=0;
+	this.status=b;
+	this.zanrovi=zanrovi;
+	this.datumIzdavanja=datumIzdavanja2;
+}
+
+
+public MuzickoDelo(String trim, String trim2, Date d, boolean b) {
+	this.dosadasnjeOceneKorisnika=new ArrayList<Integer>();
+	this.dosadasnjeOceneUrednika=new ArrayList<Integer>();
+	this.naziv=trim;
+	this.opis=trim2;
+	this.prosecnaOcenaKorisnika=0;
+	this.prosecnaOcenaUrednika=0;
+	this.status=b;
+	this.zanrovi=new ArrayList<Zanr>();
+	this.datumIzdavanja=d;
+}
+
+public MuzickoDelo(String naziv, String opis) {
+	this.naziv = naziv;
+	this.opis = opis;
+	this.status = true;
+ }
+
+public void dodajocenuKorisnika(int ocena) {
+	this.dosadasnjeOceneKorisnika.add(ocena);
+	int suma=0;
+	for(int i:this.dosadasnjeOceneKorisnika) {suma+=i;}
+	this.setProsecnaOcenaKorisnika(suma/this.dosadasnjeOceneKorisnika.size());
+}
    
 
-   public List<Zanr> getZanrovi() {
-   	return zanrovi;
-   }
+public void dodajocenuUrednika(int ocena) {
+	this.dosadasnjeOceneUrednika.add(ocena);
+	int suma=0;
+	for(int i:this.dosadasnjeOceneUrednika) {suma+=i;}
+	this.setProsecnaOcenaUrednika(suma/this.dosadasnjeOceneUrednika.size());
+}
 
-   public void setZanrovi(List<Zanr> zanrovi) {
-   	this.zanrovi = zanrovi;
-   }
-
-   public String getNaziv() {
-   	return naziv;
-   }
-
-   public void setNaziv(String naziv) {
-   	this.naziv = naziv;
-   }
-
-   public String getOpis() {
-   	return opis;
-   }
-
-   public void setOpis(String opis) {
-   	this.opis = opis;
-   }
-
-   public Date getDatumIzdavanja() {
-   	return datumIzdavanja;
-   }
-
-   public void setDatumIzdavanja(Date datumIzdavanja) {
-   	this.datumIzdavanja = datumIzdavanja;
-   }
-
-   public boolean isStatus() {
-   	return status;
-   }
-
-   public void setStatus(boolean status) {
-   	this.status = status;
-   }
-
-   public float getProsecnaOcenaKorisnika() {
-   	return prosecnaOcenaKorisnika;
-   }
-
-   public void setProsecnaOcenaKorisnika(float prosecnaOcenaKorisnika) {
-   	this.prosecnaOcenaKorisnika = prosecnaOcenaKorisnika;
-   }
-
-   public float getProsecnaOcenaUrednika() {
-   	return prosecnaOcenaUrednika;
-   }
-
-   public void setProsecnaOcenaUrednika(float prosecnaOcenaUrednika) {
-   	this.prosecnaOcenaUrednika = prosecnaOcenaUrednika;
-   }
-
-   public List<Utisak> getUtisci() {
-   	return utisci;
-   }
-
-   public void setUtisci(List<Utisak> utisci) {
-   	this.utisci = utisci;
-   }
-
-   public MuzickoDelo(String naziv, String opis, Date datumIzdavanja, boolean status, float prosecnaOcenaKorisnika,
-   		float prosecnaOcenaUrednika, List<Utisak> utisci) {
-   	super();
-   	this.naziv = naziv;
-   	this.opis = opis;
-   	this.datumIzdavanja = datumIzdavanja;
-   	this.status = status;
-   	this.prosecnaOcenaKorisnika = prosecnaOcenaKorisnika;
-   	this.prosecnaOcenaUrednika = prosecnaOcenaUrednika;
-   	this.utisci = utisci;
-   }
-
-   public MuzickoDelo() {
-   	super();
-   }
-      
-
-   public MuzickoDelo(String naziv, String opis) {
-      this.naziv = naziv;
-      this.opis = opis;
-      this.status = true;
-   }
-      
-
+public String toFileString(Izvodjac iz) {
+	String ad="";
+	ad+=this.getNaziv()+";";
+	ad+=this.getOpis()+";";
+	ad+=this.getDatumIzdavanja().getDay()+"."+this.getDatumIzdavanja().getMonth()+"."+this.getDatumIzdavanja().getYear()+".;";//
+	ad+=this.isStatus()+";";
+	ad+=iz.getUmetnickoIme();
+	for(Zanr z:this.getZanrovi()) {
+	ad+=";"+z.getNazivZanra();}
+	
+	return ad;
+}
 }

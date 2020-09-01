@@ -10,7 +10,7 @@ import model.Utisak;
 import model.Zanr;
 
 public class IzvestajSvihZanrovaMenadzer {
-	private ArrayList<IzvestajSvihZanrova> sviZanrovi;
+	ArrayList<IzvestajSvihZanrova> sviZanrovi;
 
 	public ArrayList<IzvestajSvihZanrova> getSviZanrovi() {
 		return sviZanrovi;

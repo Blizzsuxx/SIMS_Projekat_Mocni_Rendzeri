@@ -4,10 +4,7 @@
  * Purpose: Defines the Class Korisnik
  ***********************************************************************/
 package model;
-import java.text.ParseException;
 import java.util.Date;
-
-import controler.Constants;
 
 /** @pdOid 821f1adf-c3a0-4478-9680-7e8b2f65437c */
 public abstract class Korisnik {
@@ -21,6 +18,8 @@ public abstract class Korisnik {
    private Pol pol;
    /** @pdOid ea30ec0d-001e-493f-b70c-002d616633a3 */
    private Date datumRodjenja;
+   /** @pdOid be0f0d3c-a6da-4bed-98e0-397c13d099f8 */
+   private boolean status;
    
    /** @pdRoleInfo migr=no name=Nalog assc=association26 mult=1..1 */
    private Nalog nalog;
@@ -55,62 +54,14 @@ public abstract class Korisnik {
 	   nalog = null;
    }
 
-public String getIme() {
-	return ime;
-}
-
-public void setIme(String ime) {
-	this.ime = ime;
-}
-
-public String getPrezime() {
-	return prezime;
-}
-
-public void setPrezime(String prezime) {
-	this.prezime = prezime;
-}
-
-public String getEMail() {
-	return eMail;
-}
-
-public void setEMail(String eMail) {
-	this.eMail = eMail;
-}
-
-public Pol getPol() {
-	return pol;
-}
-
-public void setPol(Pol pol) {
-	this.pol = pol;
-}
-
-public void setPol(String pol) {
-	this.pol = Pol.valueOf(pol);
-}
-
-public String getDatumRodjenja() {
-	if(datumRodjenja == null) {
-		return "";
-	}
-	return datumRodjenja.toString();
-}
-
-public void setDatumRodjenja(Date datumRodjenja) {
-	this.datumRodjenja = datumRodjenja;
-}
-public void setDatumRodjenja(String datumRodjenja) throws ParseException {
-		this.datumRodjenja = Constants.FORMAT_ZA_DATUM.parse(datumRodjenja);
-}
-
-public Nalog getNalog() {
-	return nalog;
-}
 
 
-/** @pdOid 8a10c116-d1f6-4b12-ba00-78128209a21b */
+   /** @pdOid b5db7dcd-9237-4763-b6ad-4f21f00ab10c */
+   public void promeniSifru() {
+      // TODO: implement
+   }
+   
+   /** @pdOid 8a10c116-d1f6-4b12-ba00-78128209a21b */
    public void promeniPodatke() {
       // TODO: implement
    }
@@ -120,15 +71,75 @@ public Nalog getNalog() {
       // TODO: implement
    }
 
-public String getKorisnickoIme() {
-	// TODO Auto-generated method stub
-	if(nalog == null) {
-		return "";
+
+	public String getIme() {
+		return ime;
 	}
-	return nalog.getKorisnickoIme();
-}
+	
+	
+	public void setIme(String ime) {
+		this.ime = ime;
+	}
+	
+	
+	public String getPrezime() {
+		return prezime;
+	}
+	
+	
+	public void setPrezime(String prezime) {
+		this.prezime = prezime;
+	}
+	
+	
+	public String geteMail() {
+		return eMail;
+	}
+	
+	
+	public void seteMail(String eMail) {
+		this.eMail = eMail;
+	}
+	
+	
+	public Pol getPol() {
+		return pol;
+	}
+	
+	
+	public void setPol(Pol pol) {
+		this.pol = pol;
+	}
+	
+	
+	public Date getDatumRodjenja() {
+		return datumRodjenja;
+	}
+	
+	
+	public void setDatumRodjenja(Date datumRodjenja) {
+		this.datumRodjenja = datumRodjenja;
+	}
+	
+	
+	public boolean isStatus() {
+		return status;
+	}
+	
+	
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+	
+	
+	public Nalog getNalog() {
+		return nalog;
+	}
+	
+	
+	public void setNalog(Nalog nalog) {
+		this.nalog = nalog;
+	}
 
-
-
-
+   
 }

@@ -7,8 +7,12 @@ package model;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import controler.CitacDatoteka;
 import controler.IzvestajSvihIzvodjacaMenadzer;
@@ -54,9 +58,25 @@ public class Sesija {
 
    private static Sesija trenutnaSesija;
 
+   
+
    /** @pdOid 2750728b-3647-44d9-803c-9a8cbcd00047 */
    public void odjava() {
       // TODO: implement
+   }
+
+   /**
+    * @return the urednici
+    */
+   public java.util.List<Urednik> getUrednici() {
+      return urednici;
+   }
+
+   /**
+    * @param urednici the urednici to set
+    */
+   public void setUrednici(java.util.List<Urednik> urednici) {
+      this.urednici = urednici;
    }
 
    /**
@@ -314,7 +334,7 @@ public class Sesija {
          return trenutnaSesija;
       } else {
          trenutnaSesija = new Sesija(korisnik, datoteke.getKorisnici(), datoteke.getMuzickaDela(), datoteke.getGrupe(),
-               datoteke.getIzvodjaci(), datoteke.getRecenzije(), menadzer);
+               datoteke.getIzvodjaci().getSolo(), datoteke.getRecenzije(), menadzer);
          return trenutnaSesija;
       }
    }
@@ -355,17 +375,12 @@ public IzvestajSvihZanrovaMenadzer namestiIzvestaj() {
 	   
 	return izvestajSvihZanrova;
 	   
-}
-public IzvestajSvihZanrovaMenadzer getIzvestajSvihZanrova() {
-	return izvestajSvihZanrova;
-}
-
-
-public IzvestajSvihZanrova pronadjiPodatkejednogZanra(String naziv) {
+   }
+   public IzvestajSvihZanrova pronadjiPodatkejednogZanra(String naziv) {
 	   jedanZanr=new IzvestajSvihZanrova(naziv);
 	   pronadiDela(naziv);
 	   return jedanZanr;
-}
+   }
 
 
 private void pronadiDela(String naziv) {
@@ -386,7 +401,7 @@ private void pronadiDela(String naziv) {
 	
 }
 }
-public IzvestajSvihIzvodjacaMenadzer namestiIzvestajIzvodjaca() {
+   public IzvestajSvihIzvodjacaMenadzer namestiIzvestajIzvodjaca() {
 	   this.menIzvodjaca=new IzvestajSvihIzvodjacaMenadzer();
 	   ArrayList<Izvodjac> sviizv=new ArrayList<Izvodjac>();
 	   for(Grupa g:this.grupe) { sviizv.add(g);}
@@ -394,8 +409,8 @@ public IzvestajSvihIzvodjacaMenadzer namestiIzvestajIzvodjaca() {
 	   this.menIzvodjaca.namestiIzvestaj(sviizv);
 	   
 	   return this.menIzvodjaca;
-}
-public IzvestajJednogIzvodjaca namestiJedanizvestaj(Izvodjac i) {
+   }
+   public IzvestajJednogIzvodjaca namestiJedanizvestaj(Izvodjac i) {
 	   IzvestajJednogIzvodjaca jedan=new IzvestajJednogIzvodjaca(i.getUmetnickoIme());
 	   jedan.setIzvodjacReferenca(i);
 		jedan.setBrojDela(i.getMuzickaDela().size());
@@ -416,22 +431,63 @@ public IzvestajJednogIzvodjaca namestiJedanizvestaj(Izvodjac i) {
 		jedan.setOcenaUrednika(ocenaUr/i.muzickaDela.size());
 	   return jedan;
 	   
-}
-public Urednik pronadiUrednika(int rInd){
-	if(rInd < 0 || rInd > urednici.size() ) {
-		return null;
-	} else {return urednici.get(rInd);}
+   }
+   public String[] izvadiImenaIzvodjaca() {
+	   String[] imena= new String[this.grupe.size()+this.umetnici.size()];
+	   int j=0;
+	   for(Grupa i:this.grupe) {
+		   imena[j]=i.getUmetnickoIme();
+		   j++;
+	   }
+	   for(Pojedinacanizvodjac p:this.umetnici) {
+		   imena[j]=p.getUmetnickoIme();
+		   j++;
+	   }
+	   return imena;
+	   
+	   
+   }
+public String[] izvadiImenaDela(String i) {
+	for(Izvodjac iz:this.getGrupe()) {
+		if(iz.getUmetnickoIme().equals(i)) {return iz.getImenaDela();}
+	}
+	for(Izvodjac iz:this.getUmetnici()) {
+		if(iz.getUmetnickoIme().equals(i)) {return iz.getImenaDela();}
+	}
+	String[] s= {""};
+	return s;
+	
 }
 
-public Zanr pronadiZanr(int rInd) {
-	if(rInd<0 || rInd> sviZanrovi.size() ) {
-		return null;
-	}else {return sviZanrovi.get(rInd);}
+
+public Izvodjac getIzvodjac(String i) {
+	for(Izvodjac iz:this.getGrupe()) {
+		if(iz.getUmetnickoIme().equals(i)) {return iz;}
+	}
+	for(Izvodjac iz:this.getUmetnici()) {
+		if(iz.getUmetnickoIme().equals(i)) {return iz;}
+	}
+	return null;
 }
 
 
-public Collection<Urednik> getUrednici() {
-	// TODO Auto-generated method stub
-	return this.urednici;
+public boolean napraviDelo(String datumIzdavanja, String naslov, String opis, Izvodjac izv, ArrayList<Zanr> zanrovi) {
+	try {
+	DateTimeFormatter form=DateTimeFormatter.ofPattern("dd.mm.yyyy.");
+	LocalDate datum=LocalDate.parse(datumIzdavanja, form);
+	Date dan=new Date(datum.getYear(), datum.getMonthValue(), datum.getDayOfMonth());
+	MuzickoDelo md=new MuzickoDelo(naslov, opis, dan, true, zanrovi);
+	izv.getMuzickaDela().add(md);
+	this.getDela().add(md);
+	return true;
+	}catch(DateTimeException e) {
+		return false;
+	}
 }
+
+public IzvestajSvihZanrovaMenadzer getIzvestajSvihZanrova() {
+	return this.izvestajSvihZanrova;
+}
+
+
 }

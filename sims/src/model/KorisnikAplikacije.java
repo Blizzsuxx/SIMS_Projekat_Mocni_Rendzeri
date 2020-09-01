@@ -4,14 +4,17 @@
  * Purpose: Defines the Class KorisnikAplikacije
  ***********************************************************************/
 package model;
-
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 /** @pdOid d00188b7-a297-4fca-8ad3-4a5e996aa205 */
 public class KorisnikAplikacije extends FrontEndKorisnik {
    public KorisnikAplikacije(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, String sifra,
 			String korisnickoIme, Date datum, boolean status) {
-		super(ime, prezime, eMail, pol, datumRodjenja, sifra, korisnickoIme, datum, status);
+      super(ime, prezime, eMail, pol, datumRodjenja, sifra, korisnickoIme, datum, status);
+      pratite = new ArrayList<>();
+      onajKogaPrati = new ArrayList<>();
 		// TODO Auto-generated constructor stub
 	}
 
@@ -24,7 +27,23 @@ public KorisnikAplikacije() {
    /** @pdRoleInfo migr=no name=Izvodjac assc=association16 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
    private java.util.Collection<Izvodjac> onajKogaPrati;
    
-   /** @pdOid 570b1cab-dcf3-4bfc-a491-be5540c78efd */
+
+
+
+public KorisnikAplikacije(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, boolean status,
+		String sifra, String korisnickoIme, Date datum, Collection<MuzickoDelo> muzickoDelo, Collection<Zanr> preferiraniZanrovi,
+		Collection<KorisnikAplikacije> pratilac, Collection<FrontEndKorisnik> pratite,
+		Collection<Izvodjac> onajKogaPrati) {
+	   super(ime, prezime, eMail, pol, datumRodjenja, sifra, korisnickoIme, datum, status, muzickoDelo, preferiraniZanrovi, pratilac);
+	   this.pratite = pratite;
+	   this.onajKogaPrati = onajKogaPrati;
+
+   }
+
+
+
+
+/** @pdOid 570b1cab-dcf3-4bfc-a491-be5540c78efd */
    public void komentarisi() {
       // TODO: implement
    }

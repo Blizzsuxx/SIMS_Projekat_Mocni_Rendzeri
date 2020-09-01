@@ -5,6 +5,8 @@
  ***********************************************************************/
 package model;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 /** @pdOid a9c9f365-ca2f-446b-9e3e-06fdc25de877 */
@@ -12,20 +14,37 @@ public abstract class FrontEndKorisnik extends Korisnik {
    public FrontEndKorisnik(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, String sifra,
          String korisnickoIme, Date datum, boolean status) {
       super(ime, prezime, eMail, pol, datumRodjenja, sifra, korisnickoIme, datum, status);
+      this.muzickoDjelo = new ArrayList<>();
+      this.pratilac = new ArrayList<>();
+      this.preferiraniZanrovi = new ArrayList<>();
 
    }
+
+
+
+
+   public FrontEndKorisnik(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, String sifra,
+   String korisnickoIme, Date datum, boolean status, java.util.Collection<MuzickoDelo> muzickoDjelo, java.util.Collection<Zanr> preferiraniZanrovi, Collection<KorisnikAplikacije> pratilac) {
+      super(ime, prezime, eMail, pol, datumRodjenja, sifra, korisnickoIme, datum, status);
+      this.muzickoDjelo = muzickoDjelo;
+      this.preferiraniZanrovi = preferiraniZanrovi;
+      this.pratilac = pratilac;
+   }
+
+
+
 
    /**
     * @return the pratilac
     */
-   public KorisnikAplikacije[] getPratilac() {
+   public Collection<KorisnikAplikacije> getPratilac() {
       return pratilac;
    }
 
    /**
     * @param pratilac the pratilac to set
     */
-   public void setPratilac(KorisnikAplikacije[] pratilac) {
+   public void setPratilac(Collection<KorisnikAplikacije> pratilac) {
       this.pratilac = pratilac;
    }
 
@@ -46,9 +65,10 @@ public abstract class FrontEndKorisnik extends Korisnik {
     * @pdRoleInfo migr=no name=KorisnikAplikacije assc=pracenjeKorisnika mult=0..*
     *             side=A
     */
-   private KorisnikAplikacije[] pratilac;
+   private Collection<KorisnikAplikacije> pratilac;
    
-   /** @pdOid 2764179e-3960-4723-809e-5c4cf97d9e27 */
+
+/** @pdOid 2764179e-3960-4723-809e-5c4cf97d9e27 */
    public void izbrisiNalog() {
       // TODO: implement
    }

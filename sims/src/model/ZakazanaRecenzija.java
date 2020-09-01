@@ -23,9 +23,50 @@ public class ZakazanaRecenzija {
    /** @pdRoleInfo migr=no name=Urednik assc=association10 mult=1..1 side=A */
    private Urednik urednik;
 
+
+
+   public ZakazanaRecenzija(Date datumZakazivanja, String opis, boolean uradeno, Date rok, Recenzija recenzija, Urednik urednik) {
+      this.datumZakazivanja = datumZakazivanja;
+      this.opis = opis;
+      this.uradeno = uradeno;
+      this.rok = rok;
+      this.recenzija = recenzija;
+      this.urednik = urednik;
+   }
+
+
+
    /** @pdGenerated default parent getter */
    public Urednik getUrednik() {
       return urednik;
+   }
+
+   /**
+    * @return the datumZakazivanja
+    */
+   public Date getDatumZakazivanja() {
+      return datumZakazivanja;
+   }
+
+   /**
+    * @param datumZakazivanja the datumZakazivanja to set
+    */
+   public void setDatumZakazivanja(Date datumZakazivanja) {
+      this.datumZakazivanja = datumZakazivanja;
+   }
+
+   /**
+    * @return the uradeno
+    */
+   public boolean isUradeno() {
+      return uradeno;
+   }
+
+   /**
+    * @param uradeno the uradeno to set
+    */
+   public void setUradeno(boolean uradeno) {
+      this.uradeno = uradeno;
    }
 
    /**
@@ -91,14 +132,15 @@ public class ZakazanaRecenzija {
       }
    }
 
-public Date getDatumZakazivanja() {
-	// TODO Auto-generated method stub
-	return this.datumZakazivanja;
-}
-
-public boolean isUradeno() {
-	// TODO Auto-generated method stub
-	return this.uradeno;
+public String toFileString() {
+	//opis tru dan dan rec
+	String ad=this.getOpis()+";"+this.isUradeno()+";";
+	ad+=this.getDatumZakazivanja().getDate()+"."+this.getDatumZakazivanja().getMonth()+"."+this.getDatumZakazivanja().getYear()+".;";
+	ad+=this.getRok().getDate()+"."+this.getRok().getMonth()+"."+this.getRok().getYear()+".;";
+	ad+=this.getRecenzija().getNaslov();
+	
+	
+	return ad;
 }
 
 }

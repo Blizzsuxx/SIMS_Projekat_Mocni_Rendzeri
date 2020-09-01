@@ -64,4 +64,7 @@ public abstract class Utisak {
 	public Utisak() {
 		super();
 	}
+
+
+	public abstract String toFileString();
 }

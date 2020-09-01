@@ -106,9 +106,5 @@ public class IzvestajSvihIzvodjacaMenadzer {
 		iz.setBrojDela(brD);
 		
 	}
-	public Izvodjac pronadjiRed(int rInd) {
-		if(rInd<0 || rInd>izvodjaci.size()-1) {return null;}
-		return izvodjaci.get(rInd).getIzvodjacReferenca();
-	}
 
 }

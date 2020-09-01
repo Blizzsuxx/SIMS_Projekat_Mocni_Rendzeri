@@ -1,23 +1,13 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.RowFilter;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 
 import model.IzvestajJednogIzvodjaca;
 import model.Izvodjac;
@@ -32,15 +22,15 @@ public class IzvestajIzvodjaca extends JFrame {
 	private Sesija sesija;
 	private Izvodjac izvodjac;
 	private JButton btnBack;
-	private JTable table1;
+	private JTable table;
 	private JTextField tfImeUrednika, tfUkupnoDela, tfbrojRec, tfBrojkom, tfOcenaUr, tfOcenaKor;
 	private IzvestajJednogIzvodjaca jedan;
 
 	public IzvestajIzvodjaca(Sesija s, Izvodjac i) {
-		this.setSesija(s);
-		this.izvodjac = i;
-		this.jedan = s.namestiJedanizvestaj(i);
-		setSize(600, 600);
+		this.sesija=s;
+		this.izvodjac=i;
+		this.jedan=s.namestiJedanizvestaj(i);
+		setSize(400, 400);
 		setResizable(false);
 		initGui();
 		initActions();
@@ -61,7 +51,7 @@ public class IzvestajIzvodjaca extends JFrame {
 	}
 
 	private void initGui() {
-		MigLayout mig =  new MigLayout("wrap 2", "[]10[]", "[]10[]10[]10[]10[]10[]10[]10[]");
+		MigLayout mig =  new MigLayout("wrap 2", "[]10[]", "[]10[]10[]10[]10[]10[]10[]");
 		setLayout(mig);
 		
 		add(new JLabel("Umetnicko ime: "));
@@ -94,52 +84,6 @@ public class IzvestajIzvodjaca extends JFrame {
 		add(tfOcenaKor);
 		tfOcenaKor.setText(jedan.getOcenaKorisnika()+"");
 		//i spisak dela fali
-		
-		
-		table1 = new JTable(new MuzickaDelaModel(this.izvodjac.getMuzickaDela()));
-		table1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table1.getTableHeader().setReorderingAllowed(false);
-		JScrollPane sp1 = new JScrollPane(table1);
-		
-		add(sp1);
-		
-		TableRowSorter<TableModel> tableSorter1=new TableRowSorter<TableModel>();
-		tableSorter1.setModel(table1.getModel());
-		table1.setRowSorter(tableSorter1);
-		
-		JPanel pSerch1=new JPanel(new FlowLayout(FlowLayout.LEFT));
-        pSerch1.add(new JLabel("Pretraga:"));
-		JTextField tfSerch1=new JTextField(20);
-		pSerch1.add(tfSerch1);
-		add(pSerch1, BorderLayout.SOUTH);
-		tfSerch1.getDocument().addDocumentListener(new DocumentListener() {
-
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				
-				changedUpdate(e); 
-			}
-
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				
-				changedUpdate(e);
-			}
-
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				
-				String sSerch=tfSerch1.getText().trim();
-				if (sSerch.isEmpty()) {
-					tableSorter1.setRowFilter(null);
-				}else {
-					tableSorter1.setRowFilter(RowFilter.regexFilter("(?i)"+sSerch));
-				}
-				
-			}
-			
-		});
-		
 		add(btnBack);
 	}
 	private void initActions() {
@@ -154,7 +98,6 @@ public class IzvestajIzvodjaca extends JFrame {
 
 			
 		});}
-
 
 
 

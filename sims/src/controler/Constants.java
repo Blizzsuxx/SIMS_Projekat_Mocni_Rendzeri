@@ -21,8 +21,12 @@ public abstract class Constants {
 	
 	public static final SimpleDateFormat FORMAT_ZA_DATUM = new SimpleDateFormat("dd/MM/yyyy");
 
+	public static final SimpleDateFormat NATASIN_FORMAT_ZA_DATUM = new SimpleDateFormat("dd.MM.yyyy");
+
 	public static BufferedImage MUZICKA_IKONA;
 
 	public static final MuzickoDelo BARBIE_GIRL = new MuzickoDelo("Aqua - Barbie Girl", "Barbi devojka");
+
+	public static final String FILE_SEPARATOR = System.getProperty("file.separator");
 	
 }

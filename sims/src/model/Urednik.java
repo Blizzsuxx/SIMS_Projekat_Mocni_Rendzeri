@@ -28,6 +28,12 @@ public class Urednik extends FrontEndKorisnik {
 
 
 
+public Urednik() {
+}
+
+
+
+
 /** @pdOid f9c63904-e42a-4710-8822-3e3f1e173c5e */
    public void pokreniGlasanje() {
       // TODO: implement

@@ -44,20 +44,20 @@ public class UtisakMenadzer {
 					MuzickoDelo delo=pronadiDelo(muzickaDela, linije[0]);
 					DateTimeFormatter df=DateTimeFormatter.ofPattern("dd.MM.yyyy.");
 					LocalDate dan=LocalDate.parse(linije[1].trim(), df);
-					Date d=new Date(dan.getYear(), dan.getMonthValue(), dan.getDayOfMonth());
-					boolean bf=false;
-					if(linije[2].trim().equals("true")) {bf=true;}
+					Date datum=new Date(dan.getYear(), dan.getMonthValue(), dan.getDayOfMonth());
+					boolean status=false;
+					if(linije[2].trim().equals("true")) {status=true;}
 				
 					if(linije.length==6) {
-					Urednik u=(Urednik)pronadiKorisnika(korisnici, linije[4].trim());
-					Recenzija a = new Recenzija(delo, d, bf, linije[3],u ,linije[5].trim());//delo, datum status txt,urednik, naslov
-					u.getIstorijaRecenzija().add(a);
-					svi.add( a);
+					Urednik urednik = (Urednik)pronadiKorisnika(korisnici, linije[4].trim());
+					Recenzija a = new Recenzija(linije[3], datum, status, urednik, delo, linije[5].trim());//delo, datum status txt,urednik, naslov
+					urednik.getIstorijaRecenzija().add(a);
+					svi.add(a);
 					rec.add(a);
 					}
 					else if(linije.length==5) {
 						FrontEndKorisnik km=(FrontEndKorisnik)pronadiKorisnika(korisnici, linije[4].trim());
-						Komentar k=new Komentar(linije[3], d, bf, delo, km);
+						Komentar k=new Komentar(linije[3], datum, status, delo, km);
 						svi.add(k);
 						komentar.add(k);
 						

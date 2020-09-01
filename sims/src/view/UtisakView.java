@@ -7,11 +7,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import model.Komentar;
+import model.Utisak;
 import net.miginfocom.layout.CC;
 import net.miginfocom.swing.MigLayout;
 
-public class KomentarView extends JPanel{
+public class UtisakView extends JPanel{
 
     /**
      *
@@ -19,8 +19,8 @@ public class KomentarView extends JPanel{
     private static final long serialVersionUID = 1L;
     
 
-    public void addKomentar(Komentar komentar){
-        JLabel username = new JLabel(komentar.getKomentator().getNalog().getKorisnickoIme());
+    public void addKomentar(Utisak komentar){
+        JLabel username = new JLabel(komentar.getPisac().getNalog().getKorisnickoIme());
         JTextArea sadrzaj = new JTextArea(komentar.getText());
         sadrzaj.setEditable(false);
         JScrollPane skrol = new JScrollPane(sadrzaj);
@@ -37,12 +37,14 @@ public class KomentarView extends JPanel{
         panel.add(username, BorderLayout.NORTH);
         panel.add(skrol, BorderLayout.CENTER);
         this.add(panel, componentConstraints);
+        sadrzaj.setSize(panel.getSize());
+        sadrzaj.setPreferredSize(panel.getPreferredSize());
         
     }
 
     
 
-    public KomentarView() {
+    public UtisakView() {
         super(new MigLayout("fillx"));
     }
     

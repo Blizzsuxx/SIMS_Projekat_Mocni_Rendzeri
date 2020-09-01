@@ -17,6 +17,8 @@ import jaco.mp3.player.MP3Player;
 import model.Komentar;
 import model.KorisnikAplikacije;
 import model.MuzickoDelo;
+import model.Recenzija;
+import model.Urednik;
 import net.miginfocom.swing.MigLayout;
 
 public class MediaPlayer extends MojDialog {
@@ -50,8 +52,24 @@ public class MediaPlayer extends MojDialog {
         StarRater rater = new StarRater(5, 1.2f, 3);
         JLabel datum = new JLabel("Datum izdavanja: " + delo.getDatumIzdavanja());
         dataPanel.add(datum);
-        dataPanel.add(rater, "gapleft 40");
+        dataPanel.add(rater, "gapleft 100");
         this.add(dataPanel, "wrap");
+
+
+        UtisakView recenzije = new UtisakView();
+        
+        ExpandingPanel recenzijePanel = new ExpandingPanel("Recenzije");
+        recenzijePanel.getContent().add(recenzije, BorderLayout.CENTER);
+        recenzije.setSize(this.getWidth()-5, 100);
+        recenzije.setPreferredSize(new Dimension(this.getWidth()-5, 50));
+        this.add(recenzijePanel, "wrap");
+        
+        Urednik urednik = new Urednik();
+        urednik.setKorisnickoIme("urednik");
+        recenzije.addKomentar(new Recenzija("text", new Date(), true, urednik, delo, "naslov"));
+
+
+
 
         JTextArea opis = new JTextArea(delo.getOpis());
         JScrollPane pane = new JScrollPane(opis);
@@ -75,7 +93,7 @@ public class MediaPlayer extends MojDialog {
 
 
         //////////////////////////////
-        KomentarView komentari = new KomentarView();
+        UtisakView komentari = new UtisakView();
         
         ExpandingPanel expandingPanel = new ExpandingPanel("Komentari");
         expandingPanel.getContent().add(komentari, BorderLayout.CENTER);

@@ -16,14 +16,28 @@ public abstract class Utisak {
 	/** @pdOid e50c8293-12de-4b2a-9124-d7b41f2abd4c */
 	private boolean status;
 
+	private FrontEndKorisnik pisac;
+
 	/** @pdRoleInfo migr=no name=MuzickoDelo assc=association5 mult=1..1 side=A */
 	private MuzickoDelo delo;
-
 
 	public String getText() {
 		return text;
 	}
 
+	/**
+	 * @return the pisac
+	 */
+	public FrontEndKorisnik getPisac() {
+		return pisac;
+	}
+
+	/**
+	 * @param pisac the pisac to set
+	 */
+	public void setPisac(FrontEndKorisnik pisac) {
+		this.pisac = pisac;
+	}
 
 	public void setText(String text) {
 		this.text = text;
@@ -53,11 +67,12 @@ public abstract class Utisak {
 		this.delo = delo;
 	}
 
-	public Utisak(String text, Date datumUpisa, boolean status, MuzickoDelo delo) {
+	public Utisak(String text, Date datumUpisa, boolean status, FrontEndKorisnik pisac, MuzickoDelo delo) {
 		super();
 		this.text = text;
 		this.datumUpisa = datumUpisa;
 		this.status = status;
+		this.pisac = pisac;
 		this.delo = delo;
 	}
 

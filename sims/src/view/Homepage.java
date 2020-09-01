@@ -9,7 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JTextField;
+
+import org.jdesktop.swingx.JXSearchField;
 
 import model.Sesija;
 import net.miginfocom.swing.MigLayout;
@@ -52,7 +53,7 @@ public abstract class Homepage extends JFrame {
 		
 
 		
-		JTextField search = new JTextField(50);
+		JXSearchField search = new JXSearchField();
 		this.add(search, "north");
 
 		profil.addActionListener(new ActionListener() {

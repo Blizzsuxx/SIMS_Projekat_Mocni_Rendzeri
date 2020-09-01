@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.swing.JOptionPane;
+
 import controler.CitacDatoteka;
 import controler.IzvestajSvihIzvodjacaMenadzer;
 import controler.IzvestajSvihZanrovaMenadzer;
@@ -190,13 +192,18 @@ public class Sesija {
     * @pdGenerated default add
     * @param newGrupa
     */
-   public void addGrupe(Grupa newGrupa) {
-      if (newGrupa == null)
-         return;
+   public boolean addGrupe(Grupa newGrupa) {
+	  if (newGrupa == null)
+		  return false;
       if (this.grupe == null)
          this.grupe = new java.util.HashSet<Grupa>();
-      if (!this.grupe.contains(newGrupa))
-         this.grupe.add(newGrupa);
+      for (Grupa g : grupe)
+      {
+    	  if (g.getUmetnickoIme().equals(newGrupa.getUmetnickoIme()))
+    		  return false;
+      }
+      this.grupe.add(newGrupa);
+      return true;
    }
 
    /**
@@ -245,13 +252,18 @@ public class Sesija {
     * @pdGenerated default add
     * @param newPojedinacanizvodjac
     */
-   public void addUmetnici(Pojedinacanizvodjac newPojedinacanizvodjac) {
-      if (newPojedinacanizvodjac == null)
-         return;
+   public boolean addUmetnici(Pojedinacanizvodjac newPojedinacanizvodjac) {
+	  if (newPojedinacanizvodjac == null)
+		  return false;
       if (this.umetnici == null)
          this.umetnici = new java.util.HashSet<Pojedinacanizvodjac>();
-      if (!this.umetnici.contains(newPojedinacanizvodjac))
-         this.umetnici.add(newPojedinacanizvodjac);
+      for (Pojedinacanizvodjac pi : umetnici)
+      {
+    	  if (pi.getUmetnickoIme().equals(newPojedinacanizvodjac.getUmetnickoIme()))
+    		  return false;
+      }
+      this.umetnici.add(newPojedinacanizvodjac);
+      return true;
    }
 
    /**

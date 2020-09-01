@@ -175,14 +175,4 @@ public class IzvodjacMenadzer {
 			}
 		}
 	}
-	
-	public boolean proveriDuplikat(String umetnickoIme) throws ParseException
-	{
-		for (Izvodjac i : svi)
-		{
-			if (i.getUmetnickoIme().equals(umetnickoIme))
-				return false;
-		}
-		return true;
-	}
 }

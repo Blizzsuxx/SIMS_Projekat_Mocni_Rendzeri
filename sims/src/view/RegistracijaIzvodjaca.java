@@ -12,11 +12,10 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import org.jdatepicker.impl.*;
 
-import controler.IzvodjacMenadzer;
 import model.Grupa;
-import model.Izvodjac;
 import model.Pojedinacanizvodjac;
 import model.Pol;
+import model.Sesija;
 
 import javax.swing.JRadioButton;
 import javax.swing.JPanel;
@@ -44,8 +43,10 @@ public class RegistracijaIzvodjaca extends JFrame {
 	private SpringLayout sl_dtDod;
 	private SpringLayout sl_dtDof;
 	private SpringLayout sl_dtDor;
+	public Sesija sesija;
 	
-	public RegistracijaIzvodjaca() throws Exception {
+	public RegistracijaIzvodjaca(Sesija sesija) throws Exception {
+		this.sesija = sesija;
 		setTitle("Registracija izvodjaca");
 		getContentPane().setLayout(null);
 		
@@ -266,21 +267,15 @@ public class RegistracijaIzvodjaca extends JFrame {
 		Pol p = Pol.valueOf(pol);
 		Pojedinacanizvodjac pi = new Pojedinacanizvodjac(umetnickoIme, true, ime, prezime, new SimpleDateFormat("dd.MM.yyyy").parse(dob), 
 				new SimpleDateFormat("dd.MM.yyyy").parse(dod), opis, p);
-		IzvodjacMenadzer im = new IzvodjacMenadzer();
-		if(im.proveriDuplikat(umetnickoIme))
-			im.sacuvaj((Izvodjac)pi, true);
-		else
-			JOptionPane.showMessageDialog(null, "Izvodjac vec postoji.");
+			if (!sesija.addUmetnici(pi))
+				JOptionPane.showMessageDialog(null, "Izvodjac vec postoji.");
 	}
 	
 	private void registrujGrupu(String umetnickoIme, int brojClanova, String dof, String dor) throws ParseException
 	{
 		Grupa g = new Grupa(umetnickoIme, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy").parse(dof), 
 				new SimpleDateFormat("dd.MM.yyyy").parse(dor));
-		IzvodjacMenadzer im = new IzvodjacMenadzer();
-		if(im.proveriDuplikat(umetnickoIme))
-			im.sacuvaj((Izvodjac)g, true);
-		else
-			JOptionPane.showMessageDialog(null, "Izvodjac vec postoji.");
+		if (!sesija.addGrupe(g))
+			JOptionPane.showMessageDialog(null, "Grupa vec postoji");
 	}
 }

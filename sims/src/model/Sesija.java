@@ -14,11 +14,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-import javax.swing.JOptionPane;
 
 import controler.CitacDatoteka;
 import controler.IzvestajSvihIzvodjacaMenadzer;
 import controler.IzvestajSvihZanrovaMenadzer;
+import controler.IzvodjacMenadzer;
 import controler.KorisniciMenadzer;
 import controler.LoginMenadzer;
 import view.KorisnikAplikacijeHomepage;
@@ -27,6 +27,8 @@ import view.KorisnikAplikacijeHomepage;
 public class Sesija {
    /** @pdRoleInfo migr=no name=KorisniciMenadzer assc=association29 mult=1..1 */
    private KorisniciMenadzer korisnici;
+   
+   private IzvodjacMenadzer izvodjacMenadzer;
    /**
     * @pdRoleInfo migr=no name=MuzickoDelo assc=association38
     *             coll=java.util.Collection impl=java.util.HashSet mult=0..*
@@ -59,6 +61,7 @@ public class Sesija {
    private Korisnik trenutniKorisnik;
 
    private static Sesija trenutnaSesija;
+   
 
    
 
@@ -79,6 +82,14 @@ public class Sesija {
     */
    public void setUrednici(java.util.List<Urednik> urednici) {
       this.urednici = urednici;
+   }
+   
+   public ArrayList<Zanr> getZanrovi() {
+	   return this.sviZanrovi;
+   }
+   
+   public void setZanrovi(ArrayList<Zanr> zanrovi) {
+	   this.sviZanrovi = zanrovi;
    }
 
    /**
@@ -107,6 +118,14 @@ public class Sesija {
     */
    public void setKorisnici(KorisniciMenadzer korisnici) {
       this.korisnici = korisnici;
+   }
+   
+   public IzvodjacMenadzer getIzvodjacMenadzer() {
+	   return izvodjacMenadzer;
+   }
+   
+   public void setIzvodjacMenadzer(IzvodjacMenadzer izvodjacMenadzer) {
+	   this.izvodjacMenadzer = izvodjacMenadzer;
    }
 
    /** @pdGenerated default getter */
@@ -345,17 +364,18 @@ public class Sesija {
          trenutnaSesija.setTrenutniKorisnik(korisnik);
          return trenutnaSesija;
       } else {
-         trenutnaSesija = new Sesija(korisnik, datoteke.getKorisnici(), datoteke.getMuzickaDela(), datoteke.getGrupe(),
+         trenutnaSesija = new Sesija(korisnik, datoteke.getKorisnici(), datoteke.getIzvodjaci(), datoteke.getMuzickaDela(), datoteke.getGrupe(),
                datoteke.getIzvodjaci().getSolo(), datoteke.getRecenzije(), menadzer);
          return trenutnaSesija;
       }
    }
 
-   private Sesija(Korisnik trenutniKorisnik, KorisniciMenadzer korisnici, Collection<MuzickoDelo> dela,
+   private Sesija(Korisnik trenutniKorisnik, KorisniciMenadzer korisnici, IzvodjacMenadzer izvodjacMenadzer, Collection<MuzickoDelo> dela,
          Collection<Grupa> grupe, Collection<Pojedinacanizvodjac> umetnici, Collection<Recenzija> recenzije,
          LoginMenadzer loginMenadzer) {
       super();
       this.setKorisnici(korisnici);
+      this.setIzvodjacMenadzer(izvodjacMenadzer);
       this.dela = dela;
       this.grupe = grupe;
       this.umetnici = umetnici;

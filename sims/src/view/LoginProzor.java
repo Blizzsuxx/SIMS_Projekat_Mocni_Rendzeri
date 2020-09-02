@@ -74,7 +74,7 @@ public class LoginProzor extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				KorisnikAddEdit kae = new KorisnikAddEdit(null, "Registracija Korisnika", Uloga.KORISNIK);
+				KorisnikAddEdit kae = new KorisnikAddEdit("Registracija korisnika" ,Uloga.KORISNIK);
 				kae.setVisible(true);
 				
 			}

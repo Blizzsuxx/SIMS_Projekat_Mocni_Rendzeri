@@ -12,6 +12,8 @@ public abstract class Izvodjac {
 	private String umetnickoIme;
 	/** @pdOid a5f2bea1-d21a-43c6-99b6-58d368935d68 */
 	private boolean status;
+	
+	private Zanr zanr;
    
 	/** @pdRoleInfo migr=no name=KorisnikAplikacije assc=association16 mult=0..* side=A */
 	public KorisnikAplikacije[] prati;
@@ -60,9 +62,18 @@ public abstract class Izvodjac {
 		this.prati = prati;
 	}
 	
-	public Izvodjac(String umetnickoIme, boolean status, KorisnikAplikacije[] prati) {
+	public Zanr getZanr() {
+		return this.zanr;
+	}
+	
+	public void setZanr(Zanr z) {
+		this.zanr = z;
+	}
+	
+	public Izvodjac(String umetnickoIme, Zanr zanr, boolean status, KorisnikAplikacije[] prati) {
 		super();
 		this.umetnickoIme = umetnickoIme;
+		this.zanr = zanr;
 		this.status = status;
 		if (prati != null)
 	   	{
@@ -74,8 +85,9 @@ public abstract class Izvodjac {
 		super();
 	}
 	
-	public Izvodjac(String umetnickoIme2, boolean status2) {
+	public Izvodjac(String umetnickoIme2, Zanr zanr, boolean status2) {
 		this.umetnickoIme = umetnickoIme2;
+		this.zanr = zanr;
 		this.status = status2;
 	}
 	

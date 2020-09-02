@@ -17,14 +17,12 @@ import model.Sesija;
 
 
 public class BlokiranjeNaloga extends JFrame {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JTable nalozi;
 	public Sesija sesija;
 	
 	public BlokiranjeNaloga(Sesija sesija) throws Exception {
+		setResizable(false);
 		this.sesija = sesija;
 		setTitle("Blokiranje naloga");
 		getContentPane().setLayout(null);

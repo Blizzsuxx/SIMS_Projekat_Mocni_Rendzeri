@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JTable;
 
 import controler.IzvodjacMenadzer;
+import controler.ZanroviMenadzer;
 import model.Grupa;
 import model.Pojedinacanizvodjac;
 import model.Sesija;
@@ -84,7 +85,8 @@ public class PromenaZanraIzvodjaca extends JFrame {
 		
 		ucitajIzvodjace();
 		
-		for (Zanr z : sesija.getZanrovi())
+		ZanroviMenadzer zm = sesija.getZanroviMenadzer();
+		for (Zanr z : zm.getSviZanrovi())
 		{
 			cmbZanr.addItem(z.getNazivZanra());
 		}

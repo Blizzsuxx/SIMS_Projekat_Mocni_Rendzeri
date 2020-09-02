@@ -21,6 +21,7 @@ import controler.IzvestajSvihZanrovaMenadzer;
 import controler.IzvodjacMenadzer;
 import controler.KorisniciMenadzer;
 import controler.LoginMenadzer;
+import controler.ZanroviMenadzer;
 import view.KorisnikAplikacijeHomepage;
 
 /** @pdOid a6536d8d-e436-4d30-9c5d-e31219285ea3 */
@@ -29,6 +30,8 @@ public class Sesija {
    private KorisniciMenadzer korisnici;
    
    private IzvodjacMenadzer izvodjacMenadzer;
+   
+   private ZanroviMenadzer zanroviMenadzer;
    /**
     * @pdRoleInfo migr=no name=MuzickoDelo assc=association38
     *             coll=java.util.Collection impl=java.util.HashSet mult=0..*
@@ -126,6 +129,14 @@ public class Sesija {
    
    public void setIzvodjacMenadzer(IzvodjacMenadzer izvodjacMenadzer) {
 	   this.izvodjacMenadzer = izvodjacMenadzer;
+   }
+   
+   public ZanroviMenadzer getZanroviMenadzer() {
+	   return zanroviMenadzer;
+   }
+   
+   public void setZanroviMenadzer(ZanroviMenadzer zanroviMenadzer) {
+	   this.zanroviMenadzer = zanroviMenadzer;
    }
 
    /** @pdGenerated default getter */
@@ -364,18 +375,19 @@ public class Sesija {
          trenutnaSesija.setTrenutniKorisnik(korisnik);
          return trenutnaSesija;
       } else {
-         trenutnaSesija = new Sesija(korisnik, datoteke.getKorisnici(), datoteke.getIzvodjaci(), datoteke.getMuzickaDela(), datoteke.getGrupe(),
+         trenutnaSesija = new Sesija(korisnik, datoteke.getKorisnici(), datoteke.getIzvodjaci(), datoteke.getZanrovi(), datoteke.getMuzickaDela(), datoteke.getGrupe(),
                datoteke.getIzvodjaci().getSolo(), datoteke.getRecenzije(), menadzer);
          return trenutnaSesija;
       }
    }
 
-   private Sesija(Korisnik trenutniKorisnik, KorisniciMenadzer korisnici, IzvodjacMenadzer izvodjacMenadzer, Collection<MuzickoDelo> dela,
+   private Sesija(Korisnik trenutniKorisnik, KorisniciMenadzer korisnici, IzvodjacMenadzer izvodjacMenadzer, ZanroviMenadzer zanroviMenadzer, Collection<MuzickoDelo> dela,
          Collection<Grupa> grupe, Collection<Pojedinacanizvodjac> umetnici, Collection<Recenzija> recenzije,
          LoginMenadzer loginMenadzer) {
       super();
       this.setKorisnici(korisnici);
       this.setIzvodjacMenadzer(izvodjacMenadzer);
+      this.setZanroviMenadzer(zanroviMenadzer);
       this.dela = dela;
       this.grupe = grupe;
       this.umetnici = umetnici;

@@ -12,6 +12,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import org.jdatepicker.impl.*;
 
+import controler.ZanroviMenadzer;
 import model.Grupa;
 import model.Pojedinacanizvodjac;
 import model.Pol;
@@ -72,6 +73,7 @@ public class RegistracijaIzvodjaca extends JFrame {
 		
 		JPanel pnlPojedinacniIzvodjac = new JPanel();
 		JRadioButton rbPojedinacniIzvodjac = new JRadioButton("Pojedinacni izvodjac");
+		rbPojedinacniIzvodjac.setSelected(true);
 		rbPojedinacniIzvodjac.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				pnlPojedinacniIzvodjac.setVisible(true);
@@ -79,7 +81,6 @@ public class RegistracijaIzvodjaca extends JFrame {
 				
 			}
 		});
-		rbPojedinacniIzvodjac.setSelected(true);
 		rbPojedinacniIzvodjac.setBounds(10, 48, 151, 23);
 		getContentPane().add(rbPojedinacniIzvodjac);
 		
@@ -133,6 +134,10 @@ public class RegistracijaIzvodjaca extends JFrame {
 		lblNewLabel_1.setBounds(10, 81, 75, 14);
 		pnlPojedinacniIzvodjac.add(lblNewLabel_1);
 		
+		JLabel lblNewLabel_2 = new JLabel("Datum smrti");
+		lblNewLabel_2.setBounds(10, 122, 75, 14);
+		pnlPojedinacniIzvodjac.add(lblNewLabel_2);
+		
 		JDatePanelImpl date2Panel = new JDatePanelImpl(model, p);
 		JDatePickerImpl dtDod = new JDatePickerImpl(date2Panel, new DataLabelFormatter());
 		sl_dtDod.putConstraint(SpringLayout.NORTH, dtDod.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDod);
@@ -142,9 +147,46 @@ public class RegistracijaIzvodjaca extends JFrame {
 		dtDod.setBounds(106, 115, 189, 25);
 		pnlPojedinacniIzvodjac.add(dtDod);
 		
-		JLabel lblNewLabel_2 = new JLabel("Datum smrti");
-		lblNewLabel_2.setBounds(10, 122, 75, 14);
-		pnlPojedinacniIzvodjac.add(lblNewLabel_2);
+		pnlGrupa = new JPanel();
+		pnlGrupa.setSize(306, 234);
+		pnlGrupa.setLocation(284, 78);
+		pnlGrupa.setLayout(null);
+		getContentPane().add(pnlGrupa);
+		
+		JLabel lblBrojClanova = new JLabel("Broj clanova");
+		lblBrojClanova.setBounds(10, 11, 64, 14);
+		pnlGrupa.add(lblBrojClanova);
+		
+		spnBrojClanova = new JSpinner();
+		spnBrojClanova.setModel(new SpinnerNumberModel(2, 2, 200, 1));
+		spnBrojClanova.setBounds(112, 8, 51, 20);
+		pnlGrupa.add(spnBrojClanova);
+		
+		JLabel lblDatumOsnivanja = new JLabel("Datum osnivanja");
+		lblDatumOsnivanja.setBounds(10, 45, 94, 14);
+		pnlGrupa.add(lblDatumOsnivanja);
+		
+		JDatePanelImpl date3Panel = new JDatePanelImpl(model, p);
+		dtDof = new JDatePickerImpl(date3Panel, new DataLabelFormatter());
+		sl_dtDof.putConstraint(SpringLayout.NORTH, dtDof.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDof);
+		sl_dtDof.putConstraint(SpringLayout.WEST, dtDof.getJFormattedTextField(), 33, SpringLayout.WEST, dtDof);
+		sl_dtDof.putConstraint(SpringLayout.EAST, dtDof.getJFormattedTextField(), 211, SpringLayout.WEST, dtDof);
+		sl_dtDof = (SpringLayout) dtDof.getLayout();
+		dtDof.setBounds(112, 38, 189, 25);
+		pnlGrupa.add(dtDof);
+		
+		JDatePanelImpl date4Panel = new JDatePanelImpl(model, p);
+		dtDor = new JDatePickerImpl(date4Panel, new DataLabelFormatter());
+		sl_dtDor.putConstraint(SpringLayout.NORTH, dtDor.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDor);
+		sl_dtDor.putConstraint(SpringLayout.WEST, dtDor.getJFormattedTextField(), 33, SpringLayout.WEST, dtDor);
+		sl_dtDor.putConstraint(SpringLayout.EAST, dtDor.getJFormattedTextField(), 211, SpringLayout.WEST, dtDor);
+		sl_dtDor = (SpringLayout) dtDor.getLayout();
+		dtDor.setBounds(112, 78, 189, 25);
+		pnlGrupa.add(dtDor);
+		
+		JLabel lblDatumRaspada = new JLabel("Datum raspada");
+		lblDatumRaspada.setBounds(10, 86, 86, 14);
+		pnlGrupa.add(lblDatumRaspada);
 		
 		JLabel lblOpis = new JLabel("Opis");
 		lblOpis.setBounds(10, 189, 48, 14);
@@ -172,11 +214,7 @@ public class RegistracijaIzvodjaca extends JFrame {
 		pnlPojedinacniIzvodjac.add(txtOpis);
 		Border border = BorderFactory.createLineBorder(Color.LIGHT_GRAY);
 		txtOpis.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-		
-		JDatePanelImpl date3Panel = new JDatePanelImpl(model, p);
-		
-		JDatePanelImpl date4Panel = new JDatePanelImpl(model, p);
-		
+			
 		JButton btnRegistruj = new JButton("Registruj");
 		btnRegistruj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -225,52 +263,18 @@ public class RegistracijaIzvodjaca extends JFrame {
 				}
 			}
 		});
-		btnRegistruj.setBounds(10, 332, 89, 23);
+		btnRegistruj.setBounds(242, 352, 89, 23);
 		getContentPane().add(btnRegistruj);
-		pnlGrupa = new JPanel();
-		pnlGrupa.setBounds(321, 78, 306, 234);
-		getContentPane().add(pnlGrupa);
-		pnlGrupa.setLayout(null);
-		
-		JLabel lblBrojClanova = new JLabel("Broj clanova");
-		lblBrojClanova.setBounds(10, 11, 64, 14);
-		pnlGrupa.add(lblBrojClanova);
-		
-		spnBrojClanova = new JSpinner();
-		spnBrojClanova.setModel(new SpinnerNumberModel(2, 2, 200, 1));
-		spnBrojClanova.setBounds(112, 8, 51, 20);
-		pnlGrupa.add(spnBrojClanova);
-		
-		JLabel lblDatumOsnivanja = new JLabel("Datum osnivanja");
-		lblDatumOsnivanja.setBounds(10, 45, 94, 14);
-		pnlGrupa.add(lblDatumOsnivanja);
-		dtDof = new JDatePickerImpl(date3Panel, new DataLabelFormatter());
-		sl_dtDof.putConstraint(SpringLayout.NORTH, dtDof.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDof);
-		sl_dtDof.putConstraint(SpringLayout.WEST, dtDof.getJFormattedTextField(), 33, SpringLayout.WEST, dtDof);
-		sl_dtDof.putConstraint(SpringLayout.EAST, dtDof.getJFormattedTextField(), 211, SpringLayout.WEST, dtDof);
-		sl_dtDof = (SpringLayout) dtDof.getLayout();
-		dtDof.setBounds(112, 38, 189, 25);
-		pnlGrupa.add(dtDof);
-		dtDor = new JDatePickerImpl(date4Panel, new DataLabelFormatter());
-		sl_dtDor.putConstraint(SpringLayout.NORTH, dtDor.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDor);
-		sl_dtDor.putConstraint(SpringLayout.WEST, dtDor.getJFormattedTextField(), 33, SpringLayout.WEST, dtDor);
-		sl_dtDor.putConstraint(SpringLayout.EAST, dtDor.getJFormattedTextField(), 211, SpringLayout.WEST, dtDor);
-		sl_dtDor = (SpringLayout) dtDor.getLayout();
-		dtDor.setBounds(112, 78, 189, 25);
-		pnlGrupa.add(dtDor);
-		
-		JLabel lblDatumRaspada = new JLabel("Datum raspada");
-		lblDatumRaspada.setBounds(10, 86, 86, 14);
-		pnlGrupa.add(lblDatumRaspada);
 		
 		JLabel lblZanr = new JLabel("Zanr:");
-		lblZanr.setBounds(338, 11, 48, 14);
+		lblZanr.setBounds(10, 334, 48, 14);
 		getContentPane().add(lblZanr);
 		
 		cmbZanr = new JComboBox();
-		cmbZanr.setBounds(374, 7, 184, 22);
+		cmbZanr.setBounds(10, 352, 184, 22);
 		getContentPane().add(cmbZanr);
-		for (Zanr z : sesija.getZanrovi())
+		ZanroviMenadzer zm = sesija.getZanroviMenadzer();
+		for (Zanr z : zm.getSviZanrovi())
 		{
 			cmbZanr.addItem(z.getNazivZanra());
 		}

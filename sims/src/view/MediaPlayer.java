@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -49,10 +50,12 @@ public class MediaPlayer extends MojDialog {
         add(mediaPlayer, "span, wrap");
 
         JPanel dataPanel = new JPanel(new MigLayout());
-        StarRater rater = new StarRater(5, 1.2f, 3);
+        dataPanel.setBackground(Color.BLACK);
+        StarRater rater = new StarRater(5, 3, 3);
         JLabel datum = new JLabel("Datum izdavanja: " + delo.getDatumIzdavanja());
+        datum.setForeground(Color.WHITE);
         dataPanel.add(datum);
-        dataPanel.add(rater, "gapleft 100");
+        dataPanel.add(rater, "gapleft 120");
         this.add(dataPanel, "wrap");
 
 
@@ -61,7 +64,7 @@ public class MediaPlayer extends MojDialog {
         ExpandingPanel recenzijePanel = new ExpandingPanel("Recenzije");
         recenzijePanel.getContent().add(recenzije, BorderLayout.CENTER);
         recenzije.setSize(this.getWidth()-5, 100);
-        recenzije.setPreferredSize(new Dimension(this.getWidth()-5, 50));
+        recenzije.setPreferredSize(new Dimension(this.getWidth()-5, 100));
         this.add(recenzijePanel, "wrap");
         
         Urednik urednik = new Urednik();
@@ -76,6 +79,8 @@ public class MediaPlayer extends MojDialog {
         pane.setSize(new Dimension(this.getWidth(), 100));
         opis.setPreferredSize(pane.getSize());
         opis.setEditable(false);
+        opis.setBackground(Color.BLACK);
+        opis.setForeground(Color.WHITE);
 
         
         ExpandingPanel opisPanel = new ExpandingPanel("Opis");
@@ -105,11 +110,10 @@ public class MediaPlayer extends MojDialog {
         k.setKorisnickoIme("korisnickoIme");
         komentari.addKomentar(new Komentar("AAAAAAAAA", new Date(), true, delo, k));
         //////////////////////////
-
+        this.getContentPane().setBackground(Color.BLACK);
         JScrollPane scroll = new JScrollPane(this.getContentPane());
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.setContentPane(scroll);
-
         }
         
     }

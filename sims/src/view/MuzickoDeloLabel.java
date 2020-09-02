@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -24,7 +25,7 @@ public class MuzickoDeloLabel extends JPanel {
     private boolean clickable = true;
 
     public MuzickoDeloLabel(MuzickoDelo delo) {
-        this(80, 80, delo);
+        this(60, 60, delo);
 
     }
 
@@ -76,11 +77,13 @@ public class MuzickoDeloLabel extends JPanel {
 
     public MuzickoDeloLabel(ImageIcon ikona, MuzickoDelo delo) {
         super(new MigLayout());
+        setBackground(Color.BLACK);
         setPreferredSize(new Dimension(120, 120));
         JLabel labela = new JLabel(ikona);
         this.setDelo(delo);
-        this.add(labela, "wrap");
-        this.add(new JLabel(delo.getNaziv()));
+        this.add(labela, "wrap, align center");
+        labela.setBackground(Color.BLACK);
+        this.addTekst(delo.getNaziv());
 
         labela.addMouseListener(new MouseInputAdapter(){
             
@@ -103,7 +106,9 @@ public class MuzickoDeloLabel extends JPanel {
     void addTekst(String tekst){
         JLabel labela = new JLabel(tekst);
         labela.setSize(getPreferredSize());
-        this.add(labela);
+        this.add(labela, "wrap, align center");
+        labela.setBackground(Color.BLACK);
+        labela.setForeground(Color.WHITE);
     }
     
 }

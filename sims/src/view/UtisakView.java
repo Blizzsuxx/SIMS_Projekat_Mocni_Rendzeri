@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,7 +27,7 @@ public class UtisakView extends JPanel{
         JScrollPane skrol = new JScrollPane(sadrzaj);
         skrol.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         JPanel panel = new JPanel(new BorderLayout());
-
+        panel.setBackground(Color.BLACK);
         
         CC componentConstraints = new CC();
         componentConstraints.alignX("center").spanX();
@@ -39,6 +40,10 @@ public class UtisakView extends JPanel{
         this.add(panel, componentConstraints);
         sadrzaj.setSize(panel.getSize());
         sadrzaj.setPreferredSize(panel.getPreferredSize());
+        sadrzaj.setForeground(Color.WHITE);
+        sadrzaj.setBackground(Color.BLACK);
+        username.setBackground(Color.BLACK);
+        username.setForeground(Color.WHITE);
         
     }
 
@@ -46,6 +51,7 @@ public class UtisakView extends JPanel{
 
     public UtisakView() {
         super(new MigLayout("fillx"));
+        this.setBackground(Color.BLACK);
     }
     
 }

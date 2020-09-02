@@ -1,5 +1,7 @@
 package view;
 
+import java.awt.Color;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.plaf.basic.BasicArrowButton;
@@ -31,6 +33,7 @@ public class ExpandingPanel extends JPanel {
 
         this.add(expandingButton, componentConstraints);
         JXCollapsiblePane content = new JXCollapsiblePane(collapsablePaneDirection);
+        content.setBackground(Color.BLACK);
 
         CC componentConstraints2 = new CC();
         componentConstraints2.alignX("center").spanX();
@@ -55,6 +58,7 @@ public class ExpandingPanel extends JPanel {
 
     public ExpandingPanel(String labela){
         super(new MigLayout("fillx"));
+        this.setBackground(Color.BLACK);
         
         CC componentConstraints = new CC();
         componentConstraints.alignX("center").spanX();
@@ -63,6 +67,9 @@ public class ExpandingPanel extends JPanel {
         JLabel label = new JLabel(labela);
         this.add(label, componentConstraints);
         this.label = label;
+        label.setBackground(Color.BLACK);
+        label.setForeground(Color.WHITE);
+        
 
         initGui();
     }

@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
@@ -16,6 +17,7 @@ public class MojDialog extends JDialog {
 		this.setSize(dimension1, dimension2);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setResizable(false);
+		setBackground(Color.BLACK);
 		
 		// Za centriranje dijaloga
 		Toolkit toolkit = Toolkit.getDefaultToolkit();

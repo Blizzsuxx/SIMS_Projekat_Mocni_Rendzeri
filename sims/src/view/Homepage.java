@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -11,6 +12,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import org.jdesktop.swingx.JXSearchField;
+import org.jdesktop.swingx.JXSearchField.SearchMode;
 
 import model.Sesija;
 import net.miginfocom.swing.MigLayout;
@@ -32,11 +34,12 @@ public abstract class Homepage extends JFrame {
 
 
 	private void initGui(){
+		this.getContentPane().setBackground(Color.BLACK);
 		this.setSize(550, 550);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setResizable(false);
 
-		// Za centriranje dijaloga
+		
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension screenSize = toolkit.getScreenSize();
 		int x = (screenSize.width - this.getWidth()) / 2;
@@ -54,6 +57,21 @@ public abstract class Homepage extends JFrame {
 
 		
 		JXSearchField search = new JXSearchField();
+		search.setSearchMode(SearchMode.REGULAR);
+		search.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				/////////////////////////////
+				// TODO ODRADI SEARCH OVDE //
+				/////////////////////////////
+				// Seach se poziva preko klika na lupu ili preko pritiska na enter
+				// to je vec namesteno, jos samo da se search mehanika implementira
+				System.out.println(arg0.getActionCommand());
+			}
+
+		});
+		
 		this.add(search, "north");
 
 		profil.addActionListener(new ActionListener() {

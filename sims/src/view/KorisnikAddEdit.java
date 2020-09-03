@@ -51,7 +51,8 @@ public class KorisnikAddEdit extends JFrame {
 	private JRadioButton rbAdministrator;
 	private JPanel panelBase;
 	
-	public KorisnikAddEdit(String naslov, Uloga uloga) {
+	public KorisnikAddEdit(String naslov, Uloga uloga, Sesija sesija) {
+		this.sesija = sesija;
 		this.uloga = uloga;
 		setTitle(naslov);
 		setResizable(false);

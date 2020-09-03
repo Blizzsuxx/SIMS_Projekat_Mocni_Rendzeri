@@ -7,11 +7,17 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 
 import model.Izvodjac;
+import model.Korisnik;
 import model.MuzickoDelo;
+import model.Sesija;
 import model.Zanr;
+import view.TableModelWrapper;
 
 public class MuzickoDeloMenadzer {
 	private ArrayList<MuzickoDelo> dela;
@@ -114,5 +120,16 @@ public class MuzickoDeloMenadzer {
 		}
 		
 	}
-
+	
+	public TableModelWrapper getTabelaMuzickihDela(Izvodjac izvodjac)  throws Exception {
+		String[] columns = { "Naziv" ,"Opis", "Datum izdavanja"};
+		Class<?>[] columnTypes = { String.class, String.class, Date.class};
+		boolean[] editableColumns = { false, false, false};
+		int[] columnWidths = { 200, 200, 200};
+		ArrayList<Object[]> data = new ArrayList<Object[]>();
+		for (MuzickoDelo md : izvodjac.getMuzickaDela()) {
+			data.add(new Object[] {md.getNaziv(), md.getOpis(), md.getDatumIzdavanja()});
+		}
+		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
+	}
 }

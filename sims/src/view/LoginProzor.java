@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import model.Sesija;
 import model.Uloga;
 import net.miginfocom.swing.MigLayout;
 
@@ -19,8 +20,10 @@ public class LoginProzor extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private JButton btnPrijava, btnRegistracija, btnNeulogovaniKorisnik;
+	private Sesija sesija;
 	
-	public LoginProzor() throws HeadlessException {
+	public LoginProzor(Sesija sesija) throws HeadlessException {
+		this.sesija = sesija;
 		this.setTitle("Muzicki Katalog");
 		this.setSize(400, 400);
 		this.setLocationRelativeTo(null);
@@ -74,7 +77,7 @@ public class LoginProzor extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				KorisnikAddEdit kae = new KorisnikAddEdit("Registracija korisnika" ,Uloga.KORISNIK);
+				KorisnikAddEdit kae = new KorisnikAddEdit("Registracija korisnika" ,Uloga.KORISNIK, sesija);
 				kae.setVisible(true);
 				
 			}

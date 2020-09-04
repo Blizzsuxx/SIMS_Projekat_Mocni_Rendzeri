@@ -16,6 +16,7 @@ import java.util.Date;
 
 import controler.AlbumKontroler;
 import controler.CitacDatoteka;
+import controler.GlasanjeMenadzer;
 import controler.IzvestajSvihIzvodjacaMenadzer;
 import controler.IzvestajSvihZanrovaMenadzer;
 import controler.IzvodjacMenadzer;
@@ -40,6 +41,8 @@ public class Sesija {
    private ZakazanaRecenzijaMenadzer zakazanaRecenzijaMenadzer;
    
    private AlbumKontroler albumKontroler;
+   
+   private GlasanjeMenadzer glasanjeMenadzer;
    /**
     * @pdRoleInfo migr=no name=MuzickoDelo assc=association38
     *             coll=java.util.Collection impl=java.util.HashSet mult=0..*
@@ -169,6 +172,14 @@ public class Sesija {
    
    public void setAlbumKontroler(AlbumKontroler albumKontroler) {
 	   this.albumKontroler = albumKontroler;
+   }
+   
+   public GlasanjeMenadzer getGlasanjeMenadzer() {
+	   return glasanjeMenadzer;
+   }
+   
+   public void setGlasanjeMenadzer(GlasanjeMenadzer glasanjeMenadzer) {
+	   this.glasanjeMenadzer = glasanjeMenadzer;
    }
 
    /** @pdGenerated default getter */
@@ -408,14 +419,14 @@ public class Sesija {
          return trenutnaSesija;
       } else {
          trenutnaSesija = new Sesija(korisnik, datoteke.getKorisnici(), datoteke.getIzvodjaci(), datoteke.getZanrovi(), datoteke.getDeloMenadzer(), datoteke.getMuzickaDela(), datoteke.getGrupe(),
-               datoteke.getIzvodjaci().getSolo(), datoteke.getRecenzije(), datoteke.getZakRecMenadzer(), datoteke.getAlbumi(), menadzer);
+               datoteke.getIzvodjaci().getSolo(), datoteke.getRecenzije(), datoteke.getZakRecMenadzer(), datoteke.getAlbumi(), datoteke.getGlasanjeMenadzer(),menadzer);
          return trenutnaSesija;
       }
    }
 
    private Sesija(Korisnik trenutniKorisnik, KorisniciMenadzer korisnici, IzvodjacMenadzer izvodjacMenadzer, ZanroviMenadzer zanroviMenadzer, MuzickoDeloMenadzer muzickoDeloMenadzer,
 		   Collection<MuzickoDelo> dela, Collection<Grupa> grupe, Collection<Pojedinacanizvodjac> umetnici, Collection<Recenzija> recenzije, ZakazanaRecenzijaMenadzer zakazanaRecenzijaMenadzer,
-         AlbumKontroler albumKontroler, LoginMenadzer loginMenadzer) {
+         AlbumKontroler albumKontroler, GlasanjeMenadzer glasanjeMenadzer, LoginMenadzer loginMenadzer) {
       super();
       this.setKorisnici(korisnici);
       this.setIzvodjacMenadzer(izvodjacMenadzer);
@@ -428,6 +439,7 @@ public class Sesija {
       this.setZakazanaRecenzijaMenadzer(zakazanaRecenzijaMenadzer);
       this.setTrenutniKorisnik(trenutniKorisnik);
       this.setAlbumKontroler(albumKontroler);
+      this.setGlasanjeMenadzer(glasanjeMenadzer);
 	this.loginMenadzer = loginMenadzer;
 }
 

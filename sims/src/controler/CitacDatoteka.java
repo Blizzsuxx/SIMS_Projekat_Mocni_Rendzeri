@@ -1,11 +1,13 @@
 package controler;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -29,6 +31,7 @@ public class CitacDatoteka {
 	private OceneKontroler ocene;
 	private ClanoviMenadzer clanoviGrupe;
 	private RecenzijeZaIzmenuMenadzer izmena;
+	private GlasanjeMenadzer glasanjeMenadzer;
 	
 
 	public KorisniciMenadzer getKorisnici() {
@@ -71,6 +74,14 @@ public class CitacDatoteka {
 		return this.izmena;
 	}
 	
+	public GlasanjeMenadzer getGlasanjeMenadzer() {
+		return glasanjeMenadzer;
+	}
+	
+	public void setGlasanjeMenadzer(GlasanjeMenadzer glasanjeMenadzer) {
+		this.glasanjeMenadzer = glasanjeMenadzer;
+	}
+	
 	private List<String[]> ucitaj(String nazivFajla, char separator){
 		FileReader reader = null;
 		try {
@@ -99,7 +110,7 @@ public class CitacDatoteka {
 	}
 	
 
-	public void inicijalizuj() {
+	public void inicijalizuj() throws ParseException, IOException {
 		// TODO Auto-generated method stub
 
 		korisnici = new KorisniciMenadzer(ucitaj("korisnici.txt", ','));
@@ -115,7 +126,7 @@ public class CitacDatoteka {
 		ocene = new OceneKontroler(deloMenadzer, korisnici, ucitaj("ocene.txt", ','));
 		clanoviGrupe = new ClanoviMenadzer(izvodjaci, izvodjaci.getGrupe(), ucitaj("clanstva.txt",','));
 		izmena = new RecenzijeZaIzmenuMenadzer((ArrayList<Recenzija>)utisakmenadzer.getRecenzije(), ucitaj("recenzijeZaIzmenu.txt", ';'));
-
+		glasanjeMenadzer = new GlasanjeMenadzer(ucitajBuffered("glasovi.txt"), ucitajBuffered("uredniciKojiSuGlasali.txt"), deloMenadzer.getDela());
 
 		
 
@@ -151,6 +162,17 @@ public class CitacDatoteka {
 	    csvReader.close();
 	    return list;
 	}
+	
+	private ArrayList<String> ucitajBuffered(String fajl) throws IOException{
+		File f = new File("." + Constants.FILE_SEPARATOR + "sims" + Constants.FILE_SEPARATOR + "fajlovi"+ Constants.FILE_SEPARATOR + fajl);
+		BufferedReader bf = new BufferedReader(new FileReader(f));
+		String linija;
+		ArrayList<String> linije = new ArrayList<String>();
+		while ((linija = bf.readLine()) != null) {
+			linije.add(linija);
+		}
+		return linije;
+	}
 
 
 	public void sacuvaj() {
@@ -164,6 +186,7 @@ public class CitacDatoteka {
 		//izvodjaci.sacuvaj();
 		zanrovi.sacuvaj();//jos nesto treba sacuvati?? treba uzitati za izmenu
 		izmena.sacuvaj();
+		glasanjeMenadzer.sacuvaj();
 		
 	}
 

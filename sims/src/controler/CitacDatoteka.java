@@ -163,13 +163,18 @@ public class CitacDatoteka {
 	    return list;
 	}
 	
-	private ArrayList<String> ucitajBuffered(String fajl) throws IOException{
-		File f = new File("." + Constants.FILE_SEPARATOR + "sims" + Constants.FILE_SEPARATOR + "fajlovi"+ Constants.FILE_SEPARATOR + fajl);
+	private ArrayList<String> ucitajBuffered(String fajl) throws FileNotFoundException{
+		File f = new File("."+Constants.FILE_SEPARATOR + "fajlovi" + Constants.FILE_SEPARATOR+fajl);
 		BufferedReader bf = new BufferedReader(new FileReader(f));
 		String linija;
 		ArrayList<String> linije = new ArrayList<String>();
-		while ((linija = bf.readLine()) != null) {
-			linije.add(linija);
+		try {
+			while ((linija = bf.readLine()) != null) {
+				linije.add(linija);
+			}
+		} catch (IOException e) {
+			System.out.println(fajl + " NIJE PROCITAN!!!");
+			return new ArrayList<String>();
 		}
 		return linije;
 	}

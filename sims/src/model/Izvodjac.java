@@ -18,8 +18,8 @@ public abstract class Izvodjac {
 	/** @pdRoleInfo migr=no name=KorisnikAplikacije assc=association16 mult=0..* side=A */
 	public KorisnikAplikacije[] prati;
    
-	public ArrayList<MuzickoDelo> muzickaDela;
-	public ArrayList<Album> izdatiAlbumi;
+	public ArrayList<MuzickoDelo> muzickaDela = new ArrayList<MuzickoDelo>();
+	public ArrayList<Album> izdatiAlbumi = new ArrayList<Album>();
    
 
 	public ArrayList<Album> getIzdatiAlbumi() {
@@ -99,6 +99,10 @@ public abstract class Izvodjac {
 			if(md.getNaziv().equals(br1)) {return md;}
 		}
 		return null;
+	}
+	
+	public void addDelo(MuzickoDelo md) {
+		this.muzickaDela.add(md);
 	}
 	
 	public abstract String toFileString();

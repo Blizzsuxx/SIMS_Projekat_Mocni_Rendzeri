@@ -23,6 +23,8 @@ public class GlasanjeMenadzer {
 	}
 	
 	public GlasanjeMenadzer(ArrayList<String> data, ArrayList<String> urednici, ArrayList<MuzickoDelo> dela) throws ParseException {
+		this.glasovi = new ArrayList<Glasanje>();
+		this.uredniciKojiSuGlasali = new ArrayList<Urednik>();
 		dodajUrednikeKojiSuGlasali(urednici);
 		String prvaLinija = data.get(0);
 		if (prvaLinija.equals("true"))
@@ -44,12 +46,14 @@ public class GlasanjeMenadzer {
 	}
 	
 	private void dodajUrednikeKojiSuGlasali(ArrayList<String> urednici) throws ParseException {
-		for (String urednik : urednici) {
-			String[] delovi = urednik.split(";");
-			Pol p = Pol.valueOf(delovi[3]);
-			Urednik u = new Urednik(delovi[0], delovi[1], delovi[2], p, new SimpleDateFormat("dd.MM.yyyy").parse(delovi[4]), delovi[5],
-					 delovi[6], new SimpleDateFormat("dd.MM.yyyy").parse(delovi[7]), Boolean.parseBoolean(delovi[8]));
-			uredniciKojiSuGlasali.add(u);
+		if (!urednici.isEmpty()) {
+			for (String urednik : urednici) {
+				String[] delovi = urednik.split(";");
+				Pol p = Pol.valueOf(delovi[3]);
+				Urednik u = new Urednik(delovi[0], delovi[1], delovi[2], p, new SimpleDateFormat("dd.MM.yyyy").parse(delovi[4]), delovi[5],
+						 delovi[6], new SimpleDateFormat("dd.MM.yyyy").parse(delovi[7]), Boolean.parseBoolean(delovi[8]));
+				uredniciKojiSuGlasali.add(u);
+			}
 		}
 	}
 
@@ -92,12 +96,12 @@ public class GlasanjeMenadzer {
 	public void sacuvaj() {
 		PrintWriter pw = null;
 		String sep = System.getProperty("file.separator");
-		String putanja ="." + sep + "sims" + sep + "fajlovi" + sep + "glasovi.txt";
+		String putanja ="." + sep + "fajlovi" + sep + "glasovi.txt";
 		try {
 			pw = new PrintWriter(new FileWriter(putanja, false));
 			pw.println(this.pokrenutoGlasanje);
 			for(Glasanje g : glasovi) {
-				pw.println(Glasanje.Glasanje2String(g));
+				pw.print(Glasanje.Glasanje2String(g));
 			}
 			pw.close();	
 		}
@@ -115,11 +119,15 @@ public class GlasanjeMenadzer {
 	private void sacuvajUrednike() {
 		PrintWriter pw = null;
 		String sep = System.getProperty("file.separator");
-		String putanja ="." + sep + "sims" + sep + "fajlovi" + sep + "uredniciKojiSuGlasali.txt";
+		String putanja ="." + sep + "fajlovi" + sep + "uredniciKojiSuGlasali.txt";
 		try {
 			pw = new PrintWriter(new FileWriter(putanja, false));
+			if (uredniciKojiSuGlasali.isEmpty()) {
+				pw.write("");
+				return;
+			}
 			for(Urednik u : uredniciKojiSuGlasali) {
-				pw.println(Urednik.Urednik2String(u));
+				pw.print(Urednik.Urednik2String(u));
 			}
 			pw.close();	
 		}

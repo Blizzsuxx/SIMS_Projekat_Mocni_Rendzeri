@@ -3,9 +3,12 @@ package controler;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import model.Izvodjac;
 import model.Zanr;
 
 public class ZanroviMenadzer { //ovu klasu ili treba da ima sesija ili da bude prosledjena instanca klase IzvestajViseIzvodjaca
@@ -49,17 +52,12 @@ public class ZanroviMenadzer { //ovu klasu ili treba da ima sesija ili da bude p
 	}
 
 	private void ucitajZanrove(List<String[]> data) {
-
-		for(String[] linije : data){
-			Zanr a = new Zanr(linije[0].trim(), true );
-			if (linije[1].trim().equals("true")) {
-			a.setStatus(true);
-			}else {
-				a.setStatus(false);
-			}
+		this.sviZanrovi = new ArrayList<Zanr>();
+		for (String[] linije : data) {
+			String[] parts = linije[0].split(";");
+			Zanr a = new Zanr(parts[0].trim(), Boolean.parseBoolean(parts[1]));
 			sviZanrovi.add(a);
-		}
-		
+		}	
 	}
 
 	public void sacuvaj() {

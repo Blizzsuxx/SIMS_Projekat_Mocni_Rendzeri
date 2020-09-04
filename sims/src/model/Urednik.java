@@ -234,17 +234,14 @@ public Urednik() {
       if (recezijaZaIzmenu != null)
          recezijaZaIzmenu.clear();
    }
-   
-	public static String bool2String(boolean value) {
-		return (value ? "1" : "0");
-	}
+ 
    
    public static String Urednik2String(Urednik urednik) {
 	   String pattern = "dd.MM.yyyy";
 	   DateFormat df = new SimpleDateFormat(pattern);
 	   return urednik.getIme() + ";" + urednik.getPrezime() + ";" + urednik.geteMail() + ";" + urednik.getPol().name()
-				+ ";" + df.format(urednik.getDatumRodjenja()) + ";" + urednik.getNalog().getSifra() + ";" + urednik.getNalog().getKorisnickoIme()
-				+ urednik.getNalog().getDatumKreiranja() + ";" + bool2String(urednik.isStatus()) + System.lineSeparator();
+				+ ";" + df.format(urednik.getDatumRodjenja()) + ";" + urednik.getNalog().getSifra() + ";" + urednik.getNalog().getKorisnickoIme() +
+				";" + df.format(urednik.getNalog().getDatumKreiranja()) + ";" + urednik.isStatus() + System.lineSeparator();
 	}
 
 }

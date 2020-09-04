@@ -115,7 +115,7 @@ public class CitacDatoteka {
 
 		korisnici = new KorisniciMenadzer(ucitaj("korisnici.txt", ','));
 		zanrovi = new ZanroviMenadzer(ucitaj("zanrovi.txt", ','));
-		izvodjaci = new IzvodjacMenadzer(ucitaj("izvodjaci.txt", ','));
+		izvodjaci = new IzvodjacMenadzer(ucitaj("izvodjaci.txt", ';'));
 
 		deloMenadzer = new MuzickoDeloMenadzer(izvodjaci, zanrovi.getSviZanrovi(), ucitaj("muzickaDela.txt", ','));
 		utisakmenadzer = new UtisakMenadzer(deloMenadzer.getDela(), korisnici, ucitaj("utisci.txt", ','));
@@ -165,6 +165,7 @@ public class CitacDatoteka {
 	
 	private ArrayList<String> ucitajBuffered(String fajl) throws FileNotFoundException{
 		File f = new File("."+Constants.FILE_SEPARATOR + "fajlovi" + Constants.FILE_SEPARATOR+fajl);
+		@SuppressWarnings("resource")
 		BufferedReader bf = new BufferedReader(new FileReader(f));
 		String linija;
 		ArrayList<String> linije = new ArrayList<String>();

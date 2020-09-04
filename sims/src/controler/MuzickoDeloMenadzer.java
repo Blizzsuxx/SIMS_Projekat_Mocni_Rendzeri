@@ -3,6 +3,8 @@ package controler;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -28,7 +30,7 @@ public class MuzickoDeloMenadzer {
 		this.dela = new ArrayList<MuzickoDelo>();
 	}
 
-	public MuzickoDeloMenadzer(IzvodjacMenadzer izvodjaci, ArrayList<Zanr> sviZanrovi, List<String[]> data){
+	public MuzickoDeloMenadzer(IzvodjacMenadzer izvodjaci, ArrayList<Zanr> sviZanrovi, List<String[]> data) throws ParseException{
 		this();
 		ucitajDela(izvodjaci, sviZanrovi, data);
 	}
@@ -41,37 +43,35 @@ public class MuzickoDeloMenadzer {
 	public void setDela(ArrayList<MuzickoDelo> dela) {
 		this.dela = dela;
 	}
-
-	private void ucitajDela(IzvodjacMenadzer izvodjaci, ArrayList<Zanr> sviZanrovi, List<String[]> data) {
-				for  (String[] linije : data)
-				{
-					
-					DateTimeFormatter df=DateTimeFormatter.ofPattern("dd.MM.yyyy.");
-					LocalDate dan=LocalDate.parse(linije[2].trim(), df);
-					Date d=new Date(dan.getYear(), dan.getMonthValue(), dan.getDayOfMonth());
-					MuzickoDelo a = new MuzickoDelo(linije[0].trim(), linije[1].trim(), d,false );
-					if (linije[3].trim().equals("true")) {
-					a.setStatus(true);
-					}else {
-						a.setStatus(false);
-					}
-					String imeIzvodjaca=linije[4].trim();
-					for(Izvodjac i:izvodjaci.getSvi()) {
-						if(i.getUmetnickoIme().equals(imeIzvodjaca)) {
-							i.getMuzickaDela().add(a);
-						}
-					}
-					//sta je ovo??? -Dragan
-					for(int i=5; i<linije.length-5;i++) {
-						String naziv=linije[i].trim();
-						for(Zanr z:sviZanrovi) {
+	
+	
+	private void ucitajDela(IzvodjacMenadzer izvodjaci, ArrayList<Zanr> sviZanrovi, List<String[]> data) throws ParseException {
+				for (String[] linije : data) {
+					String[] parts = linije[0].split(";");
+					String naslov = parts[0];
+					String opis = parts[1].trim();
+					Date datumIzdavanja = new SimpleDateFormat("dd.MM.yyyy.").parse(parts[2].trim());
+					boolean status = Boolean.parseBoolean(parts[3]);
+					String imeIzvodjaca = parts[4].trim();
+					Izvodjac izvodjac = null;
+					ArrayList<Zanr> zanrovi = new ArrayList<Zanr>();
+					String[] viseZanrova = parts[5].split("\\|");
+					for(int j = 0; j < viseZanrova.length; j++) {
+						String naziv = viseZanrova[j].trim();
+						for(Zanr z : sviZanrovi) {
 							if(z.getNazivZanra().equals(naziv)) {
-								a.getZanrovi().add(z);
-								break;
+								zanrovi.add(z);
 							}
 						}
 					}
-					dela.add( a);
+					MuzickoDelo a = new MuzickoDelo(naslov, opis, datumIzdavanja, status, zanrovi);
+					dela.add(a);
+					for(Izvodjac iz : izvodjaci.getSvi()) {
+						if(iz.getUmetnickoIme().equals(imeIzvodjaca)) {
+							izvodjac = iz;
+						}
+					}
+					izvodjac.addDelo(a);
 				}
 	}
 
@@ -107,7 +107,7 @@ public class MuzickoDeloMenadzer {
 						break;
 					}
 				}
-				pw.println(a.toFileString(trazenIzv));
+				pw.print(a.toFileString(trazenIzv));
 				
 			}pw.close();
 			

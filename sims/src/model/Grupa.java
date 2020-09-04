@@ -102,7 +102,7 @@ public class Grupa extends Izvodjac {
 	public static String Grupa2String(Grupa g) {
 		String pattern = "dd.MM.yyyy";
 		DateFormat df = new SimpleDateFormat(pattern);
-		return g.getUmetnickoIme() + "|" + g.getZanr().getNazivZanra() + "|" + bool2String(g.isStatus()) + "|" + g.getBrojClanova() + "|" +
-				 df.format(g.getDatumOsnivanja()) + "|" + df.format(g.getDatumRaspada()) + System.lineSeparator();
+		return g.getUmetnickoIme() + ";" + g.getZanr().getNazivZanra() + ";" + bool2String(g.isStatus()) + ";" + g.getBrojClanova() + ";" +
+				 df.format(g.getDatumOsnivanja()) + ";" + df.format(g.getDatumRaspada()) + System.lineSeparator();
 	}
 }

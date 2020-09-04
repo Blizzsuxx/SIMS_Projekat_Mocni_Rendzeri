@@ -47,9 +47,17 @@ public abstract class Homepage extends JFrame {
 		this.setLocation(x, y);
 
 		JMenu menu = new JMenu("Meni");
+		menu.setBackground(Color.BLACK);
+		menu.setForeground(Color.WHITE);
 		JMenuBar menubar = new JMenuBar();
+		menubar.setBackground(Color.BLACK);
+		menubar.setForeground(Color.WHITE);
 		JMenuItem profil = new JMenuItem("Profil");
+		profil.setBackground(Color.BLACK);
+		profil.setForeground(Color.WHITE);
 		JMenuItem odjava = new JMenuItem("Odjava");
+		odjava.setBackground(Color.BLACK);
+		odjava.setForeground(Color.WHITE);
 		menu.add(profil);
 		menu.add(odjava);
 		menubar.add(menu);
@@ -58,6 +66,9 @@ public abstract class Homepage extends JFrame {
 		
 		JXSearchField search = new JXSearchField();
 		search.setSearchMode(SearchMode.REGULAR);
+		search.setCaretColor(Color.WHITE);
+		search.setBackground(Color.BLACK);
+		search.setForeground(Color.WHITE);
 		search.addActionListener(new ActionListener(){
 
 			@Override

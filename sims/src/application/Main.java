@@ -9,11 +9,9 @@ public class Main {
 		// TODO Auto-generated method stub
 		
 		CitacDatoteka datoteke = new CitacDatoteka();
-		try {
+		
 			datoteke.inicijalizuj();
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+		
 		
 		LoginMenadzer login = new LoginMenadzer(datoteke);
 		login.uloguj();

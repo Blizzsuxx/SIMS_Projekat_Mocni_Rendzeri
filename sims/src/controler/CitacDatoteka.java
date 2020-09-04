@@ -73,15 +73,15 @@ public class CitacDatoteka {
 	
 	private List<String[]> ucitaj(String nazivFajla, char separator){
 		FileReader reader = null;
-		
 		try {
-			reader = new FileReader("."+Constants.FILE_SEPARATOR+"korisnici.txt");
+			reader = new FileReader("."+Constants.FILE_SEPARATOR + "fajlovi" + Constants.FILE_SEPARATOR+nazivFajla);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			try {
-				reader = new FileReader("."+Constants.FILE_SEPARATOR+"sims"+Constants.FILE_SEPARATOR+"fajlovi"+Constants.FILE_SEPARATOR+"korisnici.txt");
+				reader = new FileReader("."+Constants.FILE_SEPARATOR+"sims"+Constants.FILE_SEPARATOR+"fajlovi"+Constants.FILE_SEPARATOR+nazivFajla);
 			} catch (FileNotFoundException e2) {
-				//TODO: handle exception
+				System.out.println(nazivFajla + " NIJE PROCITAN!!!");
+				return new ArrayList<>();
 			}
 		}
 

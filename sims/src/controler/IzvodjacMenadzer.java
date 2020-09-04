@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,8 @@ import model.Grupa;
 import model.Izvodjac;
 import model.Pojedinacanizvodjac;
 import model.Pol;
+import model.Zanr;
+import view.TableModelWrapper;
 
 public class IzvodjacMenadzer {
 	private ArrayList<Grupa> grupe;
@@ -80,23 +83,24 @@ public class IzvodjacMenadzer {
 				Date smrt = null;
 				Date rodjenje = null;
 				try {
-					rodjenje = Constants.NATASIN_FORMAT_ZA_DATUM.parse(linije[4].trim());
+					rodjenje = Constants.NATASIN_FORMAT_ZA_DATUM.parse(linije[5].trim());
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				if(!linije[5].trim().equals("/")) {
 					try {
-						smrt = Constants.NATASIN_FORMAT_ZA_DATUM.parse(linije[5].trim());
+						smrt = Constants.NATASIN_FORMAT_ZA_DATUM.parse(linije[6].trim());
 					} catch (ParseException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 				Pol p = Pol.zenski;
-				if(linije[7].trim().equals(Pol.muski.name())) {p = Pol.muski;}
-				boolean status = linije[1].trim().equals("true");
-				Pojedinacanizvodjac a = new Pojedinacanizvodjac(linije[0].trim(), status, linije[2].trim(), linije[3].trim(), rodjenje, smrt,linije[6].trim(), p );
+				if(linije[8].trim().equals(Pol.muski.name())) {p = Pol.muski;}
+				boolean status = linije[2].trim().equals("true");
+				Pojedinacanizvodjac a = new Pojedinacanizvodjac(linije[0].trim(), new Zanr(linije[1].trim(),true), 
+						status, linije[3].trim(), linije[4].trim(), rodjenje, smrt,linije[7].trim(), p );
 				svi.add(a);
 				this.getSolo().add(a);
 			}
@@ -104,22 +108,22 @@ public class IzvodjacMenadzer {
 				Date smrt = null;
 				Date rodjenje = null;
 				try {
-					rodjenje = Constants.NATASIN_FORMAT_ZA_DATUM.parse(linije[3].trim());
+					rodjenje = Constants.NATASIN_FORMAT_ZA_DATUM.parse(linije[4].trim());
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				if(!linije[4].trim().equals("/")) {
 					try {
-						smrt = Constants.NATASIN_FORMAT_ZA_DATUM.parse(linije[4].trim());
+						smrt = Constants.NATASIN_FORMAT_ZA_DATUM.parse(linije[5].trim());
 					} catch (ParseException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
-				Integer br1 = Integer.parseInt(linije[2].trim());
-				boolean status = linije[1].trim().equals("true");
-				Grupa a = new Grupa(linije[0].trim(), status, br1, rodjenje, smrt );
+				Integer br1 = Integer.parseInt(linije[3].trim());
+				boolean status = linije[2].trim().equals("true");
+				Grupa a = new Grupa(linije[0].trim(), new Zanr(linije[1].trim(),true), status, br1, rodjenje, smrt );
 				svi.add(a);
 				this.getGrupe().add(a);
 				
@@ -174,5 +178,29 @@ public class IzvodjacMenadzer {
 				pw.close();
 			}
 		}
+	}
+	
+	public TableModelWrapper getTabelaPojednicanihIzvodjaca()  throws Exception {
+		String[] columns = { "Umetnicko ime" ,"Zanr", "Ime", "Prezime", "Datum rodjenja"};
+		Class<?>[] columnTypes = { String.class, String.class, String.class, String.class, Date.class};
+		boolean[] editableColumns = { false, false, false, false, false};
+		int[] columnWidths = { 120, 80, 120, 120, 120};
+		ArrayList<Object[]> data = new ArrayList<Object[]>();
+		for (Pojedinacanizvodjac pi : solo) {
+			data.add(new Object[] {pi.getUmetnickoIme(), pi.getZanr().getNazivZanra(), pi.getIme(), pi.getPrezime(), pi.getDatumRodjenja()});
+		}
+		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
+	}
+	
+	public TableModelWrapper getTabelaGrupa()  throws Exception {
+		String[] columns = { "Umetnicko ime" ,"Zanr", "Broj clanova", "Datum osnivanja", "Datum raspada"};
+		Class<?>[] columnTypes = { String.class, String.class, Integer.class, Date.class, Date.class};
+		boolean[] editableColumns = { false, false, false, false, false};
+		int[] columnWidths = { 120, 80, 80, 120, 120};
+		ArrayList<Object[]> data = new ArrayList<Object[]>();
+		for (Grupa g : grupe) {
+			data.add(new Object[] {g.getUmetnickoIme(), g.getZanr().getNazivZanra(), g.getBrojClanova(), g.getDatumOsnivanja(), g.getDatumRaspada()});
+		}
+		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
 	}
 }

@@ -43,21 +43,21 @@ public class Grupa extends Izvodjac {
 	public void setDatumRaspada(Date datumRaspada) {
 		this.datumRaspada = datumRaspada;
 	}
-	public Grupa(String umetnickoIme, boolean status, KorisnikAplikacije[] prati, int brojClanova, Date datumOsnivanja,
+	public Grupa(String umetnickoIme, Zanr zanr, boolean status, KorisnikAplikacije[] prati, int brojClanova, Date datumOsnivanja,
 			Date datumRaspada) {
-		super(umetnickoIme, status, prati);
+		super(umetnickoIme, zanr, status, prati);
 		this.brojClanova = brojClanova;
 		this.datumOsnivanja = datumOsnivanja;
 		this.datumRaspada = datumRaspada;
 	}
-	public Grupa(String umetnickoIme, boolean status, KorisnikAplikacije[] prati) {
-		super(umetnickoIme, status, prati);
+	public Grupa(String umetnickoIme, Zanr zanr, boolean status, KorisnikAplikacije[] prati) {
+		super(umetnickoIme, zanr, status, prati);
 	}
 	
 	
-	public Grupa(String umetnickoIme, boolean status,  int brojClanova, Date datumOsnivanja,
+	public Grupa(String umetnickoIme, Zanr zanr, boolean status,  int brojClanova, Date datumOsnivanja,
 			Date datumRaspada) {
-		super(umetnickoIme, status);
+		super(umetnickoIme, zanr, status);
 		this.brojClanova = brojClanova;
 		this.datumOsnivanja = datumOsnivanja;
 		this.datumRaspada = datumRaspada;
@@ -79,6 +79,7 @@ public class Grupa extends Izvodjac {
 	public String toFileString() {
 		String ad="";
 		ad+=this.getUmetnickoIme()+";";
+		ad+=this.getZanr().getNazivZanra()+";";
 		ad+=this.isStatus()+";";
 		ad+=this.getBrojClanova()+";";
 		ad+=this.getDatumOsnivanja().getDay()+"."+this.getDatumOsnivanja().getMonth()+"."+this.getDatumOsnivanja().getYear()+".,";//
@@ -101,7 +102,7 @@ public class Grupa extends Izvodjac {
 	public static String Grupa2String(Grupa g) {
 		String pattern = "dd.MM.yyyy";
 		DateFormat df = new SimpleDateFormat(pattern);
-		return g.getUmetnickoIme() + "|" + bool2String(g.isStatus()) + "|" + g.getBrojClanova() + "|" +
+		return g.getUmetnickoIme() + "|" + g.getZanr().getNazivZanra() + "|" + bool2String(g.isStatus()) + "|" + g.getBrojClanova() + "|" +
 				 df.format(g.getDatumOsnivanja()) + "|" + df.format(g.getDatumRaspada()) + System.lineSeparator();
 	}
 }

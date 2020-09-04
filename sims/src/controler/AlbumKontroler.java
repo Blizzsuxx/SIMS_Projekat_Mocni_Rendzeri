@@ -29,6 +29,10 @@ public class AlbumKontroler {
 		super();
 		this.sviAlbumi = new ArrayList<Album>();
 	}
+	
+	public void addAlbum(Album album) {
+		sviAlbumi.add(album);
+	}
 
 	public AlbumKontroler(MuzickoDeloMenadzer muzickaDela, IzvodjacMenadzer izvodjaci, KorisniciMenadzer menadzerKorisnici, List<String[]> data){
 		this();

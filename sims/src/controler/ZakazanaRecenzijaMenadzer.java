@@ -9,8 +9,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import model.MuzickoDelo;
 import model.Recenzija;
 import model.ZakazanaRecenzija;
+import model.Zanr;
+import view.TableModelWrapper;
 
 public class ZakazanaRecenzijaMenadzer {
 	private ArrayList<ZakazanaRecenzija> sve;
@@ -85,6 +88,19 @@ public class ZakazanaRecenzijaMenadzer {
 			}
 		}
 		
+	}
+	
+	public TableModelWrapper getTabelaZavrsenihRecenzija()  throws Exception { 
+		String[] columns = { "Naziv" ,"Opis", "Datum zakazivanja", "Rok", "Urednik"};
+		Class<?>[] columnTypes = { String.class, String.class, Date.class, Date.class, String.class};
+		boolean[] editableColumns = { false, false, false, false, false};
+		int[] columnWidths = { 120, 120, 100, 80, 80};
+		ArrayList<Object[]> data = new ArrayList<Object[]>();
+		for (ZakazanaRecenzija zr : sve) {
+			if (zr.isUradeno())
+				data.add(new Object[] {zr.getRecenzija().getNaslov(), zr.getOpis(), zr.getRok(), zr.getUrednik().getIme()});
+		}
+		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
 	}
 
 }

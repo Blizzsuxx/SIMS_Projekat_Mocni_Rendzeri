@@ -1,137 +1,229 @@
 package view;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.Date;
+import java.util.Properties;
 
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JRadioButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.SpringLayout;
 
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
+import controler.KorisniciMenadzer;
 import model.Administrator;
 import model.Korisnik;
 import model.KorisnikAplikacije;
 import model.Nalog;
 import model.Pol;
+import model.Sesija;
 import model.Uloga;
 import model.Urednik;
-import net.miginfocom.swing.MigLayout;
 
-public class KorisnikAddEdit extends MojDialog {
+import javax.swing.JRadioButton;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.awt.event.ActionEvent;
+import javax.swing.JPanel;
+
+public class KorisnikAddEdit extends JFrame {
 	private static final long serialVersionUID = 1L;
-
-	private JTextField tfKorIme, tfSifra, tfIme, tfPrezime, tfMail, tfDatumRodjenja;
-	private JRadioButton musko, zensko;
-	private ButtonGroup grupa;
-	private JButton btnOk, btnCancel;
 	
-	private Pol p;
-	private Uloga indikator;
+	public Sesija sesija;
+	private JTextField txtIme;
+	private JTextField txtPrezime;
+	private JTextField txtEmail;
+	private SpringLayout sl_dtDob;
+	private JTextField txtKorisnickoIme;
+	private JTextField txtLozinka;
+	private JRadioButton rbMusko;
+	private JRadioButton rbZensko;
+	private JDatePickerImpl dtDob;
+	private Uloga uloga;
+	private JRadioButton rbObicanKorisnik;
+	private JRadioButton rbUrednik;
+	private JRadioButton rbAdministrator;
+	private JPanel panelBase;
 	
-	public KorisnikAddEdit(JDialog parent, String nazivProzora, Uloga indikator) {
-		super(nazivProzora, 400, 400);
-	
-		this.indikator = indikator;
+	public KorisnikAddEdit(String naslov, Uloga uloga, Sesija sesija) {
+		this.sesija = sesija;
+		this.uloga = uloga;
+		setTitle(naslov);
+		setResizable(false);
+		getContentPane().setLayout(null);
 		
-		this.initGUI();
-		this.actionGUI();
-		this.pack();
-	}
-
-	private void initGUI() {
-		MigLayout mig =  new MigLayout("wrap 2", "[]10[]", "[]10[]10[]10[]10[]10[]20[]");
-		setLayout(mig);
+		panelBase = new JPanel();
+		panelBase.setBounds(10, 11, 402, 181);
+		getContentPane().add(panelBase);
+		panelBase.setLayout(null);
 		
-		add(new JLabel("Korisnicko ime:"));
-		tfKorIme = new JTextField(10);
-		add(tfKorIme);
+		JLabel lblIme = new JLabel("Ime:");
+		lblIme.setBounds(10, 24, 40, 14);
+		panelBase.add(lblIme);
 		
-		add(new JLabel("Lozinka:"));
-		tfSifra = new JTextField(10);
-		add(tfSifra);
+		txtIme = new JTextField();
+		txtIme.setBounds(95, 21, 292, 20);
+		panelBase.add(txtIme);
+		txtIme.setColumns(10);
 		
-		add(new JLabel("Ime:"));
-		tfIme = new JTextField(10);
-		add(tfIme);
+		JLabel lblPrezime = new JLabel("Prezime:");
+		lblPrezime.setBounds(10, 56, 48, 14);
+		panelBase.add(lblPrezime);
 		
-		add(new JLabel("Prezime:"));
-		tfPrezime = new JTextField(10);
-		add(tfPrezime);
+		txtPrezime = new JTextField();
+		txtPrezime.setBounds(95, 52, 292, 20);
+		panelBase.add(txtPrezime);
+		txtPrezime.setColumns(10);
 		
-		add(new JLabel("E-Mail:"));
-		tfMail = new JTextField(10);
-		add(tfMail);
+		JLabel lblEmail = new JLabel("E-Mail:");
+		lblEmail.setBounds(10, 87, 48, 14);
+		panelBase.add(lblEmail);
 		
-		add(new JLabel("Datum rodjenja (dd-MM-yyyy):"));
-		tfDatumRodjenja = new JTextField(10);
-		add(tfDatumRodjenja);
+		txtEmail = new JTextField();
+		txtEmail.setBounds(95, 83, 292, 20);
+		panelBase.add(txtEmail);
+		txtEmail.setColumns(10);
 		
-		grupa = new ButtonGroup();
-		musko = new JRadioButton("Musko");
-		zensko = new JRadioButton("Zensko");
-		grupa.add(musko);
-		grupa.add(zensko);
-		musko.setSelected(true);
-		add(new JLabel("Pol:"));
-		add(musko, "split 2");
-		add(zensko);
+		UtilDateModel model = new UtilDateModel();
+		Properties p = new Properties();
+		p.put("text.today", "Danas");
+		p.put("text.month", "Mesec");
+		p.put("text.year", "Godina");
+		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+		dtDob = new JDatePickerImpl(datePanel, new DataLabelFormatter());
+		sl_dtDob.putConstraint(SpringLayout.NORTH, dtDob.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDob);
+		sl_dtDob.putConstraint(SpringLayout.WEST, dtDob.getJFormattedTextField(), 33, SpringLayout.WEST, dtDob);
+		sl_dtDob.putConstraint(SpringLayout.EAST, dtDob.getJFormattedTextField(), 211, SpringLayout.WEST, dtDob);
+		sl_dtDob = (SpringLayout) dtDob.getLayout();
+		dtDob.setBounds(95, 115, 292, 20);
+		panelBase.add(dtDob);
 		
-		btnOk = new JButton("Ok");
-		btnCancel = new JButton("Cancel");
-		add(new JLabel());
-		add(btnOk, "split 2");
-		add(btnCancel);
-	}
-	
-	private void actionGUI() {
-		btnOk.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				String korisnickoIme = tfKorIme.getText().trim();
-				String lozinka = tfSifra.getText().trim();
-				String ime = tfIme.getText().trim();
-				String prezime = tfPrezime.getText().trim();
-				String eMail = tfMail.getText().trim();
-				Date datumRodjenja = null;
-				try {
-					 datumRodjenja = new SimpleDateFormat("dd-MM-yyyy").parse(tfDatumRodjenja.getText().trim());
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} 
-				if (musko.isSelected())
-					p = Pol.muski;
-				else if (zensko.isSelected())
-					p = Pol.zenski;
-				
-				Korisnik k;
-				Nalog n = new Nalog(korisnickoIme, lozinka, new Date(), true);
-				if (indikator == Uloga.ADMIN) {
-					k = new Administrator(ime, prezime, eMail, p, datumRodjenja, lozinka, korisnickoIme, new Date(), true);
-				} else if (indikator == Uloga.KORISNIK) {
-					k = new KorisnikAplikacije(ime, prezime, eMail, p, datumRodjenja, lozinka, korisnickoIme, new Date(), true);
-				} else { // UREDNIK
-					k = new Urednik(ime, prezime, eMail, p, datumRodjenja, lozinka, korisnickoIme, new Date(), true);
-				}
-				// DOSAO DO DODAVANJE MENADZERA U GUI-ju
-			}
-			
-		});
+		JLabel lblDatumRodjenja = new JLabel("Datum rodjenja:");
+		lblDatumRodjenja.setBounds(10, 120, 79, 14);
+		panelBase.add(lblDatumRodjenja);
 		
-		btnCancel.addActionListener(new ActionListener() {
-
-			@Override
+		rbMusko = new JRadioButton("Musko");
+		rbMusko.setSelected(true);
+		rbMusko.setBounds(10, 150, 68, 23);
+		panelBase.add(rbMusko);
+		
+		rbZensko = new JRadioButton("Zensko");
+		rbZensko.setBounds(125, 150, 109, 23);
+		panelBase.add(rbZensko);
+		
+		JPanel pnlKorisnik = new JPanel();
+		pnlKorisnik.setBounds(10, 203, 402, 106);
+		getContentPane().add(pnlKorisnik);
+		pnlKorisnik.setLayout(null);
+		
+		JLabel lblKorisnickoIme = new JLabel("Korisnicko ime:");
+		lblKorisnickoIme.setBounds(10, 12, 74, 14);
+		pnlKorisnik.add(lblKorisnickoIme);
+		
+		txtKorisnickoIme = new JTextField();
+		txtKorisnickoIme.setBounds(94, 9, 292, 20);
+		pnlKorisnik.add(txtKorisnickoIme);
+		txtKorisnickoIme.setColumns(10);
+		
+		JLabel lblLozinka = new JLabel("Lozinka:");
+		lblLozinka.setBounds(10, 43, 40, 14);
+		pnlKorisnik.add(lblLozinka);
+		
+		txtLozinka = new JTextField();
+		txtLozinka.setBounds(94, 40, 292, 20);
+		pnlKorisnik.add(txtLozinka);
+		txtLozinka.setColumns(10);
+		
+		JButton btnKreiraj = new JButton("Kreiraj");
+		btnKreiraj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				KorisnikAddEdit.this.dispose();
-				
+				try {
+					kreirajKorisnika();
+				} 
+				catch (ParseException e1) {
+					e1.printStackTrace();
+				}
 			}
-			
 		});
+		btnKreiraj.setBounds(323, 333, 89, 23);
+		getContentPane().add(btnKreiraj);
+		
+		rbObicanKorisnik = new JRadioButton("Obican korisnik");
+		rbObicanKorisnik.setSelected(true);
+		rbObicanKorisnik.setBounds(10, 75, 99, 23);
+		pnlKorisnik.add(rbObicanKorisnik);
+		
+		rbUrednik = new JRadioButton("Urednik");
+		rbUrednik.setBounds(125, 75, 63, 23);
+		pnlKorisnik.add(rbUrednik);
+		
+		rbAdministrator = new JRadioButton("Administrator");
+		rbAdministrator.setBounds(214, 75, 93, 23);
+		pnlKorisnik.add(rbAdministrator);
+		
+		rbObicanKorisnik.setVisible(uloga == Uloga.ADMIN);
+		rbUrednik.setVisible(uloga == Uloga.ADMIN);
+		rbAdministrator.setVisible(uloga == Uloga.ADMIN);
+	}
+	
+	private void kreirajKorisnika() throws ParseException {
+		String msg = validiraj();
+		if (!msg.equals(""))
+		{
+			JOptionPane.showMessageDialog(null, msg);
+			return;
+		}
+		
+		String ime = txtIme.getText().trim();
+		String prezime = txtPrezime.getText().trim();
+		String eMail = txtEmail.getText().trim();
+		String dob = dtDob.getJFormattedTextField().getText();
+		Pol pol = null;
+		if (rbMusko.isSelected())
+			pol = Pol.muski;
+		else if (rbZensko.isSelected())
+			pol = Pol.zenski;
+		String korisnickoIme = txtKorisnickoIme.getText().trim();
+		String lozinka = txtLozinka.getText().trim();
+		Korisnik k;
+		Nalog n = new Nalog(korisnickoIme, lozinka, new Date(), true);
+		if (rbObicanKorisnik.isSelected()) {
+			k = new KorisnikAplikacije(ime, prezime, eMail, pol, new SimpleDateFormat("dd.MM.yyyy").parse(dob), lozinka, korisnickoIme, new Date(), true);
+		}
+		else if (rbUrednik.isSelected()) {
+			k = new Urednik(ime, prezime, eMail, pol, new SimpleDateFormat("dd.MM.yyyy").parse(dob), lozinka, korisnickoIme, new Date(), true);
+		}
+		else {
+			k = new Administrator(ime, prezime, eMail, pol, new SimpleDateFormat("dd.MM.yyyy").parse(dob), lozinka, korisnickoIme, new Date(), true);
+		}
+		k.setNalog(n);
+		KorisniciMenadzer km = sesija.getKorisnici();
+		km.dodaj(k);
+		sesija.setKorisnici(km);
+	}
+	
+	private String validiraj() {
+		if (txtIme.getText().isEmpty()) {
+			return "Ime je obavezno polje.";
+		}
+		if (txtPrezime.getText().isEmpty()) {
+			return "Prezime je obavezno polje.";
+		}
+		if (txtEmail.getText().isEmpty()) {
+			return "Email je obavezno polje.";
+		}
+		if (txtKorisnickoIme.getText().isEmpty()) {
+			return "Korisnicko ime je obavezno polje.";
+		}
+		if (txtLozinka.getText().isEmpty()) {
+			return "Lozinka je obavezno polje.";
+		}
+		return "";
 	}
 }

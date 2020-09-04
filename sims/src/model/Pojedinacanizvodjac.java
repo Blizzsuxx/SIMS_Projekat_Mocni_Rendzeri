@@ -68,9 +68,9 @@ public class Pojedinacanizvodjac extends Izvodjac {
 	public void setPol(Pol pol) {
 		this.pol = pol;
 	}
-	public Pojedinacanizvodjac(String umetnickoIme, boolean status, KorisnikAplikacije[] prati, String ime, String prezime,
+	public Pojedinacanizvodjac(String umetnickoIme, Zanr zanr, boolean status, KorisnikAplikacije[] prati, String ime, String prezime,
 			Date datumRodjenja, Date datumSmrti, String opis, Pol pol) {
-		super(umetnickoIme, status, prati);
+		super(umetnickoIme, zanr, status, prati);
 		this.ime = ime;
 		this.prezime = prezime;
 		this.datumRodjenja = datumRodjenja;
@@ -79,13 +79,13 @@ public class Pojedinacanizvodjac extends Izvodjac {
 		this.pol = pol;
 		this.clanstvaUGrupama=new ArrayList<Clan>();
 	}
-	public Pojedinacanizvodjac(String umetnickoIme, boolean status, KorisnikAplikacije[] prati) {
-		super(umetnickoIme, status, prati);
+	public Pojedinacanizvodjac(String umetnickoIme, Zanr zanr, boolean status, KorisnikAplikacije[] prati) {
+		super(umetnickoIme, zanr, status, prati);
 	}
 	
-	public Pojedinacanizvodjac(String umetnickoIme, boolean status, String ime, String prezime,
+	public Pojedinacanizvodjac(String umetnickoIme, Zanr zanr, boolean status, String ime, String prezime,
 			Date datumRodjenja, Date datumSmrti, String opis, Pol pol) {
-		super(umetnickoIme, status);
+		super(umetnickoIme, zanr, status);
 		this.ime = ime;
 		this.prezime = prezime;
 		this.datumRodjenja = datumRodjenja;
@@ -111,6 +111,7 @@ public class Pojedinacanizvodjac extends Izvodjac {
 	public String toFileString() {
 		String ad="";
 		ad+=this.getUmetnickoIme()+";";
+		ad+=this.getZanr().getNazivZanra()+";";
 		ad+=this.isStatus()+";";
 		ad+=this.getIme()+";"+this.getPrezime()+";";
 		ad+=this.getDatumRodjenja().getDay()+"."+this.getDatumRodjenja().getMonth()+"."+this.getDatumRodjenja().getYear()+".;";//
@@ -136,7 +137,7 @@ public class Pojedinacanizvodjac extends Izvodjac {
 	public static String PojedinacniIzvodjac2String(Pojedinacanizvodjac pi) {
 		String pattern = "dd.MM.yyyy";
 		DateFormat df = new SimpleDateFormat(pattern);
-		return pi.getUmetnickoIme() + "|" + bool2String(pi.isStatus()) + "|" + pi.getIme() + "|" +
+		return pi.getUmetnickoIme() + "|"  + pi.getZanr().getNazivZanra() + "|" + bool2String(pi.isStatus()) + "|" + pi.getIme() + "|" +
 				pi.getPrezime() + "|" + df.format(pi.getDatumRodjenja()) + "|" + df.format(pi.getDatumSmrti()) +
 				"|" + pi.getOpis() + "|" + pi.getPol() + System.lineSeparator();
 	}

@@ -4,7 +4,11 @@
  * Purpose: Defines the Class Korisnik
  ***********************************************************************/
 package model;
+import java.text.Format;
+import java.text.ParseException;
 import java.util.Date;
+
+import controler.Constants;
 
 /** @pdOid 821f1adf-c3a0-4478-9680-7e8b2f65437c */
 public abstract class Korisnik {
@@ -139,6 +143,19 @@ public abstract class Korisnik {
 	
 	public void setNalog(Nalog nalog) {
 		this.nalog = nalog;
+	}
+	
+	public String getDatumReflektor() {
+		return Constants.FORMAT_ZA_DATUM.format(this.datumRodjenja);
+	}
+	
+	public void setDatumReflektor(String datumReflektor) {
+		try {
+			this.datumRodjenja = Constants.FORMAT_ZA_DATUM.parse(datumReflektor);
+		} 
+		catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 
    

@@ -161,6 +161,9 @@ public class CitacDatoteka {
 	
 	private ArrayList<String> ucitajBuffered(String fajl) throws FileNotFoundException{
 		File f = new File("."+Constants.FILE_SEPARATOR + "fajlovi" + Constants.FILE_SEPARATOR+fajl);
+		if(!f.exists()){
+			f = new File("."+Constants.FILE_SEPARATOR + "sims" + Constants.FILE_SEPARATOR + "fajlovi" + Constants.FILE_SEPARATOR+fajl);
+		}
 		@SuppressWarnings("resource")
 		BufferedReader bf = new BufferedReader(new FileReader(f));
 		String linija;

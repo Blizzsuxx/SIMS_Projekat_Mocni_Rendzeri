@@ -1,5 +1,6 @@
 package controler;
 
+import java.awt.Frame;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -131,5 +132,13 @@ public class MuzickoDeloMenadzer {
 			data.add(new Object[] {md.getNaziv(), md.getOpis(), md.getDatumIzdavanja()});
 		}
 		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
+	}
+
+	public ArrayList<MuzickoDelo> trazi(String substring) {
+		ArrayList<MuzickoDelo> delaKojaSadzeString = new ArrayList<>();
+		for(MuzickoDelo delo : dela) {
+			if(delo.Ime().contains(substring)) delaKojaSadzeString.add(delo);
+		}
+		return delaKojaSadzeString;
 	}
 }

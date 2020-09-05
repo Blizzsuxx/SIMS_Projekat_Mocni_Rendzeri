@@ -125,6 +125,7 @@ public class LoginMenadzer {
 	   }
 	   korisnik = korisnici.trazi(korisnickoIme);
 	   if(korisnik == null || !korisnik.getNalog().potvrdiSifru(sifra)){
+		   JOptionPane.showMessageDialog(prozor, "Pogresni username ili sifra");
 		   return;
 	   }
 	   prozor.setVisible(false);

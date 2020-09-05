@@ -28,8 +28,20 @@ public class ExpandingPanel extends JPanel {
         BasicArrowButton expandingButton = new BasicArrowButton(basicArrowButtonDirection);
 
         CC componentConstraints = new CC();
-        componentConstraints.alignX("center").spanX();
-        componentConstraints.wrap();
+        switch(basicArrowButtonDirection) {
+        case BasicArrowButton.SOUTH:
+        	componentConstraints.dockNorth();
+        	break;
+        case BasicArrowButton.NORTH:
+        	componentConstraints.dockSouth();
+        	break;
+        case BasicArrowButton.EAST:
+        	componentConstraints.dockWest();
+        	break;
+        case BasicArrowButton.WEST:
+        	componentConstraints.dockEast();
+        	break;
+        }
 
         this.add(expandingButton, componentConstraints);
         JXCollapsiblePane content = new JXCollapsiblePane(collapsablePaneDirection);
@@ -46,7 +58,7 @@ public class ExpandingPanel extends JPanel {
         
         this.content = content;
         this.expandingButton = expandingButton;
-
+        this.content.setCollapsed(true);
 
 
     }
@@ -62,7 +74,8 @@ public class ExpandingPanel extends JPanel {
         
         CC componentConstraints = new CC();
         componentConstraints.alignX("center").spanX();
-        componentConstraints.wrap();
+        componentConstraints.gapLeft("200");
+        componentConstraints.dockNorth();
 
         JLabel label = new JLabel(labela);
         this.add(label, componentConstraints);

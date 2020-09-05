@@ -10,7 +10,7 @@ public class Main {
 		
 		CitacDatoteka datoteke = new CitacDatoteka();
 		
-			datoteke.inicijalizuj();
+		datoteke.inicijalizuj();
 		
 		
 		LoginMenadzer login = new LoginMenadzer(datoteke);

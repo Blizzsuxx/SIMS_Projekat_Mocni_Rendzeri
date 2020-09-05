@@ -506,8 +506,8 @@ private void pronadiDela(String naziv) {
 				}
 			}
 		}
-		jedan.setOcenaKorisnika(ocenaKo/i.muzickaDela.size());
-		jedan.setOcenaUrednika(ocenaUr/i.muzickaDela.size());
+		jedan.setOcenaKorisnika(ocenaKo/i.getMuzickaDela().size());
+		jedan.setOcenaUrednika(ocenaUr/i.getMuzickaDela().size());
 	   return jedan;
 	   
    }

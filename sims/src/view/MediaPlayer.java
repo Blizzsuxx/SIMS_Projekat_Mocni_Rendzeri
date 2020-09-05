@@ -55,8 +55,8 @@ public class MediaPlayer extends MojDialog {
         JLabel datum = new JLabel("Datum izdavanja: " + delo.getDatumIzdavanja());
         datum.setForeground(Color.WHITE);
         dataPanel.add(datum);
-        dataPanel.add(rater, "gapleft 120");
-        this.add(dataPanel, "wrap");
+        dataPanel.add(rater, "gapleft 200");
+        this.add(dataPanel, "wrap 20");
 
 
         UtisakView recenzije = new UtisakView();
@@ -65,7 +65,7 @@ public class MediaPlayer extends MojDialog {
         recenzijePanel.getContent().add(recenzije, BorderLayout.CENTER);
         recenzije.setSize(this.getWidth()-5, 100);
         recenzije.setPreferredSize(new Dimension(this.getWidth()-5, 100));
-        this.add(recenzijePanel, "wrap");
+        this.add(recenzijePanel, "wrap 20");
         
         Urednik urednik = new Urednik();
         urednik.setKorisnickoIme("urednik");
@@ -85,7 +85,7 @@ public class MediaPlayer extends MojDialog {
         
         ExpandingPanel opisPanel = new ExpandingPanel("Opis");
         opisPanel.getContent().add(pane, BorderLayout.CENTER);
-        add(opisPanel, "wrap");
+        add(opisPanel, "wrap 20");
         
         mediaPlayer.play();
 
@@ -104,7 +104,7 @@ public class MediaPlayer extends MojDialog {
         expandingPanel.getContent().add(komentari, BorderLayout.CENTER);
         komentari.setSize(this.getWidth()-5, 100);
         komentari.setPreferredSize(new Dimension(this.getWidth()-5, 100));
-        this.add(expandingPanel, "wrap");
+        this.add(expandingPanel, "wrap 20");
         
         KorisnikAplikacije k = new KorisnikAplikacije();
         k.setKorisnickoIme("korisnickoIme");

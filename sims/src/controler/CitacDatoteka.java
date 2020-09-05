@@ -120,6 +120,7 @@ public class CitacDatoteka {
 		
 
 		Constants.MUZICKA_IKONA  = procitajSliku("fajlovi/muzika.png");
+		Constants.KORISNICKA_IKONA = procitajSliku("fajlovi/korisnik.png");
 
 	}
 

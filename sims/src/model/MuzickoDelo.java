@@ -4,12 +4,16 @@
  * Purpose: Defines the Class MuzickoDelo
  ***********************************************************************/
 package model;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import controler.Constants;
+import view.Slikovit;
+
 /** @pdOid fe24355d-b240-471a-9a18-0672095a63e6 */
-public class MuzickoDelo {
+public class MuzickoDelo implements Slikovit {
    /** @pdOid 85e700ff-acf1-4663-ad34-fb23a5477991 */
    private String naziv;
    /** @pdOid a2b90104-3b01-42b5-94c2-45a2042c4750 */
@@ -186,5 +190,23 @@ public String toFileString(Izvodjac iz) {
 	ad+=";"+z.getNazivZanra();}
 	
 	return ad;
+}
+
+@Override
+public String Ime() {
+	// TODO Auto-generated method stub
+	return this.getNaziv();
+}
+
+@Override
+public String putDoSlike() {
+	// TODO Auto-generated method stub
+	return "fajlovi/muzika/"+getNaziv() + ".jpg";
+}
+
+@Override
+public BufferedImage defaultSlika() {
+	// TODO Auto-generated method stub
+	return Constants.MUZICKA_IKONA;
 }
 }

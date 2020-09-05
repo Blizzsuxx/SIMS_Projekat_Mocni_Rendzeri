@@ -16,10 +16,10 @@ public abstract class Izvodjac {
 	private Zanr zanr;
    
 	/** @pdRoleInfo migr=no name=KorisnikAplikacije assc=association16 mult=0..* side=A */
-	public KorisnikAplikacije[] prati;
+	private KorisnikAplikacije[] prati;
    
-	public ArrayList<MuzickoDelo> muzickaDela;
-	public ArrayList<Album> izdatiAlbumi;
+	private ArrayList<MuzickoDelo> muzickaDela;
+	private ArrayList<Album> izdatiAlbumi;
    
 
 	public ArrayList<Album> getIzdatiAlbumi() {

@@ -24,6 +24,8 @@ public abstract class Constants {
 	public static final SimpleDateFormat NATASIN_FORMAT_ZA_DATUM = new SimpleDateFormat("dd.MM.yyyy");
 
 	public static BufferedImage MUZICKA_IKONA;
+	
+	public static BufferedImage KORISNICKA_IKONA;
 
 	public static final MuzickoDelo BARBIE_GIRL = new MuzickoDelo("Aqua - Barbie Girl", "Barbi devojka");
 

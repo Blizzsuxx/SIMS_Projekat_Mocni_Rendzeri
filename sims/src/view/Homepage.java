@@ -78,7 +78,7 @@ public abstract class Homepage extends JFrame {
 				/////////////////////////////
 				// Seach se poziva preko klika na lupu ili preko pritiska na enter
 				// to je vec namesteno, jos samo da se search mehanika implementira
-				System.out.println(arg0.getActionCommand());
+				//SearchResults rezultati = new SearchResults(sesija.getMuzickoDeloMenadzer().trazi(arg0.getActionCommand()));
 			}
 
 		});

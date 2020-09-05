@@ -36,8 +36,11 @@ public class Nalog {
 		// TODO: implement
 		return this.sifra.equals(sifra);
  	}
-
 	
+	public String getSifra() {
+		return sifra;
+	}
+
 	public void setSifra(String sifra) {
 		this.sifra = sifra;
 	}

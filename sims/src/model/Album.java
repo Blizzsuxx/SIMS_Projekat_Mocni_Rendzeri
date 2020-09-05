@@ -1,5 +1,7 @@
 package model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -84,24 +86,18 @@ public class Album {
 
 	public String toFileString() {
 		//izvodjac,urednik, dan,odobreno, naslov, izbrisi, dela....
+		String pattern = "dd.MM.yyyy";
+		DateFormat df = new SimpleDateFormat(pattern);
 		String ad="";
 		ad+=this.getIzvodjac().getUmetnickoIme()+",";
 		ad+=this.getUrednik().getNalog().getKorisnickoIme()+",";
-		ad+=this.getDanRegistracije().getDay()+"."+this.getDanRegistracije().getMonth()+"."+this.getDanRegistracije().getYear()+".,";//
+		ad+=df.format(this.getDanRegistracije())+",";
 		ad+=this.isOdobreno()+",";
 		ad+=this.getNaslov()+",";
 		ad+=this.isIzbrisi()+",";
-		int br=this.getListaPesama().size()-1;
-		int i=0;
 		for(MuzickoDelo md:this.getListaPesama()) {
-			ad+=md.getNaziv();
-			if(i==br) {break;}
-			i++;
-			ad+=",";
+			ad+= "|" + md.getNaziv();
 		}
 		return ad;
-		
 	}
-	
-	
 }

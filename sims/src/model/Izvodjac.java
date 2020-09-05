@@ -79,16 +79,22 @@ public abstract class Izvodjac {
 	   	{
 	   		this.prati = prati;
 	   	}
+		this.muzickaDela = new ArrayList<MuzickoDelo>();
+		this.izdatiAlbumi = new ArrayList<Album>();
 	}
 	
 	public Izvodjac() {
 		super();
+		this.muzickaDela = new ArrayList<MuzickoDelo>();
+		this.izdatiAlbumi = new ArrayList<Album>();
 	}
 	
 	public Izvodjac(String umetnickoIme2, Zanr zanr, boolean status2) {
 		this.umetnickoIme = umetnickoIme2;
 		this.zanr = zanr;
 		this.status = status2;
+		this.muzickaDela = new ArrayList<MuzickoDelo>();
+		this.izdatiAlbumi = new ArrayList<Album>();
 	}
 	
 	protected abstract String[] getImenaDela();
@@ -99,6 +105,10 @@ public abstract class Izvodjac {
 			if(md.getNaziv().equals(br1)) {return md;}
 		}
 		return null;
+	}
+	
+	public void addDelo(MuzickoDelo md) {
+		this.muzickaDela.add(md);
 	}
 	
 	public abstract String toFileString();

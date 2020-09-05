@@ -76,10 +76,12 @@ public class IzvodjacMenadzer {
 	private void ucitajIzvodjace(List<String[]> data) {
 		//potrebno je i pratioce??? 
 		//Da -Dragan
-
+		this.svi = new ArrayList<Izvodjac>();
+		this.solo = new ArrayList<Pojedinacanizvodjac>();
+		this.grupe = new ArrayList<Grupa>();
 		for (String[] linije : data)
 		{
-			if(linije.length == 8){
+			if(linije.length == 9){
 				Date smrt = null;
 				Date rodjenje = null;
 				try {
@@ -88,7 +90,7 @@ public class IzvodjacMenadzer {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				if(!linije[5].trim().equals("/")) {
+				if(!linije[6].trim().equals("/")) {
 					try {
 						smrt = Constants.NATASIN_FORMAT_ZA_DATUM.parse(linije[6].trim());
 					} catch (ParseException e) {
@@ -98,13 +100,12 @@ public class IzvodjacMenadzer {
 				}
 				Pol p = Pol.zenski;
 				if(linije[8].trim().equals(Pol.muski.name())) {p = Pol.muski;}
-				boolean status = linije[2].trim().equals("true");
-				Pojedinacanizvodjac a = new Pojedinacanizvodjac(linije[0].trim(), new Zanr(linije[1].trim(),true), 
-						status, linije[3].trim(), linije[4].trim(), rodjenje, smrt,linije[7].trim(), p );
+				Pojedinacanizvodjac a = new Pojedinacanizvodjac(linije[0].trim(), new Zanr(linije[1].trim(),true),
+						Boolean.parseBoolean(linije[2]), linije[3].trim(), linije[4].trim(), rodjenje, smrt, linije[7].trim(), p);
 				svi.add(a);
-				this.getSolo().add(a);
+				solo.add(a);
 			}
-			else if(linije.length == 5) {
+			else if(linije.length == 6) {
 				Date smrt = null;
 				Date rodjenje = null;
 				try {
@@ -122,8 +123,7 @@ public class IzvodjacMenadzer {
 					}
 				}
 				Integer br1 = Integer.parseInt(linije[3].trim());
-				boolean status = linije[2].trim().equals("true");
-				Grupa a = new Grupa(linije[0].trim(), new Zanr(linije[1].trim(),true), status, br1, rodjenje, smrt );
+				Grupa a = new Grupa(linije[0].trim(), new Zanr(linije[1].trim(),true), Boolean.parseBoolean(linije[2]), br1, rodjenje, smrt );
 				svi.add(a);
 				this.getGrupe().add(a);
 				

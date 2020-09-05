@@ -35,21 +35,23 @@ public class KorisniciMenadzer {
 		   String prezime = s[1];
 		   String eMail = s[2];
 		   Pol pol = Pol.valueOf(s[3]);
-		   Date datumRodjenja;
-		try {
-			datumRodjenja = format.parse(s[4]);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			continue;
-		}
+		   Date datumRodjenja = null;
+		
+			try {
+				datumRodjenja = format.parse(s[4]);
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		
 		   String sifra = s[5];
 		   String korisnickoIme = s[6];
-		   Date datum;
+		   Date datum = null;
 		try {
 			datum = format.parse(s[7]);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
-			continue;
+			e.printStackTrace();
 		}
 		   boolean status = Boolean.parseBoolean(s[8]);
 		   String uloga = s[9];

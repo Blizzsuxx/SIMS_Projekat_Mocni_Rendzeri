@@ -1,4 +1,7 @@
-/application/
 /controler/
+<<<<<<< HEAD
 /view/
+=======
+>>>>>>> branch 'master' of https://github.com/Blizzsuxx/SIMS_Projekat_Mocni_Rendzeri.git
 /model/
+/application/

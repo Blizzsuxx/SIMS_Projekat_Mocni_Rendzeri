@@ -14,6 +14,7 @@ import javax.swing.JMenuItem;
 import org.jdesktop.swingx.JXSearchField;
 import org.jdesktop.swingx.JXSearchField.SearchMode;
 
+import controler.Constants;
 import model.Sesija;
 import net.miginfocom.swing.MigLayout;
 
@@ -119,6 +120,11 @@ public abstract class Homepage extends JFrame {
 		// TODO Ovde pisi kod za pregled profila
 		// Koristi DiajlogKorisnickihInformacija ako mozes nekako
 		// Ili Editor builder
+		
+		//DUMMY - Hardcoded KorisnikAplikacije
+		DijalogKorisnickihInformacija dki = new DijalogKorisnickihInformacija(this, Constants.DUMMY);
+		dki.setVisible(true);
+		
 		
 		
 	}

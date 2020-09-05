@@ -54,6 +54,7 @@ public class ZakazanaRecenzijaMenadzer {
 					if (linije[1].trim().equals("true")) {
 					a.setUradeno(true);
 					}
+					  a.setPisac(korisnici.trazi(linije[4].trim()));
 					sve.add( a);
 				}
 		

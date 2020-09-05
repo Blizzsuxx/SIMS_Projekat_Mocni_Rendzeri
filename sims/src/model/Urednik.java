@@ -243,5 +243,12 @@ public Urednik() {
 				+ ";" + df.format(urednik.getDatumRodjenja()) + ";" + urednik.getNalog().getSifra() + ";" + urednik.getNalog().getKorisnickoIme() +
 				";" + df.format(urednik.getNalog().getDatumKreiranja()) + ";" + urednik.isStatus() + System.lineSeparator();
 	}
+   @Override
+ 	public String pratiociUpis() {
+	   String s=super.pratiociUpis();
+	   return s;
+  }
+
+}
 
 }

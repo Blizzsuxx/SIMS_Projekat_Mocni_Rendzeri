@@ -155,5 +155,25 @@ public KorisnikAplikacije(String ime, String prezime, String eMail, Pol pol, Dat
       if (onajKogaPrati != null)
          onajKogaPrati.clear();
    }
+   @Override
+  	public String pratiociUpis() {
+	   String ad=super();
+	   int i=0;
+	   for(FrontEndKorisnik f:pratite) {
+		   if(i!=0) {
+			   ad+=";";
+		   }
+		   ad+=f.getNalog().getKorisnickoIme();i++;
+	   }
+	   ad+="|";
+	   i=0;
+	   for(Izvodjac f:onajKogaPrati) {
+		   if(i!=0) {
+			   ad+=";";
+		   }
+		   ad+=f.getUmetnickoIme();i++;
+	   }
+   }
+
 
 }

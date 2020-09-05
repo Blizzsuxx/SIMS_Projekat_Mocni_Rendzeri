@@ -53,11 +53,15 @@ public class ZanroviMenadzer { //ovu klasu ili treba da ima sesija ili da bude p
 
 	private void ucitajZanrove(List<String[]> data) {
 		this.sviZanrovi = new ArrayList<Zanr>();
-		for (String[] linije : data) {
-			String[] parts = linije[0].split(";");
-			Zanr a = new Zanr(parts[0].trim(), Boolean.parseBoolean(parts[1]));
+		for(String[] linije : data){
+			Zanr a = new Zanr(linije[0].trim(), true );
+			if (linije[1].trim().equals("true")) {
+			a.setStatus(true);
+			}else {
+				a.setStatus(false);
+			}
 			sviZanrovi.add(a);
-		}	
+		}
 	}
 
 	public void sacuvaj() {
@@ -81,6 +85,19 @@ public class ZanroviMenadzer { //ovu klasu ili treba da ima sesija ili da bude p
 		}
 		
 	}
+	 public Zanr trazi(String ime) {
+		 
+		                 for(Zanr z:sviZanrovi) {
+		 	
+		                         if(z.getNazivZanra().equals(ime)) {
+		 
+		                                 return z;
+		 	
+		                         }
+		 	
+		                 }return null;
+		 	
+		         }
 	
 
 }

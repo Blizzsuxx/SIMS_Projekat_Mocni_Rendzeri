@@ -137,8 +137,8 @@ public String toFileString() {
 	String ad=this.getOpis()+";"+this.isUradeno()+";";
 	ad+=this.getDatumZakazivanja().getDate()+"."+this.getDatumZakazivanja().getMonth()+"."+this.getDatumZakazivanja().getYear()+".;";
 	ad+=this.getRok().getDate()+"."+this.getRok().getMonth()+"."+this.getRok().getYear()+".;";
-	ad+=this.getRecenzija().getNaslov();
-	
+	ad+=this.getRecenzija().getNaslov()+";";
+	ad+=this.getUrednik().getNalog().getKorisnickoIme();
 	
 	return ad;
 }

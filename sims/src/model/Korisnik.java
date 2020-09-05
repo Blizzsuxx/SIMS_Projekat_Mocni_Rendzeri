@@ -8,6 +8,7 @@ import java.text.Format;
 import java.text.ParseException;
 import java.util.Date;
 
+
 import controler.Constants;
 
 /** @pdOid 821f1adf-c3a0-4478-9680-7e8b2f65437c */
@@ -157,6 +158,23 @@ public abstract class Korisnik {
 			e.printStackTrace();
 		}
 	}
+	public String toFileString() {
+		//pera preic pera@gmail.com muski 02.05.2001. sifra1 pera1 04.11.2010. true a
+		String pattern = "dd.MM.yyyy.";
+		DateFormat df = new SimpleDateFormat(pattern);
+		String ad=this.ime+","+this.prezime+","+this.eMail+","+this.pol.value+",";
+		ad+=df.format(this.datumRodjenja())+","+this.nalog.getKorisnickoIme();
+	ad+=","+this.nalog.getKorisnickoIme()+","+df.format(this.nalog.getDatumKreiranja())+",";
+	if(this.getNalog().isStatus()) {
+		ad+="0,";
+	}else {
+		ad+="1,";
+	}
+	return ad;
+	}
+	public abstract String pratiociUpis();
+	
+	
 
    
 }

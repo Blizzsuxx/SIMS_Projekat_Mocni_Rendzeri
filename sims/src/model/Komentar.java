@@ -22,12 +22,14 @@ public String toFileString() {
 	ad+=this.getDatumUpisa().getDay()+"."+this.getDatumUpisa().getMonth()+"."+this.getDatumUpisa().getYear()+".;";//
 	ad+=this.isStatus()+";";
 	ad+=this.getText()+";";
-	ad+=this.getKomentator().getNalog().getKorisnickoIme();
+	 ad+=this.getPisac().getNalog().getKorisnickoIme();
 	return ad;
 }
    
    
-   
+public void setPisac(FrontEndKorisnik k) {
+	   this.super.setPisac(k);
+}
 
    
 

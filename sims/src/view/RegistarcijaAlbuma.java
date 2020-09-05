@@ -174,6 +174,7 @@ public class RegistarcijaAlbuma extends JFrame {
 		Date danRegistracije = new SimpleDateFormat("dd.MM.yyyy").parse(dtDor.getJFormattedTextField().getText());
 		Izvodjac izvodjac = sesija.getIzvodjac((String)cmbIzvodjac.getSelectedItem());
 		Album noviAlbum = new Album(naziv, dela, null, izvodjac, danRegistracije, true);
+		noviAlbum.getIzvodjac().addIzdatAlbum(noviAlbum);
 		AlbumKontroler albumKontroler = sesija.getAlbumKontroler();
 		albumKontroler.addAlbum(noviAlbum);
 		sesija.setAlbumKontroler(albumKontroler);
@@ -190,7 +191,7 @@ public class RegistarcijaAlbuma extends JFrame {
 		if (cmbIzvodjac.getSelectedIndex() == -1) {
 			return "Morate odabrati izvodjaca.";
 		}
-		if (dtDor.getJFormattedTextField().getText() == "") {
+		if (dtDor.getJFormattedTextField().getText() == null) {
 			return "Morate odabrati datum.";
 		}
 		return "";

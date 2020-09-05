@@ -23,6 +23,7 @@ import controler.IzvodjacMenadzer;
 import controler.KorisniciMenadzer;
 import controler.LoginMenadzer;
 import controler.MuzickoDeloMenadzer;
+import controler.RecenzijeZaIzmenuMenadzer;
 import controler.ZakazanaRecenzijaMenadzer;
 import controler.ZanroviMenadzer;
 import view.KorisnikAplikacijeHomepage;
@@ -43,6 +44,8 @@ public class Sesija {
    private AlbumKontroler albumKontroler;
    
    private GlasanjeMenadzer glasanjeMenadzer;
+   
+   private RecenzijeZaIzmenuMenadzer recenzijeZaIzmenuMenadzer;
    /**
     * @pdRoleInfo migr=no name=MuzickoDelo assc=association38
     *             coll=java.util.Collection impl=java.util.HashSet mult=0..*
@@ -181,6 +184,15 @@ public class Sesija {
    public void setGlasanjeMenadzer(GlasanjeMenadzer glasanjeMenadzer) {
 	   this.glasanjeMenadzer = glasanjeMenadzer;
    }
+   
+   public RecenzijeZaIzmenuMenadzer getRecenzijeZaIzmenuMenadzer() {
+	   return recenzijeZaIzmenuMenadzer;
+   }
+   
+   public void setRecenzijeZaIzmenuMenadzer(RecenzijeZaIzmenuMenadzer recenzijeZaIzmenuMenadzer) {
+	   this.recenzijeZaIzmenuMenadzer = recenzijeZaIzmenuMenadzer;
+   }
+   
 
    /** @pdGenerated default getter */
    public java.util.Collection<MuzickoDelo> getDela() {
@@ -419,14 +431,14 @@ public class Sesija {
          return trenutnaSesija;
       } else {
          trenutnaSesija = new Sesija(korisnik, datoteke.getKorisnici(), datoteke.getIzvodjaci(), datoteke.getZanrovi(), datoteke.getDeloMenadzer(), datoteke.getMuzickaDela(), datoteke.getGrupe(),
-               datoteke.getIzvodjaci().getSolo(), datoteke.getRecenzije(), datoteke.getZakRecMenadzer(), datoteke.getAlbumi(), datoteke.getGlasanjeMenadzer(),menadzer);
+               datoteke.getIzvodjaci().getSolo(), datoteke.getRecenzije(), datoteke.getZakRecMenadzer(), datoteke.getIzmena(), datoteke.getAlbumi(), datoteke.getGlasanjeMenadzer(),menadzer);
          return trenutnaSesija;
       }
    }
 
    private Sesija(Korisnik trenutniKorisnik, KorisniciMenadzer korisnici, IzvodjacMenadzer izvodjacMenadzer, ZanroviMenadzer zanroviMenadzer, MuzickoDeloMenadzer muzickoDeloMenadzer,
 		   Collection<MuzickoDelo> dela, Collection<Grupa> grupe, Collection<Pojedinacanizvodjac> umetnici, Collection<Recenzija> recenzije, ZakazanaRecenzijaMenadzer zakazanaRecenzijaMenadzer,
-         AlbumKontroler albumKontroler, GlasanjeMenadzer glasanjeMenadzer, LoginMenadzer loginMenadzer) {
+         RecenzijeZaIzmenuMenadzer recenzijeZaIzmenuMenadzer, AlbumKontroler albumKontroler, GlasanjeMenadzer glasanjeMenadzer, LoginMenadzer loginMenadzer) {
       super();
       this.setKorisnici(korisnici);
       this.setIzvodjacMenadzer(izvodjacMenadzer);
@@ -437,6 +449,7 @@ public class Sesija {
       this.umetnici = umetnici;
       this.recenzije = recenzije;
       this.setZakazanaRecenzijaMenadzer(zakazanaRecenzijaMenadzer);
+      this.setRecenzijeZaIzmenuMenadzer(recenzijeZaIzmenuMenadzer);
       this.setTrenutniKorisnik(trenutniKorisnik);
       this.setAlbumKontroler(albumKontroler);
       this.setGlasanjeMenadzer(glasanjeMenadzer);

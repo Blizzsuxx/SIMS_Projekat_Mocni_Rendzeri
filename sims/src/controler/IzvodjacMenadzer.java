@@ -148,26 +148,19 @@ public class IzvodjacMenadzer {
 
 
 
-	public void sacuvaj(Izvodjac iz, boolean dodaj) throws ParseException {
+	public void sacuvaj() throws ParseException {
 		PrintWriter pw = null;
 		String sep = System.getProperty("file.separator");
 		String putanja ="." + sep + "fajlovi" + sep + "izvodjaci.txt";
 		try {
 			pw = new PrintWriter(new FileWriter(putanja, false));
 			for(Izvodjac i : svi) {
-				if (dodaj || !iz.getUmetnickoIme().equals(i.getUmetnickoIme()))
-				{
-					if (i.getClass() == Pojedinacanizvodjac.class)
-						pw.println(Pojedinacanizvodjac.PojedinacniIzvodjac2String((Pojedinacanizvodjac)i));
-					else
-						pw.println(Grupa.Grupa2String((Grupa)i));
-				}
+				if (i.getClass() == Pojedinacanizvodjac.class)
+					pw.print(Pojedinacanizvodjac.PojedinacniIzvodjac2String((Pojedinacanizvodjac)i));
+				else
+					pw.print(Grupa.Grupa2String((Grupa)i));
+				
 			}
-			if (iz.getClass() == Pojedinacanizvodjac.class)
-				pw.println(Pojedinacanizvodjac.PojedinacniIzvodjac2String((Pojedinacanizvodjac)iz));
-			else
-				pw.println(Grupa.Grupa2String((Grupa)iz));
-			
 			pw.close();	
 		}
 		catch(IOException e) {

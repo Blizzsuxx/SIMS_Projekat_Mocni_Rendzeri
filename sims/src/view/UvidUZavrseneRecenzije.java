@@ -49,7 +49,7 @@ public class UvidUZavrseneRecenzije extends JFrame {
 	
 	private void ucitajZavrseneRecenzije() throws Exception {
 		ZakazanaRecenzijaMenadzer zrm = sesija.getZakazanaRecenzijaMenadzer();
-		TableModelWrapper tmw = zrm.getTabelaZavrsenihRecenzija();
+		TableModelWrapper tmw = zrm.getTabelaZavrsenihRecenzija(true);
 		zavrseneRecenzije.setModel(tmw);
 	}
 }

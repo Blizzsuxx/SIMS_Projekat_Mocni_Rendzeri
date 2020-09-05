@@ -26,20 +26,22 @@ public class GlasanjeMenadzer {
 		this.glasovi = new ArrayList<Glasanje>();
 		this.uredniciKojiSuGlasali = new ArrayList<Urednik>();
 		dodajUrednikeKojiSuGlasali(urednici);
-		String prvaLinija = data.get(0);
-		if (prvaLinija.equals("true"))
-			this.pokrenutoGlasanje = true;
-		else
-			this.pokrenutoGlasanje = false;
-		for (int i = 1; i < data.size(); i++) {
-			String linija = data.get(i);
-			String[] parts = linija.split(";");
-			String nazivDela = parts[0];
-			int brojGlasova = Integer.parseInt(parts[1]);
-			for (MuzickoDelo m : dela) {
-				if (m.getNaziv().equals(nazivDela)) {
-					Glasanje g = new Glasanje(m,brojGlasova);
-					glasovi.add(g);
+		if (!data.isEmpty()) {
+			String prvaLinija = data.get(0);
+			if (prvaLinija.equals("true"))
+				this.pokrenutoGlasanje = true;
+			else
+				this.pokrenutoGlasanje = false;
+			for (int i = 1; i < data.size(); i++) {
+				String linija = data.get(i);
+				String[] parts = linija.split(";");
+				String nazivDela = parts[0];
+				int brojGlasova = Integer.parseInt(parts[1]);
+				for (MuzickoDelo m : dela) {
+					if (m.getNaziv().equals(nazivDela)) {
+						Glasanje g = new Glasanje(m,brojGlasova);
+						glasovi.add(g);
+					}
 				}
 			}
 		}

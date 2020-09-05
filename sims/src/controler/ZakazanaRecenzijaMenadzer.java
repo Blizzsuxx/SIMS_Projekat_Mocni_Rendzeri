@@ -90,15 +90,18 @@ public class ZakazanaRecenzijaMenadzer {
 		
 	}
 	
-	public TableModelWrapper getTabelaZavrsenihRecenzija()  throws Exception { 
-		String[] columns = { "Naziv" ,"Opis", "Datum zakazivanja", "Rok", "Urednik"};
-		Class<?>[] columnTypes = { String.class, String.class, Date.class, Date.class, String.class};
-		boolean[] editableColumns = { false, false, false, false, false};
-		int[] columnWidths = { 120, 120, 100, 80, 80};
+	public TableModelWrapper getTabelaZavrsenihRecenzija(boolean zavrsene)  throws Exception { 
+		String[] columns = { "Naziv" ,"Opis", "Datum zakazivanja", "Rok"};
+		Class<?>[] columnTypes = { String.class, String.class, Date.class, Date.class};
+		boolean[] editableColumns = { false, false, false, false};
+		int[] columnWidths = { 120, 120, 100, 80};
 		ArrayList<Object[]> data = new ArrayList<Object[]>();
 		for (ZakazanaRecenzija zr : sve) {
-			if (zr.isUradeno())
-				data.add(new Object[] {zr.getRecenzija().getNaslov(), zr.getOpis(), zr.getRok(), zr.getUrednik().getIme()});
+			if (zavrsene && zr.isUradeno())
+				data.add(new Object[] {zr.getRecenzija().getNaslov(), zr.getOpis(), zr.getRok()});
+			if (!zavrsene && !zr.isUradeno()) {
+				data.add(new Object[] {zr.getRecenzija().getNaslov(), zr.getOpis(), zr.getRok()});
+			}
 		}
 		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
 	}

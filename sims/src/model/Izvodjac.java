@@ -30,6 +30,10 @@ public abstract class Izvodjac {
 		this.izdatiAlbumi = izdatiAlbumi;
 	}
 	
+	public void addIzdatAlbum(Album album) {
+		izdatiAlbumi.add(album);
+	}
+	
 	public ArrayList<MuzickoDelo> getMuzickaDela() {
 		return muzickaDela;
 	}

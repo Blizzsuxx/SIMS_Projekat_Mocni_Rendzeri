@@ -15,15 +15,11 @@ public class Recenzija extends Utisak {
    
    public Recenzija(Urednik urednik, String naslov) {
 	super();
-	 this.super().setPisac(urednik);
+	this.setPisac(urednik);;
 	this.naslov = naslov;
 }
 
-   public void setPisac(FrontEndKorisnik k) {
-	   	
-	           this.super().setPisac(k);
-	   	
-	   }
+   
 public Recenzija(String text, Date datumUpisa, boolean status, FrontEndKorisnik pisac, MuzickoDelo delo, String naslov) {
 	super(text, datumUpisa, status, pisac, delo);
 	this.naslov = naslov;
@@ -82,8 +78,8 @@ public String toFileString() {
 	ad+=this.getDatumUpisa().getDay()+"."+this.getDatumUpisa().getMonth()+"."+this.getDatumUpisa().getYear()+".;";//
 	ad+=this.isStatus()+";";
 	ad+=this.getText()+";";
-	ad+=this.getNaslov()+";";
-	ad+=this.getPisac().getNalog().getKorisnickoIme();
+	ad+=this.getUrednik().getNalog().getKorisnickoIme()+";";
+	ad+=this.getNaslov();
 	return ad;
 }
 

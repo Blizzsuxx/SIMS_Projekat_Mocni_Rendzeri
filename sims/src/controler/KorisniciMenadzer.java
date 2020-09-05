@@ -13,9 +13,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+
 import model.Administrator;
 import model.Korisnik;
 import model.KorisnikAplikacije;
@@ -117,32 +115,6 @@ public class KorisniciMenadzer {
    }
 
    public void sacuvaj(){
-	   PrintWriter pw=null;
-		String sep=System.getProperty("file.separator");
-		String putanja ="."+sep+"fajlovi"+sep+"korisnici.txt";
-		try {
-			
-			pw=new PrintWriter(new FileWriter(putanja, false));
-			for(Korisnik a:korisnici.values()) {
-				if(a instanceof KorisnikAplikacije) {
-					pw.println(a.toFileString()+"k");
-				}else if(a instanceof Administrator) {
-					pw.println(a.toFileString()+"a");
-				}
-				else {
-					pw.println(a.toFileString()+"u");
-				}
-				
-				
-			}pw.close();
-			
-		}catch(IOException e) {
-			e.printStackTrace();
-		}finally {
-			if(pw!=null) {
-				pw.close();
-			}
-		}
 	   
    }
 

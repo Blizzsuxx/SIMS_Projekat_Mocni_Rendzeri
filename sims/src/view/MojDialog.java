@@ -9,12 +9,15 @@ import java.awt.event.WindowEvent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
+import net.miginfocom.swing.MigLayout;
+
 public class MojDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
 
 	public MojDialog(JFrame parent, String ime, int dimension1, int dimension2) {
 		super(parent, ime, true);
 		this.setSize(dimension1, dimension2);
+		this.setLayout(new MigLayout());
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setResizable(false);
 		setBackground(Color.BLACK);

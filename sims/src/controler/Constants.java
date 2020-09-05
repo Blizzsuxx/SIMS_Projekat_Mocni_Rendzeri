@@ -30,7 +30,7 @@ public abstract class Constants {
 	
 	public static final SimpleDateFormat FORMAT_ZA_DATUM = new SimpleDateFormat("dd/MM/yyyy");
 
-	public static final SimpleDateFormat NATASIN_FORMAT_ZA_DATUM = new SimpleDateFormat("dd.MM.yyyy.");
+	public static final SimpleDateFormat NATASIN_FORMAT_ZA_DATUM = new SimpleDateFormat("dd.MM.yyyy");
 
 	public static BufferedImage MUZICKA_IKONA;
 	

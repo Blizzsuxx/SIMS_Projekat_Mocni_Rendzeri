@@ -79,7 +79,7 @@ public abstract class Homepage extends JFrame {
 				/////////////////////////////
 				// Seach se poziva preko klika na lupu ili preko pritiska na enter
 				// to je vec namesteno, jos samo da se search mehanika implementira
-				//SearchResults rezultati = new SearchResults(sesija.getMuzickoDeloMenadzer().trazi(arg0.getActionCommand()));
+				searchTriggered(arg0.getActionCommand());
 			}
 
 		});
@@ -125,7 +125,11 @@ public abstract class Homepage extends JFrame {
 		DijalogKorisnickihInformacija dki = new DijalogKorisnickihInformacija(this, Constants.DUMMY);
 		dki.setVisible(true);
 		
-		
-		
+	}
+	
+	
+	private void searchTriggered(String textZaSearch) {
+		SearchResults rezultati = new SearchResults(this, sesija.getMuzickoDeloMenadzer().trazi(textZaSearch));
+		rezultati.setVisible(true);
 	}
 }

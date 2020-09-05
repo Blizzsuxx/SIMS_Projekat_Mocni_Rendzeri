@@ -54,8 +54,8 @@ public class MediaPlayer extends MojDialog {
         StarRater rater = new StarRater(5, 3, 3);
         JLabel datum = new JLabel("Datum izdavanja: " + delo.getDatumIzdavanja());
         datum.setForeground(Color.WHITE);
-        dataPanel.add(datum);
-        dataPanel.add(rater, "gapleft 200");
+        dataPanel.add(rater);
+        dataPanel.add(datum, "gapleft 50");
         this.add(dataPanel, "wrap 20");
 
 

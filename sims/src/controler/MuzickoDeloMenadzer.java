@@ -20,6 +20,7 @@ import model.Korisnik;
 import model.MuzickoDelo;
 import model.Sesija;
 import model.Zanr;
+import view.Slikovit;
 import view.TableModelWrapper;
 
 public class MuzickoDeloMenadzer {
@@ -134,8 +135,8 @@ public class MuzickoDeloMenadzer {
 		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
 	}
 
-	public ArrayList<MuzickoDelo> trazi(String substring) {
-		ArrayList<MuzickoDelo> delaKojaSadzeString = new ArrayList<>();
+	public ArrayList<Slikovit> trazi(String substring) {
+		ArrayList<Slikovit> delaKojaSadzeString = new ArrayList<>();
 		for(MuzickoDelo delo : dela) {
 			if(delo.Ime().contains(substring)) delaKojaSadzeString.add(delo);
 		}

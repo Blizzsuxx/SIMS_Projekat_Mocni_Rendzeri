@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -13,7 +14,7 @@ import javax.swing.event.MouseInputAdapter;
 import controler.CitacDatoteka;
 import net.miginfocom.swing.MigLayout;
 
-public abstract class ImageLabel extends JPanel {
+public class ImageLabel extends JPanel {
 	
 	/**
     *
@@ -57,7 +58,13 @@ public abstract class ImageLabel extends JPanel {
 
    private static ImageIcon proveriZaIkonu(Slikovit delo, int sirina, int duzina){
        
-       BufferedImage image = CitacDatoteka.procitajSliku(delo.putDoSlike());
+       BufferedImage image = null;
+	try {
+		image = CitacDatoteka.procitajSliku(delo.putDoSlike());
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		
+	}
 
        if(image == null){
            image = delo.defaultSlika();
@@ -96,7 +103,9 @@ public abstract class ImageLabel extends JPanel {
 
 
 
-   abstract protected void clickedEvent();
+    protected void clickedEvent() {
+	   
+   }
 
 void addTekst(String tekst){
        JLabel labela = new JLabel(tekst);

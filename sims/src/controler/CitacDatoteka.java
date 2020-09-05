@@ -117,8 +117,8 @@ public class CitacDatoteka {
 		zanrovi = new ZanroviMenadzer(ucitaj("zanrovi.txt", ','));
 		izvodjaci = new IzvodjacMenadzer(ucitaj("izvodjaci.txt", ';'));
 
-		deloMenadzer = new MuzickoDeloMenadzer(izvodjaci, zanrovi.getSviZanrovi(), ucitaj("muzickaDela.txt", ';'));
-		utisakmenadzer = new UtisakMenadzer(deloMenadzer.getDela(), korisnici, ucitaj("utisci.txt", ';'));
+		deloMenadzer = new MuzickoDeloMenadzer(izvodjaci, zanrovi.getSviZanrovi(), ucitaj("muzickaDela.txt", ','));
+		utisakmenadzer = new UtisakMenadzer(deloMenadzer.getDela(), korisnici, ucitaj("utisci.txt", ','));
 		zakRecMenadzer = new ZakazanaRecenzijaMenadzer(korisnici,(ArrayList<Recenzija>)utisakmenadzer.getRecenzije(), ucitaj("zakazaneRecenzije.txt", ';'));
 		//potrebno jos albume, i ocene
 		//recenzije za izmenu, clanove grupe
@@ -126,7 +126,6 @@ public class CitacDatoteka {
 		ocene = new OceneKontroler(deloMenadzer, korisnici, ucitaj("ocene.txt", ','));
 		clanoviGrupe = new ClanoviMenadzer(izvodjaci, izvodjaci.getGrupe(), ucitaj("clanstva.txt",','));
 		izmena = new RecenzijeZaIzmenuMenadzer((ArrayList<Recenzija>)utisakmenadzer.getRecenzije(), ucitaj("recenzijeZaIzmenu.txt", ';'));
-		ucitajPratioce(korisnici,deloMenadzer, zanrovi, izvodjaci);
 		glasanjeMenadzer = new GlasanjeMenadzer(ucitajBuffered("glasovi.txt"), ucitajBuffered("uredniciKojiSuGlasali.txt"), deloMenadzer.getDela());
 
 		
@@ -137,21 +136,16 @@ public class CitacDatoteka {
 	}
 
 
-	public static BufferedImage procitajSliku(String path) {
+	public static BufferedImage procitajSliku(String path) throws IOException {
 
 
 		try {
 			return ImageIO.read(new File(path));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			try {
+			
 				return ImageIO.read(new File("sims/"+path));
-			} catch (IOException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			}
 		}
-		return null;
 
 	}
 
@@ -194,7 +188,6 @@ public class CitacDatoteka {
 		//izvodjaci.sacuvaj();
 		zanrovi.sacuvaj();//jos nesto treba sacuvati?? treba uzitati za izmenu
 		izmena.sacuvaj();
-		sacuvajPracenja();
 		glasanjeMenadzer.sacuvaj();
 		
 	}
@@ -210,60 +203,7 @@ public class CitacDatoteka {
 	public Collection<Recenzija> getRecenzije() {
 		return this.utisakmenadzer.getRecenzije();
 	}
-	public void ucitajPratioce(KorisniciMenadzer korisnici,MuzickoDeloMenadzer md,ZanroviMenadzer zanrovi,IzvodjacMenadzer izvodjaci) {
-		List<String[]> tekst=ucitaj("pracenje.txt","//|");
-		for(String[] linija:tekst) {
-			FrontEndKorisnik k=(FrontEndKorisnik)korisnici.trazi(linija[0].trim());
-			
-			String[] zanroviPracenje=linija[1].trim().split(";");
-			for(String ime:zanroviPracenje) {
-				k.getPreferiraniZanrovi().add(zanrovi.trazi(ime.trim()));
-			}
-			String[] pratioci=linija[2].trim().split(";");
-			for(String p:pratioci) {
-				k.getPratilac().add((KorisnikAplikacije)korisnici.trazi(p.trim()));
-			}
-			String[] dela=linija[3].trim().split(";");
-			for(String d:dela) {
-				k.getMuzickoDelo().add(md.pronadiPoNazivu(d.trim()));
-			}
-			if(linija.length>4) {
-			String[] pratilac=linija[4].trim().split(";");
-			for(String pr:pratilac) {
-				(KorisnikAplikacije)k.getPratite().add((FrontEndKorisnik)korisnici.trazi(pr.trim()));
-			}
-			String[] izv=linija[5].trim().split(";");
-			for(String i:izv) {
-				(KorisnikAplikacije)k.getOnajKogaPrati().add( izvodjaci.nadiPoUmetnickomImenu(i.trim()));
-			}
-			 
-			}
-		}
-	}
-public void sacuvajPracenja() {
-		
-		PrintWriter pw=null;
-		String sep=System.getProperty("file.separator");
-		String putanja ="."+sep+"fajlovi"+sep+"pracenje.txt";
-		try {
-			pw=new PrintWriter(new FileWriter(putanja, false));
-			for(Korisnik a:korisnici.getKorisnici().values()) {
-				if(a instanceof Administrator) {
-					continue;
-				}else {
-					
-				pw.println(a.pratiociUpis());
-				}
-			}pw.close();
-			
-		}catch(IOException e) {
-			e.printStackTrace();
-		}finally {
-			if(pw!=null) {
-				pw.close();
-			}
-		}
-	}
+
 	
 
 }

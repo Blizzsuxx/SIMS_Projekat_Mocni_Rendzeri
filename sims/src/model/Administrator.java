@@ -153,9 +153,6 @@ public class Administrator extends Korisnik {
       if (recenzijeZaIzmene != null)
          recenzijeZaIzmene.clear();
    }
-   @Override
- 	public String pratiociUpis() {return "";}
-  
-}
+
    
 }

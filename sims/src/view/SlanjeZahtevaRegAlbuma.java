@@ -36,7 +36,7 @@ public class SlanjeZahtevaRegAlbuma extends JFrame {
 		btnPosalji.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nazivAlbuma = txtNazivAlbuma.getText();
-				if (nazivAlbuma == null) {
+				if (nazivAlbuma.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Morate uneti naziv albuma.");
 					return;
 				}

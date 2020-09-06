@@ -244,7 +244,7 @@ public class RegistarcijaAlbuma extends JFrame {
 		if (cmbIzvodjac.getSelectedIndex() == -1) {
 			return "Morate odabrati izvodjaca.";
 		}
-		if (dtDor.getJFormattedTextField().getText() == null) {
+		if (dtDor.getJFormattedTextField().getText().isEmpty()) {
 			return "Morate odabrati datum.";
 		}
 		return "";

@@ -52,16 +52,16 @@ public class LoginWindow extends JFrame {
 		JTextField unosKorisnickogImena = new JTextField(25);
 		JPasswordField unosSifre = new JPasswordField(25);
 		
-		add(korisnickoIme);
+		add(korisnickoIme, "gapleft 10");
 		add(unosKorisnickogImena, "wrap");
-		add(sifra);
+		add(sifra, "gapleft 10");
 		add(unosSifre, "wrap");
 		
 		JButton ulogujSe = new JButton("Uloguj se");
 		JButton gost = new JButton("Udji kao gost");
 		JButton registracija = new JButton("Registruj se");
 		
-		add(ulogujSe, "wrap");
+		add(ulogujSe, "wrap, gaptop 10");
 		add(gost, "gaptop 30");
 		add(registracija, "gaptop 30");
 		logButton = ulogujSe;

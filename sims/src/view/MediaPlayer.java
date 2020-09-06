@@ -43,7 +43,7 @@ public class MediaPlayer extends MojDialog {
         this.getContentPane().setLayout(new MigLayout());
         MP3Player mediaPlayer = getMediaPlayer(delo.getNaziv(), ".mp3");
         mediaPlayer.setPreferredSize(new Dimension(this.getWidth() , 20));
-        MuzickoDeloLabel labela = new MuzickoDeloLabel(this.getWidth(), 100, delo);
+        MuzickoDeloLabel labela = new MuzickoDeloLabel(this.getWidth()-50, 100, delo);
         labela.setClickable(false);
         this.add(labela, "wrap");
         add(mediaPlayer, "span, wrap");

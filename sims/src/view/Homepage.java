@@ -14,8 +14,8 @@ import javax.swing.JMenuItem;
 
 import org.jdesktop.swingx.JXSearchField;
 import org.jdesktop.swingx.JXSearchField.SearchMode;
+import org.jdesktop.swingx.search.RecentSearches;
 
-import controler.Constants;
 import model.Sesija;
 import net.miginfocom.swing.MigLayout;
 
@@ -29,8 +29,8 @@ public abstract class Homepage extends JFrame {
 
 	public Homepage(Sesija sesija) {
 		this.getContentPane().setLayout(new MigLayout());
-		initGui();
 		this.sesija = sesija;
+		initGui();
 	}
 
 
@@ -59,16 +59,42 @@ public abstract class Homepage extends JFrame {
 		
 		JXSearchField search = new JXSearchField();
 		search.setSearchMode(SearchMode.REGULAR);
+		
+		String korisnickoIme = null;
+		if(sesija.getTrenutniKorisnik() != null) {
+			korisnickoIme = sesija.getTrenutniKorisnik().getNalog().getKorisnickoIme();
+		}
+		
+		RecentSearches recentSearches = new RecentSearches(korisnickoIme);
+		recentSearches.install(search);
 		search.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				recentSearches.put(arg0.getActionCommand());
 				searchTriggered(arg0.getActionCommand());
 			}
 
 		});
 		
 		this.add(search, "north");
+		
+		
+		/*
+		
+		JPopupMenu selectSearchCriterium = new JPopupMenu();
+		JCheckBoxMenuItem muzika = new JCheckBoxMenuItem("Muzika");
+		JCheckBoxMenuItem albumi = new JCheckBoxMenuItem("Albumi");
+		JCheckBoxMenuItem izvodjaci = new JCheckBoxMenuItem("Izvodjaci");
+		
+		selectSearchCriterium.add(muzika);
+		selectSearchCriterium.add(albumi);
+		selectSearchCriterium.add(izvodjaci);
+		
+		
+		search.add(selectSearchCriterium);
+		search.setComponentPopupMenu(selectSearchCriterium);
+		*/
 		
 		JButton advancedSearchButton = new JButton("Napredna pretraga");
 		this.add(advancedSearchButton, "north");

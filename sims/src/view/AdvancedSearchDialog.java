@@ -1,10 +1,15 @@
 package view;
 
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
+import javax.swing.JPopupMenu;
 
 import org.jdesktop.swingx.JXSearchField;
 import org.jdesktop.swingx.JXSearchField.SearchMode;
@@ -18,7 +23,7 @@ public class AdvancedSearchDialog extends MojDialog {
 	
 	private void initGui() {
 		// TODO Auto-generated method stub
-		
+		this.setLayout(new BorderLayout());
 		JXSearchField search = new JXSearchField();
 		search.setSearchMode(SearchMode.REGULAR);
 		search.addActionListener(new ActionListener(){
@@ -35,9 +40,23 @@ public class AdvancedSearchDialog extends MojDialog {
 
 		});
 		
-		this.add(search, "north");
+		this.add(search, BorderLayout.NORTH);
 		
+		final JPopupMenu menu = new JPopupMenu();
+		menu.add(new JCheckBoxMenuItem("Other Court"));
+		menu.add(new JCheckBoxMenuItem("Tribunal Court"));
+		menu.add(new JCheckBoxMenuItem("High Court"));
+		menu.add(new JCheckBoxMenuItem("Supreme Court"));
+
+		final JButton button = new JButton();
+		button.setAction(new AbstractAction("Court") {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        menu.show(button, 0, button.getHeight());
+		    }
+		});
 		
+		add(button);
 		
 		
 	}

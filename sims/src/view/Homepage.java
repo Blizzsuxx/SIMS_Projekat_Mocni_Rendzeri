@@ -1,6 +1,5 @@
 package view;
 
-
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -20,13 +19,11 @@ import model.Sesija;
 import net.miginfocom.swing.MigLayout;
 
 public abstract class Homepage extends JFrame {
-
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1L;
 	private Sesija sesija;
-
+	protected JMenu menu;
+	protected JMenuBar menubar;
+	
 	public Homepage(Sesija sesija) {
 		this.getContentPane().setLayout(new MigLayout());
 		initGui();
@@ -47,8 +44,8 @@ public abstract class Homepage extends JFrame {
 		int y = (screenSize.height - this.getHeight()) / 2;
 		this.setLocation(x, y);
 
-		JMenu menu = new JMenu("Meni");
-		JMenuBar menubar = new JMenuBar();
+		menu = new JMenu("Meni");
+		menubar = new JMenuBar();
 		JMenuItem profil = new JMenuItem("Profil");
 		JMenuItem odjava = new JMenuItem("Odjava");
 		menu.add(profil);

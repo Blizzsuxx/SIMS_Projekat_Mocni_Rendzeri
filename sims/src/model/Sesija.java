@@ -26,7 +26,10 @@ import controler.MuzickoDeloMenadzer;
 import controler.RecenzijeZaIzmenuMenadzer;
 import controler.ZakazanaRecenzijaMenadzer;
 import controler.ZanroviMenadzer;
+import view.AdminHomepage;
+import view.Homepage;
 import view.KorisnikAplikacijeHomepage;
+import view.UrednikHomepage;
 
 /** @pdOid a6536d8d-e436-4d30-9c5d-e31219285ea3 */
 public class Sesija {
@@ -460,8 +463,16 @@ public class Sesija {
 public void izvrsi() {
 	// TODO Auto-generated method stub
 	
+	Homepage homepage;
 	
-	KorisnikAplikacijeHomepage homepage = new KorisnikAplikacijeHomepage(this);
+	if (trenutniKorisnik instanceof Administrator) {
+		homepage = new AdminHomepage(this);
+	} else if (trenutniKorisnik instanceof Urednik) {
+		homepage = new UrednikHomepage(this);
+	} else {
+		homepage = new KorisnikAplikacijeHomepage(this);
+	}
+	
 	homepage.setVisible(true);
 	homepage.addWindowListener(new WindowAdapter() {
 		@Override

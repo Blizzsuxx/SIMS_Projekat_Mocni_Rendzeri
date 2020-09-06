@@ -114,6 +114,8 @@ public class LoginMenadzer {
    public void uloguj() {
       // TODO: implement
 	   prozor.setVisible(true);
+	   prozor.setKorisnickoIme("");
+	   prozor.setSifra("");
    }
    
    

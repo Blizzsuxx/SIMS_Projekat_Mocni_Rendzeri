@@ -12,7 +12,7 @@ public abstract class Izvodjac {
 	private String umetnickoIme;
 	/** @pdOid a5f2bea1-d21a-43c6-99b6-58d368935d68 */
 	private boolean status;
-	
+
 	private Zanr zanr;
    
 	/** @pdRoleInfo migr=no name=KorisnikAplikacije assc=association16 mult=0..* side=A */
@@ -21,7 +21,6 @@ public abstract class Izvodjac {
 	private ArrayList<MuzickoDelo> muzickaDela;
 	private ArrayList<Album> izdatiAlbumi;
    
-
 	public ArrayList<Album> getIzdatiAlbumi() {
 		return izdatiAlbumi;
 	}

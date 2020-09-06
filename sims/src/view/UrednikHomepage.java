@@ -5,19 +5,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import model.Izvodjac;
 import model.Sesija;
 
 public class UrednikHomepage extends Homepage {
 	 private static final long serialVersionUID = 1L;
 
 	 private JMenu listaMenu, korisniciMenu;
-	 private JMenuItem listaItem1, listaItem2, korisniciItem1, korisniciItem2;
+	 private JMenuItem listaItem1, listaItem2, korisniciItem1, korisniciItem2, korisniciItem3, korisniciItem4;
 	 
 	  
 	public UrednikHomepage(Sesija sesija) {
@@ -67,6 +69,15 @@ public class UrednikHomepage extends Homepage {
 		korisniciItem2.setBackground(Color.BLACK);
 		korisniciItem2.setForeground(Color.WHITE);
 		korisniciMenu.add(korisniciItem2);
+		korisniciMenu.addSeparator();
+		korisniciItem3 = new JMenuItem("Neprihvaceni Izvodjaci");
+		korisniciItem3.setBackground(Color.BLACK);
+		korisniciItem3.setForeground(Color.WHITE);
+		korisniciMenu.add(korisniciItem3);
+		korisniciItem4 = new JMenuItem("Prihvaceni Izvodjaci");
+		korisniciItem4.setBackground(Color.BLACK);
+		korisniciItem4.setForeground(Color.WHITE);
+		korisniciMenu.add(korisniciItem4);
 		menubar.add(korisniciMenu);
 	}
 	    
@@ -119,6 +130,31 @@ public class UrednikHomepage extends Homepage {
 					
 			}
 	    		
+	    });
+	    
+	    korisniciItem3.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				IzvodjaciProzor ip = new IzvodjaciProzor(UrednikHomepage.this, "Neprihvaceni Izvodjaci",
+						500, 500, new ArrayList<Izvodjac>());
+				ip.setVisible(true);
+				
+			}
+	    	
+	    });
+	    
+	    korisniciItem4.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				IzvodjaciProzor ip = new IzvodjaciProzor(UrednikHomepage.this, "Prihvaceni Izvodjaci",
+						500, 500, new ArrayList<Izvodjac>());
+				ip.setVisible(true);
+				
+				
+			}
+	    	
 	    });
 	}
 

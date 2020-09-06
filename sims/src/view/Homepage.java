@@ -121,13 +121,10 @@ public abstract class Homepage extends JFrame {
 
 	private void menuProfilTriggered() {
 		// TODO Ovde pisi kod za pregled profila
-		// Koristi DiajlogKorisnickihInformacija ako mozes nekako
-		// Ili Editor builder
 		
 		//DUMMY - Hardcoded KorisnikAplikacije
-		DijalogKorisnickihInformacija dki = new DijalogKorisnickihInformacija(this, Constants.DUMMY);
-		dki.setVisible(true);
-		
+		//DijalogRadSaNalogom radSaNalogom = new DijalogRadSaNalogom(this, Constants.DUMMY, "Rad sa nalogom");
+		//radSaNalogom.setVisible(true);
 	}
 	
 	

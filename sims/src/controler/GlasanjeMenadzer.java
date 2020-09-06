@@ -12,7 +12,7 @@ import model.Glasanje;
 import model.MuzickoDelo;
 import model.Pol;
 import model.Urednik;
-
+//Grcka
 public class GlasanjeMenadzer {
 	private ArrayList<Glasanje> glasovi;
 	private boolean pokrenutoGlasanje;

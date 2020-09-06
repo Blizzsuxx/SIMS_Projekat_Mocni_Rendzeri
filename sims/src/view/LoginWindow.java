@@ -6,12 +6,15 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import org.jdesktop.swingx.JXLoginPane;
 
 import controler.LoginMenadzer;
 import net.miginfocom.swing.MigLayout;
@@ -32,7 +35,7 @@ public class LoginWindow extends JFrame {
 	public LoginWindow(LoginMenadzer loginMenadzer) throws HeadlessException {
 		// TODO Auto-generated constructor stub
 		getContentPane().setLayout(new MigLayout());
-		setSize(450, 250);
+		setSize(425, 275);
 		
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension screenSize = toolkit.getScreenSize();
@@ -40,22 +43,25 @@ public class LoginWindow extends JFrame {
 		int y = (screenSize.height - this.getHeight()) / 2;
 		this.setLocation(x, y);
 		
+		JXLoginPane pane = new JXLoginPane();
+		this.add(new JLabel(new ImageIcon(pane.getBanner())), "north");
+		
 		JLabel korisnickoIme = new JLabel("Korisnicko Ime");
 		JLabel sifra = new JLabel("Sifra");
 		
 		JTextField unosKorisnickogImena = new JTextField(25);
 		JPasswordField unosSifre = new JPasswordField(25);
 		
-		add(korisnickoIme);
+		add(korisnickoIme, "gapleft 10");
 		add(unosKorisnickogImena, "wrap");
-		add(sifra);
+		add(sifra, "gapleft 10");
 		add(unosSifre, "wrap");
 		
 		JButton ulogujSe = new JButton("Uloguj se");
 		JButton gost = new JButton("Udji kao gost");
 		JButton registracija = new JButton("Registruj se");
 		
-		add(ulogujSe, "wrap");
+		add(ulogujSe, "wrap, gaptop 10");
 		add(gost, "gaptop 30");
 		add(registracija, "gaptop 30");
 		logButton = ulogujSe;

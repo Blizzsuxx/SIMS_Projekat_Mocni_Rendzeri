@@ -39,6 +39,7 @@ public class DijalogKorisnickihInformacija extends MojDialog {
 		   this.setContentPane(panel);
 		   this.panel = panel;
 		   this.editor = editor;
+		   this.setSize(this.getWidth(), this.getHeight()+50);
 		   panel.addActionListener(new ActionListener() {
 			
 			@Override

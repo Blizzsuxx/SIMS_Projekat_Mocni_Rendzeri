@@ -10,6 +10,7 @@ import controler.CitacDatoteka;
 import controler.LoginMenadzer;
 
 public class Main {
+	
 
 	public static void main(String[] args) throws ParseException, IOException {
 		// TODO Auto-generated method stub

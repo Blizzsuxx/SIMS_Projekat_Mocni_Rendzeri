@@ -18,7 +18,7 @@ public class SearchResults extends JScrollPane {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private static JPanel initGui(ArrayList<Slikovit> prikaz) {
+	public static JPanel initGui(ArrayList<Slikovit> prikaz) {
 		JPanel content = new JPanel(new MigLayout());
 		for(Slikovit sadrzaj : prikaz) {
 			JPanel slika = null;

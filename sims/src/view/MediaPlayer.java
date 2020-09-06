@@ -76,7 +76,7 @@ public class MediaPlayer extends MojDialog {
         pane.setSize(new Dimension(this.getWidth(), 100));
         opis.setPreferredSize(pane.getSize());
         opis.setEditable(false);
-
+        
         
         ExpandingPanel opisPanel = new ExpandingPanel("Opis");
         opisPanel.getContent().add(pane, BorderLayout.CENTER);

@@ -9,6 +9,7 @@ import controler.KorisniciMenadzer;
 import controler.RecenzijeZaIzmenuMenadzer;
 import controler.ZakazanaRecenzijaMenadzer;
 import model.Korisnik;
+import model.Recenzija;
 import model.RecezijaZaIzmenu;
 import model.Sesija;
 import model.Urednik;
@@ -157,8 +158,30 @@ public class DodelaRecenzija extends JFrame {
 			urednik.addRecezijaZaIzmenu(rzi);
 			urednik.addIstorijaRecenzija(rzi.getRecenzija());
 		}
+		setujRecenzije(urednik, zakazaneRecenzije, recenzijeZaIzmenu);
 		korisnici.replace(urednik.getNalog().getKorisnickoIme(), (Korisnik)urednik);
 		km.setKorisnici(korisnici);
 		sesija.setKorisnici(km);
 	}
+	
+	private void setujRecenzije(Urednik urednik, ArrayList<ZakazanaRecenzija> zakazaneRecenzije, 
+			ArrayList<RecezijaZaIzmenu> recenzijeZaIzemnu) {
+		for (Recenzija recenzija : sesija.getRecenzije()) {
+			for (ZakazanaRecenzija zr : zakazaneRecenzije) {
+				if (zr.getRecenzija().getNaslov().equals(recenzija.getNaslov())) {
+					recenzija.setUrednik(urednik);
+					sesija.setZakazanaRecenzija(recenzija, urednik);
+					break;
+				}
+			}
+			for (RecezijaZaIzmenu rzi : recenzijeZaIzemnu) {
+				if (rzi.getRecenzija().getNaslov().equals(recenzija.getNaslov())) {
+					recenzija.setUrednik(urednik);
+					sesija.setRecenzijaZaIzmenu(recenzija);
+					break;
+				}
+			}
+		}
+	}
+	
 }

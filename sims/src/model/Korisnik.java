@@ -4,7 +4,6 @@
  * Purpose: Defines the Class Korisnik
  ***********************************************************************/
 package model;
-import java.text.Format;
 import java.text.ParseException;
 import java.util.Date;
 

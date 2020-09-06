@@ -1,2 +1,8 @@
-Sara,Saric,Saric@gmail.com,zenski,14/06/1992,password123,Ssara,12/07/2013,true,k
-Pera,Peric,pera@gmail.com,muski,13/09/1999,password123,pPeric,13/07/2013,true,u
+Pera,Peric,pera@gmail.com,muski,13/09/1999,pPeric,pPeric,13/07/2013,1,u
+pera,preic,pera@gmail.com,muski,02/05/2001,pera1,pera1,04/11/2010,1,a
+pera,preisic,perap@gmail.com,muski,02/05/2001,perap,perap,04/11/2010,1,a
+miki,jevremeovic,miki@gmail.com,muski,03/04/2000,miki1,miki1,06/09/2010,1,u
+Sara,Saric,Saric@gmail.com,zenski,14/06/1992,Ssara,Ssara,12/07/2013,1,k
+nata,aleksic,nata@gmail.com,zenski,01/01/2000,nata1,nata1,05/10/2010,1,k
+nina,pesic,nina@gmail.com,zenski,01/01/2000,nina1,nina1,05/10/2010,1,k
+mlina,popov,milanpopov@gmail.com,muski,03/04/2000,milan1,milan1,06/09/2010,1,u

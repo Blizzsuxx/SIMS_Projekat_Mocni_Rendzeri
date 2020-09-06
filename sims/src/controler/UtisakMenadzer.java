@@ -42,6 +42,7 @@ public class UtisakMenadzer {
 				{
 
 					MuzickoDelo delo=pronadiDelo(muzickaDela, linije[0]);
+					System.out.println("d");
 					DateTimeFormatter df=DateTimeFormatter.ofPattern("dd.MM.yyyy.");
 					LocalDate dan=LocalDate.parse(linije[1].trim(), df);
 					Date datum=new Date(dan.getYear(), dan.getMonthValue(), dan.getDayOfMonth());
@@ -51,8 +52,10 @@ public class UtisakMenadzer {
 					if(linije.length==6) {
 					Urednik urednik = (Urednik)pronadiKorisnika(korisnici, linije[4].trim());
 					Recenzija a = new Recenzija(linije[3], datum, status, urednik, delo, linije[5].trim());//delo, datum status txt,urednik, naslov
-					urednik.getIstorijaRecenzija().add(a);
+					if(urednik!=null) {
+					urednik.getIstorijaRecenzija().add(a);}
 					svi.add(a);
+					
 					rec.add(a);
 					}
 					else if(linije.length==5) {

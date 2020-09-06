@@ -44,7 +44,8 @@ public class AlbumKontroler {
 					//izvodjac,urednik, dan,odobreno, naslov, izbrisi, dela....
 					Izvodjac iz = izvodjaci.nadiPoUmetnickomImenu(linije[0].trim());
 					Urednik u = (Urednik) menadzerKorisnici.trazi(linije[1].trim());
-					Date datumRegistracije = new SimpleDateFormat("dd.MM.yyyy").parse(linije[2].trim());
+					
+					Date datumRegistracije = new SimpleDateFormat("dd.MM.yyyy.").parse(linije[2].trim());
 					boolean odobreno = Boolean.parseBoolean(linije[3].trim());
 					String nazivAlbuma = linije[4].trim();
 					boolean izbrisan = Boolean.parseBoolean(linije[5].trim());

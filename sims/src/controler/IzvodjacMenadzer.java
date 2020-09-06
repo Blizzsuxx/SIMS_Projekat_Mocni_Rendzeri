@@ -30,9 +30,9 @@ public class IzvodjacMenadzer {
 		this.svi = new ArrayList<Izvodjac>();
 	}
 
-	public IzvodjacMenadzer(List<String[]> data){
+	public IzvodjacMenadzer(List<String[]> data, ZanroviMenadzer zm){
 		this();
-		ucitajIzvodjace(data);
+		ucitajIzvodjace(data, zm);
 	}
 
 
@@ -73,7 +73,7 @@ public class IzvodjacMenadzer {
 
 
 
-	private void ucitajIzvodjace(List<String[]> data) {
+	private void ucitajIzvodjace(List<String[]> data, ZanroviMenadzer zm) {
 		//potrebno je i pratioce??? 
 		//Da -Dragan
 		this.svi = new ArrayList<Izvodjac>();
@@ -100,7 +100,8 @@ public class IzvodjacMenadzer {
 				}
 				Pol p = Pol.zenski;
 				if(linije[8].trim().equals(Pol.muski.name())) {p = Pol.muski;}
-				Pojedinacanizvodjac a = new Pojedinacanizvodjac(linije[0].trim(), new Zanr(linije[1].trim(),true),
+				
+				Pojedinacanizvodjac a = new Pojedinacanizvodjac(linije[0].trim(), zm.trazi(linije[1].trim()),
 						Boolean.parseBoolean(linije[2]), linije[3].trim(), linije[4].trim(), rodjenje, smrt, linije[7].trim(), p);
 				svi.add(a);
 				solo.add(a);
@@ -109,12 +110,13 @@ public class IzvodjacMenadzer {
 				Date smrt = null;
 				Date rodjenje = null;
 				try {
+					System.out.println(linije[4]);
 					rodjenje = Constants.NATASIN_FORMAT_ZA_DATUM.parse(linije[4].trim());
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				if(!linije[4].trim().equals("/")) {
+				if(!linije[5].trim().equals("/")) {
 					try {
 						smrt = Constants.NATASIN_FORMAT_ZA_DATUM.parse(linije[5].trim());
 					} catch (ParseException e) {
@@ -123,12 +125,13 @@ public class IzvodjacMenadzer {
 					}
 				}
 				Integer br1 = Integer.parseInt(linije[3].trim());
-				Grupa a = new Grupa(linije[0].trim(), new Zanr(linije[1].trim(),true), Boolean.parseBoolean(linije[2]), br1, rodjenje, smrt );
+				Grupa a = new Grupa(linije[0].trim(), zm.trazi(linije[1].trim()), Boolean.parseBoolean(linije[2]), br1, rodjenje, smrt );
 				svi.add(a);
 				this.getGrupe().add(a);
 				
 			}
 			else {
+				System.out.println(linije[0]);
 				System.out.println("Greska pri ucitavanju izvodjaca.");
 			}
 					

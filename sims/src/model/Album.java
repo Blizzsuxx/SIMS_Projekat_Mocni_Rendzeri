@@ -86,7 +86,7 @@ public class Album {
 
 	public String toFileString() {
 		//izvodjac,urednik, dan,odobreno, naslov, izbrisi, dela....
-		String pattern = "dd.MM.yyyy";
+		String pattern = "dd.MM.yyyy.";
 		DateFormat df = new SimpleDateFormat(pattern);
 		String ad="";
 		ad+=this.getIzvodjac().getUmetnickoIme()+",";

@@ -50,11 +50,12 @@ public class ZakazanaRecenzijaMenadzer {
 					LocalDate rok=LocalDate.parse(linije[3].trim(), df);
 					Date rok2=new Date(rok.getYear(), rok.getMonthValue(), rok.getDayOfMonth());
 					Recenzija r=pronadiRecenziju(linije[4].trim(), recenzije);
+					if(r!=null) {
 					ZakazanaRecenzija a = new ZakazanaRecenzija(d,linije[0].trim(), false,rok2, r, r.getUrednik() );
 					if (linije[1].trim().equals("true")) {
 					a.setUradeno(true);
 					}
-					sve.add( a);
+					sve.add( a);}
 				}
 		
 	}

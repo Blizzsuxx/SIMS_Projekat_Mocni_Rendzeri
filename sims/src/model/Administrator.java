@@ -154,5 +154,13 @@ public class Administrator extends Korisnik {
          recenzijeZaIzmene.clear();
    }
 
+
+
+@Override
+public String pratiociUpis() {
+	
+	return "";
+}
+
    
 }

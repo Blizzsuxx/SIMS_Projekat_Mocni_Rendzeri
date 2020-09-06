@@ -1,5 +1,7 @@
 package model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 /***********************************************************************
  * Module:  Clan.java
  * Author:  Dragan
@@ -77,11 +79,13 @@ public Clan(Date datumPrikljucivanja, Date datumNapustanja, Pojedinacanizvodjac 
 }
 public String toFileString() {
 	String ad="";
-	ad+=this.getDatumPrikljucivanja().getDay()+"."+this.getDatumPrikljucivanja().getMonth()+"."+this.getDatumPrikljucivanja().getYear()+".,";//
+	String pattern = "dd.MM.yyyy.";
+	DateFormat df = new SimpleDateFormat(pattern);
+	ad+=df.format(datumPrikljucivanja)+",";//
 	if(this.getDatumNapustanja()==null) {
 		ad+="/,";
 	}else {
-		ad+=this.getDatumNapustanja().getDay()+"."+this.getDatumNapustanja().getMonth()+"."+this.getDatumNapustanja().getYear()+".,";//	
+		ad+=df.format(this.datumNapustanja)+",";//	
 	}
 	ad+=this.getIzvodjac().getUmetnickoIme()+",";
 	ad+=this.getGrupa().getUmetnickoIme();

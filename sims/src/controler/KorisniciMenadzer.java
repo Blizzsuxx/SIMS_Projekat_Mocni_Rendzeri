@@ -5,6 +5,9 @@
  ***********************************************************************/
 package controler;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,30 +34,31 @@ public class KorisniciMenadzer {
 	   korisnici = new HashMap<String, Korisnik>();
 	   SimpleDateFormat format = Constants.FORMAT_ZA_DATUM;
 	   for(String[] s : readAll) {
-		   String ime = s[0];
-		   String prezime = s[1];
-		   String eMail = s[2];
-		   Pol pol = Pol.valueOf(s[3]);
+		   String ime = s[0].trim();
+		   String prezime = s[1].trim();
+		   String eMail = s[2].trim();
+		   Pol pol = Pol.valueOf(s[3].trim());
 		   Date datumRodjenja = null;
 		
 			try {
-				datumRodjenja = format.parse(s[4]);
+				datumRodjenja = format.parse(s[4].trim());
 			} catch (ParseException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		
-		   String sifra = s[5];
-		   String korisnickoIme = s[6];
+		   String sifra = s[5].trim();
+		   String korisnickoIme = s[6].trim();
 		   Date datum = null;
 		try {
-			datum = format.parse(s[7]);
+			
+			datum = format.parse(s[7].trim());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		   boolean status = Boolean.parseBoolean(s[8]);
-		   String uloga = s[9];
+		   boolean status = Boolean.parseBoolean(s[8].trim());
+		   String uloga = s[9].trim();
 		   switch(uloga) {
 		   case "a":
 			   dodaj(new Administrator(ime, prezime, eMail, pol, datumRodjenja, sifra, korisnickoIme, datum, status));
@@ -115,7 +119,32 @@ public class KorisniciMenadzer {
    }
 
    public void sacuvaj(){
-	   
+	   PrintWriter pw=null;
+		String sep=System.getProperty("file.separator");
+		String putanja ="."+sep+"fajlovi"+sep+"korisnici.txt";
+		try {
+			
+			pw=new PrintWriter(new FileWriter(putanja, false));
+			for(Korisnik a:korisnici.values()) {
+				if(a instanceof KorisnikAplikacije) {
+					pw.println(a.toFileString()+"k");
+				}else if(a instanceof Administrator) {
+					pw.println(a.toFileString()+"a");
+				}
+				else {
+					pw.println(a.toFileString()+"u");
+				}
+				
+				
+			}pw.close();
+			
+		}catch(IOException e) {
+			e.printStackTrace();
+		}finally {
+			if(pw!=null) {
+				pw.close();
+			}
+		}
    }
 
    

@@ -49,9 +49,11 @@ public class Grupa extends Izvodjac {
 		this.brojClanova = brojClanova;
 		this.datumOsnivanja = datumOsnivanja;
 		this.datumRaspada = datumRaspada;
+		this.clanovi=new ArrayList();
 	}
 	public Grupa(String umetnickoIme, Zanr zanr, boolean status, KorisnikAplikacije[] prati) {
 		super(umetnickoIme, zanr, status, prati);
+		this.clanovi=new ArrayList();
 	}
 	
 	
@@ -61,6 +63,7 @@ public class Grupa extends Izvodjac {
 		this.brojClanova = brojClanova;
 		this.datumOsnivanja = datumOsnivanja;
 		this.datumRaspada = datumRaspada;
+		this.clanovi=new ArrayList();
 	}
 	@Override
 	protected String[] getImenaDela() {
@@ -82,11 +85,13 @@ public class Grupa extends Izvodjac {
 		ad+=this.getZanr().getNazivZanra()+";";
 		ad+=this.isStatus()+";";
 		ad+=this.getBrojClanova()+";";
-		ad+=this.getDatumOsnivanja().getDay()+"."+this.getDatumOsnivanja().getMonth()+"."+this.getDatumOsnivanja().getYear()+".,";//
+		String pattern = "dd.MM.yyyy.";
+		DateFormat df = new SimpleDateFormat(pattern);
+		ad+=df.format(this.getDatumOsnivanja())+";";//
 		if(this.getDatumRaspada()==null) {
 			ad+="/;";
 		}else {
-			ad+=this.getDatumRaspada().getDay()+"."+this.getDatumRaspada().getMonth()+"."+this.getDatumRaspada().getYear()+".";//		
+			ad+=df.format(this.getDatumRaspada())+";";//		
 		}
 		
 		return ad;
@@ -100,7 +105,7 @@ public class Grupa extends Izvodjac {
 	}
 	
 	public static String Grupa2String(Grupa g) {
-		String pattern = "dd.MM.yyyy";
+		String pattern = "dd.MM.yyyy.";
 		DateFormat df = new SimpleDateFormat(pattern);
 		return g.getUmetnickoIme() + ";" + g.getZanr().getNazivZanra() + ";" + bool2String(g.isStatus()) + ";" + g.getBrojClanova() + ";" +
 				 df.format(g.getDatumOsnivanja()) + ";" + df.format(g.getDatumRaspada()) + System.lineSeparator();

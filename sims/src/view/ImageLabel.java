@@ -81,13 +81,16 @@ public class ImageLabel extends JPanel {
    
 
    public ImageLabel(ImageIcon ikona, Slikovit delo) {
+       this(ikona, delo, "left");
+   }
+   
+   
+   public ImageLabel(ImageIcon ikona, Slikovit delo, String align) {
        super(new MigLayout());
-       setBackground(Color.BLACK);
        setPreferredSize(new Dimension(120, 120));
        JLabel labela = new JLabel(ikona);
        this.setDelo(delo);
-       this.add(labela, "wrap, align center");
-       labela.setBackground(Color.BLACK);
+       this.add(labela, "wrap, align " + align);
        this.addTekst(delo.Ime());
 
        labela.addMouseListener(new MouseInputAdapter(){
@@ -102,7 +105,6 @@ public class ImageLabel extends JPanel {
    }
 
 
-
     protected void clickedEvent() {
 	   
    }
@@ -111,8 +113,6 @@ void addTekst(String tekst){
        JLabel labela = new JLabel(tekst);
        labela.setSize(getPreferredSize());
        this.add(labela, "wrap, align center");
-       labela.setBackground(Color.BLACK);
-       labela.setForeground(Color.WHITE);
    }
 
 }

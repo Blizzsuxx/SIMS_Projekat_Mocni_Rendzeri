@@ -1,46 +1,53 @@
 package view;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import model.MuzickoDelo;
+import net.miginfocom.swing.MigLayout;
 
-public class SearchResults extends MojDialog {
+public class SearchResults extends JScrollPane {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private void initGui(ArrayList<Slikovit> prikaz) {
+	private static JPanel initGui(ArrayList<Slikovit> prikaz) {
+		JPanel content = new JPanel(new MigLayout());
 		for(Slikovit sadrzaj : prikaz) {
-			ImageLabel slika = null;
+			JPanel slika = null;
 			if(sadrzaj instanceof MuzickoDelo) {
-				slika = new MuzickoDeloLabel(sadrzaj);
+				slika = new JPanel(new FlowLayout(FlowLayout.LEFT));
+				JPanel deoSaSlikom = new MuzickoDeloLabel(sadrzaj);
+				slika.add(deoSaSlikom);
+				JPanel deoSaOpisom = new JPanel(new BorderLayout());
+				StarRater rater = new StarRater(5, 3, 3);
+				rater.setEnabled(false);
+				deoSaOpisom.add(rater, BorderLayout.NORTH);
+				JTextArea opis = new JTextArea(((MuzickoDelo) sadrzaj).getOpis());
+				opis.setEditable(false);
+				deoSaOpisom.add(opis, BorderLayout.CENTER);
+				slika.add(deoSaOpisom);
 			} else {
 				slika = new ImageLabel(sadrzaj);
 			}
-			this.add(slika, "wrap 20");
+			
+			content.add(slika, "wrap 20");
 		}
+		return content;
+	}
+	
+	
+	public SearchResults(ArrayList<Slikovit> prikaz) {
+		super(initGui(prikaz));
 	}
 
-	public SearchResults(JFrame parent, int dimension1, int dimension2, ArrayList<Slikovit> prikaz) {
-		super(parent, "Rezultat pretrage", dimension1, dimension2);
-		initGui(prikaz);
-		// TODO Auto-generated constructor stub
-	}
-
-	public SearchResults(JFrame parent, ArrayList<Slikovit> prikaz) {
-		super(parent, "Rezultat pretrage");
-		initGui(prikaz);
-		// TODO Auto-generated constructor stub
-	}
-
-	public SearchResults(int dimension1, int dimension2, ArrayList<Slikovit> prikaz) {
-		super("Rezultat pretrage", dimension1, dimension2);
-		initGui(prikaz);
-		// TODO Auto-generated constructor stub
-	}
+	
 
 }

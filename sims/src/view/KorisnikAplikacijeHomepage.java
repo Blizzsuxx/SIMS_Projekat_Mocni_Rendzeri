@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.Color;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,17 +24,14 @@ public class KorisnikAplikacijeHomepage extends Homepage {
 		preporucujemo = new ArrayList<>();
 
 		JLabel trendingl = new JLabel("U trendu");
-		trendingl.setForeground(Color.WHITE);
 		this.add(trendingl, "wrap, gaptop 20, align center");
 		initRow(trending, 10);
 
 		JLabel pratitel = new JLabel("Pratite");
-		pratitel.setForeground(Color.WHITE);
 		this.add(pratitel, "wrap, gaptop 20, align center");
 		initRow(pratite, 5);
 
 		JLabel preporucujemol = new JLabel("Preporucujemo");
-		preporucujemol.setForeground(Color.WHITE);
 		this.add(preporucujemol, "wrap, gaptop 20, align center");
 		initRow(preporucujemo, 5);
 		
@@ -44,14 +41,12 @@ public class KorisnikAplikacijeHomepage extends Homepage {
 		
 
 		JPanel pane = new JPanel(new MigLayout());
-		pane.setBackground(Color.BLACK);
 		for(int i = 0; i < numberOfElements; ++i){
 			MuzickoDeloLabel labela = new MuzickoDeloLabel(Constants.BARBIE_GIRL);
 			pane.add(labela, "gapleft 10");
 			lista.add(labela);
 		}
 		JScrollPane scroll = new JScrollPane(pane);
-		scroll.getHorizontalScrollBar().setBackground(Color.BLACK);
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
 		this.add(scroll, "wrap");
 	}

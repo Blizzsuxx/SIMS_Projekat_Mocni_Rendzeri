@@ -6,13 +6,12 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import model.Glasanje;
 import model.MuzickoDelo;
 import model.Pol;
 import model.Urednik;
-
+//Grcka
 public class GlasanjeMenadzer {
 	private ArrayList<Glasanje> glasovi;
 	private boolean pokrenutoGlasanje;
@@ -76,10 +75,20 @@ public class GlasanjeMenadzer {
 	}
 	
 	public void addGlas(Glasanje g) {
+		for (Glasanje glas : glasovi) {
+			if (glas.getMuzickoDelo().getNaziv().equals(g.getMuzickoDelo().getNaziv())) {
+				return;
+			}
+		}
 		glasovi.add(g);
 	}
 	
 	public void addUrednik(Urednik u) {
+		for (Urednik urednik : uredniciKojiSuGlasali) {
+			if (urednik.getNalog().getKorisnickoIme().equals(u.getNalog().getKorisnickoIme())) {
+				return;
+			}
+		}
 		uredniciKojiSuGlasali.add(u);
 	}
 	
@@ -125,7 +134,7 @@ public class GlasanjeMenadzer {
 		try {
 			pw = new PrintWriter(new FileWriter(putanja, false));
 			if (uredniciKojiSuGlasali.isEmpty()) {
-				pw.write("");
+				pw.print("");
 				return;
 			}
 			for(Urednik u : uredniciKojiSuGlasali) {

@@ -106,4 +106,13 @@ public class LoginWindow extends JFrame {
 		return guestButton;
 	}
 
+	public void setKorisnickoIme(String korisnickoIme) {
+		this.korisnickoIme.setText(korisnickoIme);
+	}
+
+	public void setSifra(String sifra) {
+		this.sifra.setText(sifra);
+	}
+
+	
 }

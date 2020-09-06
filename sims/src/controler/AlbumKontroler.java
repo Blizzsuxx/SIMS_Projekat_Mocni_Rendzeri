@@ -31,6 +31,11 @@ public class AlbumKontroler {
 	}
 	
 	public void addAlbum(Album album) {
+		for (Album a : sviAlbumi) {
+			if (a.getNaslov().equals(album.getNaslov())) {
+				return;
+			}
+		}
 		sviAlbumi.add(album);
 	}
 

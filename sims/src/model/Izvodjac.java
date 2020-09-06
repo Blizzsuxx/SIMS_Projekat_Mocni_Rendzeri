@@ -31,6 +31,11 @@ public abstract class Izvodjac {
 	}
 	
 	public void addIzdatAlbum(Album album) {
+		for (Album a : izdatiAlbumi) {
+			if (a.getNaslov().equals(album.getNaslov())) {
+				return;
+			}
+		}
 		izdatiAlbumi.add(album);
 	}
 	
@@ -112,6 +117,11 @@ public abstract class Izvodjac {
 	}
 	
 	public void addDelo(MuzickoDelo md) {
+		for (MuzickoDelo muzickoDelo : muzickaDela) {
+			if (muzickoDelo.getNaziv().equals(md.getNaziv())) {
+				return;
+			}
+		}
 		this.muzickaDela.add(md);
 	}
 	

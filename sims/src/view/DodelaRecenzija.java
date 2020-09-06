@@ -113,15 +113,15 @@ public class DodelaRecenzija extends JFrame {
 	}
 	
 	private void dodeliRecenzijeUredniku() {
-		ArrayList<ZakazanaRecenzija> zakazeneRecenzije = new ArrayList<ZakazanaRecenzija>();
+		ArrayList<ZakazanaRecenzija> zakazaneRecenzije = new ArrayList<ZakazanaRecenzija>();
 		ArrayList<RecezijaZaIzmenu> recenzijeZaIzmenu = new ArrayList<RecezijaZaIzmenu>();
 		ZakazanaRecenzijaMenadzer zrm = sesija.getZakazanaRecenzijaMenadzer();
 		RecenzijeZaIzmenuMenadzer rzim = sesija.getRecenzijeZaIzmenuMenadzer();
-		int[] selektovaneZakRec = zakazaneRecenzije.getSelectedRows();
+		int[] selektovaneZakRec = this.zakazaneRecenzije.getSelectedRows();
 		for (int i = 0; i < selektovaneZakRec.length; i++) {
 			for (ZakazanaRecenzija zr : zrm.getSve()) {
-				if (zakazaneRecenzije.getValueAt(selektovaneZakRec[i], 0).equals(zr.getRecenzija().getNaslov())) {
-					zakazeneRecenzije.add(zr);
+				if (this.zakazaneRecenzije.getValueAt(selektovaneZakRec[i], 0).equals(zr.getRecenzija().getNaslov())) {
+					zakazaneRecenzije.add(zr);
 				}
 			}
 		}
@@ -145,16 +145,19 @@ public class DodelaRecenzija extends JFrame {
 			Korisnik k = (Korisnik)pair.getValue();
 			if (k.getNalog().getKorisnickoIme().equals(sUrednik)) {
 				urednik = (Urednik)k;
-				urednik.setZakazaneRecenzije(zakazeneRecenzije);
-				urednik.setRecezijaZaIzmenu(recenzijeZaIzmenu);
-				korisnici.replace((String)pair.getKey(), (Korisnik)urednik);
 				break;
 			}
 	        it.remove();
 	    }
-		for (ZakazanaRecenzija zr : zakazeneRecenzije) {
-			zr.setUrednik(urednik);
+		for (ZakazanaRecenzija zr : zakazaneRecenzije) {
+			urednik.addZakazaneRecenzije(zr);
+			urednik.addIstorijaRecenzija(zr.getRecenzija());
 		}
+		for (RecezijaZaIzmenu rzi : recenzijeZaIzmenu) {
+			urednik.addRecezijaZaIzmenu(rzi);
+			urednik.addIstorijaRecenzija(rzi.getRecenzija());
+		}
+		korisnici.replace(urednik.getNalog().getKorisnickoIme(), (Korisnik)urednik);
 		km.setKorisnici(korisnici);
 		sesija.setKorisnici(km);
 	}

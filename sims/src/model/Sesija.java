@@ -7,12 +7,10 @@ package model;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.time.DateTimeException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 import controler.AlbumKontroler;
 import controler.CitacDatoteka;
@@ -226,13 +224,17 @@ public class Sesija {
     * @param newMuzickoDjelo
     */
    public void addDela(MuzickoDelo newMuzickoDjelo) {
-      if (newMuzickoDjelo == null)
-         return;
-      if (this.dela == null)
-         this.dela = new java.util.HashSet<MuzickoDelo>();
-      if (!this.dela.contains(newMuzickoDjelo))
-         this.dela.add(newMuzickoDjelo);
-   }
+	      if (newMuzickoDjelo == null)
+	         return;
+	      if (this.dela == null)
+	         this.dela = new java.util.HashSet<MuzickoDelo>();
+	      for (MuzickoDelo md : this.dela) {
+	    	  if (md.getNaziv().equals(newMuzickoDjelo.getNaziv())) {
+	    		  return;
+	    	  }
+	      }
+	      this.dela.add(newMuzickoDjelo);
+	   }
 
    /**
     * @pdGenerated default remove
@@ -588,14 +590,12 @@ public Izvodjac getIzvodjac(String i) {
 
 public boolean napraviDelo(String datumIzdavanja, String naslov, String opis, Izvodjac izv, ArrayList<Zanr> zanrovi) {
 	try {
-	DateTimeFormatter form=DateTimeFormatter.ofPattern("dd.mm.yyyy.");
-	LocalDate datum=LocalDate.parse(datumIzdavanja, form);
-	Date dan=new Date(datum.getYear(), datum.getMonthValue(), datum.getDayOfMonth());
-	MuzickoDelo md=new MuzickoDelo(naslov, opis, dan, true, zanrovi);
-	izv.getMuzickaDela().add(md);
-	this.getDela().add(md);
-	return true;
-	}catch(DateTimeException e) {
+		MuzickoDelo md = new MuzickoDelo(naslov, opis, new SimpleDateFormat("dd.MM.yyyy").parse(datumIzdavanja), true, zanrovi);
+		izv.getMuzickaDela().add(md);
+		this.getDela().add(md);
+		return true;
+	}
+	catch(ParseException e) {
 		return false;
 	}
 }

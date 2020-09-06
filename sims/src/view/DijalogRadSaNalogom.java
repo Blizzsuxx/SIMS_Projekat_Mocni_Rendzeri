@@ -44,10 +44,10 @@ public class DijalogRadSaNalogom extends MojDialog {
 	}
 
 	private void initGui() {
-		this.setSize(450, 350);
+		this.setSize(450, 380);
 		MigLayout mig = new MigLayout("",
 									  "50 [] 50 []", //Kolone
-									  "40 [] 10 [] 10 [] 10 [] 10 [] 10 [] 10 [] 10 [] 10 [] 10"); //Vrste
+									  "25 [] 10 [] 10 [] 10 [] 10 [] 10 [] 10 [] 10 [] 10 [] 10"); //Vrste
 		this.setLayout(mig);
 		
 		imeLabela  = new JLabel("Ime"); prezLabela = new JLabel("Prezime"); 		mailLabela = new JLabel("eMail");

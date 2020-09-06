@@ -6,6 +6,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
@@ -18,6 +20,7 @@ import model.Pojedinacanizvodjac;
 import model.Pol;
 import model.Sesija;
 import model.Zanr;
+import net.miginfocom.swing.MigLayout;
 
 import javax.swing.JRadioButton;
 import javax.swing.JPanel;
@@ -33,8 +36,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 
-public class RegistracijaIzvodjaca extends JFrame {
+public class RegistracijaIzvodjaca extends JDialog {
 	/**
 	 * 
 	 */
@@ -61,7 +65,17 @@ public class RegistracijaIzvodjaca extends JFrame {
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public RegistracijaIzvodjaca(Sesija sesija) throws Exception {
-		setResizable(false);
+		this.setSize(450, 500);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setResizable(false);
+		setBackground(Color.BLACK);
+		
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Dimension screenSize = toolkit.getScreenSize();
+		int x = (screenSize.width - this.getWidth()) / 2;
+		int y = (screenSize.height - this.getHeight()) / 2;
+		this.setLocation(x, y);
+		
 		this.sesija = sesija;
 		setTitle("Registracija izvodjaca");
 		getContentPane().setLayout(null);
@@ -128,6 +142,7 @@ public class RegistracijaIzvodjaca extends JFrame {
 		p.put("text.year", "Godina");
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
 		dtDob = new JDatePickerImpl(datePanel, new DataLabelFormatter());
+		sl_dtDob = new SpringLayout();
 		sl_dtDob.putConstraint(SpringLayout.NORTH, dtDob.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDob);
 		sl_dtDob.putConstraint(SpringLayout.WEST, dtDob.getJFormattedTextField(), 33, SpringLayout.WEST, dtDob);
 		sl_dtDob.putConstraint(SpringLayout.EAST, dtDob.getJFormattedTextField(), 211, SpringLayout.WEST, dtDob);
@@ -145,6 +160,7 @@ public class RegistracijaIzvodjaca extends JFrame {
 		
 		JDatePanelImpl date2Panel = new JDatePanelImpl(model, p);
 		dtDod = new JDatePickerImpl(date2Panel, new DataLabelFormatter());
+		sl_dtDod = new SpringLayout();
 		sl_dtDod.putConstraint(SpringLayout.NORTH, dtDod.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDod);
 		sl_dtDod.putConstraint(SpringLayout.WEST, dtDod.getJFormattedTextField(), 33, SpringLayout.WEST, dtDod);
 		sl_dtDod.putConstraint(SpringLayout.EAST, dtDod.getJFormattedTextField(), 211, SpringLayout.WEST, dtDod);
@@ -173,6 +189,7 @@ public class RegistracijaIzvodjaca extends JFrame {
 		
 		JDatePanelImpl date3Panel = new JDatePanelImpl(model, p);
 		dtDof = new JDatePickerImpl(date3Panel, new DataLabelFormatter());
+		sl_dtDof = new SpringLayout();
 		sl_dtDof.putConstraint(SpringLayout.NORTH, dtDof.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDof);
 		sl_dtDof.putConstraint(SpringLayout.WEST, dtDof.getJFormattedTextField(), 33, SpringLayout.WEST, dtDof);
 		sl_dtDof.putConstraint(SpringLayout.EAST, dtDof.getJFormattedTextField(), 211, SpringLayout.WEST, dtDof);
@@ -182,6 +199,7 @@ public class RegistracijaIzvodjaca extends JFrame {
 		
 		JDatePanelImpl date4Panel = new JDatePanelImpl(model, p);
 		dtDor = new JDatePickerImpl(date4Panel, new DataLabelFormatter());
+		sl_dtDor = new SpringLayout();
 		sl_dtDor.putConstraint(SpringLayout.NORTH, dtDor.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDor);
 		sl_dtDor.putConstraint(SpringLayout.WEST, dtDor.getJFormattedTextField(), 33, SpringLayout.WEST, dtDor);
 		sl_dtDor.putConstraint(SpringLayout.EAST, dtDor.getJFormattedTextField(), 211, SpringLayout.WEST, dtDor);

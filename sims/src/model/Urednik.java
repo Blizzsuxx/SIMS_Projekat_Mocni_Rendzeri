@@ -91,11 +91,13 @@ public Urednik() {
          return;
       if (this.istorijaRecenzija == null)
          this.istorijaRecenzija = new java.util.HashSet<Recenzija>();
-      if (!this.istorijaRecenzija.contains(newRecenzija))
-      {
-         this.istorijaRecenzija.add(newRecenzija);
-         newRecenzija.setUrednik(this);      
+      for (Recenzija r : istorijaRecenzija) {
+    	  if (r.getNaslov().equals(newRecenzija.getNaslov())) {
+    		  return;
+    	  }
       }
+      this.istorijaRecenzija.add(newRecenzija);
+      newRecenzija.setUrednik(this);      
    }
    
    /** @pdGenerated default remove
@@ -153,11 +155,13 @@ public Urednik() {
          return;
       if (this.zakazaneRecenzije == null)
          this.zakazaneRecenzije = new java.util.HashSet<ZakazanaRecenzija>();
-      if (!this.zakazaneRecenzije.contains(newZakazanaRecenzija))
-      {
-         this.zakazaneRecenzije.add(newZakazanaRecenzija);
-         newZakazanaRecenzija.setUrednik(this);      
+      for (ZakazanaRecenzija zr : zakazaneRecenzije) {
+    	  if (zr.getRecenzija().getNaslov().equals(newZakazanaRecenzija.getRecenzija().getNaslov())) {
+    		  return;
+    	  }
       }
+      this.zakazaneRecenzije.add(newZakazanaRecenzija);
+      newZakazanaRecenzija.setUrednik(this);      
    }
    
    /** @pdGenerated default remove
@@ -215,8 +219,12 @@ public Urednik() {
          return;
       if (this.recezijaZaIzmenu == null)
          this.recezijaZaIzmenu = new java.util.HashSet<RecezijaZaIzmenu>();
-      if (!this.recezijaZaIzmenu.contains(newRecezijaZaIzmenu))
-         this.recezijaZaIzmenu.add(newRecezijaZaIzmenu);
+      for (RecezijaZaIzmenu rzi : recezijaZaIzmenu) {
+    	  if (rzi.getRecenzija().getNaslov().equals(newRecezijaZaIzmenu.getRecenzija().getNaslov())) {
+    		  return;
+    	  }
+      }
+      this.recezijaZaIzmenu.add(newRecezijaZaIzmenu);
    }
    
    /** @pdGenerated default remove

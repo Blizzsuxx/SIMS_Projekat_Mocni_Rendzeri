@@ -1,11 +1,11 @@
 package view;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -19,13 +19,11 @@ import model.Sesija;
 import net.miginfocom.swing.MigLayout;
 
 public abstract class Homepage extends JFrame {
-
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1L;
 	private Sesija sesija;
-
+	protected JMenu menu;
+	protected JMenuBar menubar;
+	
 	public Homepage(Sesija sesija) {
 		this.getContentPane().setLayout(new MigLayout());
 		initGui();
@@ -35,8 +33,7 @@ public abstract class Homepage extends JFrame {
 
 
 	private void initGui(){
-		this.getContentPane().setBackground(Color.BLACK);
-		this.setSize(550, 550);
+		this.setSize(550, 600);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setResizable(false);
 
@@ -47,18 +44,10 @@ public abstract class Homepage extends JFrame {
 		int y = (screenSize.height - this.getHeight()) / 2;
 		this.setLocation(x, y);
 
-		JMenu menu = new JMenu("Meni");
-		menu.setBackground(Color.BLACK);
-		menu.setForeground(Color.WHITE);
-		JMenuBar menubar = new JMenuBar();
-		menubar.setBackground(Color.BLACK);
-		menubar.setForeground(Color.WHITE);
+		menu = new JMenu("Meni");
+		menubar = new JMenuBar();
 		JMenuItem profil = new JMenuItem("Profil");
-		profil.setBackground(Color.BLACK);
-		profil.setForeground(Color.WHITE);
 		JMenuItem odjava = new JMenuItem("Odjava");
-		odjava.setBackground(Color.BLACK);
-		odjava.setForeground(Color.WHITE);
 		menu.add(profil);
 		menu.add(odjava);
 		menubar.add(menu);
@@ -67,24 +56,27 @@ public abstract class Homepage extends JFrame {
 		
 		JXSearchField search = new JXSearchField();
 		search.setSearchMode(SearchMode.REGULAR);
-		search.setCaretColor(Color.WHITE);
-		search.setBackground(Color.BLACK);
-		search.setForeground(Color.WHITE);
 		search.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				/////////////////////////////
-				// TODO ODRADI SEARCH OVDE //
-				/////////////////////////////
-				// Seach se poziva preko klika na lupu ili preko pritiska na enter
-				// to je vec namesteno, jos samo da se search mehanika implementira
 				searchTriggered(arg0.getActionCommand());
 			}
 
 		});
 		
 		this.add(search, "north");
+		
+		JButton advancedSearchButton = new JButton("Napredna pretraga");
+		this.add(advancedSearchButton, "north");
+		advancedSearchButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				advancedSearchButtonTriggered();
+			}
+		});
 
 		profil.addActionListener(new ActionListener() {
 
@@ -107,6 +99,14 @@ public abstract class Homepage extends JFrame {
 		this.setJMenuBar(menubar);
 	}
 
+	private void advancedSearchButtonTriggered() {
+		// TODO Auto-generated method stub
+		AdvancedSearchDialog dialog = new AdvancedSearchDialog(this);
+		dialog.setVisible(true);
+	}
+
+
+
 	public Sesija getSesija() {
 		return sesija;
 	}
@@ -126,7 +126,9 @@ public abstract class Homepage extends JFrame {
 	
 	
 	private void searchTriggered(String textZaSearch) {
-		SearchResults rezultati = new SearchResults(this, sesija.getMuzickoDeloMenadzer().trazi(textZaSearch));
-		rezultati.setVisible(true);
+		SearchResults rezultati = new SearchResults(sesija.getMuzickoDeloMenadzer().trazi(textZaSearch));
+		MojDialog dialog = new MojDialog(this, "Rezultati pretrage");
+		dialog.setContentPane(rezultati);
+		dialog.setVisible(true);
 	}
 }

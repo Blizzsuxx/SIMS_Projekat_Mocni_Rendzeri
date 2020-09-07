@@ -78,7 +78,7 @@ public class BlokiranjeNaloga extends JFrame {
 			Korisnik k = (Korisnik)pair.getValue();
 			if (nalozi.getValueAt(selektovaniRed, 0).equals(pair.getKey()))
 			{
-				k.setStatus(status);
+				k.getNalog().setStatus(status);
 				korisnici.replace((String)pair.getKey(), k);
 				break;
 			}

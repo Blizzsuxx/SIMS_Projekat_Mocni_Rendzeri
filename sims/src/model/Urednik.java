@@ -21,6 +21,8 @@ public class Urednik extends FrontEndKorisnik {
    /** @pdRoleInfo migr=no name=RecezijaZaIzmenu assc=association41 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
    public java.util.Collection<RecezijaZaIzmenu> recezijaZaIzmenu;
    
+   private String albumZaRegistracju;
+   
    public Urednik(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, String sifra,
 			String korisnickoIme, Date datum, boolean status) {
 		super(ime, prezime, eMail, pol, datumRodjenja, sifra, korisnickoIme, datum, status);
@@ -252,7 +254,20 @@ public Urednik() {
 	   DateFormat df = new SimpleDateFormat(pattern);
 	   return urednik.getIme() + ";" + urednik.getPrezime() + ";" + urednik.geteMail() + ";" + urednik.getPol().name()
 				+ ";" + df.format(urednik.getDatumRodjenja()) + ";" + urednik.getNalog().getSifra() + ";" + urednik.getNalog().getKorisnickoIme() +
-				";" + df.format(urednik.getNalog().getDatumKreiranja()) + ";" + urednik.isStatus() + System.lineSeparator();
+				";" + df.format(urednik.getNalog().getDatumKreiranja()) + ";" + urednik.getNalog().isStatus() + System.lineSeparator();
+	}
+   
+   	public static String ZahtevUrednika2String(Urednik urednik) {
+	   return urednik.getNalog().getKorisnickoIme() + ";" + 
+			   urednik.getAlbumZaRegistracju() + System.lineSeparator();
+	}
+
+   	public String getAlbumZaRegistracju() {
+		return albumZaRegistracju;
+	}
+
+   	public void setAlbumZaRegistracju(String albumZaRegistracju) {
+		this.albumZaRegistracju = albumZaRegistracju;
 	}
 
 

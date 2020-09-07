@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import controler.Constants;
 import model.Sesija;
@@ -90,11 +91,18 @@ public abstract class Homepage extends JFrame {
 	}
 
 	private void menuProfilTriggered() {
-		// TODO Ovde pisi kod za pregled profila
+		//Kod za pregled profila
 		
 		//DUMMY - Hardcoded KorisnikAplikacije
-		DijalogRadSaNalogom radSaNalogom = new DijalogRadSaNalogom(this, Constants.DUMMY, "Rad sa nalogom");
-		radSaNalogom.setVisible(true);
+		if(sesija.getTrenutniKorisnik() == null)
+		{
+			JOptionPane.showMessageDialog(this, "Da bi ste pregledali svoj profil morate imati nalog.", "Profil", JOptionPane.INFORMATION_MESSAGE);
+		}
+		else 
+		{
+			DijalogRadSaNalogom radSaNalogom = new DijalogRadSaNalogom(this, Constants.DUMMY, "Rad sa nalogom");
+			radSaNalogom.setVisible(true);
+		}	
 	}
 
 }

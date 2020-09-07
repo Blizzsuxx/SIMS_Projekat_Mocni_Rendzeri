@@ -428,6 +428,25 @@ public class Sesija {
       if (recenzije != null)
          recenzije.clear();
    }
+   
+   public void setZakazanaRecenzija(Recenzija recenzija, Urednik urednik) {
+	   for (ZakazanaRecenzija zr : zakazanaRecenzijaMenadzer.getSve()) {
+		   if (zr.getRecenzija().getNaslov().equals(recenzija.getNaslov())) {
+			   zr.setRecenzija(recenzija);
+			   zr.setUrednik(urednik);
+			   break;
+		   }
+	   }
+   }
+   
+   public void setRecenzijaZaIzmenu(Recenzija recenzija) {
+	   for (RecezijaZaIzmenu rzi : recenzijeZaIzmenuMenadzer.getSveizmene()) {
+		   if (rzi.getRecenzija().getNaslov().equals(recenzija.getNaslov())) {
+			   rzi.setRecenzija(recenzija);
+			   break;
+		   }
+	   }
+   }
 
    public static Sesija namestiSesiju(Korisnik korisnik, CitacDatoteka datoteke, LoginMenadzer menadzer) {
       // TODO Auto-generated method stub

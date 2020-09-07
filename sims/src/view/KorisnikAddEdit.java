@@ -224,6 +224,9 @@ public class KorisnikAddEdit extends JFrame {
 		if (txtLozinka.getText().isEmpty()) {
 			return "Lozinka je obavezno polje.";
 		}
+		if (dtDob.getJFormattedTextField().getText().isEmpty()) {
+			return "Datum nije unet.";
+		}
 		return "";
 	}
 }

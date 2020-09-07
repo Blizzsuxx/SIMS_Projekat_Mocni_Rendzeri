@@ -285,7 +285,7 @@ public class RegistracijaIzvodjaca extends JDialog {
 					return;
 				}
 				
-				if (dtDod.getJFormattedTextField().getText() != null) {
+				if (!dtDod.getJFormattedTextField().getText().isEmpty()) {
 					registrujIzvodjaca(txtUmetnickoIme.getText(), new Zanr((String)cmbZanr.getSelectedItem(), true), txtIme.getText(), txtPrezime.getText(), 
 							dtDob.getJFormattedTextField().getText(), 
 							dtDod.getJFormattedTextField().getText(), 
@@ -311,7 +311,7 @@ public class RegistracijaIzvodjaca extends JDialog {
 					return;
 				}
 					
-				if (dtDof.getJFormattedTextField().getText() != null) {
+				if (!dtDof.getJFormattedTextField().getText().isEmpty()) {
 					registrujGrupu(txtUmetnickoIme.getText(), new Zanr((String)cmbZanr.getSelectedItem(),true), 
 							((Integer)spnBrojClanova.getValue()), dtDof.getJFormattedTextField().getText(), 
 							dtDor.getJFormattedTextField().getText());
@@ -332,7 +332,7 @@ public class RegistracijaIzvodjaca extends JDialog {
 	{
 		Pol p = Pol.valueOf(pol);
 		Pojedinacanizvodjac pi = null;
-		if (dod != null) {
+		if (!dod.isEmpty()) {
 			pi = new Pojedinacanizvodjac(umetnickoIme, zanr, true, ime, prezime, new SimpleDateFormat("dd.MM.yyyy").parse(dob), 
 					new SimpleDateFormat("dd.MM.yyyy").parse(dod), opis, p);
 		}
@@ -347,7 +347,7 @@ public class RegistracijaIzvodjaca extends JDialog {
 	private void registrujGrupu(String umetnickoIme, Zanr zanr, int brojClanova, String dof, String dor) throws ParseException
 	{
 		Grupa g = null;
-		if (dor != null) {
+		if (!dor.isEmpty()) {
 			g = new Grupa(umetnickoIme, zanr, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy").parse(dof), 
 					new SimpleDateFormat("dd.MM.yyyy").parse(dor));
 		}

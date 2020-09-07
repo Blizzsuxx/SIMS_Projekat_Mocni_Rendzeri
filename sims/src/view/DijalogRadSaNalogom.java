@@ -91,10 +91,21 @@ public class DijalogRadSaNalogom extends MojDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				korisnik.getNalog().setSifra(poljeSifra.getText());
-				System.out.println(korisnik.getNalog().getSifra());
+				if(poljeSifra.getText().equals("")) {
+					JOptionPane.showMessageDialog(DijalogRadSaNalogom.this, "Popunite sva polja", "Prazna polja", JOptionPane.INFORMATION_MESSAGE);
+					return;
+				}
+				if(!(korisnik.getNalog().getSifra().equals(poljeSifra.getText()))) {
 				
-				JOptionPane.showMessageDialog(DijalogRadSaNalogom.this, "Uspesno ste izmenili sifru", "Izmena sifre", JOptionPane.INFORMATION_MESSAGE);
+					korisnik.getNalog().setSifra(poljeSifra.getText());
+					System.out.println(korisnik.getNalog().getSifra());
+					
+					JOptionPane.showMessageDialog(DijalogRadSaNalogom.this, "Uspesno ste izmenili sifru", "Izmena sifre", JOptionPane.INFORMATION_MESSAGE);
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(DijalogRadSaNalogom.this, "Nista niste menjali", "Izmena", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		});
 	}

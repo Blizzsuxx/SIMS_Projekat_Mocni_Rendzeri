@@ -4,7 +4,9 @@
  * Purpose: Defines the Class Korisnik
  ***********************************************************************/
 package model;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import controler.Constants;
@@ -157,10 +159,31 @@ public abstract class Korisnik implements Slikovit {
 			e.printStackTrace();
 		}
 	}
+
 @Override
 	public String Ime() {
 		// TODO Auto-generated method stub
 		return this.getNalog().getKorisnickoIme();
+}
+	
+	public static String Korisnik2String(Korisnik korisnik) {
+		String pattern = "dd/MM/yyyy";
+		DateFormat df = new SimpleDateFormat(pattern);
+		String text = korisnik.getIme() + "," + korisnik.getPrezime() + "," + korisnik.geteMail() + "," + korisnik.getPol().name()
+				+ "," + df.format(korisnik.getDatumRodjenja()) + "," + korisnik.getNalog().getSifra() + "," + korisnik.getNalog().getKorisnickoIme() +
+				"," + df.format(korisnik.getNalog().getDatumKreiranja()) + "," + korisnik.getNalog().isStatus() + ",";
+		if (korisnik.getClass() == KorisnikAplikacije.class) {
+			text += "k";
+		}
+		if (korisnik.getClass() == Urednik.class) {
+			text += "u";
+		}
+		if (korisnik.getClass() == Administrator.class) {
+			text += "a";
+		}
+		text += System.lineSeparator();
+		return text;
+
 	}
 
 @Override

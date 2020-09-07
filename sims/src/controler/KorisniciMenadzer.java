@@ -23,6 +23,7 @@ import model.Album;
 import model.Korisnik;
 import model.KorisnikAplikacije;
 import model.Pol;
+import model.Uloga;
 import model.Urednik;
 import view.Slikovit;
 import view.TableModelWrapper;
@@ -63,6 +64,7 @@ public class KorisniciMenadzer {
 			e.printStackTrace();
 		}
 		   boolean status = Boolean.parseBoolean(s[8]);
+		  
 		   String uloga = s[9];
 		   switch(uloga) {
 		   case "a":
@@ -217,5 +219,42 @@ public Collection<? extends Slikovit> traziZaSearch(String textZaSearch) {
 				pw.close();
 		   }
 	   }
+   }
+   
+   // POMOCNE FUNKCIJE
+   public List<Korisnik> vratiSveAktivneKorisnike(){
+	   List<Korisnik> lista = new ArrayList<>();
+	   for (Korisnik k: korisnici.values()) {
+		   if (k.isStatus())
+			   lista.add(k);
+	   }
+	   return lista;
+   }
+   public List<Korisnik> vratiAdmine(){
+	   List<Korisnik> lista = new ArrayList<>();
+	   for (Korisnik k : korisnici.values()) 
+		   if (k.isStatus() && k instanceof Administrator)
+			   lista.add(k);
+	   
+	   return lista;
+   }
+   
+   public List<Korisnik> vratiUrednike(){
+	   List<Korisnik> lista = new ArrayList<>();
+	   for (Korisnik k : korisnici.values()) 
+		   if (k.isStatus() && k instanceof Urednik)
+			   lista.add(k);
+	   
+	   return lista;
+	   
+   }
+   
+   public List<Korisnik> vratiObicneKorisnike(){
+	   List<Korisnik> lista = new ArrayList<>();
+	   for (Korisnik k : korisnici.values()) 
+		   if (k.isStatus() && k instanceof KorisnikAplikacije)
+			   lista.add(k);
+	   
+	   return lista;
    }
 }

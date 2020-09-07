@@ -8,38 +8,43 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
-import model.Izvodjac;
+import model.Korisnik;
+import model.KorisnikModel;
+import model.Uloga;
 import net.miginfocom.swing.MigLayout;
 
-public class IzvodjaciProzor extends MojDialog {
+public class KorisnikProzor extends MojDialog {
 	private static final long serialVersionUID = 1L;
 
-	private List<Izvodjac> izvodjaci;
-	private String[] imeKolona = {"Umjetnicko Ime", "Ime Zanra", "Broj Izdatih Albuma", "Broj Muzickih Djela"};
+	private List<Korisnik> korisnici;
+	private String[] imenaKolona;
+	private Uloga indikator;
 	
 	private JTable table;
-	// dugme koje prikaze detaljan prikaz informacija o izabranom izvodjacu
 	private JButton info;
 	
-	public IzvodjaciProzor(JFrame parent, String ime, int dimension1, int dimension2) {
+	public KorisnikProzor(JFrame parent, String ime, int dimension1, int dimension2) {
 		super(parent, ime, dimension1, dimension2);
 		// TODO Auto-generated constructor stub
 	}
 
-	public IzvodjaciProzor(JFrame parent, String ime, int dim1, int dim2, 
-			List<Izvodjac> izvodjaci) {
+	public KorisnikProzor(JFrame parent, String ime, int dim1, int dim2, 
+			List<Korisnik> korisnici, String[] imenaKolona, Uloga indikator) {
 		super(ime, dim1, dim2);
-		this.izvodjaci = izvodjaci;
-		this.setLayout(new BorderLayout());
+		this.korisnici = korisnici;
+		this.imenaKolona = imenaKolona;
+		this.indikator = indikator;
 		
+		this.setLayout(new BorderLayout());
+			
 		this.initGUI();
-		this.initAction();
+		this.actionGUI();
+		
 	}
 	
 	private void initGUI() {
@@ -48,7 +53,7 @@ public class IzvodjaciProzor extends MojDialog {
 		base.add(info);
 		this.add(base, BorderLayout.NORTH);
 		
-		table = new JTable(new IzvodjaciModel(imeKolona, izvodjaci));
+		table = new JTable(new KorisnikModel(imenaKolona, korisnici, indikator));
 		table.getTableHeader().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getTableHeader().setReorderingAllowed(false);
@@ -57,18 +62,12 @@ public class IzvodjaciProzor extends MojDialog {
 		this.add(sp, BorderLayout.CENTER);
 	}
 	
-	private void initAction() {
+	private void actionGUI() {
 		info.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				int rIndex = table.getSelectedRow();
-				if (rIndex < 0) {
-					JOptionPane.showMessageDialog(IzvodjaciProzor.this, "Morate selektovati nekog od izvodjaca.",
-							 "Info", JOptionPane.INFORMATION_MESSAGE);
-				} else {
-					
-				}
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
 				
 			}
 			

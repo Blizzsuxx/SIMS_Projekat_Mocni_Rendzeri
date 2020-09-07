@@ -28,6 +28,9 @@ public class IzvodjaciProzor extends MojDialog {
 	private JButton info, dozvolaBtn;
 	private JFrame parent;
 	
+	private boolean indikator; // koji proslijedjujemo tabeli na osnovu kojeg znamo da li editovanje odobrenosti moguce
+	private String ime;
+	
 	public IzvodjaciProzor(JFrame parent, String ime, int dimension1, int dimension2) {
 		super(parent, ime, dimension1, dimension2);
 		// TODO Auto-generated constructor stub
@@ -37,17 +40,14 @@ public class IzvodjaciProzor extends MojDialog {
 			List<Izvodjac> izvodjaci) {
 		super(ime, dim1, dim2);
 		this.parent = parent;
+		this.ime = ime;
 		
 		this.izvodjaci = izvodjaci;
 		this.setLayout(new BorderLayout());
 		
 		this.initGUI();
 		this.initAction();
-		
-		if (ime.equals("Neprihvaceni Izvodjaci") && parent instanceof AdminHomepage) 
-			dozvolaBtn.setVisible(true);
-		else 
-			dozvolaBtn.setVisible(false);
+	
 	}
 	
 	private void initGUI() {
@@ -58,7 +58,14 @@ public class IzvodjaciProzor extends MojDialog {
 		base.add(dozvolaBtn);
 		this.add(base, BorderLayout.NORTH);
 		
-		table = new JTable(new IzvodjaciModel(imeKolona, izvodjaci));
+		if (ime.equals("Neprihvaceni Izvodjaci") && parent instanceof AdminHomepage) {
+			dozvolaBtn.setVisible(true);
+			indikator = true;
+		}	else {
+			dozvolaBtn.setVisible(false);
+		}
+		
+		table = new JTable(new IzvodjaciModel(imeKolona, izvodjaci, indikator));
 		table.getTableHeader().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getTableHeader().setReorderingAllowed(false);

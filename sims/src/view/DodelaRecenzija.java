@@ -139,8 +139,7 @@ public class DodelaRecenzija extends JFrame {
 		KorisniciMenadzer km = sesija.getKorisnici();
 		HashMap<String,Korisnik> korisnici = km.getKorisnici();
 		Iterator<Entry<String, Korisnik>> it = korisnici.entrySet().iterator();
-		while (it.hasNext()) 
-		{
+		while (it.hasNext()) {
 			@SuppressWarnings("rawtypes")
 			HashMap.Entry pair = (HashMap.Entry)it.next();
 			Korisnik k = (Korisnik)pair.getValue();
@@ -150,27 +149,19 @@ public class DodelaRecenzija extends JFrame {
 			}
 	        it.remove();
 	    }
-		for (ZakazanaRecenzija zr : zakazaneRecenzije) {
-			urednik.addZakazaneRecenzije(zr);
-			urednik.addIstorijaRecenzija(zr.getRecenzija());
-		}
-		for (RecezijaZaIzmenu rzi : recenzijeZaIzmenu) {
-			urednik.addRecezijaZaIzmenu(rzi);
-			urednik.addIstorijaRecenzija(rzi.getRecenzija());
-		}
-		setujRecenzije(urednik, zakazaneRecenzije, recenzijeZaIzmenu);
-		korisnici.replace(urednik.getNalog().getKorisnickoIme(), (Korisnik)urednik);
-		km.setKorisnici(korisnici);
-		sesija.setKorisnici(km);
+		if (urednik != null)
+			setuj(urednik, zakazaneRecenzije, recenzijeZaIzmenu);
 	}
 	
-	private void setujRecenzije(Urednik urednik, ArrayList<ZakazanaRecenzija> zakazaneRecenzije, 
+	private void setuj(Urednik urednik, ArrayList<ZakazanaRecenzija> zakazaneRecenzije, 
 			ArrayList<RecezijaZaIzmenu> recenzijeZaIzemnu) {
 		for (Recenzija recenzija : sesija.getRecenzije()) {
 			for (ZakazanaRecenzija zr : zakazaneRecenzije) {
 				if (zr.getRecenzija().getNaslov().equals(recenzija.getNaslov())) {
 					recenzija.setUrednik(urednik);
 					sesija.setZakazanaRecenzija(recenzija, urednik);
+					urednik.addZakazaneRecenzije(zr);
+					urednik.addIstorijaRecenzija(zr.getRecenzija());
 					break;
 				}
 			}
@@ -178,10 +169,17 @@ public class DodelaRecenzija extends JFrame {
 				if (rzi.getRecenzija().getNaslov().equals(recenzija.getNaslov())) {
 					recenzija.setUrednik(urednik);
 					sesija.setRecenzijaZaIzmenu(recenzija);
+					urednik.addRecezijaZaIzmenu(rzi);
+					urednik.addIstorijaRecenzija(rzi.getRecenzija());
 					break;
 				}
 			}
 		}
+		KorisniciMenadzer km = sesija.getKorisnici();
+		HashMap<String,Korisnik> korisnici = km.getKorisnici();
+		korisnici.replace(urednik.getNalog().getKorisnickoIme(), (Korisnik)urednik);
+		km.setKorisnici(korisnici);
+		sesija.setKorisnici(km);
 	}
 	
 }

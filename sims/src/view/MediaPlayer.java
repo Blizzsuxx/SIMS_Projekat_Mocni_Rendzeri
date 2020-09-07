@@ -159,6 +159,10 @@ public class MediaPlayer extends MojDialog {
     		JOptionPane.showMessageDialog(MediaPlayer.this, "Da bi ste dodali komentar morate biti ulogovani", "Dodavanje komentara", JOptionPane.INFORMATION_MESSAGE);
     		poljeKomentar.setText("");
     	}
+    	if(poljeKomentar.getText().equals(""))
+    	{
+    		return;
+    	}
     	else
     	{
     		Komentar kom = new Komentar(poljeKomentar.getText(), new Date(), true, delo, (FrontEndKorisnik)trenutniKorisnik);

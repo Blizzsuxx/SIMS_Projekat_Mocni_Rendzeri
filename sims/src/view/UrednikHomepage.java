@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.Color;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -54,61 +54,35 @@ public class UrednikHomepage extends Homepage {
 	    
 	private void initGUI() {
 		listaMenu = new JMenu("Liste");
-    	listaMenu.setBackground(Color.BLACK);
-    	listaMenu.setForeground(Color.WHITE);
 		    	
 		listaItem1 = new JMenuItem("Top Liste");
-		listaItem1.setBackground(Color.BLACK);
-		listaItem1.setForeground(Color.WHITE);
 		listaMenu.add(listaItem1);
 		listaItem2 = new JMenuItem("Recenzirani Sadrzaj");
-		listaItem2.setBackground(Color.BLACK);
-		listaItem2.setForeground(Color.WHITE);
 		listaMenu.add(listaItem2);
 		listaMenu.addSeparator();
 		listaItem3 = new JMenuItem("Istorija Recenzija");
-		listaItem3.setBackground(Color.BLACK);
-		listaItem3.setForeground(Color.WHITE);
 		listaMenu.add(listaItem3);
 		listaItem4 = new JMenuItem("Istorija Zakazanih Recenzija");
-		listaItem4.setBackground(Color.BLACK);
-		listaItem4.setForeground(Color.WHITE);
 		listaMenu.add(listaItem4);
 		menubar.add(listaMenu);
 		    	
 		korisniciMenu = new JMenu("Korisnici");
-		korisniciMenu.setBackground(Color.BLACK);
-		korisniciMenu.setForeground(Color.WHITE);
 		    	
 		korisniciItem1 = new JMenuItem("Korisnici");
-		korisniciItem1.setBackground(Color.BLACK);
-		korisniciItem1.setForeground(Color.WHITE);
 		korisniciMenu.add(korisniciItem1);
 		korisniciItem2 = new JMenuItem("Korisnici Aplikacije");
-		korisniciItem2.setBackground(Color.BLACK);
-		korisniciItem2.setForeground(Color.WHITE);
 		korisniciMenu.add(korisniciItem2);
 		korisniciItem3 = new JMenuItem("Urednici");
-		korisniciItem3.setBackground(Color.BLACK);
-		korisniciItem3.setForeground(Color.WHITE);
 		korisniciMenu.add(korisniciItem3);
 		korisniciItem4 = new JMenuItem("Admini");
-		korisniciItem4.setBackground(Color.BLACK);
-		korisniciItem4.setForeground(Color.WHITE);
 		korisniciMenu.add(korisniciItem4);
 		korisniciMenu.addSeparator();
 		korisniciItem5 = new JMenuItem("Zahtjevi Registracije");
-		korisniciItem5.setBackground(Color.BLACK);
-		korisniciItem5.setForeground(Color.WHITE);
 		korisniciMenu.add(korisniciItem5);
 		korisniciMenu.addSeparator();
 		korisniciItem6 = new JMenuItem("Neprihvaceni Izvodjaci");
-		korisniciItem6.setBackground(Color.BLACK);
-		korisniciItem6.setForeground(Color.WHITE);
 		korisniciMenu.add(korisniciItem6);
 		korisniciItem7 = new JMenuItem("Prihvaceni Izvodjaci");
-		korisniciItem7.setBackground(Color.BLACK);
-		korisniciItem7.setForeground(Color.WHITE);
 		korisniciMenu.add(korisniciItem7);
 		menubar.add(korisniciMenu);
 	}

@@ -20,8 +20,6 @@ public class Album implements Slikovit {
 	private String naslov;
 	private boolean izbrisi;
 	
-	
-	
 	public boolean isIzbrisi() {
 		return izbrisi;
 	}

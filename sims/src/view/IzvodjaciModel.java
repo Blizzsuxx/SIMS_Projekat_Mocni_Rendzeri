@@ -8,10 +8,12 @@ public class IzvodjaciModel extends ApstraktniModel {
 	private static final long serialVersionUID = 1L;
 
 	private List<Izvodjac> izvodjaci;
+	private boolean indikator;
 	
-	public IzvodjaciModel(String[] columnNames, List<Izvodjac> izvodjaci) {
+	public IzvodjaciModel(String[] columnNames, List<Izvodjac> izvodjaci, boolean indikator) {
 		super(columnNames);
 		this.izvodjaci = izvodjaci;
+		this.indikator = indikator;
 	}
 
 	@Override
@@ -37,4 +39,20 @@ public class IzvodjaciModel extends ApstraktniModel {
 		return temp;
 	}
 
+	@Override
+	public boolean isCellEditable(int row, int col) {
+		if (col == 4 && indikator)
+			return true;
+	    return false;
+	}
+	
+	@Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex)
+    {
+        Izvodjac row = izvodjaci.get(rowIndex);
+        if (columnIndex == 4 && (Boolean)aValue) {
+        	row.setOdobrenost((Boolean)aValue);
+        }
+   
+    }
 }

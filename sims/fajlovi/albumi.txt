@@ -1,1 +1,2 @@
-Aqua,pPeric,13.09.2014,true,Aquarium,false,|My Oh My
+Aqua,pPeric,13.09.2014.,true,Aquarium,false,My Oh My
+Bon Jovi,miki1,17.05.2002.,true,Name,false,It's my life

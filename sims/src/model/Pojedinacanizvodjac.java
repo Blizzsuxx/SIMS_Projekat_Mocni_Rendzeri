@@ -138,8 +138,8 @@ public class Pojedinacanizvodjac extends Izvodjac {
 	}
 	
 	public static String PojedinacniIzvodjac2String(Pojedinacanizvodjac pi) {
-		String pattern = "dd.MM.yyyy";
-		DateFormat df = new SimpleDateFormat(pattern);
+		String pattern = "dd.MM.yyyy.";
+		DateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;
 		return pi.getUmetnickoIme() + ";"  + pi.getZanr().getNazivZanra() + ";" + bool2String(pi.isStatus()) + ";" + pi.getIme() + ";" +
 				pi.getPrezime() + ";" + df.format(pi.getDatumRodjenja()) + ";" + df.format(pi.getDatumSmrti()) +
 				";" + pi.getOpis() + ";" + pi.getPol() + System.lineSeparator();

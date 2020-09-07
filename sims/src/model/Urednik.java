@@ -36,6 +36,9 @@ public class Urednik extends FrontEndKorisnik {
 
 
 public Urednik() {
+	 this.istorijaRecenzija = new ArrayList<>();
+	   this.zakazaneRecenzije = new ArrayList<>();
+	   this.recezijaZaIzmenu = new ArrayList<>();
 }
 
 
@@ -250,8 +253,8 @@ public Urednik() {
  
    
    public static String Urednik2String(Urednik urednik) {
-	   String pattern = "dd.MM.yyyy";
-	   DateFormat df = new SimpleDateFormat(pattern);
+	   String pattern = "dd.MM.yyyy.";
+	   DateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;
 	   return urednik.getIme() + ";" + urednik.getPrezime() + ";" + urednik.geteMail() + ";" + urednik.getPol().name()
 				+ ";" + df.format(urednik.getDatumRodjenja()) + ";" + urednik.getNalog().getSifra() + ";" + urednik.getNalog().getKorisnickoIme() +
 				";" + df.format(urednik.getNalog().getDatumKreiranja()) + ";" + urednik.getNalog().isStatus() + System.lineSeparator();
@@ -278,5 +281,12 @@ public BufferedImage defaultSlika() {
 	// TODO Auto-generated method stub
 	return Constants.UREDNIK_IKONA;
 }
+
+
+   @Override
+	public String pratiociUpis() {
+	   String s=super.pratiociUpis();
+	   return s;
+ }
 
 }

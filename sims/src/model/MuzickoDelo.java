@@ -186,15 +186,19 @@ public void dodajocenuUrednika(int ocena) {
 
 public String toFileString(Izvodjac iz) {
 	String pattern = "dd.MM.yyyy.";
-	DateFormat df = new SimpleDateFormat(pattern);
+	DateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;
 	String ad="";
 	ad+=this.getNaziv()+";";
 	ad+=this.getOpis()+";";
 	ad+=df.format(this.getDatumIzdavanja())+";";
 	ad+=this.isStatus()+";";
 	ad+=iz.getUmetnickoIme()+";";
+	int i=0;
 	for(Zanr z:this.getZanrovi()) {
-	ad+="|"+z.getNazivZanra();
+		if(i!=0) {
+			ad+="|";
+		}i++;
+	ad+=z.getNazivZanra();
 	}
 	ad+=System.lineSeparator();
 	return ad;

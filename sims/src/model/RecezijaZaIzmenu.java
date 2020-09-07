@@ -61,6 +61,7 @@ public Recenzija getRecenzija() {
 public void setRecenzija(Recenzija recenzija) {
 	this.recenzija = recenzija;
 }
+
    
    public String toFileString() {
 	   String ad="";

@@ -1,2 +1,5 @@
-Aqua - Barbie Girl;BBG;13.09.1997.;true;Aqua;|Pop|Dance
-My Oh My;BBG;14.09.1997.;true;Aqua;|Pop|Dance
+Aqua - Barbie Girl;BBG;13.09.1997.;true;Aqua;Pop|Dance
+My Oh My;BBG;14.09.1997.;true;Aqua;Pop|Dance
+It's my life;good;03.04.2000.;true;Bon Jovi;rock
+You give love a bad name;good;06.05.1986.;true;Bon Jovi;rock
+Hasta la vista;nema;02.02.2020.;true;Hurricane;Pop

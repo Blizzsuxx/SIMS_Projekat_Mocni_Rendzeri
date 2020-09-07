@@ -3,6 +3,8 @@ package controler;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -37,16 +39,26 @@ public class ClanoviMenadzer {
 
 	private void ucitaj(IzvodjacMenadzer izvodjaci, ArrayList<Grupa> grupe, List<String[]> data) {
 		for(String[] linije : data){
-					DateTimeFormatter df=DateTimeFormatter.ofPattern("dd.MM.yyyy.");
-					LocalDate dan=LocalDate.parse(linije[0].trim(), df);
-					Date d=new Date(dan.getYear(), dan.getMonthValue(), dan.getDayOfMonth());
+			SimpleDateFormat df= Constants.NATASIN_FORMAT_ZA_DATUM;
+			Date datum=null;
+			try {
+				datum = df.parse(linije[0].trim());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+					
 					Date izlazak=null;
 					if(!linije[1].trim().equals("/")) {
-						LocalDate dan1=LocalDate.parse(linije[1].trim(), df);
-						izlazak=new Date(dan1.getYear(), dan1.getMonthValue(), dan1.getDayOfMonth());
+						try {
+							datum = df.parse(linije[1].trim());
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 					Izvodjac iz=izvodjaci.nadiPoUmetnickomImenu(linije[2].trim());
-					Clan a = new Clan(d, izlazak, (Pojedinacanizvodjac)iz);
+					Clan a = new Clan(datum, izlazak, (Pojedinacanizvodjac)iz);
 					Grupa g=(Grupa)izvodjaci.nadiPoUmetnickomImenu(linije[3].trim());
 					g.getClanovi().add(a);
 					a.setGrupa(g);

@@ -36,7 +36,7 @@ public Zanr() {
 }
 public String toFileString() {
 	String ad="";
-	ad+=this.getNazivZanra()+";";
+	ad+=this.getNazivZanra()+",";
 	ad+=this.isStatus();
 	return ad;
 }

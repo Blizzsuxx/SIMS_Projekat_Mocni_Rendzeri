@@ -5,7 +5,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Reader;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -15,7 +17,11 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import au.com.bytecode.opencsv.CSVReader;
+import model.Administrator;
+import model.FrontEndKorisnik;
 import model.Grupa;
+import model.Korisnik;
+import model.KorisnikAplikacije;
 import model.MuzickoDelo;
 import model.Recenzija;
 
@@ -115,13 +121,11 @@ public class CitacDatoteka {
 
 		korisnici = new KorisniciMenadzer(ucitaj("korisnici.txt", ','), ucitajBuffered("zahteviZaRegAlbuma.txt"));
 		zanrovi = new ZanroviMenadzer(ucitaj("zanrovi.txt", ','));
-		izvodjaci = new IzvodjacMenadzer(ucitaj("izvodjaci.txt", ';'));
+		izvodjaci = new IzvodjacMenadzer(ucitaj("izvodjaci.txt", ';'), zanrovi);
 
 		deloMenadzer = new MuzickoDeloMenadzer(izvodjaci, zanrovi.getSviZanrovi(), ucitaj("muzickaDela.txt", ','));
-		utisakmenadzer = new UtisakMenadzer(deloMenadzer.getDela(), korisnici, ucitaj("utisci.txt", ','));
+		utisakmenadzer = new UtisakMenadzer(deloMenadzer.getDela(), korisnici, ucitaj("utisci.txt", ';'));
 		zakRecMenadzer = new ZakazanaRecenzijaMenadzer(korisnici,(ArrayList<Recenzija>)utisakmenadzer.getRecenzije(), ucitaj("zakazaneRecenzije.txt", ';'));
-		//potrebno jos albume, i ocene
-		//recenzije za izmenu, clanove grupe
 		albumi = new AlbumKontroler(deloMenadzer, izvodjaci, korisnici, ucitaj("albumi.txt", ','));
 		ocene = new OceneKontroler(deloMenadzer, korisnici, ucitaj("ocene.txt", ','));
 		clanoviGrupe = new ClanoviMenadzer(izvodjaci, izvodjaci.getGrupe(), ucitaj("clanstva.txt",','));
@@ -210,7 +214,60 @@ public class CitacDatoteka {
 	public Collection<Recenzija> getRecenzije() {
 		return this.utisakmenadzer.getRecenzije();
 	}
-
+	public void ucitajPratioce(KorisniciMenadzer korisnici,MuzickoDeloMenadzer md,ZanroviMenadzer zanrovi,IzvodjacMenadzer izvodjaci) {
+		List<String[]> tekst=ucitaj("pracenje.txt",'|');
+		for(String[] linija:tekst) {
+			FrontEndKorisnik k=(FrontEndKorisnik)korisnici.trazi(linija[0].trim());
+			
+			String[] zanroviPracenje=linija[1].trim().split(";");
+			for(String ime:zanroviPracenje) {
+				k.getPreferiraniZanrovi().add(zanrovi.trazi(ime.trim()));
+			}
+			String[] pratioci=linija[2].trim().split(";");
+			for(String p:pratioci) {
+				k.getPratilac().add((KorisnikAplikacije)korisnici.trazi(p.trim()));
+			}
+			String[] dela=linija[3].trim().split(";");
+			for(String d:dela) {
+				k.getMuzickoDjelo().add(md.pronadiPoNazivu(d.trim()));
+			}
+			if(linija.length>4) {
+			String[] pratilac=linija[4].trim().split(";");
+			for(String pr:pratilac) {
+				((KorisnikAplikacije)k).getPratite().add((FrontEndKorisnik)korisnici.trazi(pr.trim()));
+			}
+			String[] izv=linija[5].trim().split(";");
+			for(String i:izv) {
+				((KorisnikAplikacije)k).getOnajKogaPrati().add( izvodjaci.nadiPoUmetnickomImenu(i.trim()));
+			}
+			 
+			}
+		}
+	}
+public void sacuvajPracenja() {
+		
+		PrintWriter pw=null;
+		String sep=System.getProperty("file.separator");
+		String putanja ="."+sep+"fajlovi"+sep+"pracenje.txt";
+		try {
+			pw=new PrintWriter(new FileWriter(putanja, false));
+			for(Korisnik a:korisnici.getKorisnici().values()) {
+				if(a instanceof Administrator) {
+					continue;
+				}else {
+					
+				pw.println(a.pratiociUpis());
+				}
+			}pw.close();
+			
+		}catch(IOException e) {
+			e.printStackTrace();
+		}finally {
+			if(pw!=null) {
+				pw.close();
+			}
+		}
+	}
 	
 
 }

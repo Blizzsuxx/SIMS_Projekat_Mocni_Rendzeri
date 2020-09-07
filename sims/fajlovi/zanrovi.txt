@@ -1,2 +1,5 @@
-Pop;true
-Dance;true
+Pop,true
+Dance,true
+rock,true
+clasic,false
+hip-hop,true

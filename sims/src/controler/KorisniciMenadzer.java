@@ -19,53 +19,53 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import model.Administrator;
-import model.Album;
 import model.Korisnik;
 import model.KorisnikAplikacije;
 import model.Pol;
-import model.Uloga;
 import model.Urednik;
+import view.KorisnikAddEdit;
 import view.Slikovit;
 import view.TableModelWrapper;
+
+import model.Uloga;
+import model.Album;
 
 /** @pdOid 121daa1d-b073-437c-95b7-7f061b5ef5df */
 public class KorisniciMenadzer {
    /** @pdRoleInfo migr=no name=Korisnik assc=association25 mult=1 type=Aggregation */
    private HashMap<String, Korisnik> korisnici;
-   
    private HashMap<String, Urednik> zahteviUrednika;
-   
-	public KorisniciMenadzer(List<String[]> readAll, ArrayList<String> zahteviZaReg) {
+	public KorisniciMenadzer(List<String[]> readAll,ArrayList<String> zahteviZaReg) {
 	// TODO Auto-generated constructor stub
 	   korisnici = new HashMap<String, Korisnik>();
 	   zahteviUrednika = new HashMap<String, Urednik>();
 	   SimpleDateFormat format = Constants.FORMAT_ZA_DATUM;
 	   for(String[] s : readAll) {
-		   String ime = s[0];
-		   String prezime = s[1];
-		   String eMail = s[2];
-		   Pol pol = Pol.valueOf(s[3]);
+		   String ime = s[0].trim();
+		   String prezime = s[1].trim();
+		   String eMail = s[2].trim();
+		   Pol pol = Pol.valueOf(s[3].trim());
 		   Date datumRodjenja = null;
 		
 			try {
-				datumRodjenja = format.parse(s[4]);
+				datumRodjenja = format.parse(s[4].trim());
 			} catch (ParseException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		
-		   String sifra = s[5];
-		   String korisnickoIme = s[6];
+		   String sifra = s[5].trim();
+		   String korisnickoIme = s[6].trim();
 		   Date datum = null;
 		try {
-			datum = format.parse(s[7]);
+			
+			datum = format.parse(s[7].trim());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		   boolean status = Boolean.parseBoolean(s[8]);
-		  
-		   String uloga = s[9];
+		   boolean status = Boolean.parseBoolean(s[8].trim());
+		   String uloga = s[9].trim();
 		   switch(uloga) {
 		   case "a":
 			   dodaj(new Administrator(ime, prezime, eMail, pol, datumRodjenja, sifra, korisnickoIme, datum, status));
@@ -151,34 +151,71 @@ public class KorisniciMenadzer {
    }
 
    public void sacuvaj(){
-	   PrintWriter pw = null;
-	   String sep=System.getProperty("file.separator");
-	   String putanja ="." + sep + "fajlovi" + sep + "korisnici.txt";
-	   try {
-		   pw = new PrintWriter(new FileWriter(putanja, false));
-		   Iterator<Entry<String, Korisnik>> it = korisnici.entrySet().iterator();
-			while (it.hasNext()) {
-				@SuppressWarnings("rawtypes")
-				HashMap.Entry pair = (HashMap.Entry)it.next();
-				Korisnik k = (Korisnik)pair.getValue();
-				pw.print(Korisnik.Korisnik2String(k));
-		        it.remove();
-		    }
-		   pw.close();
-	   }
-	   catch(IOException e) {
-		   e.printStackTrace();
-	   }
-	   finally {
-		   if(pw != null) {
+	   PrintWriter pw=null;
+		String sep=System.getProperty("file.separator");
+		String putanja ="."+sep+"fajlovi"+sep+"korisnici.txt";
+		try {
+			
+			pw=new PrintWriter(new FileWriter(putanja, false));
+			for(Korisnik a:korisnici.values()) {
+				if(a instanceof KorisnikAplikacije) {
+					pw.println(a.toFileString()+"k");
+				}else if(a instanceof Administrator) {
+					pw.println(a.toFileString()+"a");
+				}
+				else {
+					pw.println(a.toFileString()+"u");
+				}
+				
+				
+			}pw.close();
+			
+		}catch(IOException e) {
+			e.printStackTrace();
+		}finally {
+			if(pw!=null) {
 				pw.close();
-		   }
-		   sacuvajZahteve();
-	   }
+			}
+		}
+	  
+   }
+   
+   public List<Korisnik> vratiUrednike(){
+	   List<Korisnik> lista = new ArrayList<>();
+	   for (Korisnik k : korisnici.values()) 
+		   if (k.isStatus() && k instanceof Urednik)
+			   lista.add(k);
+	   
+	   return lista;
+	   
+   }
+   
+   public List<Korisnik> vratiObicneKorisnike(){
+	   List<Korisnik> lista = new ArrayList<>();
+	   for (Korisnik k : korisnici.values()) 
+		   if (k.isStatus() && k instanceof KorisnikAplikacije)
+			   lista.add(k);
+	   
+	   return lista;
    }
 
+public List<Korisnik> vratiAdmine() {
+	List<Korisnik> lista = new ArrayList<>();
+	   for (Korisnik k : korisnici.values()) 
+		   if (k.isStatus() && k instanceof Administrator)
+			   lista.add(k);
+	   
+	   return lista;
+}
 
-
+public List<Korisnik> vratiSveAktivneKorisnike() {
+	List<Korisnik> lista = new ArrayList<>();
+	   for (Korisnik k : korisnici.values()) 
+		   if (k.isStatus() )
+			   lista.add(k);
+	   
+	   return lista;
+}
 public Collection<? extends Slikovit> traziZaSearch(String textZaSearch) {
 	ArrayList<Slikovit> rezultat = new ArrayList<>();
 	for(Korisnik a : this.korisnici.values()) {
@@ -188,10 +225,7 @@ public Collection<? extends Slikovit> traziZaSearch(String textZaSearch) {
 	}
 	return rezultat;
 }
-
-
-   
-   private void sacuvajZahteve() {
+private void sacuvajZahteve() {
 	   PrintWriter pw = null;
 	   String sep=System.getProperty("file.separator");
 	   String putanja ="." + sep + "fajlovi" + sep + "zahteviZaRegAlbuma.txt";
@@ -219,42 +253,9 @@ public Collection<? extends Slikovit> traziZaSearch(String textZaSearch) {
 				pw.close();
 		   }
 	   }
-   }
-   
-   // POMOCNE FUNKCIJE
-   public List<Korisnik> vratiSveAktivneKorisnike(){
-	   List<Korisnik> lista = new ArrayList<>();
-	   for (Korisnik k: korisnici.values()) {
-		   if (k.isStatus())
-			   lista.add(k);
-	   }
-	   return lista;
-   }
-   public List<Korisnik> vratiAdmine(){
-	   List<Korisnik> lista = new ArrayList<>();
-	   for (Korisnik k : korisnici.values()) 
-		   if (k.isStatus() && k instanceof Administrator)
-			   lista.add(k);
 	   
-	   return lista;
-   }
-   
-   public List<Korisnik> vratiUrednike(){
-	   List<Korisnik> lista = new ArrayList<>();
-	   for (Korisnik k : korisnici.values()) 
-		   if (k.isStatus() && k instanceof Urednik)
-			   lista.add(k);
-	   
-	   return lista;
-	   
-   }
-   
-   public List<Korisnik> vratiObicneKorisnike(){
-	   List<Korisnik> lista = new ArrayList<>();
-	   for (Korisnik k : korisnici.values()) 
-		   if (k.isStatus() && k instanceof KorisnikAplikacije)
-			   lista.add(k);
-	   
-	   return lista;
-   }
+}
+
+
+
 }

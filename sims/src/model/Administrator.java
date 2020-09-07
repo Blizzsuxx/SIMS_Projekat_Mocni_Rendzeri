@@ -158,9 +158,15 @@ public class Administrator extends Korisnik {
 
 
 @Override
+
+public String pratiociUpis() {
+	
+	return "";}
+
 public BufferedImage defaultSlika() {
 	// TODO Auto-generated method stub
 	return null;
+
 }
 
    

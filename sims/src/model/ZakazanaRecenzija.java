@@ -5,7 +5,11 @@
  ***********************************************************************/
 package model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import controler.Constants;
 
 /** @pdOid 1aed17a0-74ed-476f-886a-73eca8c0108a */
 public class ZakazanaRecenzija {
@@ -134,11 +138,14 @@ public class ZakazanaRecenzija {
 
 public String toFileString() {
 	//opis tru dan dan rec
+	String pattern = "dd.MM.yyyy.";
+	DateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;
 	String ad=this.getOpis()+";"+this.isUradeno()+";";
-	ad+=this.getDatumZakazivanja().getDate()+"."+this.getDatumZakazivanja().getMonth()+"."+this.getDatumZakazivanja().getYear()+".;";
-	ad+=this.getRok().getDate()+"."+this.getRok().getMonth()+"."+this.getRok().getYear()+".;";
-	ad+=this.getRecenzija().getNaslov();
-	
+	ad+=df.format(this.getDatumZakazivanja())+";";
+	ad+=df.format(this.rok)+";";
+	ad+=this.getRecenzija().getNaslov()+";";
+	ad+=this.getUrednik().getNalog().getKorisnickoIme()+";";
+	ad+=this.isUradeno();
 	
 	return ad;
 }

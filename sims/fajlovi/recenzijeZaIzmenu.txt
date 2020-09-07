@@ -1,0 +1,1 @@
+true;false;Naslov;false;promeniti tekst

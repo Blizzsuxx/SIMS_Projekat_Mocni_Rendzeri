@@ -41,14 +41,21 @@ public class OceneKontroler {
 		//ocena, korisnik, delo
 		
 		for(String[] linije : data){
+			//System.out.print(linije[2]);
 					FrontEndKorisnik fKorisnik= (FrontEndKorisnik) korisnici.trazi(linije[2].trim());
 					MuzickoDelo delo=muzickaDela.pronadiPoNazivu(linije[1].trim());
 					Ocena a = new Ocena(Float.parseFloat(linije[0].trim()),fKorisnik);
 					a.delo=delo;
 					if(fKorisnik instanceof Urednik) {
+						if(delo.getDosadasnjeOceneKorisnika()==null) {
+							delo.setDosadasnjeOceneKorisnika(new ArrayList<Integer>());
+						}
 						delo.dodajocenuUrednika((int)a.getOcena());
 					}
 					else if(fKorisnik instanceof KorisnikAplikacije) {
+						if(delo.getDosadasnjeOceneUrednika()==null) {
+							delo.setDosadasnjeOceneUrednika(new ArrayList<Integer>());
+						}
 						delo.dodajocenuKorisnika((int)a.getOcena());
 					}
 					sveOcene.add( a);

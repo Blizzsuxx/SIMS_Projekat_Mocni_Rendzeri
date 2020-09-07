@@ -4,7 +4,11 @@
  * Purpose: Defines the Class Recenzija
  ***********************************************************************/
 package model;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import controler.Constants;
 
 /** @pdOid 7bbc8580-778f-4a3f-8306-57c0cbc02cce */
 public class Recenzija extends Utisak {
@@ -75,11 +79,13 @@ public void setAll(String text, String naslov2, Izvodjac i, MuzickoDelo md) {
 public String toFileString() {
 	String ad="";
 	ad+=this.getDelo().getNaziv()+";";
-	ad+=this.getDatumUpisa().getDay()+"."+this.getDatumUpisa().getMonth()+"."+this.getDatumUpisa().getYear()+".;";//
+	String pattern = "dd.MM.yyyy.";
+	SimpleDateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;
+	ad+=df.format(this.getDatumUpisa())+";";//
 	ad+=this.isStatus()+";";
 	ad+=this.getText()+";";
-	ad+=this.getUrednik().getNalog().getKorisnickoIme()+";";
-	ad+=this.getNaslov();
+	ad+=this.getNaslov()+";";
+	ad+=this.getPisac().getNalog().getKorisnickoIme();
 	return ad;
 }
 

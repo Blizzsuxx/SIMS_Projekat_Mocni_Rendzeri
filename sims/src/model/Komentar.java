@@ -5,7 +5,11 @@
  ***********************************************************************/
 package model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import controler.Constants;
 
 /** @pdOid 10543295-3d2a-49e5-876e-e10dbe844cf8 */
 public class Komentar extends Utisak {
@@ -19,7 +23,9 @@ public Komentar(String text, Date datumUpisa, boolean status, MuzickoDelo delo, 
 public String toFileString() {
 	String ad="";
 	ad+=this.getDelo().getNaziv()+";";
-	ad+=this.getDatumUpisa().getDay()+"."+this.getDatumUpisa().getMonth()+"."+this.getDatumUpisa().getYear()+".;";//
+	String pattern = "dd.MM.yyyy.";
+	SimpleDateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;;
+	ad+=df.format(this.getDatumUpisa())+";";//
 	ad+=this.isStatus()+";";
 	ad+=this.getText()+";";
 	ad+=this.getKomentator().getNalog().getKorisnickoIme();

@@ -1,11 +1,15 @@
 package model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 /***********************************************************************
  * Module:  Clan.java
  * Author:  Dragan
  * Purpose: Defines the Class Clan
  ***********************************************************************/
 import java.util.Date;
+
+import controler.Constants;
 
 /** @pdOid 2bdbbe03-46e7-43b8-86a3-41039d253a69 */
 public class Clan {
@@ -77,11 +81,13 @@ public Clan(Date datumPrikljucivanja, Date datumNapustanja, Pojedinacanizvodjac 
 }
 public String toFileString() {
 	String ad="";
-	ad+=this.getDatumPrikljucivanja().getDay()+"."+this.getDatumPrikljucivanja().getMonth()+"."+this.getDatumPrikljucivanja().getYear()+".,";//
+	String pattern = "dd.MM.yyyy.";
+	SimpleDateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;
+	ad+=df.format(datumPrikljucivanja)+",";//
 	if(this.getDatumNapustanja()==null) {
 		ad+="/,";
 	}else {
-		ad+=this.getDatumNapustanja().getDay()+"."+this.getDatumNapustanja().getMonth()+"."+this.getDatumNapustanja().getYear()+".,";//	
+		ad+=df.format(this.datumNapustanja)+",";//	
 	}
 	ad+=this.getIzvodjac().getUmetnickoIme()+",";
 	ad+=this.getGrupa().getUmetnickoIme();

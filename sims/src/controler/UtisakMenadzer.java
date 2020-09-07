@@ -3,6 +3,8 @@ package controler;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -44,17 +46,27 @@ public class UtisakMenadzer {
 				{
 
 					MuzickoDelo delo=pronadiDelo(muzickaDela, linije[0]);
-					DateTimeFormatter df=DateTimeFormatter.ofPattern("dd.MM.yyyy.");
-					LocalDate dan=LocalDate.parse(linije[1].trim(), df);
-					Date datum=new Date(dan.getYear(), dan.getMonthValue(), dan.getDayOfMonth());
+					
+					SimpleDateFormat df= Constants.NATASIN_FORMAT_ZA_DATUM;
+					
+					Date datum=null;
+					try {
+						datum = df.parse(linije[1].trim());
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					boolean status=false;
 					if(linije[2].trim().equals("true")) {status=true;}
 				
 					if(linije.length==6) {
-					Urednik urednik = (Urednik)pronadiKorisnika(korisnici, linije[4].trim());
-					Recenzija a = new Recenzija(linije[3], datum, status, urednik, delo, linije[5].trim());//delo, datum status txt,urednik, naslov
-					urednik.getIstorijaRecenzija().add(a);
+					Urednik urednik = (Urednik)pronadiKorisnika(korisnici, linije[5].trim());
+				//	System.out.println(linije[5].trim());
+					Recenzija a = new Recenzija(linije[3], datum, status, urednik, delo, linije[4].trim());//delo, datum status txt,urednik, naslov
+					if(urednik!=null) {
+					urednik.getIstorijaRecenzija().add(a);}
 					svi.add(a);
+					
 					rec.add(a);
 					}
 					else if(linije.length==5) {

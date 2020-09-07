@@ -8,6 +8,7 @@ package controler;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -15,10 +16,12 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import model.Administrator;
+import model.Album;
 import model.Korisnik;
 import model.KorisnikAplikacije;
 import model.Pol;
 import model.Urednik;
+import view.Slikovit;
 import view.TableModelWrapper;
 
 /** @pdOid 121daa1d-b073-437c-95b7-7f061b5ef5df */
@@ -117,6 +120,17 @@ public class KorisniciMenadzer {
    public void sacuvaj(){
 	   
    }
+
+
+public Collection<? extends Slikovit> traziZaSearch(String textZaSearch) {
+	ArrayList<Slikovit> rezultat = new ArrayList<>();
+	for(Korisnik a : this.korisnici.values()) {
+		if(a.Ime().contains(textZaSearch)) {
+			rezultat.add(a);
+		}
+	}
+	return rezultat;
+}
 
    
 }

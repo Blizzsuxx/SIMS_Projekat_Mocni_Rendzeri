@@ -5,15 +5,10 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-
-import org.jdesktop.swingx.JXSearchField;
-import org.jdesktop.swingx.JXSearchField.SearchMode;
-import org.jdesktop.swingx.search.RecentSearches;
 
 import controler.Constants;
 import model.Sesija;
@@ -55,55 +50,12 @@ public abstract class Homepage extends JFrame {
 		
 
 		
-		JXSearchField search = new JXSearchField();
-		search.setSearchMode(SearchMode.REGULAR);
+		SearchField search = new SearchField(sesija, this);
 		
-		String korisnickoIme = null;
-		if(sesija.getTrenutniKorisnik() != null) {
-			korisnickoIme = sesija.getTrenutniKorisnik().getNalog().getKorisnickoIme();
-		}
 		
-		RecentSearches recentSearches = new RecentSearches(korisnickoIme);
-		recentSearches.install(search);
-		search.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				recentSearches.put(arg0.getActionCommand());
-				searchTriggered(arg0.getActionCommand());
-			}
-
-		});
 		
 		this.add(search, "north");
 		
-		
-		/*
-		
-		JPopupMenu selectSearchCriterium = new JPopupMenu();
-		JCheckBoxMenuItem muzika = new JCheckBoxMenuItem("Muzika");
-		JCheckBoxMenuItem albumi = new JCheckBoxMenuItem("Albumi");
-		JCheckBoxMenuItem izvodjaci = new JCheckBoxMenuItem("Izvodjaci");
-		
-		selectSearchCriterium.add(muzika);
-		selectSearchCriterium.add(albumi);
-		selectSearchCriterium.add(izvodjaci);
-		
-		
-		search.add(selectSearchCriterium);
-		search.setComponentPopupMenu(selectSearchCriterium);
-		*/
-		
-		JButton advancedSearchButton = new JButton("Napredna pretraga");
-		this.add(advancedSearchButton, "north");
-		advancedSearchButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				advancedSearchButtonTriggered();
-			}
-		});
 
 		profil.addActionListener(new ActionListener() {
 
@@ -126,12 +78,6 @@ public abstract class Homepage extends JFrame {
 		this.setJMenuBar(menubar);
 	}
 
-	private void advancedSearchButtonTriggered() {
-		// TODO Auto-generated method stub
-		AdvancedSearchDialog dialog = new AdvancedSearchDialog(this);
-		dialog.setVisible(true);
-	}
-
 
 
 	public Sesija getSesija() {
@@ -150,12 +96,5 @@ public abstract class Homepage extends JFrame {
 		DijalogRadSaNalogom radSaNalogom = new DijalogRadSaNalogom(this, Constants.DUMMY, "Rad sa nalogom");
 		radSaNalogom.setVisible(true);
 	}
-	
-	
-	private void searchTriggered(String textZaSearch) {
-		SearchResults rezultati = new SearchResults(sesija.getMuzickoDeloMenadzer().trazi(textZaSearch));
-		MojDialog dialog = new MojDialog(this, "Rezultati pretrage");
-		dialog.setContentPane(rezultati);
-		dialog.setVisible(true);
-	}
+
 }

@@ -6,8 +6,10 @@
 package model;
 import java.util.ArrayList;
 
+import view.Slikovit;
+
 /** @pdOid 20a31e0c-cbdd-4a1e-956e-0c8ed03fce3d */
-public abstract class Izvodjac {
+public abstract class Izvodjac implements Slikovit {
 	/** @pdOid 515ac754-9ea8-45bb-bc6e-0b899ea103d8 */
 	private String umetnickoIme;
 	/** @pdOid a5f2bea1-d21a-43c6-99b6-58d368935d68 */
@@ -125,5 +127,16 @@ public abstract class Izvodjac {
 	}
 	
 	public abstract String toFileString();
+	
+	@Override
+	public String Ime() {
+		// TODO Auto-generated method stub
+		return this.getUmetnickoIme();
+	}
+	@Override
+	public String putDoSlike() {
+		// TODO Auto-generated method stub
+		return "fajlovi/slike" + this.Ime() + ".jpg";
+	}
 
 }

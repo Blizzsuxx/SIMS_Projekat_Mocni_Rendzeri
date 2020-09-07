@@ -33,7 +33,13 @@ public class MediaPlayer extends MojDialog {
         File fajl = new File("./sims/fajlovi/muzika/" + nazivPesme + ekstenzija);
         if (!fajl.exists())
             fajl = new File("./fajlovi/muzika/" + nazivPesme + ekstenzija);
-        MP3Player mediaPlayer = new MP3Player(fajl);
+        
+        MP3Player mediaPlayer = null;
+        if(fajl.exists()) {
+        	mediaPlayer = new MP3Player(fajl);
+        } else {
+        	mediaPlayer = new MP3Player();
+        }
         return mediaPlayer;
     }
 
@@ -73,8 +79,8 @@ public class MediaPlayer extends MojDialog {
 
         JTextArea opis = new JTextArea(delo.getOpis());
         JScrollPane pane = new JScrollPane(opis);
-        pane.setSize(new Dimension(this.getWidth(), 100));
-        opis.setPreferredSize(pane.getSize());
+        pane.setSize(new Dimension(this.getWidth()-5, 100));
+        opis.setPreferredSize(new Dimension(this.getWidth()-5, 100));
         opis.setEditable(false);
 
         
@@ -82,7 +88,7 @@ public class MediaPlayer extends MojDialog {
         opisPanel.getContent().add(pane, BorderLayout.CENTER);
         add(opisPanel, "wrap 20");
         
-        mediaPlayer.play();
+        if(mediaPlayer.getPlayList().size() > 0) mediaPlayer.play();
 
         this.addWindowListener(new WindowAdapter() {
             @Override

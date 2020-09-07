@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -153,6 +154,14 @@ public class Administrator extends Korisnik {
       if (recenzijeZaIzmene != null)
          recenzijeZaIzmene.clear();
    }
+
+
+
+@Override
+public BufferedImage defaultSlika() {
+	// TODO Auto-generated method stub
+	return null;
+}
 
    
 }

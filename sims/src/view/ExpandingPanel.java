@@ -1,5 +1,9 @@
 package view;
 
+import java.awt.Cursor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.plaf.basic.BasicArrowButton;
@@ -24,6 +28,20 @@ public class ExpandingPanel extends JPanel {
         
 
         BasicArrowButton expandingButton = new BasicArrowButton(basicArrowButtonDirection);
+        
+        expandingButton.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseEntered(MouseEvent e) {
+        		// TODO Auto-generated method stub
+        		setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        	}
+        	
+        	@Override
+        	public void mouseExited(MouseEvent e) {
+        		// TODO Auto-generated method stub
+        		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        	}
+		});
 
         CC componentConstraints = new CC();
         switch(basicArrowButtonDirection) {

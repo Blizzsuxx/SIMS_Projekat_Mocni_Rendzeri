@@ -4,10 +4,13 @@
  * Purpose: Defines the Class Grupa
  ***********************************************************************/
 package model;
+import java.awt.image.BufferedImage;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import controler.Constants;
 
 /** @pdOid 38a4054e-e6d7-430f-83e2-c22dad90681d */
 public class Grupa extends Izvodjac {
@@ -104,5 +107,11 @@ public class Grupa extends Izvodjac {
 		DateFormat df = new SimpleDateFormat(pattern);
 		return g.getUmetnickoIme() + ";" + g.getZanr().getNazivZanra() + ";" + bool2String(g.isStatus()) + ";" + g.getBrojClanova() + ";" +
 				 df.format(g.getDatumOsnivanja()) + ";" + df.format(g.getDatumRaspada()) + System.lineSeparator();
+	}
+	
+	@Override
+	public BufferedImage defaultSlika() {
+		// TODO Auto-generated method stub
+		return Constants.GRUPA_IKONA;
 	}
 }

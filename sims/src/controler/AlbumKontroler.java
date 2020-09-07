@@ -6,13 +6,16 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import model.Album;
+import model.Grupa;
 import model.Izvodjac;
 import model.MuzickoDelo;
 import model.Urednik;
+import view.Slikovit;
 
 public class AlbumKontroler {
 	private ArrayList<Album> sviAlbumi;
@@ -99,6 +102,18 @@ public class AlbumKontroler {
 				pw.close();
 			}
 		}
+	}
+
+	public Collection<? extends Slikovit> trazi(String textZaSearch) {
+		// TODO Auto-generated method stub
+		
+		ArrayList<Slikovit> rezultat = new ArrayList<>();
+		for(Album a : this.sviAlbumi) {
+			if(a.Ime().contains(textZaSearch)) {
+				rezultat.add(a);
+			}
+		}
+		return rezultat;
 	}
 	
 	

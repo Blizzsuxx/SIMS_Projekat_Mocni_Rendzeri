@@ -4,10 +4,13 @@
  * Purpose: Defines the Class Pojedinacanizvodjac
  ***********************************************************************/
 package model;
+import java.awt.image.BufferedImage;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import controler.Constants;
 
 /** @pdOid 2fc12510-acfe-4d29-b294-58047091b3ba */
 public class Pojedinacanizvodjac extends Izvodjac {
@@ -140,5 +143,11 @@ public class Pojedinacanizvodjac extends Izvodjac {
 		return pi.getUmetnickoIme() + ";"  + pi.getZanr().getNazivZanra() + ";" + bool2String(pi.isStatus()) + ";" + pi.getIme() + ";" +
 				pi.getPrezime() + ";" + df.format(pi.getDatumRodjenja()) + ";" + df.format(pi.getDatumSmrti()) +
 				";" + pi.getOpis() + ";" + pi.getPol() + System.lineSeparator();
+	}
+
+	@Override
+	public BufferedImage defaultSlika() {
+		// TODO Auto-generated method stub
+		return Constants.POJEDINACAN_IZVODJAC_IKONA;
 	}
 }

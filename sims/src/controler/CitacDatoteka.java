@@ -132,6 +132,10 @@ public class CitacDatoteka {
 
 		Constants.MUZICKA_IKONA  = procitajSliku("fajlovi/muzika.png");
 		Constants.KORISNICKA_IKONA = procitajSliku("fajlovi/korisnik.png");
+		Constants.ALBUM_IKONA = procitajSliku("fajlovi/album.png");
+		Constants.UREDNIK_IKONA = procitajSliku("fajlovi/urednik.png");
+		Constants.POJEDINACAN_IZVODJAC_IKONA = procitajSliku("fajlovi/solo_izvodjac.png");
+		Constants.GRUPA_IKONA = procitajSliku("fajlovi/grupa.png");
 
 	}
 

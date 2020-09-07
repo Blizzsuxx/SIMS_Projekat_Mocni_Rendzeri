@@ -4,10 +4,13 @@
  * Purpose: Defines the Class Urednik
  ***********************************************************************/
 package model;
+import java.awt.image.BufferedImage;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import controler.Constants;
 
 /** @pdOid d7b7dd3e-6a5f-4c47-ad28-32c0171650d0 */
 public class Urednik extends FrontEndKorisnik {
@@ -251,5 +254,14 @@ public Urednik() {
 				+ ";" + df.format(urednik.getDatumRodjenja()) + ";" + urednik.getNalog().getSifra() + ";" + urednik.getNalog().getKorisnickoIme() +
 				";" + df.format(urednik.getNalog().getDatumKreiranja()) + ";" + urednik.isStatus() + System.lineSeparator();
 	}
+
+
+
+
+@Override
+public BufferedImage defaultSlika() {
+	// TODO Auto-generated method stub
+	return Constants.UREDNIK_IKONA;
+}
 
 }

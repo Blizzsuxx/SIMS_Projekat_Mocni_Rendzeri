@@ -4,9 +4,12 @@
  * Purpose: Defines the Class KorisnikAplikacije
  ***********************************************************************/
 package model;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+
+import controler.Constants;
 
 /** @pdOid d00188b7-a297-4fca-8ad3-4a5e996aa205 */
 public class KorisnikAplikacije extends FrontEndKorisnik {
@@ -175,5 +178,11 @@ public KorisnikAplikacije(String ime, String prezime, String eMail, Pol pol, Dat
 	   }
 	   return ad;
  }
+
+@Override
+public BufferedImage defaultSlika() {
+	// TODO Auto-generated method stub
+	return Constants.KORISNICKA_IKONA;
+}
 
 }

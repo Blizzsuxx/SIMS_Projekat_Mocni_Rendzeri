@@ -13,12 +13,14 @@ import java.util.Date;
 import java.util.List;
 
 import model.FrontEndKorisnik;
+import model.Grupa;
 import model.Komentar;
 import model.Korisnik;
 import model.MuzickoDelo;
 import model.Recenzija;
 import model.Urednik;
 import model.Utisak;
+import view.TableModelWrapper;
 
 public class UtisakMenadzer {
 	private ArrayList<Utisak> svi;
@@ -124,6 +126,19 @@ public class UtisakMenadzer {
 			}
 		}
 		
+	}
+	
+	public TableModelWrapper getTabelaRecenzija()  throws Exception {
+		String[] columns = { "Naslov" ,"Datum upisa", "Muzicko delo", "Pisac"};
+		Class<?>[] columnTypes = { String.class, Date.class, String.class, String.class};
+		boolean[] editableColumns = { false, false, false, false, false};
+		int[] columnWidths = { 90, 80, 120, 120};
+		ArrayList<Object[]> data = new ArrayList<Object[]>();
+		for (Recenzija r : rec) {
+			if (r.isStatus())
+				data.add(new Object[] {r.getNaslov(), r.getDatumUpisa(), r.getDelo().getNaziv(), r.getPisac().getNalog().getKorisnickoIme()});
+		}
+		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
 	}
 
 }

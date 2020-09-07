@@ -7,12 +7,10 @@ package model;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.time.DateTimeException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 import controler.AlbumKontroler;
 import controler.CitacDatoteka;
@@ -24,9 +22,13 @@ import controler.KorisniciMenadzer;
 import controler.LoginMenadzer;
 import controler.MuzickoDeloMenadzer;
 import controler.RecenzijeZaIzmenuMenadzer;
+import controler.UtisakMenadzer;
 import controler.ZakazanaRecenzijaMenadzer;
 import controler.ZanroviMenadzer;
+import view.AdminHomepage;
+import view.Homepage;
 import view.KorisnikAplikacijeHomepage;
+import view.UrednikHomepage;
 
 /** @pdOid a6536d8d-e436-4d30-9c5d-e31219285ea3 */
 public class Sesija {
@@ -46,6 +48,8 @@ public class Sesija {
    private GlasanjeMenadzer glasanjeMenadzer;
    
    private RecenzijeZaIzmenuMenadzer recenzijeZaIzmenuMenadzer;
+   
+   private UtisakMenadzer utisakMenadzer;
    /**
     * @pdRoleInfo migr=no name=MuzickoDelo assc=association38
     *             coll=java.util.Collection impl=java.util.HashSet mult=0..*
@@ -193,6 +197,14 @@ public class Sesija {
 	   this.recenzijeZaIzmenuMenadzer = recenzijeZaIzmenuMenadzer;
    }
    
+   public UtisakMenadzer getUtisakMenadzer() {
+	   return utisakMenadzer;
+   }
+   
+   public void setUtisakMenadzer(UtisakMenadzer utisakMenadzer) {
+	   this.utisakMenadzer = utisakMenadzer;
+   }
+   
 
    /** @pdGenerated default getter */
    public java.util.Collection<MuzickoDelo> getDela() {
@@ -223,13 +235,17 @@ public class Sesija {
     * @param newMuzickoDjelo
     */
    public void addDela(MuzickoDelo newMuzickoDjelo) {
-      if (newMuzickoDjelo == null)
-         return;
-      if (this.dela == null)
-         this.dela = new java.util.HashSet<MuzickoDelo>();
-      if (!this.dela.contains(newMuzickoDjelo))
-         this.dela.add(newMuzickoDjelo);
-   }
+	      if (newMuzickoDjelo == null)
+	         return;
+	      if (this.dela == null)
+	         this.dela = new java.util.HashSet<MuzickoDelo>();
+	      for (MuzickoDelo md : this.dela) {
+	    	  if (md.getNaziv().equals(newMuzickoDjelo.getNaziv())) {
+	    		  return;
+	    	  }
+	      }
+	      this.dela.add(newMuzickoDjelo);
+	   }
 
    /**
     * @pdGenerated default remove
@@ -423,6 +439,25 @@ public class Sesija {
       if (recenzije != null)
          recenzije.clear();
    }
+   
+   public void setZakazanaRecenzija(Recenzija recenzija, Urednik urednik) {
+	   for (ZakazanaRecenzija zr : zakazanaRecenzijaMenadzer.getSve()) {
+		   if (zr.getRecenzija().getNaslov().equals(recenzija.getNaslov())) {
+			   zr.setRecenzija(recenzija);
+			   zr.setUrednik(urednik);
+			   break;
+		   }
+	   }
+   }
+   
+   public void setRecenzijaZaIzmenu(Recenzija recenzija) {
+	   for (RecezijaZaIzmenu rzi : recenzijeZaIzmenuMenadzer.getSveizmene()) {
+		   if (rzi.getRecenzija().getNaslov().equals(recenzija.getNaslov())) {
+			   rzi.setRecenzija(recenzija);
+			   break;
+		   }
+	   }
+   }
 
    public static Sesija namestiSesiju(Korisnik korisnik, CitacDatoteka datoteke, LoginMenadzer menadzer) {
       // TODO Auto-generated method stub
@@ -431,13 +466,14 @@ public class Sesija {
          return trenutnaSesija;
       } else {
          trenutnaSesija = new Sesija(korisnik, datoteke.getKorisnici(), datoteke.getIzvodjaci(), datoteke.getZanrovi(), datoteke.getDeloMenadzer(), datoteke.getMuzickaDela(), datoteke.getGrupe(),
-               datoteke.getIzvodjaci().getSolo(), datoteke.getRecenzije(), datoteke.getZakRecMenadzer(), datoteke.getIzmena(), datoteke.getAlbumi(), datoteke.getGlasanjeMenadzer(),menadzer);
+               datoteke.getIzvodjaci().getSolo(), datoteke.getRecenzije(), datoteke.getUtisakmenadzer(), datoteke.getZakRecMenadzer(), datoteke.getIzmena(), datoteke.getAlbumi(), datoteke.getGlasanjeMenadzer(),menadzer);
          return trenutnaSesija;
       }
    }
 
    private Sesija(Korisnik trenutniKorisnik, KorisniciMenadzer korisnici, IzvodjacMenadzer izvodjacMenadzer, ZanroviMenadzer zanroviMenadzer, MuzickoDeloMenadzer muzickoDeloMenadzer,
-		   Collection<MuzickoDelo> dela, Collection<Grupa> grupe, Collection<Pojedinacanizvodjac> umetnici, Collection<Recenzija> recenzije, ZakazanaRecenzijaMenadzer zakazanaRecenzijaMenadzer,
+		   Collection<MuzickoDelo> dela, Collection<Grupa> grupe, Collection<Pojedinacanizvodjac> umetnici, 
+		   Collection<Recenzija> recenzije, UtisakMenadzer utisakMenadzer,ZakazanaRecenzijaMenadzer zakazanaRecenzijaMenadzer,
          RecenzijeZaIzmenuMenadzer recenzijeZaIzmenuMenadzer, AlbumKontroler albumKontroler, GlasanjeMenadzer glasanjeMenadzer, LoginMenadzer loginMenadzer) {
       super();
       this.setKorisnici(korisnici);
@@ -448,6 +484,7 @@ public class Sesija {
       this.grupe = grupe;
       this.umetnici = umetnici;
       this.recenzije = recenzije;
+      this.setUtisakMenadzer(utisakMenadzer);
       this.setZakazanaRecenzijaMenadzer(zakazanaRecenzijaMenadzer);
       this.setRecenzijeZaIzmenuMenadzer(recenzijeZaIzmenuMenadzer);
       this.setTrenutniKorisnik(trenutniKorisnik);
@@ -460,8 +497,16 @@ public class Sesija {
 public void izvrsi() {
 	// TODO Auto-generated method stub
 	
+	Homepage homepage;
 	
-	KorisnikAplikacijeHomepage homepage = new KorisnikAplikacijeHomepage(this);
+	if (trenutniKorisnik instanceof Administrator) {
+		homepage = new AdminHomepage(this);
+	} else if (trenutniKorisnik instanceof Urednik) {
+		homepage = new UrednikHomepage(this);
+	} else {
+		homepage = new KorisnikAplikacijeHomepage(this);
+	}
+	
 	homepage.setVisible(true);
 	homepage.addWindowListener(new WindowAdapter() {
 		@Override
@@ -577,14 +622,12 @@ public Izvodjac getIzvodjac(String i) {
 
 public boolean napraviDelo(String datumIzdavanja, String naslov, String opis, Izvodjac izv, ArrayList<Zanr> zanrovi) {
 	try {
-	DateTimeFormatter form=DateTimeFormatter.ofPattern("dd.mm.yyyy.");
-	LocalDate datum=LocalDate.parse(datumIzdavanja, form);
-	Date dan=new Date(datum.getYear(), datum.getMonthValue(), datum.getDayOfMonth());
-	MuzickoDelo md=new MuzickoDelo(naslov, opis, dan, true, zanrovi);
-	izv.getMuzickaDela().add(md);
-	this.getDela().add(md);
-	return true;
-	}catch(DateTimeException e) {
+		MuzickoDelo md = new MuzickoDelo(naslov, opis, new SimpleDateFormat("dd.MM.yyyy").parse(datumIzdavanja), true, zanrovi);
+		izv.getMuzickaDela().add(md);
+		this.getDela().add(md);
+		return true;
+	}
+	catch(ParseException e) {
 		return false;
 	}
 }

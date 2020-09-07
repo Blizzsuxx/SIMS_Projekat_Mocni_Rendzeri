@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -22,16 +23,22 @@ import model.Korisnik;
 import model.KorisnikAplikacije;
 import model.Pol;
 import model.Urednik;
+import view.KorisnikAddEdit;
+import view.Slikovit;
 import view.TableModelWrapper;
+
+import model.Uloga;
+import model.Album;
 
 /** @pdOid 121daa1d-b073-437c-95b7-7f061b5ef5df */
 public class KorisniciMenadzer {
    /** @pdRoleInfo migr=no name=Korisnik assc=association25 mult=1 type=Aggregation */
    private HashMap<String, Korisnik> korisnici;
-   
-	public KorisniciMenadzer(List<String[]> readAll) {
+   private HashMap<String, Urednik> zahteviUrednika;
+	public KorisniciMenadzer(List<String[]> readAll,ArrayList<String> zahteviZaReg) {
 	// TODO Auto-generated constructor stub
 	   korisnici = new HashMap<String, Korisnik>();
+	   zahteviUrednika = new HashMap<String, Urednik>();
 	   SimpleDateFormat format = Constants.FORMAT_ZA_DATUM;
 	   for(String[] s : readAll) {
 		   String ime = s[0].trim();
@@ -71,7 +78,25 @@ public class KorisniciMenadzer {
 				break;
 		   }
 	   }
+	   ucitajZahteve(zahteviZaReg);
 	}
+	
+	private void ucitajZahteve(ArrayList<String> zahtevi) {
+		for (String linija : zahtevi) {
+			String[] parts = linija.split(";");
+			Urednik urednik = (Urednik)trazi(parts[0]);
+			urednik.setAlbumZaRegistracju(parts[1]);
+			zahteviUrednika.put(urednik.getNalog().getKorisnickoIme(), urednik);
+		}
+	}
+	
+	public HashMap<String, Urednik> getZahteviUrednika() {
+		   return zahteviUrednika;
+	   	}
+
+	   public void setZahteviUrednika(HashMap<String, Urednik> zahteviUrednika) {
+		   this.zahteviUrednika = zahteviUrednika;
+	   	}
    
    
    public HashMap<String, Korisnik> getKorisnici()
@@ -112,6 +137,13 @@ public class KorisniciMenadzer {
     	  korisnici.put(k.getNalog().getKorisnickoIme(), k);
    }
    
+   public void dodajZahtevUrednika(Urednik urednik, String nazivAlbuma) {
+	   if (!zahteviUrednika.containsKey(urednik.getNalog().getKorisnickoIme())) {
+		   urednik.setAlbumZaRegistracju(nazivAlbuma);
+		   zahteviUrednika.put(urednik.getNalog().getKorisnickoIme(), urednik);
+	   }
+   }
+   
    /** @pdOid 59cb0526-ada2-4d39-93a6-eaaf6a8f1733 */
    public Korisnik trazi(String korisnickoIme) {
       // TODO: implement
@@ -145,7 +177,85 @@ public class KorisniciMenadzer {
 				pw.close();
 			}
 		}
+	  
+   }
+   
+   public List<Korisnik> vratiUrednike(){
+	   List<Korisnik> lista = new ArrayList<>();
+	   for (Korisnik k : korisnici.values()) 
+		   if (k.isStatus() && k instanceof Urednik)
+			   lista.add(k);
+	   
+	   return lista;
+	   
+   }
+   
+   public List<Korisnik> vratiObicneKorisnike(){
+	   List<Korisnik> lista = new ArrayList<>();
+	   for (Korisnik k : korisnici.values()) 
+		   if (k.isStatus() && k instanceof KorisnikAplikacije)
+			   lista.add(k);
+	   
+	   return lista;
    }
 
-   
+public List<Korisnik> vratiAdmine() {
+	List<Korisnik> lista = new ArrayList<>();
+	   for (Korisnik k : korisnici.values()) 
+		   if (k.isStatus() && k instanceof Administrator)
+			   lista.add(k);
+	   
+	   return lista;
+}
+
+public List<Korisnik> vratiSveAktivneKorisnike() {
+	List<Korisnik> lista = new ArrayList<>();
+	   for (Korisnik k : korisnici.values()) 
+		   if (k.isStatus() )
+			   lista.add(k);
+	   
+	   return lista;
+}
+public Collection<? extends Slikovit> traziZaSearch(String textZaSearch) {
+	ArrayList<Slikovit> rezultat = new ArrayList<>();
+	for(Korisnik a : this.korisnici.values()) {
+		if(a.Ime().contains(textZaSearch)) {
+			rezultat.add(a);
+		}
+	}
+	return rezultat;
+}
+private void sacuvajZahteve() {
+	   PrintWriter pw = null;
+	   String sep=System.getProperty("file.separator");
+	   String putanja ="." + sep + "fajlovi" + sep + "zahteviZaRegAlbuma.txt";
+	   try {
+		   pw = new PrintWriter(new FileWriter(putanja, false));
+		   if (zahteviUrednika.isEmpty()) {
+				  pw.print("");
+				  return;
+		   }
+		   Iterator<Entry<String, Urednik>> it = zahteviUrednika.entrySet().iterator();
+			while (it.hasNext()) {
+				@SuppressWarnings("rawtypes")
+				HashMap.Entry pair = (HashMap.Entry)it.next();
+				Urednik urednik = (Urednik)pair.getValue();
+				pw.print(Urednik.ZahtevUrednika2String(urednik));
+		        it.remove();
+		    }
+		   pw.close();
+	   }
+	   catch(IOException e) {
+		   e.printStackTrace();
+	   }
+	   finally {
+		   if(pw != null) {
+				pw.close();
+		   }
+	   }
+	   
+}
+
+
+
 }

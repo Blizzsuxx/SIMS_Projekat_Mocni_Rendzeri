@@ -10,12 +10,13 @@ import controler.CitacDatoteka;
 import controler.LoginMenadzer;
 
 public class Main {
+	
 
 	public static void main(String[] args) throws ParseException, IOException {
 		// TODO Auto-generated method stub
 		
 		
-		initUi();
+		initUI();
 		
 		
 		
@@ -30,7 +31,7 @@ public class Main {
 		
 	}
 
-	private static void initUi() {
+	private static void initUI() {
 		// TODO Auto-generated method stub
 		UIManager.put( "control", new Color( 128, 128, 128) );
 		  UIManager.put( "info", new Color(128,128,128) );

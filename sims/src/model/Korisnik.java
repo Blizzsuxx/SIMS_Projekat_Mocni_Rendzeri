@@ -10,9 +10,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import controler.Constants;
+import view.Slikovit;
 
 /** @pdOid 821f1adf-c3a0-4478-9680-7e8b2f65437c */
-public abstract class Korisnik {
+public abstract class Korisnik implements Slikovit {
    /** @pdOid 5b9ed12b-0833-4281-ba9d-e989c84e9fbd */
    private String ime;
    /** @pdOid d2e5ef38-cdba-4f7a-b70f-76396bcb5fd7 */
@@ -158,6 +159,7 @@ public abstract class Korisnik {
 			e.printStackTrace();
 		}
 	}
+
 	public String toFileString() {
 		//pera preic pera@gmail.com muski 02.05.2001. sifra1 pera1 04.11.2010. true a
 		String pattern = "dd/MM/yyyy";
@@ -169,5 +171,38 @@ public abstract class Korisnik {
 	return ad;
 	}
 	public abstract String pratiociUpis();
+
+@Override
+	public String Ime() {
+		// TODO Auto-generated method stub
+		return this.getNalog().getKorisnickoIme();
+}
+	
+	public static String Korisnik2String(Korisnik korisnik) {
+		String pattern = "dd/MM/yyyy";
+		DateFormat df = new SimpleDateFormat(pattern);
+		String text = korisnik.getIme() + "," + korisnik.getPrezime() + "," + korisnik.geteMail() + "," + korisnik.getPol().name()
+				+ "," + df.format(korisnik.getDatumRodjenja()) + "," + korisnik.getNalog().getSifra() + "," + korisnik.getNalog().getKorisnickoIme() +
+				"," + df.format(korisnik.getNalog().getDatumKreiranja()) + "," + korisnik.getNalog().isStatus() + ",";
+		if (korisnik.getClass() == KorisnikAplikacije.class) {
+			text += "k";
+		}
+		if (korisnik.getClass() == Urednik.class) {
+			text += "u";
+		}
+		if (korisnik.getClass() == Administrator.class) {
+			text += "a";
+		}
+		text += System.lineSeparator();
+		return text;
+
+	}
+
+@Override
+	public String putDoSlike() {
+		// TODO Auto-generated method stub
+		return "fajlovi/" + Ime() + ".jpg";
+	}
+
    
 }

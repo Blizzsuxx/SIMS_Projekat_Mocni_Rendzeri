@@ -1,8 +1,9 @@
 package view;
 
-import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -81,7 +82,7 @@ public class ImageLabel extends JPanel {
    
 
    public ImageLabel(ImageIcon ikona, Slikovit delo) {
-       this(ikona, delo, "left");
+       this(ikona, delo, "center");
    }
    
    
@@ -91,7 +92,9 @@ public class ImageLabel extends JPanel {
        JLabel labela = new JLabel(ikona);
        this.setDelo(delo);
        this.add(labela, "wrap, align " + align);
+       
        this.addTekst(delo.Ime());
+       
 
        labela.addMouseListener(new MouseInputAdapter(){
            
@@ -99,6 +102,20 @@ public class ImageLabel extends JPanel {
            public void mouseClicked(java.awt.event.MouseEvent arg0) {
                clickedEvent();
            }
+           
+           @Override
+        public void mouseEntered(MouseEvent e) {
+        	// TODO Auto-generated method stub
+        	if(isClickable()) {
+        		setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        	}
+        }
+           
+           @Override
+        public void mouseExited(MouseEvent e) {
+        	// TODO Auto-generated method stub
+        	setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        }
 
 
        });

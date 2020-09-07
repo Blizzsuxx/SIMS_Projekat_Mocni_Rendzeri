@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -106,6 +107,20 @@ public class StarRater extends JPanel {
     this.selection = selection;
     this.rollover = 0;
     this.done = false;
+    
+    addMouseListener(new MouseAdapter() {
+    	@Override
+    	public void mouseEntered(MouseEvent e) {
+    		// TODO Auto-generated method stub
+    		setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    	}
+    	
+    	@Override
+    	public void mouseExited(MouseEvent e) {
+    		// TODO Auto-generated method stub
+    		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+    	}
+	});
     
     // set look
     setOpaque(false);

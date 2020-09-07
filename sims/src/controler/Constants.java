@@ -34,7 +34,16 @@ public abstract class Constants {
 
 	public static BufferedImage MUZICKA_IKONA;
 	
+	public static BufferedImage ALBUM_IKONA;
+	
 	public static BufferedImage KORISNICKA_IKONA;
+	
+	public static BufferedImage UREDNIK_IKONA;
+	
+	public static BufferedImage POJEDINACAN_IZVODJAC_IKONA;
+	
+	public static BufferedImage GRUPA_IKONA;
+	
 
 	public static final MuzickoDelo BARBIE_GIRL = new MuzickoDelo("Aqua - Barbie Girl", "Barbi devojka");
 

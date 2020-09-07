@@ -6,13 +6,15 @@
 package model;
 import java.util.ArrayList;
 
+import view.Slikovit;
+
 /** @pdOid 20a31e0c-cbdd-4a1e-956e-0c8ed03fce3d */
-public abstract class Izvodjac {
+public abstract class Izvodjac implements Slikovit {
 	/** @pdOid 515ac754-9ea8-45bb-bc6e-0b899ea103d8 */
 	private String umetnickoIme;
 	/** @pdOid a5f2bea1-d21a-43c6-99b6-58d368935d68 */
 	private boolean status;
-	
+
 	private Zanr zanr;
    
 	/** @pdRoleInfo migr=no name=KorisnikAplikacije assc=association16 mult=0..* side=A */
@@ -21,7 +23,6 @@ public abstract class Izvodjac {
 	private ArrayList<MuzickoDelo> muzickaDela;
 	private ArrayList<Album> izdatiAlbumi;
    
-
 	public ArrayList<Album> getIzdatiAlbumi() {
 		return izdatiAlbumi;
 	}
@@ -31,6 +32,11 @@ public abstract class Izvodjac {
 	}
 	
 	public void addIzdatAlbum(Album album) {
+		for (Album a : izdatiAlbumi) {
+			if (a.getNaslov().equals(album.getNaslov())) {
+				return;
+			}
+		}
 		izdatiAlbumi.add(album);
 	}
 	
@@ -112,9 +118,25 @@ public abstract class Izvodjac {
 	}
 	
 	public void addDelo(MuzickoDelo md) {
+		for (MuzickoDelo muzickoDelo : muzickaDela) {
+			if (muzickoDelo.getNaziv().equals(md.getNaziv())) {
+				return;
+			}
+		}
 		this.muzickaDela.add(md);
 	}
 	
 	public abstract String toFileString();
+	
+	@Override
+	public String Ime() {
+		// TODO Auto-generated method stub
+		return this.getUmetnickoIme();
+	}
+	@Override
+	public String putDoSlike() {
+		// TODO Auto-generated method stub
+		return "fajlovi/slike" + this.Ime() + ".jpg";
+	}
 
 }

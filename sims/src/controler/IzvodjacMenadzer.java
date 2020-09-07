@@ -14,6 +14,7 @@ import model.Izvodjac;
 import model.Pojedinacanizvodjac;
 import model.Pol;
 import model.Zanr;
+import view.Slikovit;
 import view.TableModelWrapper;
 
 public class IzvodjacMenadzer {
@@ -198,5 +199,26 @@ public class IzvodjacMenadzer {
 			data.add(new Object[] {g.getUmetnickoIme(), g.getZanr().getNazivZanra(), g.getBrojClanova(), g.getDatumOsnivanja(), g.getDatumRaspada()});
 		}
 		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
+	}
+
+	public Collection<? extends Slikovit> traziGrupe(String textZaSearch) {
+		// TODO Auto-generated method stub
+		ArrayList<Slikovit> rezultat = new ArrayList<>();
+		for(Grupa g : grupe) {
+			if(g.Ime().contains(textZaSearch)) {
+				rezultat.add(g);
+			}
+		}
+		return rezultat;
+	}
+
+	public Collection<? extends Slikovit> traziSoloIzvodjace(String textZaSearch) {
+		ArrayList<Slikovit> rezultat = new ArrayList<>();
+		for(Pojedinacanizvodjac g : this.solo) {
+			if(g.Ime().contains(textZaSearch)) {
+				rezultat.add(g);
+			}
+		}
+		return rezultat;
 	}
 }

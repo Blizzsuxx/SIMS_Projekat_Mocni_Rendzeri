@@ -4,6 +4,7 @@
  * Purpose: Defines the Class Urednik
  ***********************************************************************/
 package model;
+import java.awt.image.BufferedImage;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ public class Urednik extends FrontEndKorisnik {
    public java.util.Collection<ZakazanaRecenzija> zakazaneRecenzije;
    /** @pdRoleInfo migr=no name=RecezijaZaIzmenu assc=association41 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
    public java.util.Collection<RecezijaZaIzmenu> recezijaZaIzmenu;
+   
+   private String albumZaRegistracju;
    
    public Urednik(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, String sifra,
 			String korisnickoIme, Date datum, boolean status) {
@@ -96,11 +99,13 @@ public Urednik() {
          return;
       if (this.istorijaRecenzija == null)
          this.istorijaRecenzija = new java.util.HashSet<Recenzija>();
-      if (!this.istorijaRecenzija.contains(newRecenzija))
-      {
-         this.istorijaRecenzija.add(newRecenzija);
-         newRecenzija.setUrednik(this);      
+      for (Recenzija r : istorijaRecenzija) {
+    	  if (r.getNaslov().equals(newRecenzija.getNaslov())) {
+    		  return;
+    	  }
       }
+      this.istorijaRecenzija.add(newRecenzija);
+      newRecenzija.setUrednik(this);      
    }
    
    /** @pdGenerated default remove
@@ -158,11 +163,13 @@ public Urednik() {
          return;
       if (this.zakazaneRecenzije == null)
          this.zakazaneRecenzije = new java.util.HashSet<ZakazanaRecenzija>();
-      if (!this.zakazaneRecenzije.contains(newZakazanaRecenzija))
-      {
-         this.zakazaneRecenzije.add(newZakazanaRecenzija);
-         newZakazanaRecenzija.setUrednik(this);      
+      for (ZakazanaRecenzija zr : zakazaneRecenzije) {
+    	  if (zr.getRecenzija().getNaslov().equals(newZakazanaRecenzija.getRecenzija().getNaslov())) {
+    		  return;
+    	  }
       }
+      this.zakazaneRecenzije.add(newZakazanaRecenzija);
+      newZakazanaRecenzija.setUrednik(this);      
    }
    
    /** @pdGenerated default remove
@@ -220,8 +227,12 @@ public Urednik() {
          return;
       if (this.recezijaZaIzmenu == null)
          this.recezijaZaIzmenu = new java.util.HashSet<RecezijaZaIzmenu>();
-      if (!this.recezijaZaIzmenu.contains(newRecezijaZaIzmenu))
-         this.recezijaZaIzmenu.add(newRecezijaZaIzmenu);
+      for (RecezijaZaIzmenu rzi : recezijaZaIzmenu) {
+    	  if (rzi.getRecenzija().getNaslov().equals(newRecezijaZaIzmenu.getRecenzija().getNaslov())) {
+    		  return;
+    	  }
+      }
+      this.recezijaZaIzmenu.add(newRecezijaZaIzmenu);
    }
    
    /** @pdGenerated default remove
@@ -246,8 +257,30 @@ public Urednik() {
 	   DateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;
 	   return urednik.getIme() + ";" + urednik.getPrezime() + ";" + urednik.geteMail() + ";" + urednik.getPol().name()
 				+ ";" + df.format(urednik.getDatumRodjenja()) + ";" + urednik.getNalog().getSifra() + ";" + urednik.getNalog().getKorisnickoIme() +
-				";" + df.format(urednik.getNalog().getDatumKreiranja()) + ";" + urednik.isStatus() + System.lineSeparator();
+				";" + df.format(urednik.getNalog().getDatumKreiranja()) + ";" + urednik.getNalog().isStatus() + System.lineSeparator();
 	}
+   
+   	public static String ZahtevUrednika2String(Urednik urednik) {
+	   return urednik.getNalog().getKorisnickoIme() + ";" + 
+			   urednik.getAlbumZaRegistracju() + System.lineSeparator();
+	}
+
+   	public String getAlbumZaRegistracju() {
+		return albumZaRegistracju;
+	}
+
+   	public void setAlbumZaRegistracju(String albumZaRegistracju) {
+		this.albumZaRegistracju = albumZaRegistracju;
+	}
+
+
+
+
+@Override
+public BufferedImage defaultSlika() {
+	// TODO Auto-generated method stub
+	return Constants.UREDNIK_IKONA;
+}
 
 
    @Override

@@ -48,6 +48,15 @@ public class LoginMenadzer {
 				pokusajUlogovanje(prozor.getKorisnickoIme().getText(), String.valueOf(prozor.getSifra().getPassword()));
 			}
 		});
+	   
+	   prozor.getSifra().addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			pokusajUlogovanje(prozor.getKorisnickoIme().getText(), String.valueOf(prozor.getSifra().getPassword()));
+		}
+	});
 		   
 		   prozor.getGuestButton().addActionListener(new ActionListener() {
 			
@@ -89,6 +98,8 @@ public class LoginMenadzer {
 	
 	
 }
+   
+   //test 
 
    
    /** @pdOid 4bf09b27-0f29-425d-8c6b-7dd4b7072a68 */
@@ -114,6 +125,8 @@ public class LoginMenadzer {
    public void uloguj() {
       // TODO: implement
 	   prozor.setVisible(true);
+	   prozor.setKorisnickoIme("");
+	   prozor.setSifra("");
    }
    
    

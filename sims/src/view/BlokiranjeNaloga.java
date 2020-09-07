@@ -58,27 +58,24 @@ public class BlokiranjeNaloga extends JFrame {
 		ucitajNaloge();
 	}
 	
-	private void ucitajNaloge() throws Exception
-	{
+	private void ucitajNaloge() throws Exception {
 		KorisniciMenadzer km = sesija.getKorisnici();
 		TableModelWrapper tmw = km.getTabelaKorisnika();
 		nalozi.setModel(tmw);
 	}
 	
-	private void setujStatus(int selektovaniRed, boolean status)
-	{
+	private void setujStatus(int selektovaniRed, boolean status) {
 		nalozi.setValueAt(status, selektovaniRed, 4);
 		KorisniciMenadzer km = sesija.getKorisnici();
 		HashMap<String,Korisnik> korisnici = km.getKorisnici();
 		Iterator<Entry<String, Korisnik>> it = korisnici.entrySet().iterator();
-		while (it.hasNext()) 
-		{
+		while (it.hasNext()) {
 			@SuppressWarnings("rawtypes")
 			HashMap.Entry pair = (HashMap.Entry)it.next();
 			Korisnik k = (Korisnik)pair.getValue();
-			if (nalozi.getValueAt(selektovaniRed, 0).equals(pair.getKey()))
-			{
-				k.setStatus(status);
+			String korisnickoIme = (String)nalozi.getValueAt(selektovaniRed, 0);
+			if (korisnickoIme.equals((String)pair.getKey())) {
+				k.getNalog().setStatus(status);
 				korisnici.replace((String)pair.getKey(), k);
 				break;
 			}

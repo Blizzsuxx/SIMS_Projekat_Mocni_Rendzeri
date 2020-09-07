@@ -7,6 +7,7 @@ import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpringLayout;
+import javax.swing.table.DefaultTableModel;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -14,15 +15,20 @@ import org.jdatepicker.impl.UtilDateModel;
 
 import controler.AlbumKontroler;
 import controler.IzvodjacMenadzer;
+import controler.KorisniciMenadzer;
 import controler.MuzickoDeloMenadzer;
 import model.Album;
 import model.Izvodjac;
 import model.MuzickoDelo;
 import model.Sesija;
+import model.Urednik;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Properties;
+import java.util.Map.Entry;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -41,6 +47,7 @@ public class RegistarcijaAlbuma extends JFrame {
 	private JDatePickerImpl dtDor;
 	private Sesija sesija;
 	private JButton btnDodajPesmu;
+	private Urednik urednik;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public RegistarcijaAlbuma(Sesija sesija) throws Exception {
@@ -145,6 +152,13 @@ public class RegistarcijaAlbuma extends JFrame {
 		{
 			cmbIzvodjac.addItem(i.getUmetnickoIme());
 		}
+		
+		urednik = ucitajZahteve();
+		
+		if (urednik == null) {
+			JOptionPane.showMessageDialog(null, "Nemaju zahtevi za registraciju albuma.");
+			RegistarcijaAlbuma.this.dispose();
+		}
 	}
 	
 	private void ucitajPesme(String umetnickoIme) throws Exception {
@@ -152,6 +166,21 @@ public class RegistarcijaAlbuma extends JFrame {
 		Izvodjac i = sesija.getIzvodjac(umetnickoIme);
 		TableModelWrapper tmw = mdm.getTabelaMuzickihDela(i);
 		pesme.setModel(tmw);
+	}
+	
+	private Urednik ucitajZahteve() {
+		KorisniciMenadzer km = sesija.getKorisnici();
+		HashMap<String, Urednik> zahteviUrednika = km.getZahteviUrednika();
+		Iterator<Entry<String, Urednik>> it = zahteviUrednika.entrySet().iterator();
+		while (it.hasNext()) {
+			@SuppressWarnings("rawtypes")
+			HashMap.Entry pair = (HashMap.Entry)it.next();
+			Urednik u = (Urednik)pair.getValue();
+			txtNaziv.setText(u.getAlbumZaRegistracju());
+			txtNaziv.setEditable(false);
+			return u;
+	    }
+		return null;
 	}
 	
 	private void registrujAlbum() throws ParseException {
@@ -173,11 +202,35 @@ public class RegistarcijaAlbuma extends JFrame {
 		}
 		Date danRegistracije = new SimpleDateFormat("dd.MM.yyyy").parse(dtDor.getJFormattedTextField().getText());
 		Izvodjac izvodjac = sesija.getIzvodjac((String)cmbIzvodjac.getSelectedItem());
-		Album noviAlbum = new Album(naziv, dela, null, izvodjac, danRegistracije, true);
+		Album noviAlbum = new Album(naziv, dela, urednik, izvodjac, danRegistracije, true);
 		noviAlbum.getIzvodjac().addIzdatAlbum(noviAlbum);
 		AlbumKontroler albumKontroler = sesija.getAlbumKontroler();
 		albumKontroler.addAlbum(noviAlbum);
 		sesija.setAlbumKontroler(albumKontroler);
+		refresh();
+	}
+	
+	private void refresh() {
+		KorisniciMenadzer km = sesija.getKorisnici();
+		HashMap<String, Urednik> zahtevi = km.getZahteviUrednika();
+		Iterator<Entry<String, Urednik>> it = zahtevi.entrySet().iterator();
+		while (it.hasNext()) {
+			@SuppressWarnings("rawtypes")
+			HashMap.Entry pair = (HashMap.Entry)it.next();
+			Urednik u = (Urednik)pair.getValue();
+			if (u.getAlbumZaRegistracju().equals(txtNaziv.getText())) {
+				zahtevi.remove(u.getNalog().getKorisnickoIme());
+				break;
+			}
+	    }
+		km.setZahteviUrednika(zahtevi);
+		sesija.setKorisnici(km);
+		ucitajZahteve();
+		if (urednik == null) {
+			JOptionPane.showMessageDialog(null, "Nemaju zahtevi za registraciju albuma.");
+			RegistarcijaAlbuma.this.dispose();
+		}
+		pesme.setModel(new DefaultTableModel(null, new String[] {"Naziv" ,"Opis", "Datum izdavanja"}));
 	}
 	
 	private String validiraj() {
@@ -191,7 +244,7 @@ public class RegistarcijaAlbuma extends JFrame {
 		if (cmbIzvodjac.getSelectedIndex() == -1) {
 			return "Morate odabrati izvodjaca.";
 		}
-		if (dtDor.getJFormattedTextField().getText() == null) {
+		if (dtDor.getJFormattedTextField().getText().isEmpty()) {
 			return "Morate odabrati datum.";
 		}
 		return "";

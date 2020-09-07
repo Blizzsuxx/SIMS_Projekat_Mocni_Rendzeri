@@ -87,6 +87,7 @@ public class Nalog {
 		ad+=(i+"");
 		return ad;
 	}
+
 	
 	public static boolean string2Bool(String value) {
 		return (value.equals("1") ? true : false);
@@ -112,4 +113,5 @@ public class Nalog {
 		nalog.setStatus(string2Bool(parts[3]));
 		return nalog;
 	}
+
 }

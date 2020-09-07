@@ -9,6 +9,7 @@ import controler.KorisniciMenadzer;
 import controler.RecenzijeZaIzmenuMenadzer;
 import controler.ZakazanaRecenzijaMenadzer;
 import model.Korisnik;
+import model.Recenzija;
 import model.RecezijaZaIzmenu;
 import model.Sesija;
 import model.Urednik;
@@ -113,15 +114,15 @@ public class DodelaRecenzija extends JFrame {
 	}
 	
 	private void dodeliRecenzijeUredniku() {
-		ArrayList<ZakazanaRecenzija> zakazeneRecenzije = new ArrayList<ZakazanaRecenzija>();
+		ArrayList<ZakazanaRecenzija> zakazaneRecenzije = new ArrayList<ZakazanaRecenzija>();
 		ArrayList<RecezijaZaIzmenu> recenzijeZaIzmenu = new ArrayList<RecezijaZaIzmenu>();
 		ZakazanaRecenzijaMenadzer zrm = sesija.getZakazanaRecenzijaMenadzer();
 		RecenzijeZaIzmenuMenadzer rzim = sesija.getRecenzijeZaIzmenuMenadzer();
-		int[] selektovaneZakRec = zakazaneRecenzije.getSelectedRows();
+		int[] selektovaneZakRec = this.zakazaneRecenzije.getSelectedRows();
 		for (int i = 0; i < selektovaneZakRec.length; i++) {
 			for (ZakazanaRecenzija zr : zrm.getSve()) {
-				if (zakazaneRecenzije.getValueAt(selektovaneZakRec[i], 0).equals(zr.getRecenzija().getNaslov())) {
-					zakazeneRecenzije.add(zr);
+				if (this.zakazaneRecenzije.getValueAt(selektovaneZakRec[i], 0).equals(zr.getRecenzija().getNaslov())) {
+					zakazaneRecenzije.add(zr);
 				}
 			}
 		}
@@ -138,24 +139,47 @@ public class DodelaRecenzija extends JFrame {
 		KorisniciMenadzer km = sesija.getKorisnici();
 		HashMap<String,Korisnik> korisnici = km.getKorisnici();
 		Iterator<Entry<String, Korisnik>> it = korisnici.entrySet().iterator();
-		while (it.hasNext()) 
-		{
+		while (it.hasNext()) {
 			@SuppressWarnings("rawtypes")
 			HashMap.Entry pair = (HashMap.Entry)it.next();
 			Korisnik k = (Korisnik)pair.getValue();
 			if (k.getNalog().getKorisnickoIme().equals(sUrednik)) {
 				urednik = (Urednik)k;
-				urednik.setZakazaneRecenzije(zakazeneRecenzije);
-				urednik.setRecezijaZaIzmenu(recenzijeZaIzmenu);
-				korisnici.replace((String)pair.getKey(), (Korisnik)urednik);
 				break;
 			}
 	        it.remove();
 	    }
-		for (ZakazanaRecenzija zr : zakazeneRecenzije) {
-			zr.setUrednik(urednik);
+		if (urednik != null)
+			setuj(urednik, zakazaneRecenzije, recenzijeZaIzmenu);
+	}
+	
+	private void setuj(Urednik urednik, ArrayList<ZakazanaRecenzija> zakazaneRecenzije, 
+			ArrayList<RecezijaZaIzmenu> recenzijeZaIzemnu) {
+		for (Recenzija recenzija : sesija.getRecenzije()) {
+			for (ZakazanaRecenzija zr : zakazaneRecenzije) {
+				if (zr.getRecenzija().getNaslov().equals(recenzija.getNaslov())) {
+					recenzija.setUrednik(urednik);
+					sesija.setZakazanaRecenzija(recenzija, urednik);
+					urednik.addZakazaneRecenzije(zr);
+					urednik.addIstorijaRecenzija(zr.getRecenzija());
+					break;
+				}
+			}
+			for (RecezijaZaIzmenu rzi : recenzijeZaIzemnu) {
+				if (rzi.getRecenzija().getNaslov().equals(recenzija.getNaslov())) {
+					recenzija.setUrednik(urednik);
+					sesija.setRecenzijaZaIzmenu(recenzija);
+					urednik.addRecezijaZaIzmenu(rzi);
+					urednik.addIstorijaRecenzija(rzi.getRecenzija());
+					break;
+				}
+			}
 		}
+		KorisniciMenadzer km = sesija.getKorisnici();
+		HashMap<String,Korisnik> korisnici = km.getKorisnici();
+		korisnici.replace(urednik.getNalog().getKorisnickoIme(), (Korisnik)urednik);
 		km.setKorisnici(korisnici);
 		sesija.setKorisnici(km);
 	}
+	
 }

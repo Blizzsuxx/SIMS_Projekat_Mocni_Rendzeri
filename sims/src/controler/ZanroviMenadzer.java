@@ -3,13 +3,11 @@ package controler;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import model.Izvodjac;
 import model.Zanr;
+import view.TableModelWrapper;
 
 public class ZanroviMenadzer { //ovu klasu ili treba da ima sesija ili da bude prosledjena instanca klase IzvestajViseIzvodjaca
 	private ArrayList<Zanr> sviZanrovi;
@@ -90,5 +88,16 @@ public class ZanroviMenadzer { //ovu klasu ili treba da ima sesija ili da bude p
 			return null;
 		}
 	
-
+	public TableModelWrapper getTabelaZanrova() {
+		String[] columns = {"Naziv"};
+		Class<?>[] columnTypes = { String.class};
+		boolean[] editableColumns = { false};
+		int[] columnWidths = {80};
+		ArrayList<Object[]> data = new ArrayList<Object[]>();
+		for (Zanr z : sviZanrovi) {
+			data.add(new Object[] {z.getNazivZanra()});
+		}
+		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
+	}
+	
 }

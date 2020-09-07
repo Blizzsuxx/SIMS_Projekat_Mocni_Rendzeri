@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.image.BufferedImage;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -7,7 +8,10 @@ import java.util.Date;
 
 import controler.Constants;
 
-public class Album {
+import view.Slikovit;
+
+public class Album implements Slikovit {
+
 	private Izvodjac izvodjac;
 	private ArrayList<MuzickoDelo> listaPesama;
 	private Urednik urednik; //urednik koji je izvrsio registraciju tog albuma
@@ -105,5 +109,23 @@ public class Album {
 			ad+= md.getNaziv();
 		}
 		return ad;
+	}
+
+	@Override
+	public String Ime() {
+		// TODO Auto-generated method stub
+		return this.getNaslov();
+	}
+
+	@Override
+	public String putDoSlike() {
+		// TODO Auto-generated method stub
+		return "fajlovi/" + Ime() + ".jpg";
+	}
+
+	@Override
+	public BufferedImage defaultSlika() {
+		// TODO Auto-generated method stub
+		return Constants.ALBUM_IKONA;
 	}
 }

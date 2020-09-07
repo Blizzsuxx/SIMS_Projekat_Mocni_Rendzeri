@@ -119,7 +119,7 @@ public class CitacDatoteka {
 	public void inicijalizuj() throws ParseException, IOException {
 		// TODO Auto-generated method stub
 
-		korisnici = new KorisniciMenadzer(ucitaj("korisnici.txt", ','));
+		korisnici = new KorisniciMenadzer(ucitaj("korisnici.txt", ','), ucitajBuffered("zahteviZaRegAlbuma.txt"));
 		zanrovi = new ZanroviMenadzer(ucitaj("zanrovi.txt", ','));
 		izvodjaci = new IzvodjacMenadzer(ucitaj("izvodjaci.txt", ';'), zanrovi);
 
@@ -130,12 +130,16 @@ public class CitacDatoteka {
 		ocene = new OceneKontroler(deloMenadzer, korisnici, ucitaj("ocene.txt", ','));
 		clanoviGrupe = new ClanoviMenadzer(izvodjaci, izvodjaci.getGrupe(), ucitaj("clanstva.txt",','));
 		izmena = new RecenzijeZaIzmenuMenadzer((ArrayList<Recenzija>)utisakmenadzer.getRecenzije(), ucitaj("recenzijeZaIzmenu.txt", ';'));
-		glasanjeMenadzer = new GlasanjeMenadzer(ucitajBuffered("glasovi.txt"), ucitajBuffered("uredniciKojiSuGlasali.txt"), deloMenadzer.getDela());
+		glasanjeMenadzer = new GlasanjeMenadzer(ucitajBuffered("glasovi.txt"), ucitajBuffered("uredniciKojiSuGlasali.txt"), deloMenadzer.getDela(), korisnici);
 
 		
 
 		Constants.MUZICKA_IKONA  = procitajSliku("fajlovi/muzika.png");
 		Constants.KORISNICKA_IKONA = procitajSliku("fajlovi/korisnik.png");
+		Constants.ALBUM_IKONA = procitajSliku("fajlovi/album.png");
+		Constants.UREDNIK_IKONA = procitajSliku("fajlovi/urednik.png");
+		Constants.POJEDINACAN_IZVODJAC_IKONA = procitajSliku("fajlovi/solo_izvodjac.png");
+		Constants.GRUPA_IKONA = procitajSliku("fajlovi/grupa.png");
 
 	}
 

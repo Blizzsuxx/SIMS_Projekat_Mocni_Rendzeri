@@ -418,8 +418,11 @@ public class Sesija {
          return;
       if (this.recenzije == null)
          this.recenzije = new java.util.HashSet<Recenzija>();
-      if (!this.recenzije.contains(newRecenzija))
-         this.recenzije.add(newRecenzija);
+      for (Recenzija r : recenzije) {
+    	  if (r.getNaslov().equals(newRecenzija.getNaslov()))
+    		  return;
+      }
+      this.recenzije.add(newRecenzija);
    }
 
    /**
@@ -622,7 +625,7 @@ public Izvodjac getIzvodjac(String i) {
 
 public boolean napraviDelo(String datumIzdavanja, String naslov, String opis, Izvodjac izv, ArrayList<Zanr> zanrovi) {
 	try {
-		MuzickoDelo md = new MuzickoDelo(naslov, opis, new SimpleDateFormat("dd.MM.yyyy").parse(datumIzdavanja), true, zanrovi);
+		MuzickoDelo md = new MuzickoDelo(naslov, opis, new SimpleDateFormat("dd.MM.yyyy.").parse(datumIzdavanja), true, zanrovi);
 		izv.getMuzickaDela().add(md);
 		this.getDela().add(md);
 		return true;

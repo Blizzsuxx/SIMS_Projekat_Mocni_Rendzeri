@@ -176,6 +176,7 @@ public class KorisniciMenadzer {
 			if(pw!=null) {
 				pw.close();
 			}
+			sacuvajZahteve();
 		}
 	  
    }

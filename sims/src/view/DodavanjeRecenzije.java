@@ -1,140 +1,125 @@
 package view;
 
-import java.awt.HeadlessException;
-import java.awt.Label;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 import model.Izvodjac;
 import model.MuzickoDelo;
 import model.Recenzija;
 import model.Sesija;
 import model.Urednik;
-import net.miginfocom.swing.MigLayout;
 
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
-public class DodavanjeRecenzije extends JFrame{
-	public Urednik urednik;
-	public JTextField naslov;
-	public JTextField text;
-	public JButton btnZavrsi, btnBack;
-	public Recenzija novaRecenzija;
-	public JComboBox listaizvodjaca;
-	public JComboBox listaDela;
-	public String[] imenaIzvodjaca, imenaDela;
-	public Sesija sesija;
-	public int oznaka;
-	public MuzickoDelo deloo; 
-	public Izvodjac izvodjacc;
-	public DodavanjeRecenzije(Urednik urednik, Sesija sesija) throws HeadlessException {
-		super();
-		oznaka=1;
-		this.urednik = urednik;
-		this.sesija=sesija;
-		novaRecenzija=new Recenzija(urednik, "");
-		imenaIzvodjaca=sesija.izvadiImenaIzvodjaca();
-		listaizvodjaca=new JComboBox(imenaIzvodjaca);
-		imenaDela = new String[1]; imenaDela[0]="";
-		listaDela=new JComboBox(imenaDela);
-		setSize(600,600);
-		initGui();
-		initAction();
-	}
+import controler.MuzickoDeloMenadzer;
+
+import javax.swing.JTextArea;
+import javax.swing.JComboBox;
+import javax.swing.JTable;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.util.Date;
+import java.awt.event.ActionEvent;
+import javax.swing.ListSelectionModel;
+
+public class DodavanjeRecenzije extends JFrame {
+	private static final long serialVersionUID = 1L;
+	private Sesija sesija;
+	private JTextField txtNaslov;
+	private JTable dela;
+	private JTextArea txtTekst;
+	@SuppressWarnings("rawtypes")
+	private JComboBox cmbIzvodjaci;
 	
-	public DodavanjeRecenzije(Urednik urednik, Sesija sesija, MuzickoDelo md, Izvodjac izv) throws HeadlessException {
-		super();
-		oznaka=2;
-		this.urednik = urednik;
-		this.sesija=sesija;
-		deloo=md;
-		izvodjacc=izv;
-		novaRecenzija=new Recenzija(urednik, "");
-		imenaIzvodjaca=sesija.izvadiImenaIzvodjaca();
-		listaizvodjaca=new JComboBox(imenaIzvodjaca);
-		imenaDela = new String[1]; imenaDela[0]="";
-		listaDela=new JComboBox(imenaDela);
-		setSize(600,600);
-		initGui();
-		initAction();
-	}
-	
-	private void initAction() {
-		btnBack.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				DodavanjeRecenzije.this.dispose();
-				
-			}
-		});
-		listaizvodjaca.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int br=listaizvodjaca.getSelectedIndex();
-				String s=imenaIzvodjaca[br];
-				imenaDela= sesija.izvadiImenaDela(s);
-				listaDela=new JComboBox(imenaDela);
-				
-			}
-		});
-		btnZavrsi.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(DodavanjeRecenzije.this.oznaka==2) {
-					DodavanjeRecenzije.this.novaRecenzija.setAll(DodavanjeRecenzije.this.text.getText(), DodavanjeRecenzije.this.naslov.getText(),izvodjacc,deloo);
-					
-				}else {
-				String br=(String) listaizvodjaca.getSelectedItem();
-				String br1=(String) listaDela.getSelectedItem();
-				if(br.equals("") || br1.equals("")) {
-					JOptionPane.showMessageDialog(DodavanjeRecenzije.this, "Morate selektovati jedanog muzicara,i jedno delo", "Info", JOptionPane.INFORMATION_MESSAGE);
-				}
-				else {
-					 izvodjacc=sesija.getIzvodjac(br);
-					 deloo=izvodjacc.pronadiDelo(br1);
-					if(izvodjacc==null || deloo==null) {
-					JOptionPane.showMessageDialog(DodavanjeRecenzije.this, "Nema tog dela ili izvodjaca", "Info", JOptionPane.INFORMATION_MESSAGE);
-					}else {
-					DodavanjeRecenzije.this.novaRecenzija.setAll(DodavanjeRecenzije.this.text.getText(), DodavanjeRecenzije.this.naslov.getText(),izvodjacc,deloo);
-				}
-					}
-			}}
-		});
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public DodavanjeRecenzije(Sesija sesija) {
+		this.sesija = sesija;
+		setTitle("Dodavanje recenzije");
+		setResizable(false);
+		getContentPane().setLayout(null);
 		
+		JLabel lblNaslov = new JLabel("Naslov");
+		lblNaslov.setBounds(10, 22, 38, 14);
+		getContentPane().add(lblNaslov);
+		
+		txtNaslov = new JTextField();
+		txtNaslov.setBounds(68, 19, 636, 20);
+		getContentPane().add(txtNaslov);
+		txtNaslov.setColumns(10);
+		
+		JLabel lblText = new JLabel("Tekst");
+		lblText.setBounds(10, 62, 38, 14);
+		getContentPane().add(lblText);
+		
+		txtTekst = new JTextArea();
+		txtTekst.setRows(4);
+		txtTekst.setBounds(68, 57, 636, 58);
+		getContentPane().add(txtTekst);
+		
+		JLabel lblIzvodjac = new JLabel("Izvodjac");
+		lblIzvodjac.setBounds(10, 144, 48, 14);
+		getContentPane().add(lblIzvodjac);
+		
+		String[] imenaIzvodjaca = sesija.izvadiImenaIzvodjaca();
+		cmbIzvodjaci = new JComboBox(imenaIzvodjaca);
+		cmbIzvodjaci.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (cmbIzvodjaci.getSelectedIndex() == -1) {
+					return;
+				}
+				try {
+					ucitajPesme((String)cmbIzvodjaci.getSelectedItem());
+				} 
+				catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		cmbIzvodjaci.setMaximumRowCount(20);
+		cmbIzvodjaci.setBounds(68, 140, 205, 22);
+		getContentPane().add(cmbIzvodjaci);
+		
+		dela = new JTable();
+		dela.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		dela.setBounds(68, 204, 636, 135);
+		getContentPane().add(dela);
+		
+		JLabel lblDela = new JLabel("Dela");
+		lblDela.setBounds(10, 204, 38, 14);
+		getContentPane().add(lblDela);
+		
+		JButton btnDodaj = new JButton("Dodaj");
+		btnDodaj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dodajRecenziju();
+			}
+		});
+		btnDodaj.setBounds(615, 365, 89, 23);
+		getContentPane().add(btnDodaj);
 	}
-	private void initGui() {
-		MigLayout mig =  new MigLayout("wrap 2", "[]10[]", "[]10[]10[]10[]10[]10[]10[]10[]");
-		setLayout(mig);
-		naslov=new JTextField(30);
-		add(new JLabel("Naslov: "));
-		add(naslov);
-		text=new JTextField(100);
-		add(new JLabel("Tekst: "));//TODO: napraviti lepo za text
-		add(text, "span 2 3");
-		if(oznaka!=2) {
-			add(new Label("Izvodjaci:"));
-			
-			add(listaizvodjaca);
-			add(new Label("Dela: "));
-			add(listaDela);
+	
+	private void ucitajPesme(String umetnickoIme) throws Exception {
+		MuzickoDeloMenadzer mdm = sesija.getMuzickoDeloMenadzer();
+		Izvodjac i = sesija.getIzvodjac(umetnickoIme);
+		TableModelWrapper tmw = mdm.getTabelaMuzickihDela(i);
+		dela.setModel(tmw);
+	}
+	
+	private void dodajRecenziju() {
+		String naslov = txtNaslov.getText();
+		String tekst = txtTekst.getText();
+		int selektovaniRed = dela.getSelectedRow();
+		String sDelo = (String)dela.getValueAt(selektovaniRed, 0);
+		MuzickoDeloMenadzer mdm = sesija.getMuzickoDeloMenadzer();
+		MuzickoDelo muzickoDelo = null;
+		for (MuzickoDelo md : mdm.getDela()) {
+			if (md.getNaziv().equals(sDelo)) {
+				muzickoDelo = md;
+				break;
+			}
 		}
-		btnBack=new JButton();
-		btnBack.setText("Nazad");
-		btnZavrsi=new JButton();
-		btnZavrsi.setText("Zavrsi recenziju");
-		add(btnBack);
-		add(btnZavrsi);
+		Urednik urednik = (Urednik)sesija.getTrenutniKorisnik();
+		Recenzija recenzija = new Recenzija(tekst, new Date(), true, urednik, muzickoDelo, naslov);
+		sesija.addRecenzije(recenzija);
 	}
-	
-	
-	
 }

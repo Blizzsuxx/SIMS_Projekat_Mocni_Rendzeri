@@ -20,7 +20,6 @@ import model.Pojedinacanizvodjac;
 import model.Pol;
 import model.Sesija;
 import model.Zanr;
-import net.miginfocom.swing.MigLayout;
 
 import javax.swing.JRadioButton;
 import javax.swing.JPanel;
@@ -332,12 +331,15 @@ public class RegistracijaIzvodjaca extends JDialog {
 	{ 
 		Pol p = Pol.valueOf(pol);
 		Pojedinacanizvodjac pi = null;
-		if (!dod.isEmpty()) {
-			pi = new Pojedinacanizvodjac(false,umetnickoIme, zanr, true, ime, prezime, new SimpleDateFormat("dd.MM.yyyy").parse(dob), 
+		if (!dod.isEmpty()) { 
+
+			pi = new Pojedinacanizvodjac(false, umetnickoIme, zanr, true, ime, prezime, new SimpleDateFormat("dd.MM.yyyy.").parse(dob),
 					new SimpleDateFormat("dd.MM.yyyy").parse(dod), opis, p);
 		}
 		else {
-			pi = new Pojedinacanizvodjac(false,umetnickoIme, zanr, true, ime, prezime, new SimpleDateFormat("dd.MM.yyyy").parse(dob), 
+
+
+			pi = new Pojedinacanizvodjac(false, umetnickoIme, zanr, true, ime, prezime, new SimpleDateFormat("dd.MM.yyyy.").parse(dob),
 					null, opis, p);
 		}
 			if (!sesija.addUmetnici(pi))
@@ -348,11 +350,17 @@ public class RegistracijaIzvodjaca extends JDialog {
 	{
 		Grupa g = null;
 		if (!dor.isEmpty()) {
+
 			g = new Grupa(false,umetnickoIme, zanr, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy").parse(dof), 
 					new SimpleDateFormat("dd.MM.yyyy").parse(dor));
+
+			g = new Grupa(false, umetnickoIme, zanr, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy.").parse(dof), 
+					new SimpleDateFormat("dd.MM.yyyy.").parse(dor));
+
 		}
 		else {
-			g = new Grupa(false,umetnickoIme, zanr, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy").parse(dof), 
+
+			g = new Grupa(false, umetnickoIme, zanr, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy.").parse(dof),
 					null);
 		}
 		if (!sesija.addGrupe(g))

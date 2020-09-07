@@ -51,8 +51,8 @@ public class GlasanjeMenadzer {
 			for (String urednik : urednici) {
 				String[] delovi = urednik.split(";");
 				Pol p = Pol.valueOf(delovi[3]);
-				Urednik u = new Urednik(delovi[0], delovi[1], delovi[2], p, new SimpleDateFormat("dd.MM.yyyy").parse(delovi[4]), delovi[5],
-						 delovi[6], new SimpleDateFormat("dd.MM.yyyy").parse(delovi[7]), Boolean.parseBoolean(delovi[8]));
+				Urednik u = new Urednik(delovi[0], delovi[1], delovi[2], p, new SimpleDateFormat("dd.MM.yyyy.").parse(delovi[4]), delovi[5],
+						 delovi[6], new SimpleDateFormat("dd.MM.yyyy.").parse(delovi[7]), Boolean.parseBoolean(delovi[8]));
 				Urednik postoji = (Urednik) km.trazi(u.getNalog().getKorisnickoIme());
 				if (postoji != null)
 					uredniciKojiSuGlasali.add(u);

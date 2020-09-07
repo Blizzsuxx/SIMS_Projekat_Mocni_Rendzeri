@@ -11,7 +11,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import controler.Constants;
 import model.Sesija;
 import net.miginfocom.swing.MigLayout;
 
@@ -21,6 +20,14 @@ public abstract class Homepage extends JFrame {
 	protected JMenu menu;
 	protected JMenuBar menubar;
 	
+	 protected String[] koloneSvihKorisnika = {"Korisnicko Ime", "Ime", "Prezime", "Email", "Pol", "Datum Rodjenja"};
+	 protected String[] koloneSvihObicnihKorisnika = {"Korisnicko Ime", "Ime", "Prezime", "Email", "Pol", "Datum Rodjenja",
+			 "Broj Korisnika", "Broj Izvodjaca"};
+	 protected String[] koloneSvihUrednika = {"Korisnicko Ime", "Ime", "Prezime", "Email", "Pol", "Datum Rodjenja",
+			 "Broj Recenzija"};
+	 protected String[] koloneSvihAdmina = {"Korisnicko Ime", "Ime", "Prezime", "Email", "Pol", "Datum Rodjenja",
+			 "Broj Zakazanih", "Broj Za Izmjenu"};
+	 
 	public Homepage(Sesija sesija) {
 		this.getContentPane().setLayout(new MigLayout());
 		this.sesija = sesija;

@@ -60,9 +60,9 @@ public class Grupa extends Izvodjac {
 	}
 	
 	
-	public Grupa(String umetnickoIme, Zanr zanr, boolean status,  int brojClanova, Date datumOsnivanja,
+	public Grupa(boolean odobrenost, String umetnickoIme, Zanr zanr, boolean status,  int brojClanova, Date datumOsnivanja,
 			Date datumRaspada) {
-		super(umetnickoIme, zanr, status);
+		super(umetnickoIme, zanr, status, odobrenost);
 		this.brojClanova = brojClanova;
 		this.datumOsnivanja = datumOsnivanja;
 		this.datumRaspada = datumRaspada;
@@ -84,6 +84,7 @@ public class Grupa extends Izvodjac {
 	@Override
 	public String toFileString() {
 		String ad="";
+		ad+=this.isOdobrenost()+";";
 		ad+=this.getUmetnickoIme()+";";
 		ad+=this.getZanr().getNazivZanra()+";";
 		ad+=this.isStatus()+";";
@@ -110,7 +111,7 @@ public class Grupa extends Izvodjac {
 	public static String Grupa2String(Grupa g) {
 		String pattern = "dd.MM.yyyy.";
 		DateFormat df = new SimpleDateFormat(pattern);
-		return g.getUmetnickoIme() + ";" + g.getZanr().getNazivZanra() + ";" + bool2String(g.isStatus()) + ";" + g.getBrojClanova() + ";" +
+		return g.isOdobrenost()+";"+g.getUmetnickoIme() + ";" + g.getZanr().getNazivZanra() + ";" + bool2String(g.isStatus()) + ";" + g.getBrojClanova() + ";" +
 				 df.format(g.getDatumOsnivanja()) + ";" + df.format(g.getDatumRaspada()) + System.lineSeparator();
 	}
 	

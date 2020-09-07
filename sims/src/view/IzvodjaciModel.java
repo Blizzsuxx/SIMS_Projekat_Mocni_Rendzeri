@@ -31,6 +31,8 @@ public class IzvodjaciModel extends ApstraktniModel {
 			temp = i.getIzdatiAlbumi().size();
 		} else if (col == 3) {
 			temp = i.getMuzickaDela().size();
+		} else if (col == 4) {
+			temp = i.isOdobrenost();
 		}
 		return temp;
 	}

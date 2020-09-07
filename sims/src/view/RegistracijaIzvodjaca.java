@@ -329,15 +329,15 @@ public class RegistracijaIzvodjaca extends JDialog {
 	}
 	
 	private void registrujIzvodjaca(String umetnickoIme, Zanr zanr, String ime, String prezime, String dob, String dod, String pol, String opis) throws ParseException
-	{
+	{ 
 		Pol p = Pol.valueOf(pol);
 		Pojedinacanizvodjac pi = null;
 		if (!dod.isEmpty()) {
-			pi = new Pojedinacanizvodjac(umetnickoIme, zanr, true, ime, prezime, new SimpleDateFormat("dd.MM.yyyy").parse(dob), 
+			pi = new Pojedinacanizvodjac(false,umetnickoIme, zanr, true, ime, prezime, new SimpleDateFormat("dd.MM.yyyy").parse(dob), 
 					new SimpleDateFormat("dd.MM.yyyy").parse(dod), opis, p);
 		}
 		else {
-			pi = new Pojedinacanizvodjac(umetnickoIme, zanr, true, ime, prezime, new SimpleDateFormat("dd.MM.yyyy").parse(dob), 
+			pi = new Pojedinacanizvodjac(false,umetnickoIme, zanr, true, ime, prezime, new SimpleDateFormat("dd.MM.yyyy").parse(dob), 
 					null, opis, p);
 		}
 			if (!sesija.addUmetnici(pi))
@@ -348,11 +348,11 @@ public class RegistracijaIzvodjaca extends JDialog {
 	{
 		Grupa g = null;
 		if (!dor.isEmpty()) {
-			g = new Grupa(umetnickoIme, zanr, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy").parse(dof), 
+			g = new Grupa(false,umetnickoIme, zanr, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy").parse(dof), 
 					new SimpleDateFormat("dd.MM.yyyy").parse(dor));
 		}
 		else {
-			g = new Grupa(umetnickoIme, zanr, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy").parse(dof), 
+			g = new Grupa(false,umetnickoIme, zanr, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy").parse(dof), 
 					null);
 		}
 		if (!sesija.addGrupe(g))

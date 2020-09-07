@@ -92,7 +92,7 @@ public abstract class Homepage extends JFrame {
 	}
 
 	private void menuProfilTriggered() {
-		//Kod za pregled profila
+		//Pregled profila
 		
 		//DUMMY - Hardcoded KorisnikAplikacije
 		if(sesija.getTrenutniKorisnik() == null)

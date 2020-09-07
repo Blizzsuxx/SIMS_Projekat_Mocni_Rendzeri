@@ -241,4 +241,11 @@ public class IzvodjacMenadzer {
 			}
 		return false;
 	}
+
+	public void dodaj(Izvodjac pi) {
+		// TODO Auto-generated method stub
+		this.svi.add(pi);
+		if(pi instanceof Pojedinacanizvodjac) this.solo.add((Pojedinacanizvodjac) pi);
+		else this.grupe.add((Grupa) pi);
+	}
 }

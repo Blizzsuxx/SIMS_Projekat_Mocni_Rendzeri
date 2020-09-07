@@ -1,7 +1,10 @@
 package view;
 
+import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.Callable;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -54,10 +57,21 @@ public class DijalogRadSaNalogom extends MojDialog {
 		
 		///////////////// - mali dodatak od strane Dragana, ako ti se ne svidja obrisi
 		///////////////// - izbrisi takodje i prvi red u MigLayout-u, tj "[] 30" deo
-		this.setSize(450, 600);
 		JXImagePanel image = new JXImagePanel();
 		image.setEditable(true);
-		image.setImage(this.korisnik.defaultSlika());
+		
+		
+		
+		Callable<Image> skalirajSliku = new Callable<Image>() {
+			
+			@Override
+			public Image call() throws Exception {
+				// TODO Auto-generated method stub
+				return image.getImage().getScaledInstance(-1, 300, Image.SCALE_DEFAULT);
+			}
+		};
+		image.setImageLoader(skalirajSliku);
+		image.setImage(this.korisnik.defaultSlika().getScaledInstance(-1, 300, Image.SCALE_DEFAULT));
 		this.add(image, "span, alignx center, wrap");
 		////////////////// kraj promena
 		

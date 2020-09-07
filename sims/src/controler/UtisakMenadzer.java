@@ -96,12 +96,12 @@ public class UtisakMenadzer {
 		return null;
 	}
 
-	public Collection<Recenzija> getRecenzije() {
+	public ArrayList<Recenzija> getRecenzije() {
 		
 		return rec;
 	}
 
-	public Collection<Komentar> getKomentari() {
+	public ArrayList<Komentar> getKomentari() {
 		
 		return komentar;
 	}

@@ -69,6 +69,8 @@ public class UrednikHomepage extends Homepage {
 		korisniciMenu.add(korisniciItem4);
 		korisniciMenu.addSeparator();
 
+	
+
 		korisniciItem5 = new JMenuItem("Registracija Izvodjaca");
 
 		korisniciMenu.add(korisniciItem5);

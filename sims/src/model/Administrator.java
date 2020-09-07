@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Date;
 
+import controler.Constants;
+
 /** @pdOid 016eeff6-23c0-4cd3-b64b-7d02c2eef130 */
 public class Administrator extends Korisnik {
    /** @pdRoleInfo migr=no name=ZakazanaRecenzija assc=association11 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
@@ -165,7 +167,7 @@ public String pratiociUpis() {
 
 public BufferedImage defaultSlika() {
 	// TODO Auto-generated method stub
-	return null;
+	return Constants.UREDNIK_IKONA;
 
 }
 

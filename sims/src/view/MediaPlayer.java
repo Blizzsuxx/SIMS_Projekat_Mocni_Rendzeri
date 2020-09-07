@@ -26,6 +26,7 @@ import model.Korisnik;
 import model.KorisnikAplikacije;
 import model.MuzickoDelo;
 import model.Recenzija;
+import model.Sesija;
 import model.Urednik;
 import net.miginfocom.swing.MigLayout;
 
@@ -59,9 +60,9 @@ public class MediaPlayer extends MojDialog {
         return mediaPlayer;
     }
 
-    public MediaPlayer(JFrame parent, MuzickoDelo delo, Korisnik trenutniKorisnik) {
+    public MediaPlayer(JFrame parent, MuzickoDelo delo) {
         super(parent, "Media Player");
-        this.trenutniKorisnik = trenutniKorisnik;
+        this.trenutniKorisnik = Sesija.getTrenutniKorisnik();
         this.delo = delo;
         this.setResizable(true);
         this.getContentPane().setLayout(new MigLayout());

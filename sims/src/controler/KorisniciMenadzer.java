@@ -185,7 +185,7 @@ public class KorisniciMenadzer {
 	   List<Korisnik> lista = new ArrayList<>();
 	   for (Korisnik k : korisnici.values()) 
 		   if (k.isStatus() && k instanceof Urednik)
-			   lista.add(k);
+			   lista.add((Urednik) k);
 	   
 	   return lista;
 	   

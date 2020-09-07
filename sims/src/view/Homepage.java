@@ -33,6 +33,7 @@ public abstract class Homepage extends JFrame {
 		this.setSize(550, 600);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setResizable(false);
+		this.setTitle("Pocetna strana");
 
 		
 		Toolkit toolkit = Toolkit.getDefaultToolkit();

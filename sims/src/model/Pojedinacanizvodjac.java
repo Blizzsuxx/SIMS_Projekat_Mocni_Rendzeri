@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import controler.Constants;
+
 /** @pdOid 2fc12510-acfe-4d29-b294-58047091b3ba */
 public class Pojedinacanizvodjac extends Izvodjac {
 	/** @pdOid d1866ad1-9677-405a-85a4-d344052641a8 */
@@ -135,8 +137,8 @@ public class Pojedinacanizvodjac extends Izvodjac {
 	}
 	
 	public static String PojedinacniIzvodjac2String(Pojedinacanizvodjac pi) {
-		String pattern = "dd.MM.yyyy";
-		DateFormat df = new SimpleDateFormat(pattern);
+		String pattern = "dd.MM.yyyy.";
+		DateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;
 		return pi.getUmetnickoIme() + ";"  + pi.getZanr().getNazivZanra() + ";" + bool2String(pi.isStatus()) + ";" + pi.getIme() + ";" +
 				pi.getPrezime() + ";" + df.format(pi.getDatumRodjenja()) + ";" + df.format(pi.getDatumSmrti()) +
 				";" + pi.getOpis() + ";" + pi.getPol() + System.lineSeparator();

@@ -8,6 +8,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import controler.Constants;
+
 /** @pdOid 7bbc8580-778f-4a3f-8306-57c0cbc02cce */
 public class Recenzija extends Utisak {
    /** @pdRoleInfo migr=no name=Urednik assc=association9 mult=1 side=A */
@@ -78,7 +80,7 @@ public String toFileString() {
 	String ad="";
 	ad+=this.getDelo().getNaziv()+";";
 	String pattern = "dd.MM.yyyy.";
-	DateFormat df = new SimpleDateFormat(pattern);
+	SimpleDateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;
 	ad+=df.format(this.getDatumUpisa())+";";//
 	ad+=this.isStatus()+";";
 	ad+=this.getText()+";";

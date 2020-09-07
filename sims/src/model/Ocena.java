@@ -37,7 +37,7 @@ public Ocena(float ocena, FrontEndKorisnik ocenitelj) {
 }
 
 public String toFileString() {
-	System.out.println(this.delo.getNaziv());
+	//System.out.println(this.delo.getNaziv());
 	String ad=this.getOcena()+","+this.delo.getNaziv()+","+this.getOcenitelj().getNalog().getKorisnickoIme();
 	return ad;
 }

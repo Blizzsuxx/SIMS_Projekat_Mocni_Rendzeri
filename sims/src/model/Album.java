@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import controler.Constants;
+
 public class Album {
 	private Izvodjac izvodjac;
 	private ArrayList<MuzickoDelo> listaPesama;
@@ -87,7 +89,7 @@ public class Album {
 	public String toFileString() {
 		//izvodjac,urednik, dan,odobreno, naslov, izbrisi, dela....
 		String pattern = "dd.MM.yyyy.";
-		DateFormat df = new SimpleDateFormat(pattern);
+		DateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;;
 		String ad="";
 		ad+=this.getIzvodjac().getUmetnickoIme()+",";
 		ad+=this.getUrednik().getNalog().getKorisnickoIme()+",";
@@ -95,8 +97,12 @@ public class Album {
 		ad+=this.isOdobreno()+",";
 		ad+=this.getNaslov()+",";
 		ad+=this.isIzbrisi()+",";
+		int i=0;
 		for(MuzickoDelo md:this.getListaPesama()) {
-			ad+= "|" + md.getNaziv();
+			if(i!=0) {
+				ad+="|";
+			}i++;
+			ad+= md.getNaziv();
 		}
 		return ad;
 	}

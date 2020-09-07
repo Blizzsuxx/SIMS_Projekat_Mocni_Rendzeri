@@ -186,7 +186,7 @@ public void dodajocenuUrednika(int ocena) {
 
 public String toFileString(Izvodjac iz) {
 	String pattern = "dd.MM.yyyy.";
-	DateFormat df = new SimpleDateFormat(pattern);
+	DateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;
 	String ad="";
 	ad+=this.getNaziv()+";";
 	ad+=this.getOpis()+";";

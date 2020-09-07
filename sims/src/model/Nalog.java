@@ -9,6 +9,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import controler.Constants;
+
 /** @pdOid 160f1d49-ad7d-4dbd-ad61-a747a8aa941a */
 public class Nalog {
    /** @pdOid 501b74e5-d072-42f0-8c0c-57bb2a68d7b2 */
@@ -96,7 +98,7 @@ public class Nalog {
 	
 	public static String Nalog2String(Nalog n) {
 		String pattern = "dd.MM.yyyy";
-		DateFormat df = new SimpleDateFormat(pattern);
+		DateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;;
 		return n.getKorisnickoIme() + "|" + n.sifra + "|" + df.format(n.getDatumKreiranja()) + "|" +
 				bool2String(n.isStatus()) + System.lineSeparator();
 	}
@@ -106,7 +108,7 @@ public class Nalog {
 		String[] parts = linija.split("\\|");
 		nalog.setKorisnickoIme(parts[0]);
 		nalog.setSifra(parts[1]);
-		nalog.setDatumKreiranja(new SimpleDateFormat("dd.MM.yyyy").parse(parts[2]));
+		nalog.setDatumKreiranja(new SimpleDateFormat("dd.MM.yyyy.").parse(parts[2]));
 		nalog.setStatus(string2Bool(parts[3]));
 		return nalog;
 	}

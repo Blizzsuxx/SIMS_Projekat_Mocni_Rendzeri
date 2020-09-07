@@ -1,7 +1,7 @@
-01.12.9593.,/,David Bryan,Bon Jovi
-06.11.9593.,/,Tico Torres,Bon Jovi
-01.12.9594.,/,Jon Bon Jovi,Bon Jovi
-06.11.9580.,03.06.9596.,Richard Stephen Sambora,Bon Jovi
-05.06.9610.,/,Ksenija Knezevic,Hurricane
-05.06.9610.,/,Ivana Nikolic,Hurricane
-05.06.9610.,/,Sanja Vucic,Hurricane
+01.01.1991.,/,David Bryan,Bon Jovi
+06.12.1990.,/,Tico Torres,Bon Jovi
+01.01.1991.,/,Jon Bon Jovi,Bon Jovi
+03.07.1998.,/,Richard Stephen Sambora,Bon Jovi
+05.07.1990.,/,Ksenija Knezevic,Hurricane
+05.07.1990.,/,Ivana Nikolic,Hurricane
+05.07.1990.,/,Sanja Vucic,Hurricane

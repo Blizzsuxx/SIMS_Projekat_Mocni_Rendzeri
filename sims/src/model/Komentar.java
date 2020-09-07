@@ -9,6 +9,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import controler.Constants;
+
 /** @pdOid 10543295-3d2a-49e5-876e-e10dbe844cf8 */
 public class Komentar extends Utisak {
    
@@ -22,7 +24,7 @@ public String toFileString() {
 	String ad="";
 	ad+=this.getDelo().getNaziv()+";";
 	String pattern = "dd.MM.yyyy.";
-	DateFormat df = new SimpleDateFormat(pattern);
+	SimpleDateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;;
 	ad+=df.format(this.getDatumUpisa())+";";//
 	ad+=this.isStatus()+";";
 	ad+=this.getText()+";";

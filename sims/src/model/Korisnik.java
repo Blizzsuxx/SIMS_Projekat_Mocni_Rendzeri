@@ -161,15 +161,11 @@ public abstract class Korisnik {
 	public String toFileString() {
 		//pera preic pera@gmail.com muski 02.05.2001. sifra1 pera1 04.11.2010. true a
 		String pattern = "dd/MM/yyyy";
-		DateFormat df = new SimpleDateFormat(pattern);
+		SimpleDateFormat df = Constants.FORMAT_ZA_DATUM;
 		String ad=this.ime+","+this.prezime+","+this.eMail+","+this.pol.toString()+",";
-		ad+=df.format(this.getDatumRodjenja())+","+this.nalog.getKorisnickoIme();
+		ad+=df.format(this.getDatumRodjenja())+","+this.nalog.getSifra();
 	ad+=","+this.nalog.getKorisnickoIme()+","+df.format(this.nalog.getDatumKreiranja())+",";
-	if(this.getNalog().isStatus()) {
-		ad+="0,";
-	}else {
-		ad+="1,";
-	}
+	ad+=Boolean.toString(this.isStatus())+",";
 	return ad;
 	}
 	public abstract String pratiociUpis();

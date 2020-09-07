@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
  ***********************************************************************/
 import java.util.Date;
 
+import controler.Constants;
+
 /** @pdOid 2bdbbe03-46e7-43b8-86a3-41039d253a69 */
 public class Clan {
    /** @pdOid 33ff4bd2-c6f0-4551-a448-297e62cc43bd */
@@ -80,7 +82,7 @@ public Clan(Date datumPrikljucivanja, Date datumNapustanja, Pojedinacanizvodjac 
 public String toFileString() {
 	String ad="";
 	String pattern = "dd.MM.yyyy.";
-	DateFormat df = new SimpleDateFormat(pattern);
+	SimpleDateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;
 	ad+=df.format(datumPrikljucivanja)+",";//
 	if(this.getDatumNapustanja()==null) {
 		ad+="/,";

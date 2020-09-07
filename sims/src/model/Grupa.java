@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import controler.Constants;
+
 /** @pdOid 38a4054e-e6d7-430f-83e2-c22dad90681d */
 public class Grupa extends Izvodjac {
 	/** @pdOid 4ad9e500-3e23-4910-a130-75d40fcd6374 */
@@ -86,7 +88,7 @@ public class Grupa extends Izvodjac {
 		ad+=this.isStatus()+";";
 		ad+=this.getBrojClanova()+";";
 		String pattern = "dd.MM.yyyy.";
-		DateFormat df = new SimpleDateFormat(pattern);
+		DateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;
 		ad+=df.format(this.getDatumOsnivanja())+";";//
 		if(this.getDatumRaspada()==null) {
 			ad+="/;";

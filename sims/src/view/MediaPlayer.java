@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -119,6 +121,7 @@ public class MediaPlayer extends MojDialog {
         //Dodavanje JPanel za upis komentara u kome ce biti JTextArea i JButton
         JPanel panelKomentar = new JPanel(new MigLayout());
         poljeKomentar = new JTextArea(3, 42);
+        if(trenutniKorisnik == null) poljeKomentar.setEditable(false);
         dugmeKomentar = new JButton("Komentarisi");
         panelKomentar.add(poljeKomentar, "wrap");
         panelKomentar.add(dugmeKomentar);
@@ -147,6 +150,41 @@ public class MediaPlayer extends MojDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				comment();	
+			}
+		});
+    	
+    	poljeKomentar.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(trenutniKorisnik == null)
+				{
+					JOptionPane.showMessageDialog(MediaPlayer.this, "Da bi ste dodali komentar morate biti ulogovani", "Dodavanje komentara", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
     }

@@ -194,13 +194,13 @@ public class KorisnikAddEdit extends JFrame {
 		Korisnik k;
 		Nalog n = new Nalog(korisnickoIme, lozinka, new Date(), true);
 		if (rbObicanKorisnik.isSelected()) {
-			k = new KorisnikAplikacije(ime, prezime, eMail, pol, new SimpleDateFormat("dd.MM.yyyy").parse(dob), lozinka, korisnickoIme, new Date(), true);
+			k = new KorisnikAplikacije(ime, prezime, eMail, pol, new SimpleDateFormat("dd/MM/yyyy").parse(dob), lozinka, korisnickoIme, new Date(), true);
 		}
 		else if (rbUrednik.isSelected()) {
-			k = new Urednik(ime, prezime, eMail, pol, new SimpleDateFormat("dd.MM.yyyy").parse(dob), lozinka, korisnickoIme, new Date(), true);
+			k = new Urednik(ime, prezime, eMail, pol, new SimpleDateFormat("dd/MM/yyyy").parse(dob), lozinka, korisnickoIme, new Date(), true);
 		}
 		else {
-			k = new Administrator(ime, prezime, eMail, pol, new SimpleDateFormat("dd.MM.yyyy").parse(dob), lozinka, korisnickoIme, new Date(), true);
+			k = new Administrator(ime, prezime, eMail, pol, new SimpleDateFormat("dd/MM/yyyy").parse(dob), lozinka, korisnickoIme, new Date(), true);
 		}
 		k.setNalog(n);
 		KorisniciMenadzer km = sesija.getKorisnici();

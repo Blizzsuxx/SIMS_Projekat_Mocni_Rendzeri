@@ -21,10 +21,10 @@ public class GlasanjeMenadzer {
 		
 	}
 	
-	public GlasanjeMenadzer(ArrayList<String> data, ArrayList<String> urednici, ArrayList<MuzickoDelo> dela) throws ParseException {
+	public GlasanjeMenadzer(ArrayList<String> data, ArrayList<String> urednici, ArrayList<MuzickoDelo> dela, KorisniciMenadzer km) throws ParseException {
 		this.glasovi = new ArrayList<Glasanje>();
 		this.uredniciKojiSuGlasali = new ArrayList<Urednik>();
-		dodajUrednikeKojiSuGlasali(urednici);
+		dodajUrednikeKojiSuGlasali(urednici, km);
 		if (!data.isEmpty()) {
 			String prvaLinija = data.get(0);
 			if (prvaLinija.equals("true"))
@@ -38,7 +38,7 @@ public class GlasanjeMenadzer {
 				int brojGlasova = Integer.parseInt(parts[1]);
 				for (MuzickoDelo m : dela) {
 					if (m.getNaziv().equals(nazivDela)) {
-						Glasanje g = new Glasanje(m,brojGlasova);
+						Glasanje g = new Glasanje(m, brojGlasova);
 						glasovi.add(g);
 					}
 				}
@@ -46,14 +46,16 @@ public class GlasanjeMenadzer {
 		}
 	}
 	
-	private void dodajUrednikeKojiSuGlasali(ArrayList<String> urednici) throws ParseException {
+	private void dodajUrednikeKojiSuGlasali(ArrayList<String> urednici, KorisniciMenadzer km) throws ParseException {
 		if (!urednici.isEmpty()) {
 			for (String urednik : urednici) {
 				String[] delovi = urednik.split(";");
 				Pol p = Pol.valueOf(delovi[3]);
 				Urednik u = new Urednik(delovi[0], delovi[1], delovi[2], p, new SimpleDateFormat("dd.MM.yyyy").parse(delovi[4]), delovi[5],
 						 delovi[6], new SimpleDateFormat("dd.MM.yyyy").parse(delovi[7]), Boolean.parseBoolean(delovi[8]));
-				uredniciKojiSuGlasali.add(u);
+				Urednik postoji = (Urednik) km.trazi(u.getNalog().getKorisnickoIme());
+				if (postoji != null)
+					uredniciKojiSuGlasali.add(u);
 			}
 		}
 	}

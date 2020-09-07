@@ -196,7 +196,12 @@ public class CitacDatoteka {
 		zakRecMenadzer.sacuvaj();
 		utisakmenadzer.sacuvaj();
 		deloMenadzer.sacuvaj(izvodjaci.getSvi());
-		//izvodjaci.sacuvaj();
+		/*try {
+			izvodjaci.sacuvaj();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
 		zanrovi.sacuvaj();//jos nesto treba sacuvati?? treba uzitati za izmenu
 		izmena.sacuvaj();
 		glasanjeMenadzer.sacuvaj();

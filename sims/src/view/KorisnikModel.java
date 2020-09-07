@@ -1,8 +1,12 @@
-package model;
+package view;
 
 import java.util.List;
 
-import view.ApstraktniModel;
+import model.Administrator;
+import model.Korisnik;
+import model.KorisnikAplikacije;
+import model.Uloga;
+import model.Urednik;
 
 public class KorisnikModel extends ApstraktniModel {
 	private static final long serialVersionUID = 1L;

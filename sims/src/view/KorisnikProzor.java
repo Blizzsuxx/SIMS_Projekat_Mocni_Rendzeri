@@ -14,7 +14,6 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import model.Korisnik;
-import model.KorisnikModel;
 import model.Uloga;
 import net.miginfocom.swing.MigLayout;
 

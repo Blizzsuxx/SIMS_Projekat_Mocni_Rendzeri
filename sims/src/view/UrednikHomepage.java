@@ -5,14 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import model.Izvodjac;
 import model.Sesija;
 import model.Uloga;
 
@@ -23,14 +21,6 @@ public class UrednikHomepage extends Homepage {
 	 private JMenuItem listaItem1, listaItem2, listaItem3, listaItem4,
 	 korisniciItem1, korisniciItem2, korisniciItem3, korisniciItem4, korisniciItem5, korisniciItem6,
 	 korisniciItem7;
-	 
-	 private String[] koloneSvihKorisnika = {"Korisnicko Ime", "Ime", "Prezime", "Email", "Pol", "Datum Rodjenja"};
-	 private String[] koloneSvihObicnihKorisnika = {"Korisnicko Ime", "Ime", "Prezime", "Email", "Pol", "Datum Rodjenja",
-			 "Broj Korisnika", "Broj Izvodjaca"};
-	 private String[] koloneSvihUrednika = {"Korisnicko Ime", "Ime", "Prezime", "Email", "Pol", "Datum Rodjenja",
-			 "Broj Recenzija"};
-	 private String[] koloneSvihAdmina = {"Korisnicko Ime", "Ime", "Prezime", "Email", "Pol", "Datum Rodjenja",
-			 "Broj Zakazanih", "Broj Za Izmjenu"};
 	 
 	public UrednikHomepage(Sesija sesija) {
 	    super(sesija);
@@ -69,6 +59,7 @@ public class UrednikHomepage extends Homepage {
 		korisniciMenu = new JMenu("Korisnici");
 		    	
 		korisniciItem1 = new JMenuItem("Korisnici");
+
 		korisniciMenu.add(korisniciItem1);
 		korisniciItem2 = new JMenuItem("Korisnici Aplikacije");
 		korisniciMenu.add(korisniciItem2);
@@ -77,7 +68,9 @@ public class UrednikHomepage extends Homepage {
 		korisniciItem4 = new JMenuItem("Admini");
 		korisniciMenu.add(korisniciItem4);
 		korisniciMenu.addSeparator();
-		korisniciItem5 = new JMenuItem("Zahtjevi Registracije");
+
+		korisniciItem5 = new JMenuItem("Registracija Izvodjaca");
+
 		korisniciMenu.add(korisniciItem5);
 		korisniciMenu.addSeparator();
 		korisniciItem6 = new JMenuItem("Neprihvaceni Izvodjaci");
@@ -210,7 +203,8 @@ public class UrednikHomepage extends Homepage {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				IzvodjaciProzor ip = new IzvodjaciProzor(UrednikHomepage.this, "Neprihvaceni Izvodjaci",
-						700, 300, new ArrayList<Izvodjac>());
+						700, 300,
+						UrednikHomepage.this.getSesija().getIzvodjacMenadzer().vratiIzvodjaceNaOsnovuOdobrenosti(false));
 				ip.setVisible(true);
 				
 			}
@@ -222,7 +216,8 @@ public class UrednikHomepage extends Homepage {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				IzvodjaciProzor ip = new IzvodjaciProzor(UrednikHomepage.this, "Prihvaceni Izvodjaci",
-						700, 300, new ArrayList<Izvodjac>());
+						700, 300, 
+						UrednikHomepage.this.getSesija().getIzvodjacMenadzer().vratiIzvodjaceNaOsnovuOdobrenosti(true));
 				ip.setVisible(true);
 				
 				

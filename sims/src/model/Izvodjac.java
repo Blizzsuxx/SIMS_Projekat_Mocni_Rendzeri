@@ -124,6 +124,15 @@ public abstract class Izvodjac implements Slikovit {
 		this.izdatiAlbumi = new ArrayList<Album>();
 	}
 	
+	public Izvodjac(String umetnickoIme2, Zanr zanr, boolean status2, boolean odobrenost) {
+		this.umetnickoIme = umetnickoIme2;
+		this.zanr = zanr;
+		this.status = status2;
+		this.odobrenost = odobrenost;
+		this.muzickaDela = new ArrayList<MuzickoDelo>();
+		this.izdatiAlbumi = new ArrayList<Album>();
+	}
+	
 	protected abstract String[] getImenaDela();
 	
 	public MuzickoDelo pronadiDelo(String br1) {

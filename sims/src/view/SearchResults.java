@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import model.Korisnik;
 import model.MuzickoDelo;
 import net.miginfocom.swing.MigLayout;
 
@@ -16,17 +17,21 @@ public class SearchResults extends JScrollPane {
 	/**
 	 * 
 	 */
-	/*
+
 	private static final long serialVersionUID = 1L;
 	
-	public static JPanel initGui(ArrayList<Slikovit> prikaz) {
+	public SearchResults(ArrayList<Slikovit> prikaz, Korisnik trenutniKorisnik) {
+		super(initGui(prikaz, trenutniKorisnik));
+	}
+
+	public static JPanel initGui(ArrayList<Slikovit> prikaz, Korisnik trenutniKorisnik) {
 		
 		JPanel content = new JPanel(new MigLayout());
 		for(Slikovit sadrzaj : prikaz) {
 			JPanel slika = null;
 			if(sadrzaj instanceof MuzickoDelo) {
 				slika = new JPanel(new FlowLayout(FlowLayout.LEFT));
-				JPanel deoSaSlikom = new MuzickoDeloLabel(sadrzaj);
+				JPanel deoSaSlikom = new MuzickoDeloLabel(trenutniKorisnik, sadrzaj);
 				slika.add(deoSaSlikom);
 				JPanel deoSaOpisom = new JPanel(new BorderLayout());
 				StarRater rater = new StarRater(5, 3, 3);
@@ -46,10 +51,7 @@ public class SearchResults extends JScrollPane {
 	}
 	
 	
-	public SearchResults(ArrayList<Slikovit> prikaz) {
-		super(initGui(prikaz));
-	}
-
 	
-*/
+	
+
 }

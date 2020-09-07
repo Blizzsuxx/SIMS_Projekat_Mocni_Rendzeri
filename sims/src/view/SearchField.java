@@ -137,12 +137,12 @@ public class SearchField extends JXSearchField {
 			rezultati.addAll(sesija.getKorisnici().traziZaSearch(textZaSearch));
 		}
 		
-		/*
-		SearchResults rezultatiPanel = new SearchResults(rezultati);
+		
+		SearchResults rezultatiPanel = new SearchResults(rezultati, sesija.getTrenutniKorisnik());
 		MojDialog dialog = new MojDialog(this.owner, "Rezultati pretrage");
 		dialog.setContentPane(rezultatiPanel);
 		dialog.setVisible(true);
-		*/
+		
 	}
 
 }

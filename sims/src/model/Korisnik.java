@@ -46,13 +46,15 @@ public abstract class Korisnik implements Slikovit {
 	   }
 	   }
    
-   public Korisnik(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, String sifra, String korisnickoIme, Date datum, boolean status) {
+   public Korisnik(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja,
+		   String sifra, String korisnickoIme, Date datum, boolean status) {
 	super();
 	this.ime = ime;
 	this.prezime = prezime;
 	this.eMail = eMail;
 	this.pol = pol;
 	this.datumRodjenja = datumRodjenja;
+	this.status = status;
 	this.nalog = new Nalog(sifra, korisnickoIme, datum, status);
 }
    

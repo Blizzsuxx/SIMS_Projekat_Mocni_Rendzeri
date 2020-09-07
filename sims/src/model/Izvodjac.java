@@ -16,7 +16,9 @@ public abstract class Izvodjac implements Slikovit {
 	private boolean status;
 
 	private Zanr zanr;
-   
+	
+	// indikator da li je izvodjac odobren od strane admina
+	private boolean odobrenost;
 	/** @pdRoleInfo migr=no name=KorisnikAplikacije assc=association16 mult=0..* side=A */
 	private KorisnikAplikacije[] prati;
    
@@ -93,6 +95,21 @@ public abstract class Izvodjac implements Slikovit {
 		this.izdatiAlbumi = new ArrayList<Album>();
 	}
 	
+	public Izvodjac(String umetnickoIme, Zanr zanr, boolean status, KorisnikAplikacije[] prati, boolean odobrenost) {
+		super();
+		this.umetnickoIme = umetnickoIme;
+		this.zanr = zanr;
+		this.status = status;
+		if (prati != null)
+	   	{
+	   		this.prati = prati;
+	   	}
+		this.odobrenost = odobrenost;
+		this.muzickaDela = new ArrayList<MuzickoDelo>();
+		this.izdatiAlbumi = new ArrayList<Album>();
+	}
+	
+	
 	public Izvodjac() {
 		super();
 		this.muzickaDela = new ArrayList<MuzickoDelo>();
@@ -139,4 +156,13 @@ public abstract class Izvodjac implements Slikovit {
 		return "fajlovi/slike" + this.Ime() + ".jpg";
 	}
 
+	public boolean isOdobrenost() {
+		return odobrenost;
+	}
+
+	public void setOdobrenost(boolean odobrenost) {
+		this.odobrenost = odobrenost;
+	}
+
+	
 }

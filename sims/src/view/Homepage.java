@@ -101,7 +101,7 @@ public abstract class Homepage extends JFrame {
 		}
 		else 
 		{
-			DijalogRadSaNalogom radSaNalogom = new DijalogRadSaNalogom(this, Constants.DUMMY, "Rad sa nalogom");
+			DijalogRadSaNalogom radSaNalogom = new DijalogRadSaNalogom(this, sesija.getTrenutniKorisnik(), "Rad sa nalogom");
 			radSaNalogom.setVisible(true);
 		}	
 	}

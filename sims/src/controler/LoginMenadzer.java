@@ -57,6 +57,16 @@ public class LoginMenadzer {
 			pokusajUlogovanje(prozor.getKorisnickoIme().getText(), String.valueOf(prozor.getSifra().getPassword()));
 		}
 	});
+	   
+	   
+	   prozor.getKorisnickoIme().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				pokusajUlogovanje(prozor.getKorisnickoIme().getText(), String.valueOf(prozor.getSifra().getPassword()));
+			}
+		});
 		   
 		   prozor.getGuestButton().addActionListener(new ActionListener() {
 			

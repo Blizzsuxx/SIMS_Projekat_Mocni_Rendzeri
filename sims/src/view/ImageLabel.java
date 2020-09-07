@@ -82,7 +82,7 @@ public class ImageLabel extends JPanel {
    
 
    public ImageLabel(ImageIcon ikona, Slikovit delo) {
-       this(ikona, delo, "center");
+       this(ikona, delo, "left");
    }
    
    
@@ -129,7 +129,7 @@ public class ImageLabel extends JPanel {
 void addTekst(String tekst){
        JLabel labela = new JLabel(tekst);
        labela.setSize(getPreferredSize());
-       this.add(labela, "wrap, align center");
+       this.add(labela, "wrap, align left");
    }
 
 }

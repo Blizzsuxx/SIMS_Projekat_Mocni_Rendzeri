@@ -8,6 +8,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import org.jdesktop.swingx.JXImagePanel;
+
 import model.Korisnik;
 import net.miginfocom.swing.MigLayout;
 
@@ -44,11 +46,21 @@ public class DijalogRadSaNalogom extends MojDialog {
 	}
 
 	private void initGui() {
-		this.setSize(450, 380);
+		this.setSize(450, 600);
 		MigLayout mig = new MigLayout("",
 									  "50 [] 50 []", //Kolone
-									  "25 [] 10 [] 10 [] 10 [] 10 [] 10 [] 10 [] 10 [] 10 [] 10"); //Vrste
+									  "[] 30 [] 10 [] 10 [] 10 [] 10 [] 10 [] 10 [] 10 [] 10 [] 10"); //Vrste
 		this.setLayout(mig);
+		
+		///////////////// - mali dodatak od strane Dragana, ako ti se ne svidja obrisi
+		///////////////// - izbrisi takodje i prvi red u MigLayout-u, tj "[] 30" deo
+		this.setSize(450, 600);
+		JXImagePanel image = new JXImagePanel();
+		image.setEditable(true);
+		image.setImage(this.korisnik.defaultSlika());
+		this.add(image, "span, alignx center, wrap");
+		////////////////// kraj promena
+		
 		
 		imeLabela  = new JLabel("Ime"); prezLabela = new JLabel("Prezime"); 		mailLabela = new JLabel("eMail");
 		polLabela  = new JLabel("Pol"); dateLabela = new JLabel("Datum Rodjenja"); 	sifraLabela = new JLabel("Sifra");

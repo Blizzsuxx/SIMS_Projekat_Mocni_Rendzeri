@@ -29,7 +29,7 @@ public abstract class Homepage extends JFrame {
 			 "Broj Zakazanih", "Broj Za Izmjenu"};
 	 
 	public Homepage(Sesija sesija) {
-		this.getContentPane().setLayout(new MigLayout());
+		this.getContentPane().setLayout(new MigLayout("fillx"));
 		this.sesija = sesija;
 		initGui();
 	}

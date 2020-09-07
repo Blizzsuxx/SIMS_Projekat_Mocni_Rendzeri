@@ -36,6 +36,8 @@ public class MuzickoDelo implements Slikovit {
    
    private ArrayList<Integer> dosadasnjeOceneKorisnika;
    private ArrayList<Integer> dosadasnjeOceneUrednika;
+   /** @pdRoleInfo migr=no name=Utisak assc=association5 mult=0..* */
+   private List<Utisak> utisci;
    
 
 public ArrayList<Integer> getDosadasnjeOceneKorisnika() {
@@ -62,8 +64,7 @@ public void setZanrovi(ArrayList<Zanr> zanrovi) {
 	this.zanrovi = zanrovi;
 }
 
-/** @pdRoleInfo migr=no name=Utisak assc=association5 mult=0..* */
-   private List<Utisak> utisci;
+
 
 public String getNaziv() {
 	return naziv;
@@ -185,7 +186,6 @@ public void dodajocenuUrednika(int ocena) {
 }
 
 public String toFileString(Izvodjac iz) {
-	String pattern = "dd.MM.yyyy.";
 	DateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;
 	String ad="";
 	ad+=this.getNaziv()+";";

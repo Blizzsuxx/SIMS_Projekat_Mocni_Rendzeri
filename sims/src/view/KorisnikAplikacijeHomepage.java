@@ -17,14 +17,12 @@ public class KorisnikAplikacijeHomepage extends Homepage {
 	private List<MuzickoDeloLabel> trending;
 	private List<MuzickoDeloLabel> pratite;
 	private List<MuzickoDeloLabel> preporucujemo;
-	Sesija sesija;
 	
 	public KorisnikAplikacijeHomepage(Sesija sesija) {
 		super(sesija);
 		trending = new ArrayList<>();
 		pratite = new ArrayList<>();
 		preporucujemo = new ArrayList<>();
-		this.sesija = sesija;
 
 		JLabel trendingl = new JLabel("U trendu");
 		this.add(trendingl, "wrap, gaptop 20, align center");
@@ -45,7 +43,7 @@ public class KorisnikAplikacijeHomepage extends Homepage {
 
 		JPanel pane = new JPanel(new MigLayout());
 		for(int i = 0; i < numberOfElements; ++i){
-			MuzickoDeloLabel labela = new MuzickoDeloLabel(sesija.getTrenutniKorisnik(), Constants.BARBIE_GIRL);
+			MuzickoDeloLabel labela = new MuzickoDeloLabel(this.getSesija().getTrenutniKorisnik(), Constants.BARBIE_GIRL);
 			pane.add(labela, "gapleft 10");
 			lista.add(labela);
 		}

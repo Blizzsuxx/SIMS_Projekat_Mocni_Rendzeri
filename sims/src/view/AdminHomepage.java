@@ -16,9 +16,9 @@ import model.Uloga;
 public class AdminHomepage extends Homepage {
 	private static final long serialVersionUID = 1L;
 
-	private JMenu korisniciMenu, izvodjaciMenu;
+	private JMenu korisniciMenu, izvodjaciMenu, zanroviMenu;
 	private JMenuItem korisniciItem1, korisniciItem2, korisniciItem3, korisniciItem4,
-	izvodjaciItem1, izvodjaciItem2;
+	izvodjaciItem1, izvodjaciItem2, zanroviItem1;
 	
 	public AdminHomepage(Sesija sesija) {
 		super(sesija);
@@ -41,8 +41,7 @@ public class AdminHomepage extends Homepage {
 	}
 
 	private void initGUI() {
-		korisniciMenu = new JMenu("Korisnici");
-		    	
+		korisniciMenu = new JMenu("Korisnici");    	
 		korisniciItem1 = new JMenuItem("Korisnici");
 		korisniciMenu.add(korisniciItem1);
 		korisniciItem2 = new JMenuItem("Korisnici Aplikacije");
@@ -54,12 +53,16 @@ public class AdminHomepage extends Homepage {
 		menubar.add(korisniciMenu);
 		
 		izvodjaciMenu = new JMenu("Izvodjaci");
-		
 		izvodjaciItem1 = new JMenuItem("Neprihvaceni Izvodjaci");
 		izvodjaciMenu.add(izvodjaciItem1);
 		izvodjaciItem2 = new JMenuItem("Prihvaceni Izvodjaci");
 		izvodjaciMenu.add(izvodjaciItem2);
 		menubar.add(izvodjaciMenu);
+		
+		zanroviMenu = new JMenu("Zanrovi");
+		zanroviItem1 = new JMenuItem("Aktivni Zanrovi");
+		zanroviMenu.add(zanroviItem1);
+		menubar.add(zanroviMenu);
 	}
 	
 	private void actionGUI() {
@@ -139,6 +142,18 @@ public class AdminHomepage extends Homepage {
 						700, 300, 
 						AdminHomepage.this.getSesija().getIzvodjacMenadzer().vratiIzvodjaceNaOsnovuOdobrenosti(true));
 				ip.setVisible(true);
+				
+			}
+			
+		});
+		
+		zanroviItem1.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ZanrProzor zp = new ZanrProzor(AdminHomepage.this, "Aktivni Zanrovi", 500, 300, 
+						AdminHomepage.this.getSesija().getZanroviMenadzer().vratiAktivneZanrove());
+				zp.setVisible(true);
 				
 			}
 			

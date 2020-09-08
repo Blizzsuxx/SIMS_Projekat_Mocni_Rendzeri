@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Cursor;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -28,7 +29,7 @@ public class KorisnikProzor extends MojDialog {
 	
 	private JFrame parent;
 	private JTable table;
-	private JButton info, btnAdd, btnEdit, btnDelete;
+	private JButton info, btnAdd, btnEdit, btnDelete, btnSearch;
 	
 	
 	public KorisnikProzor(JFrame parent, String ime, int dimension1, int dimension2) {
@@ -64,9 +65,14 @@ public class KorisnikProzor extends MojDialog {
 			btnEdit = new JButton(editI);
 			ImageIcon deleteI = new ImageIcon("slike/remove.gif");
 			btnDelete = new JButton(deleteI);
+			ImageIcon searchI = new ImageIcon("slike/search.jpg");
+			ImageIcon scaled = new ImageIcon(searchI.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+			searchI = scaled;
+			btnSearch = new JButton(searchI);
 			base.add(btnAdd);
 			base.add(btnEdit);
 			base.add(btnDelete);
+			base.add(btnSearch);
 			
 		}
 		
@@ -84,8 +90,16 @@ public class KorisnikProzor extends MojDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				int rIndex = table.getSelectedRow();
+				if (rIndex < 0) {
+					JOptionPane.showMessageDialog(KorisnikProzor.this, "Morate selektovati korisnika.",
+							 "Info", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					String korisnickoIme = table.getModel().getValueAt(rIndex, 0).toString();
+					Korisnik k = ((AdminHomepage)parent).getSesija().getKorisnici().trazi(korisnickoIme);
+					DijalogRadSaNalogom drsn = new DijalogRadSaNalogom(null, k, k.getNalog().getKorisnickoIme(), true);
+					drsn.setVisible(true);
+				}
 			}
 			
 		});
@@ -106,8 +120,17 @@ public class KorisnikProzor extends MojDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				int rIndex = table.getSelectedRow();
+				if (rIndex < 0) {
+					JOptionPane.showMessageDialog(KorisnikProzor.this, "Morate selektovati korisnika.",
+							 "Info", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					String korisnickoIme = table.getModel().getValueAt(rIndex, 0).toString();
+					Korisnik k = ((AdminHomepage)parent).getSesija().getKorisnici().trazi(korisnickoIme);
+					DijalogRadSaNalogom drsn = new DijalogRadSaNalogom(null, k, k.getNalog().getKorisnickoIme());
+					drsn.setVisible(true);
+					KorisnikProzor.this.refreshData();
+				}
 			}
 			
 		});
@@ -130,6 +153,16 @@ public class KorisnikProzor extends MojDialog {
 						KorisnikProzor.this.refreshData();
 					}
 				}
+				
+			}
+			
+		});
+		
+		btnSearch.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
 				
 			}
 			

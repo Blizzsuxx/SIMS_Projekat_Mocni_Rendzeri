@@ -79,14 +79,6 @@ public class ZanroviMenadzer { //ovu klasu ili treba da ima sesija ili da bude p
 		}
 		
 	}
-	public Zanr trazi(String trim) {
-		for(Zanr z:sviZanrovi) {
-			if(trim.equals(z.getNazivZanra())) {
-				return z;
-			}
-		}
-			return null;
-		}
 	
 	public TableModelWrapper getTabelaZanrova() {
 		String[] columns = {"Naziv"};
@@ -100,4 +92,21 @@ public class ZanroviMenadzer { //ovu klasu ili treba da ima sesija ili da bude p
 		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
 	}
 	
+	public Zanr trazi(String trim) {
+		for(Zanr z:sviZanrovi) {
+			if(trim.equals(z.getNazivZanra())) {
+				return z;
+			}
+		}
+			return null;
+	}
+	
+	// pomocne funkcije
+	public List<Zanr> vratiAktivneZanrove(){
+		List<Zanr> zanrovi = new ArrayList<>();
+		for (Zanr z: this.sviZanrovi)
+			if (z.isStatus())
+				zanrovi.add(z);
+		return zanrovi;
+	}
 }

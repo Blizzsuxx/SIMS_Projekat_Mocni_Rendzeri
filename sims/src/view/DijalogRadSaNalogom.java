@@ -26,6 +26,8 @@ public class DijalogRadSaNalogom extends MojDialog {
 	private JButton izadjiBtn, potvrdiBtn;
 	private Korisnik korisnik;
 
+	private boolean indikator;
+	
 	public DijalogRadSaNalogom(JFrame parent, String ime, int dimension1, int dimension2) {
 		super(parent, ime, dimension1, dimension2);
 		// TODO Auto-generated constructor stub
@@ -44,6 +46,14 @@ public class DijalogRadSaNalogom extends MojDialog {
 	public DijalogRadSaNalogom(JFrame parent, Korisnik korisnik, String naziv) {
 		super(parent, naziv);
 		this.korisnik = korisnik;
+		initGui();
+		setListeners();
+	}
+	
+	public DijalogRadSaNalogom(JFrame parent, Korisnik korisnik, String naziv, boolean indikator) {
+		super(parent, naziv);
+		this.korisnik = korisnik;
+		this.indikator = indikator;
 		initGui();
 		setListeners();
 	}
@@ -102,6 +112,12 @@ public class DijalogRadSaNalogom extends MojDialog {
 		
 		this.add(izadjiBtn);
 		this.add(potvrdiBtn);
+		
+		if (indikator) { // ako gledamo korisnika cisto radi informacija
+			poljeSifra.setVisible(false);
+			sifraLabela.setVisible(false);
+			potvrdiBtn.setVisible(false);
+		}
 	}
 	
 	void setListeners() {

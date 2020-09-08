@@ -1,5 +1,6 @@
-Pop,true
-Dance,true
+Pop,false
+Dance,false
 rock,true
 clasic,false
 hip-hop,true
+gasiranje,true

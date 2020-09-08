@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -35,6 +36,7 @@ import model.Pol;
 import model.Sesija;
 import model.Uloga;
 import model.Urednik;
+import model.Zanr;
 
 public class KorisnikAddEdit extends JDialog {
 	private static final long serialVersionUID = 1L;
@@ -53,6 +55,10 @@ public class KorisnikAddEdit extends JDialog {
 	private JPanel panelBase;
 	
 	private List<Korisnik> korisnici; // privremena kolekcija u kojoj su isti entiteti koji se nalaze u sesiji
+	
+	// ova dva atiributa su bitna prilikom kreiranja urednika da mu se dodjele zanrovi!
+	private ComboZanr cz;
+	private List<Zanr> izabraniZanrovi;
 	
 	public KorisnikAddEdit(String naslov, Uloga uloga, Sesija sesija, List<Korisnik> korisnici) {
 		this.sesija = sesija;
@@ -160,6 +166,19 @@ public class KorisnikAddEdit extends JDialog {
 		pnlKorisnik.add(txtLozinka);
 		txtLozinka.setColumns(10);
 		
+		if (uloga == Uloga.UREDNIK) { // Mozdaa se moze bolje pozicionirati, al me mrzilo :D
+			JLabel lblZanrovi = new JLabel("Zanrovi:");
+			lblZanrovi.setBounds(10, 73, 50, 14);
+			pnlKorisnik.add(lblZanrovi);
+			
+			cz = new ComboZanr();
+			cz.kreirajSadrzaj(sesija.getZanroviMenadzer().vratiAktivneZanrove());
+			izabraniZanrovi = new ArrayList<>();
+			cz.setBounds(94, 73, 300, 140);
+			pnlKorisnik.add(cz);
+		}
+		
+		
 		JButton btnKreiraj = new JButton("Kreiraj");
 		btnKreiraj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -208,7 +227,10 @@ public class KorisnikAddEdit extends JDialog {
 				k = new KorisnikAplikacije(ime, prezime, eMail, pol, new SimpleDateFormat("dd/MM/yyyy").parse(dob2), lozinka, korisnickoIme, new Date(), true);
 			}
 			else if (uloga == Uloga.UREDNIK) {
+				izabraniZanrovi.clear();
+				cz.vratiSelektovaneZanrove(izabraniZanrovi); // I ONDA OVE IZABRANE ZANROVE DODJELIMO UREDNIKU
 				k = new Urednik(ime, prezime, eMail, pol, new SimpleDateFormat("dd/MM/yyyy").parse(dob2), lozinka, korisnickoIme, new Date(), true);
+				((Urednik)k).setZanrovi(izabraniZanrovi);
 			}
 			else {
 				k = new Administrator(ime, prezime, eMail, pol, new SimpleDateFormat("dd/MM/yyyy").parse(dob2), lozinka, korisnickoIme, new Date(), true);

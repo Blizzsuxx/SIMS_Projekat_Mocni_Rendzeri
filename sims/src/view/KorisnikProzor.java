@@ -5,6 +5,7 @@ import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -18,6 +19,7 @@ import javax.swing.ListSelectionModel;
 
 import model.Korisnik;
 import model.Uloga;
+import model.Zanr;
 import net.miginfocom.swing.MigLayout;
 
 public class KorisnikProzor extends MojDialog {
@@ -29,8 +31,23 @@ public class KorisnikProzor extends MojDialog {
 	
 	private JFrame parent;
 	private JTable table;
-	private JButton info, btnAdd, btnEdit, btnDelete, btnSearch;
+	private JButton info;
 	
+	private ImageIcon addI = new ImageIcon("slike/add.gif");
+	private ImageIcon editI = new ImageIcon("slike/edit.gif");
+	private ImageIcon deleteI = new ImageIcon("slike/remove.gif");
+	private JButton btnAdd = new JButton(addI);
+	private JButton btnEdit = new JButton(editI);
+	private JButton btnDelete = new JButton(deleteI);
+	private ImageIcon searchI = new ImageIcon("slike/search.jpg");
+	private ImageIcon scaledS = new ImageIcon(searchI.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
+	private JButton btnSearch = new JButton(scaledS);
+	private ImageIcon refreshI = new ImageIcon("slike/refresh.jpg");
+	private ImageIcon scaledR = new ImageIcon(refreshI.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
+	private JButton btnRefresh = new JButton(scaledR);
+	
+	private ComboZanr cz;
+	private List<Zanr> izabraniZanrovi;
 	
 	public KorisnikProzor(JFrame parent, String ime, int dimension1, int dimension2) {
 		super(parent, ime, dimension1, dimension2);
@@ -58,21 +75,20 @@ public class KorisnikProzor extends MojDialog {
 		base.add(info);
 		this.add(base, BorderLayout.NORTH);
 		
+		
 		if (parent instanceof AdminHomepage) {
-			ImageIcon addI = new ImageIcon("slike/add.gif");
-			btnAdd = new JButton(addI);
-			ImageIcon editI = new ImageIcon("slike/edit.gif");
-			btnEdit = new JButton(editI);
-			ImageIcon deleteI = new ImageIcon("slike/remove.gif");
-			btnDelete = new JButton(deleteI);
-			ImageIcon searchI = new ImageIcon("slike/search.jpg");
-			ImageIcon scaled = new ImageIcon(searchI.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
-			searchI = scaled;
-			btnSearch = new JButton(searchI);
 			base.add(btnAdd);
 			base.add(btnEdit);
 			base.add(btnDelete);
-			base.add(btnSearch);
+			
+			if (indikator == Uloga.UREDNIK) {
+				cz = new ComboZanr();
+				cz.kreirajSadrzaj(((AdminHomepage)parent).getSesija().getZanroviMenadzer().vratiAktivneZanrove());
+				izabraniZanrovi = new ArrayList<>();
+				base.add(cz);
+				base.add(btnSearch);
+				base.add(btnRefresh);
+			}
 			
 		}
 		
@@ -159,6 +175,16 @@ public class KorisnikProzor extends MojDialog {
 		});
 		
 		btnSearch.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				izabraniZanrovi.clear();
+				KorisnikProzor.this.refreshData();
+			}
+			
+		});
+		
+		btnRefresh.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

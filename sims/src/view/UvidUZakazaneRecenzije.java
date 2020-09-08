@@ -33,7 +33,12 @@ public class UvidUZakazaneRecenzije extends JFrame {
 		btnIzmeni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!zakazaneRecenzije.getSelectionModel().isSelectionEmpty())
-					izmeni();
+					try {
+						izmeni();
+					} 
+					catch (Exception e1) {
+						e1.printStackTrace();
+					}
 			}
 		});
 		btnIzmeni.setBounds(348, 347, 89, 23);
@@ -48,7 +53,7 @@ public class UvidUZakazaneRecenzije extends JFrame {
 		zakazaneRecenzije.setModel(tmw);
 	}
 	
-	private void izmeni() {
+	private void izmeni() throws Exception {
 		String naslov = (String)zakazaneRecenzije.getValueAt(zakazaneRecenzije.getSelectedRow(), 0);
 		UtisakMenadzer um = sesija.getUtisakMenadzer();
 		Recenzija recenzija = null;
@@ -65,5 +70,6 @@ public class UvidUZakazaneRecenzije extends JFrame {
 			km.getKorisnici().replace(urednik.getNalog().getKorisnickoIme(), urednik);
 			sesija.setKorisnici(km);
 		}
+		ucitajZakazeneRecenzije();
 	}
 }

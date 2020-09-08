@@ -164,7 +164,6 @@ public class DodavanjeRecenzije extends JFrame {
 				r.setNaslov(txtNaslov.getText());
 				r.setText(txtTekst.getText());
 				r.setUrednik((Urednik)Sesija.getTrenutniKorisnik());
-				r.setStatus(false);
 				sesija.setUtisakMenadzer(um);
 				break;
 		}

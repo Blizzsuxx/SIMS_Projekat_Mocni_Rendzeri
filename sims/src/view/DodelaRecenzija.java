@@ -177,7 +177,7 @@ public class DodelaRecenzija extends JFrame {
 		}
 		KorisniciMenadzer km = sesija.getKorisnici();
 		HashMap<String,Korisnik> korisnici = km.getKorisnici();
-		korisnici.replace(urednik.getNalog().getKorisnickoIme(), (Korisnik)urednik);
+		korisnici.replace(urednik.getNalog().getKorisnickoIme(), urednik);
 		km.setKorisnici(korisnici);
 		sesija.setKorisnici(km);
 	}

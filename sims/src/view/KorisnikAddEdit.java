@@ -1,12 +1,24 @@
 package view;
 
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
@@ -24,19 +36,6 @@ import model.Sesija;
 import model.Uloga;
 import model.Urednik;
 
-import javax.swing.JRadioButton;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-
-import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import javax.swing.JPanel;
-
 public class KorisnikAddEdit extends JDialog {
 	private static final long serialVersionUID = 1L;
 	
@@ -51,14 +50,17 @@ public class KorisnikAddEdit extends JDialog {
 	private JRadioButton rbZensko;
 	private JDatePickerImpl dtDob;
 	private Uloga uloga;
-	private JRadioButton rbObicanKorisnik;
-	private JRadioButton rbUrednik;
-	private JRadioButton rbAdministrator;
 	private JPanel panelBase;
 	
-	public KorisnikAddEdit(String naslov, Uloga uloga, Sesija sesija) {
+	private List<Korisnik> korisnici; // privremena kolekcija u kojoj su isti entiteti koji se nalaze u sesiji
+	
+	public KorisnikAddEdit(String naslov, Uloga uloga, Sesija sesija, List<Korisnik> korisnici) {
 		this.sesija = sesija;
 		this.uloga = uloga;
+		this.korisnici = korisnici;
+		
+		if (uloga == null) // u slucaju kada ovaj prozor pozivamo iz statusa korisnici
+			uloga = Uloga.KORISNIK;
 		
 		this.setSize(450, 450);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -171,59 +173,54 @@ public class KorisnikAddEdit extends JDialog {
 		});
 		btnKreiraj.setBounds(323, 333, 89, 23);
 		getContentPane().add(btnKreiraj);
-		
-		rbObicanKorisnik = new JRadioButton("Obican korisnik");
-		rbObicanKorisnik.setSelected(true);
-		rbObicanKorisnik.setBounds(10, 75, 99, 23);
-		pnlKorisnik.add(rbObicanKorisnik);
-		
-		rbUrednik = new JRadioButton("Urednik");
-		rbUrednik.setBounds(125, 75, 63, 23);
-		pnlKorisnik.add(rbUrednik);
-		
-		rbAdministrator = new JRadioButton("Administrator");
-		rbAdministrator.setBounds(214, 75, 93, 23);
-		pnlKorisnik.add(rbAdministrator);
-		
-		rbObicanKorisnik.setVisible(uloga == Uloga.ADMIN);
-		rbUrednik.setVisible(uloga == Uloga.ADMIN);
-		rbAdministrator.setVisible(uloga == Uloga.ADMIN);
+	
 	}
 	
 	private void kreirajKorisnika() throws ParseException {
 		String msg = validiraj();
+		
 		if (!msg.equals(""))
 		{
 			JOptionPane.showMessageDialog(null, msg);
 			return;
 		}
-		
-		String ime = txtIme.getText().trim();
-		String prezime = txtPrezime.getText().trim();
-		String eMail = txtEmail.getText().trim();
-		String dob = dtDob.getJFormattedTextField().getText();
-		Pol pol = null;
-		if (rbMusko.isSelected())
-			pol = Pol.muski;
-		else if (rbZensko.isSelected())
-			pol = Pol.zenski;
 		String korisnickoIme = txtKorisnickoIme.getText().trim();
-		String lozinka = txtLozinka.getText().trim();
-		Korisnik k;
-		Nalog n = new Nalog(korisnickoIme, lozinka, new Date(), true);
-		if (rbObicanKorisnik.isSelected()) {
-			k = new KorisnikAplikacije(ime, prezime, eMail, pol, new SimpleDateFormat("dd/MM/yyyy").parse(dob), lozinka, korisnickoIme, new Date(), true);
+		if (!sesija.getKorisnici().provjeriKorisnickoIme(korisnickoIme)) { // znaci ne postoji isto korisnicko ime
+			String ime = txtIme.getText().trim();
+			String prezime = txtPrezime.getText().trim();
+			String eMail = txtEmail.getText().trim();
+		
+			String dob = dtDob.getJFormattedTextField().getText(); // string trenutno u formi dd-MM-yyyy
+			SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+			SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
+			String dob2 = sdf2.format(sdf1.parse(dob)); // string trenutno u formi dd/MM/yyyy i moguce je parsirati u datum
+		
+			Pol pol = null;
+			if (rbMusko.isSelected())
+				pol = Pol.muski;
+			else if (rbZensko.isSelected())
+				pol = Pol.zenski;
+		
+			String lozinka = txtLozinka.getText().trim();
+			Korisnik k;
+			Nalog n = new Nalog(korisnickoIme, lozinka, new Date(), true);
+			if (uloga == Uloga.KORISNIK) {
+				k = new KorisnikAplikacije(ime, prezime, eMail, pol, new SimpleDateFormat("dd/MM/yyyy").parse(dob2), lozinka, korisnickoIme, new Date(), true);
+			}
+			else if (uloga == Uloga.UREDNIK) {
+				k = new Urednik(ime, prezime, eMail, pol, new SimpleDateFormat("dd/MM/yyyy").parse(dob2), lozinka, korisnickoIme, new Date(), true);
+			}
+			else {
+				k = new Administrator(ime, prezime, eMail, pol, new SimpleDateFormat("dd/MM/yyyy").parse(dob2), lozinka, korisnickoIme, new Date(), true);
+			}
+			k.setNalog(n);
+			KorisniciMenadzer km = sesija.getKorisnici();
+			km.dodaj(k);
+			sesija.setKorisnici(km);
+			korisnici.add(k); // dodavanje u privremenu kolekciju
+		
+			this.dispose();  
 		}
-		else if (rbUrednik.isSelected()) {
-			k = new Urednik(ime, prezime, eMail, pol, new SimpleDateFormat("dd/MM/yyyy").parse(dob), lozinka, korisnickoIme, new Date(), true);
-		}
-		else {
-			k = new Administrator(ime, prezime, eMail, pol, new SimpleDateFormat("dd/MM/yyyy").parse(dob), lozinka, korisnickoIme, new Date(), true);
-		}
-		k.setNalog(n);
-		KorisniciMenadzer km = sesija.getKorisnici();
-		km.dodaj(k);
-		sesija.setKorisnici(km);
 	}
 	
 	private String validiraj() {

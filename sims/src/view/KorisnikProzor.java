@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -93,7 +94,7 @@ public class KorisnikProzor extends MojDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				KorisnikAddEdit kae = new KorisnikAddEdit("Dodavanje Korisnika", indikator, ((AdminHomepage)parent).getSesija());
+				KorisnikAddEdit kae = new KorisnikAddEdit("Dodavanje Korisnika", indikator, ((AdminHomepage)parent).getSesija(), korisnici);
 				kae.setVisible(true);
 				KorisnikProzor.this.refreshData();
 				
@@ -115,7 +116,20 @@ public class KorisnikProzor extends MojDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				int rIndex = table.getSelectedRow();
+				if (rIndex < 0) {
+					JOptionPane.showMessageDialog(KorisnikProzor.this, "Morate selektovati korisnika.",
+							 "Info", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					if (JOptionPane.showConfirmDialog(null, "Jeste sigurno da zelite obrisati?", "Brisanje Korisnika",
+					        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+						String korisnickoIme = table.getModel().getValueAt(rIndex, 0).toString();
+						Korisnik k = ((AdminHomepage)parent).getSesija().getKorisnici().trazi(korisnickoIme);
+						korisnici.remove(k);
+						k.setStatus(false);
+						KorisnikProzor.this.refreshData();
+					}
+				}
 				
 			}
 			

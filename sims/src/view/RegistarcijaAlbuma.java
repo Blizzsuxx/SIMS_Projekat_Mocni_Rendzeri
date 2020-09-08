@@ -229,7 +229,7 @@ public class RegistarcijaAlbuma extends JFrame {
 	    }
 		km.setZahteviUrednika(zahtevi);
 		sesija.setKorisnici(km);
-		ucitajZahteve();
+		urednik = ucitajZahteve();
 		if (urednik == null) {
 			JOptionPane.showMessageDialog(null, "Nemaju zahtevi za registraciju albuma.");
 			RegistarcijaAlbuma.this.dispose();

@@ -9,10 +9,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import model.MuzickoDelo;
 import model.Recenzija;
+import model.Urednik;
 import model.ZakazanaRecenzija;
-import model.Zanr;
 import view.TableModelWrapper;
 
 public class ZakazanaRecenzijaMenadzer {
@@ -92,10 +91,10 @@ public class ZakazanaRecenzijaMenadzer {
 	}
 	
 	public TableModelWrapper getTabelaZavrsenihRecenzija(boolean zavrsene)  throws Exception { 
-		String[] columns = { "Naziv" ,"Opis", "Datum zakazivanja", "Rok"};
-		Class<?>[] columnTypes = { String.class, String.class, Date.class, Date.class};
-		boolean[] editableColumns = { false, false, false, false};
-		int[] columnWidths = { 120, 120, 100, 80};
+		String[] columns = { "Naziv" ,"Opis", "Rok"};
+		Class<?>[] columnTypes = { String.class, String.class, Date.class};
+		boolean[] editableColumns = { false, false, false};
+		int[] columnWidths = { 120, 120, 100};
 		ArrayList<Object[]> data = new ArrayList<Object[]>();
 		for (ZakazanaRecenzija zr : sve) {
 			if (zavrsene && zr.isUradeno())
@@ -106,5 +105,18 @@ public class ZakazanaRecenzijaMenadzer {
 		}
 		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
 	}
-
+	
+	
+	public TableModelWrapper getTabelaZakazanihRecenzijaZaUrednika(Urednik urednik)  throws Exception { 
+		String[] columns = { "Naziv" ,"Opis", "Datum zakazivanja", "Rok"};
+		Class<?>[] columnTypes = { String.class, String.class, Date.class, Date.class};
+		boolean[] editableColumns = { false, false, false, false};
+		int[] columnWidths = { 120, 120, 100, 80};
+		ArrayList<Object[]> data = new ArrayList<Object[]>();
+		for (ZakazanaRecenzija zr : urednik.getZakazaneRecenzije()) {
+			if (!zr.isUradeno())
+				data.add(new Object[] {zr.getRecenzija().getNaslov(), zr.getOpis(), zr.getRok()});
+		}
+		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
+	}
 }

@@ -329,17 +329,21 @@ public class RegistracijaIzvodjaca extends JDialog {
 	
 	private void registrujIzvodjaca(String umetnickoIme, Zanr zanr, String ime, String prezime, String dob, String dod, String pol, String opis) throws ParseException
 	{ 
+		SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyyy.");
+		String dob2 = sdf2.format(sdf1.parse(dob));
 		Pol p = Pol.valueOf(pol);
 		Pojedinacanizvodjac pi = null;
 		if (!dod.isEmpty()) { 
-
-			pi = new Pojedinacanizvodjac(false, umetnickoIme, zanr, true, ime, prezime, new SimpleDateFormat("dd.MM.yyyy.").parse(dob),
-					new SimpleDateFormat("dd.MM.yyyy").parse(dod), opis, p);
+			
+			String dod2 = sdf2.format(sdf1.parse(dod));
+			pi = new Pojedinacanizvodjac(false, umetnickoIme, zanr, true, ime, prezime, new SimpleDateFormat("dd.MM.yyyy.").parse(dob2),
+					new SimpleDateFormat("dd.MM.yyyy.").parse(dod2), opis, p);
 		}
 		else {
 
 
-			pi = new Pojedinacanizvodjac(false, umetnickoIme, zanr, true, ime, prezime, new SimpleDateFormat("dd.MM.yyyy.").parse(dob),
+			pi = new Pojedinacanizvodjac(false, umetnickoIme, zanr, true, ime, prezime, new SimpleDateFormat("dd.MM.yyyy.").parse(dob2),
 					null, opis, p);
 		}
 			if (!sesija.addUmetnici(pi))
@@ -348,19 +352,20 @@ public class RegistracijaIzvodjaca extends JDialog {
 	
 	private void registrujGrupu(String umetnickoIme, Zanr zanr, int brojClanova, String dof, String dor) throws ParseException
 	{
+		SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyyy.");
+		String dof2 = sdf2.format(sdf1.parse(dof));
 		Grupa g = null;
 		if (!dor.isEmpty()) {
-
-			g = new Grupa(false,umetnickoIme, zanr, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy").parse(dof), 
-					new SimpleDateFormat("dd.MM.yyyy").parse(dor));
-
-			g = new Grupa(false, umetnickoIme, zanr, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy.").parse(dof), 
-					new SimpleDateFormat("dd.MM.yyyy.").parse(dor));
+			
+			String dor2 = sdf2.format(sdf1.parse(dor));
+			g = new Grupa(false,umetnickoIme, zanr, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy.").parse(dof2), 
+					new SimpleDateFormat("dd.MM.yyyy.").parse(dor2));
 
 		}
 		else {
 
-			g = new Grupa(false, umetnickoIme, zanr, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy.").parse(dof),
+			g = new Grupa(false, umetnickoIme, zanr, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy.").parse(dof2),
 					null);
 		}
 		if (!sesija.addGrupe(g))

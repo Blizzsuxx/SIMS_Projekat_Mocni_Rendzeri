@@ -200,7 +200,11 @@ public class RegistarcijaAlbuma extends JFrame {
 				}
 			}
 		}
-		Date danRegistracije = new SimpleDateFormat("dd.MM.yyyy.").parse(dtDor.getJFormattedTextField().getText());
+		String txtRegistracije = dtDor.getJFormattedTextField().getText();
+		SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyyy.");
+		String txtRegistracije2 = sdf2.format(sdf1.parse(txtRegistracije));
+		Date danRegistracije = new SimpleDateFormat("dd.MM.yyyy.").parse(txtRegistracije2);
 		Izvodjac izvodjac = sesija.getIzvodjac((String)cmbIzvodjac.getSelectedItem());
 		Album noviAlbum = new Album(naziv, dela, urednik, izvodjac, danRegistracije, true);
 		noviAlbum.getIzvodjac().addIzdatAlbum(noviAlbum);

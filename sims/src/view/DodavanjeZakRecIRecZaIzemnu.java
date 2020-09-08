@@ -205,10 +205,14 @@ public class DodavanjeZakRecIRecZaIzemnu extends JFrame {
 			}
 		}
 		String txtDatumZakazivanja = dtDor.getJFormattedTextField().getText();
+		SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyyy.");
+		String txtDatumZakazivanja2 = sdf2.format(sdf1.parse(txtDatumZakazivanja));
 		String txtRok = dtDod.getJFormattedTextField().getText();
+		String txtRok2 = sdf2.format(sdf1.parse(txtRok));
 		String opis = txtOpis.getText();
-		ZakazanaRecenzija zakazanaRecenzija = new ZakazanaRecenzija(new SimpleDateFormat("dd.MM.yyyy").parse(txtDatumZakazivanja), 
-				opis, false, new SimpleDateFormat("dd.MM.yyyy").parse(txtRok), recenzija, recenzija.getUrednik());
+		ZakazanaRecenzija zakazanaRecenzija = new ZakazanaRecenzija(new SimpleDateFormat("dd.MM.yyyy.").parse(txtDatumZakazivanja2), 
+				opis, false, new SimpleDateFormat("dd.MM.yyyy.").parse(txtRok2), recenzija, recenzija.getUrednik());
 		ZakazanaRecenzijaMenadzer zrm = sesija.getZakazanaRecenzijaMenadzer();
 		zrm.getSve().add(zakazanaRecenzija);
 		sesija.setZakazanaRecenzijaMenadzer(zrm);

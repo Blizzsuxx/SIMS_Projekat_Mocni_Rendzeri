@@ -2,6 +2,8 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -62,25 +64,11 @@ public class DodajMuzickoDelo extends JDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				datumIzdavanja = dtDop.getJFormattedTextField().getText();
-				naslov = naziv.getText();
-				opisDela = opis.getText();
-				if (br == 1) {
-					izv = sesija.getIzvodjac((String) izvodjaci.getSelectedItem());
+				try {
+					dodaj();
 				}
-				ZanroviMenadzer zm = sesija.getZanroviMenadzer();
-				ArrayList<Zanr> listaZanrova = new ArrayList<Zanr>();
-				int[] redovi = zanrovi.getSelectedRows();
-				for (int i = 0; i < redovi.length; i++) {
-					for (Zanr z : zm.getSviZanrovi()) {
-						if (zanrovi.getValueAt(redovi[i], 0).equals(z.getNazivZanra())) {
-							listaZanrova.add(z);
-						}
-					}
-				}
-				boolean validno = sesija.napraviDelo(datumIzdavanja, naslov, opisDela, izv, listaZanrova);
-				if (!validno) {
-					JOptionPane.showMessageDialog(DodajMuzickoDelo.this, "Datum nije ispravan.");
+				catch (ParseException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -143,5 +131,31 @@ public class DodajMuzickoDelo extends JDialog {
 		btnNazad = new JButton("Nazad");
 		btnNazad.setHorizontalAlignment(SwingConstants.RIGHT);
 		getContentPane().add(btnNazad, "cell 1 8,alignx right");
+	}
+	
+	private void dodaj() throws ParseException {
+		datumIzdavanja = dtDop.getJFormattedTextField().getText();
+		SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyyy.");
+		String datumIzdavanja2 = sdf2.format(sdf1.parse(datumIzdavanja));
+		naslov = naziv.getText();
+		opisDela = opis.getText();
+		if (br == 1) {
+			izv = sesija.getIzvodjac((String) izvodjaci.getSelectedItem());
+		}
+		ZanroviMenadzer zm = sesija.getZanroviMenadzer();
+		ArrayList<Zanr> listaZanrova = new ArrayList<Zanr>();
+		int[] redovi = zanrovi.getSelectedRows();
+		for (int i = 0; i < redovi.length; i++) {
+			for (Zanr z : zm.getSviZanrovi()) {
+				if (zanrovi.getValueAt(redovi[i], 0).equals(z.getNazivZanra())) {
+					listaZanrova.add(z);
+				}
+			}
+		}
+		boolean validno = sesija.napraviDelo(datumIzdavanja2, naslov, opisDela, izv, listaZanrova);
+		if (!validno) {
+			JOptionPane.showMessageDialog(DodajMuzickoDelo.this, "Datum nije ispravan.");
+		}
 	}
 }

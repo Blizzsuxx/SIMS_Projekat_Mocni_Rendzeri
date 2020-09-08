@@ -179,7 +179,11 @@ public class KorisnikProzor extends MojDialog {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				izabraniZanrovi.clear();
-				KorisnikProzor.this.refreshData();
+				cz.vratiSelektovaneZanrove(izabraniZanrovi);
+				if (!izabraniZanrovi.isEmpty()) {
+					((AdminHomepage)parent).getSesija().getZanroviMenadzer().pretrageUrednikaNaOsnovuZanrova(korisnici, izabraniZanrovi);
+					KorisnikProzor.this.refreshData();
+				}
 			}
 			
 		});
@@ -188,7 +192,14 @@ public class KorisnikProzor extends MojDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+				if (!((AdminHomepage)parent).getSesija().getKorisnici().vratiUrednike().isEmpty()) {
+					korisnici.clear();
+					List<Korisnik> temp = ((AdminHomepage)parent).getSesija().getKorisnici().vratiUrednike();
+					for (Korisnik k: temp)
+						korisnici.add(k);
+					KorisnikProzor.this.refreshData();
+					
+				}
 				
 			}
 			

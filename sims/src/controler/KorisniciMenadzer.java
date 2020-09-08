@@ -23,12 +23,9 @@ import model.Korisnik;
 import model.KorisnikAplikacije;
 import model.Pol;
 import model.Urednik;
-import view.KorisnikAddEdit;
 import view.Slikovit;
 import view.TableModelWrapper;
 
-import model.Uloga;
-import model.Album;
 
 /** @pdOid 121daa1d-b073-437c-95b7-7f061b5ef5df */
 public class KorisniciMenadzer {

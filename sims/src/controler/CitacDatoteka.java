@@ -120,7 +120,7 @@ public class CitacDatoteka {
 		// TODO Auto-generated method stub
 
 		korisnici = new KorisniciMenadzer(ucitaj("korisnici.txt", ','), ucitajBuffered("zahteviZaRegAlbuma.txt"));
-		zanrovi = new ZanroviMenadzer(ucitaj("zanrovi.txt", ','));
+		zanrovi = new ZanroviMenadzer(ucitaj("zanrovi.txt", ','), korisnici);
 		izvodjaci = new IzvodjacMenadzer(ucitaj("izvodjaci.txt", ';'), zanrovi);
 
 		deloMenadzer = new MuzickoDeloMenadzer(izvodjaci, zanrovi.getSviZanrovi(), ucitaj("muzickaDela.txt", ','));
@@ -205,6 +205,8 @@ public class CitacDatoteka {
 		zanrovi.sacuvaj();//jos nesto treba sacuvati?? treba uzitati za izmenu
 		izmena.sacuvaj();
 		glasanjeMenadzer.sacuvaj();
+		
+		zanrovi.sacuvajZanroveUrednike(); //
 		
 	}
 

@@ -2,15 +2,20 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Cursor;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -27,6 +32,8 @@ public class ZanrProzor extends MojDialog {
 	private JButton btnAdd,btnEdit;
 	private JFrame parent;
 	private JTable table;
+	private JPopupMenu popupMenu;
+	private JMenuItem menuItemDelete;
 	
 	public ZanrProzor(JFrame parent, String ime, int dimension1, int dimension2, List<Zanr> zanrovi) {
 		super(parent, ime, dimension1, dimension2);
@@ -55,6 +62,20 @@ public class ZanrProzor extends MojDialog {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getTableHeader().setReorderingAllowed(false);
 		
+		popupMenu = new JPopupMenu();
+        menuItemDelete = new JMenuItem("Obrisi");
+        popupMenu.add(menuItemDelete);
+        
+        table.setComponentPopupMenu(popupMenu);
+        table.addMouseListener(new MouseAdapter() {
+        	 @Override
+        	    public void mousePressed(MouseEvent event) {
+        	        Point point = event.getPoint();
+        	        int currentRow = table.rowAtPoint(point);
+        	        table.setRowSelectionInterval(currentRow, currentRow);
+        	    }
+        });
+        
 		JScrollPane sp = new JScrollPane(table);
 		this.add(sp, BorderLayout.CENTER);
 	}
@@ -91,6 +112,21 @@ public class ZanrProzor extends MojDialog {
 						z.setNazivZanra(nazivNovi);
 					}
 				}
+				ZanrProzor.this.refreshData();
+				
+			}
+			
+		});
+		
+		menuItemDelete.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int rIndex = table.getSelectedRow();
+				String nazivZanra = table.getModel().getValueAt(rIndex, 0).toString();
+				Zanr z = ((AdminHomepage)parent).getSesija().getZanroviMenadzer().trazi(nazivZanra);
+				zanrovi.remove(z);
+				z.setStatus(false);
 				ZanrProzor.this.refreshData();
 				
 			}

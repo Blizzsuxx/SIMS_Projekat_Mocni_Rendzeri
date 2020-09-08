@@ -38,8 +38,8 @@ public class SearchField extends JXSearchField {
 		this.sesija = sesija;
 		
 		String korisnickoIme = null;
-		if(sesija.getTrenutniKorisnik() != null) {
-			korisnickoIme = sesija.getTrenutniKorisnik().getNalog().getKorisnickoIme();
+		if(Sesija.getTrenutniKorisnik() != null) { // promjene
+			korisnickoIme = Sesija.getTrenutniKorisnik().getNalog().getKorisnickoIme();//
 		}
 		
 		this.setSearchMode(SearchMode.REGULAR);

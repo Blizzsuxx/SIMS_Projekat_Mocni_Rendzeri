@@ -26,13 +26,18 @@ import model.Urednik;
 
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 
-public class KorisnikAddEdit extends JFrame {
+public class KorisnikAddEdit extends JDialog {
 	private static final long serialVersionUID = 1L;
 	
 	public Sesija sesija;
@@ -54,8 +59,20 @@ public class KorisnikAddEdit extends JFrame {
 	public KorisnikAddEdit(String naslov, Uloga uloga, Sesija sesija) {
 		this.sesija = sesija;
 		this.uloga = uloga;
+		
+		this.setSize(450, 450);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setResizable(false);
+		this.setModal(true);
+		setBackground(Color.BLACK);
+		
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Dimension screenSize = toolkit.getScreenSize();
+		int x = (screenSize.width - this.getWidth()) / 2;
+		int y = (screenSize.height - this.getHeight()) / 2;
+		this.setLocation(x, y);
+		
 		setTitle(naslov);
-		setResizable(false);
 		getContentPane().setLayout(null);
 		
 		panelBase = new JPanel();
@@ -97,6 +114,7 @@ public class KorisnikAddEdit extends JFrame {
 		p.put("text.year", "Godina");
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
 		dtDob = new JDatePickerImpl(datePanel, new DataLabelFormatter());
+		sl_dtDob = new SpringLayout();
 		sl_dtDob.putConstraint(SpringLayout.NORTH, dtDob.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDob);
 		sl_dtDob.putConstraint(SpringLayout.WEST, dtDob.getJFormattedTextField(), 33, SpringLayout.WEST, dtDob);
 		sl_dtDob.putConstraint(SpringLayout.EAST, dtDob.getJFormattedTextField(), 211, SpringLayout.WEST, dtDob);

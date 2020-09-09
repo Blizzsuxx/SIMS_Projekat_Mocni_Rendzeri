@@ -22,7 +22,7 @@ import model.Uloga;
 import model.Zanr;
 import net.miginfocom.swing.MigLayout;
 
-public class KorisnikProzor extends MojDialog {
+public class KorisnikProzor extends MojDialog implements ActionListener{
 	private static final long serialVersionUID = 1L;
 
 	private List<Korisnik> korisnici;
@@ -48,6 +48,7 @@ public class KorisnikProzor extends MojDialog {
 	
 	private ComboZanr cz;
 	private List<Zanr> izabraniZanrovi;
+	private TablePopupMenu popupMenu = new TablePopupMenu();
 	
 	public KorisnikProzor(JFrame parent, String ime, int dimension1, int dimension2) {
 		super(parent, ime, dimension1, dimension2);
@@ -75,8 +76,18 @@ public class KorisnikProzor extends MojDialog {
 		base.add(info);
 		this.add(base, BorderLayout.NORTH);
 		
+		table = new JTable(new KorisnikModel(imenaKolona, korisnici, indikator));
+		table.getTableHeader().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.getTableHeader().setReorderingAllowed(false);
+		
+		JScrollPane sp = new JScrollPane(table);
+		this.add(sp, BorderLayout.CENTER);
 		
 		if (parent instanceof AdminHomepage) {
+			table.setComponentPopupMenu(popupMenu);
+	        table.addMouseListener(new TableMouseListener(table));
+	        
 			base.add(btnAdd);
 			base.add(btnEdit);
 			base.add(btnDelete);
@@ -91,14 +102,6 @@ public class KorisnikProzor extends MojDialog {
 			}
 			
 		}
-		
-		table = new JTable(new KorisnikModel(imenaKolona, korisnici, indikator));
-		table.getTableHeader().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.getTableHeader().setReorderingAllowed(false);
-		
-		JScrollPane sp = new JScrollPane(table);
-		this.add(sp, BorderLayout.CENTER);
 	}
 	
 	private void actionGUI() {
@@ -120,59 +123,12 @@ public class KorisnikProzor extends MojDialog {
 			
 		});
 		
-		btnAdd.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				KorisnikAddEdit kae = new KorisnikAddEdit("Dodavanje Korisnika", indikator, ((AdminHomepage)parent).getSesija(), korisnici);
-				kae.setVisible(true);
-				KorisnikProzor.this.refreshData();
-				
-			}
-			
-		});
-		
-		btnEdit.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int rIndex = table.getSelectedRow();
-				if (rIndex < 0) {
-					JOptionPane.showMessageDialog(KorisnikProzor.this, "Morate selektovati korisnika.",
-							 "Info", JOptionPane.INFORMATION_MESSAGE);
-				} else {
-					String korisnickoIme = table.getModel().getValueAt(rIndex, 0).toString();
-					Korisnik k = ((AdminHomepage)parent).getSesija().getKorisnici().trazi(korisnickoIme);
-					DijalogRadSaNalogom drsn = new DijalogRadSaNalogom(null, k, k.getNalog().getKorisnickoIme());
-					drsn.setVisible(true);
-					KorisnikProzor.this.refreshData();
-				}
-			}
-			
-		});
-		
-		btnDelete.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int rIndex = table.getSelectedRow();
-				if (rIndex < 0) {
-					JOptionPane.showMessageDialog(KorisnikProzor.this, "Morate selektovati korisnika.",
-							 "Info", JOptionPane.INFORMATION_MESSAGE);
-				} else {
-					if (JOptionPane.showConfirmDialog(null, "Jeste sigurno da zelite obrisati?", "Brisanje Korisnika",
-					        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-						String korisnickoIme = table.getModel().getValueAt(rIndex, 0).toString();
-						Korisnik k = ((AdminHomepage)parent).getSesija().getKorisnici().trazi(korisnickoIme);
-						korisnici.remove(k);
-						k.setStatus(false);
-						KorisnikProzor.this.refreshData();
-					}
-				}
-				
-			}
-			
-		});
+		btnAdd.addActionListener(this);
+		btnEdit.addActionListener(this);
+		btnDelete.addActionListener(this);
+		popupMenu.menuItemAdd.addActionListener(this);
+		popupMenu.menuItemEdit.addActionListener(this);
+		popupMenu.menuItemDelete.addActionListener(this);
 		
 		btnSearch.addActionListener(new ActionListener() {
 
@@ -205,9 +161,56 @@ public class KorisnikProzor extends MojDialog {
 			
 		});
 	}
+	private void dodaj() {
+		KorisnikAddEdit kae = new KorisnikAddEdit("Dodavanje Korisnika", indikator, ((AdminHomepage)parent).getSesija(), korisnici);
+		kae.setVisible(true);
+		KorisnikProzor.this.refreshData();
+	}
+	
+	private void edituj() {
+		int rIndex = table.getSelectedRow();
+		if (rIndex < 0) {
+			JOptionPane.showMessageDialog(KorisnikProzor.this, "Morate selektovati korisnika.",
+					 "Info", JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			String korisnickoIme = table.getModel().getValueAt(rIndex, 0).toString();
+			Korisnik k = ((AdminHomepage)parent).getSesija().getKorisnici().trazi(korisnickoIme);
+			DijalogRadSaNalogom drsn = new DijalogRadSaNalogom(null, k, k.getNalog().getKorisnickoIme());
+			drsn.setVisible(true);
+			KorisnikProzor.this.refreshData();
+		}
+	}
+	
+	private void izbrisi() {
+		int rIndex = table.getSelectedRow();
+		if (rIndex < 0) {
+			JOptionPane.showMessageDialog(KorisnikProzor.this, "Morate selektovati korisnika.",
+					 "Info", JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			if (JOptionPane.showConfirmDialog(null, "Jeste sigurno da zelite obrisati?", "Brisanje Korisnika",
+			        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				String korisnickoIme = table.getModel().getValueAt(rIndex, 0).toString();
+				Korisnik k = ((AdminHomepage)parent).getSesija().getKorisnici().trazi(korisnickoIme);
+				korisnici.remove(k);
+				k.setStatus(false);
+				KorisnikProzor.this.refreshData();
+			}
+		}
+	}
 	
 	private void refreshData() {
 		KorisnikModel km = (KorisnikModel)table.getModel();
 		km.fireTableDataChanged();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnAdd || e.getSource() == popupMenu.menuItemAdd) 
+			dodaj();
+		else if (e.getSource() == btnEdit || e.getSource() == popupMenu.menuItemEdit)
+			edituj();
+		else
+			izbrisi();
+		
 	}
 }

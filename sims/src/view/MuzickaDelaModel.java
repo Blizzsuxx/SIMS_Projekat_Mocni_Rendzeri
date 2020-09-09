@@ -47,7 +47,8 @@ public class MuzickaDelaModel extends AbstractTableModel {
 		}
 		return null;
 	}
-	 @Override
+	 @SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
      public Class getColumnClass(int columnIndex) {
 		 if(columnIndex==4) {
         return Boolean.class;}

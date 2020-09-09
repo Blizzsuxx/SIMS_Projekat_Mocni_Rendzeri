@@ -28,7 +28,6 @@ import org.jdatepicker.impl.UtilDateModel;
 
 import controler.IzvestajSvihIzvodjacaMenadzer;
 import controler.ZanroviMenadzer;
-import model.Izvodjac;
 import model.Sesija;
 import model.Zanr;
 import net.miginfocom.swing.MigLayout;
@@ -38,6 +37,7 @@ public class IzvestajViseIzvodjaca extends JFrame{
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
+	@SuppressWarnings("unused")
 	private Sesija sesija;
 	private IzvestajSvihIzvodjacaMenadzer men;
 	private JButton btnBack, btnOk;
@@ -49,6 +49,7 @@ public class IzvestajViseIzvodjaca extends JFrame{
 	
 	
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public IzvestajViseIzvodjaca(Sesija s, ZanroviMenadzer zm) {
 		this.sesija=s;
 		this.men=s.namestiIzvestajIzvodjaca();

@@ -164,7 +164,6 @@ public abstract class Korisnik implements Slikovit {
 
 	public String toFileString() {
 		//pera preic pera@gmail.com muski 02.05.2001. sifra1 pera1 04.11.2010. true a
-		String pattern = "dd/MM/yyyy";
 		SimpleDateFormat df = Constants.FORMAT_ZA_DATUM;
 		String ad=this.ime+","+this.prezime+","+this.eMail+","+this.pol.toString()+",";
 		ad+=df.format(this.getDatumRodjenja())+","+this.nalog.getSifra();

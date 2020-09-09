@@ -102,13 +102,14 @@ public abstract class Homepage extends JFrame {
 		//Pregled profila
 		
 		//DUMMY - Hardcoded KorisnikAplikacije
-		if(sesija.getTrenutniKorisnik() == null)
+		//sesija.getTrenutniKorisnik()
+		if(Sesija.getTrenutniKorisnik() == null)
 		{
 			JOptionPane.showMessageDialog(this, "Da bi ste pregledali svoj profil morate imati nalog.", "Profil", JOptionPane.INFORMATION_MESSAGE);
 		}
 		else 
 		{
-			DijalogRadSaNalogom radSaNalogom = new DijalogRadSaNalogom(this, sesija.getTrenutniKorisnik(), "Rad sa nalogom");
+			DijalogRadSaNalogom radSaNalogom = new DijalogRadSaNalogom(this, Sesija.getTrenutniKorisnik(), "Rad sa nalogom");
 			radSaNalogom.setVisible(true);
 		}	
 	}

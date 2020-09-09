@@ -8,7 +8,6 @@ package model;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -197,7 +196,8 @@ public class Sesija {
    public static Sesija namestiSesiju(Korisnik korisnik, CitacDatoteka datoteke, LoginMenadzer menadzer) {
       // TODO Auto-generated method stub
       if (trenutnaSesija != null) {
-         trenutnaSesija.setTrenutniKorisnik(korisnik);
+         //trenutnaSesija.setTrenutniKorisnik(korisnik);
+    	  Sesija.setTrenutniKorisnik(korisnik);
          return trenutnaSesija;
       } else {
          trenutnaSesija = new Sesija(korisnik, datoteke.getKorisnici(), datoteke.getIzvodjaci(), datoteke.getZanrovi(), datoteke.getDeloMenadzer(), datoteke.getMuzickaDela(), datoteke.getGrupe(),
@@ -218,7 +218,8 @@ public class Sesija {
       this.setUtisakMenadzer(utisakMenadzer);
       this.setZakazanaRecenzijaMenadzer(zakazanaRecenzijaMenadzer);
       this.setRecenzijeZaIzmenuMenadzer(recenzijeZaIzmenuMenadzer);
-      this.setTrenutniKorisnik(trenutniKorisnik);
+      //this.setTrenutniKorisnik(trenutniKorisnik);
+      Sesija.setTrenutniKorisnik(trenutniKorisnik);
       this.setAlbumKontroler(albumKontroler);
       this.setGlasanjeMenadzer(glasanjeMenadzer);
 	this.loginMenadzer = loginMenadzer;
@@ -399,6 +400,7 @@ public boolean addGrupe(Grupa pi) {
 }
 
 
+@SuppressWarnings("unchecked")
 public Collection<Urednik> getUrednici() {
 	// TODO Auto-generated method stub
 	return (Collection<Urednik>)(Collection<?>) this.korisnici.vratiUrednike();

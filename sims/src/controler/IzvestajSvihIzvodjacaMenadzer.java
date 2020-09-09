@@ -79,7 +79,9 @@ public class IzvestajSvihIzvodjacaMenadzer {
 		double ocenaKo=0;
 		double ocenaUr=0; 
 		int brD=0;
+		@SuppressWarnings("deprecation")
 		Date danPocetka=new Date(dan.getYear(), dan.getMonthValue(), dan.getDayOfMonth());
+		@SuppressWarnings("deprecation")
 		Date dankraja=new Date(dan1.getYear(), dan1.getMonthValue(), dan1.getDayOfMonth());
 		for(MuzickoDelo m: muzickaDela) {
 			if(m.getDatumIzdavanja().after(danPocetka) && m.getDatumIzdavanja().before(dankraja)) {

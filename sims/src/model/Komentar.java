@@ -5,7 +5,6 @@
  ***********************************************************************/
 package model;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -23,7 +22,6 @@ public Komentar(String text, Date datumUpisa, boolean status, MuzickoDelo delo, 
 public String toFileString() {
 	String ad="";
 	ad+=this.getDelo().getNaziv()+";";
-	String pattern = "dd.MM.yyyy.";
 	SimpleDateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;;
 	ad+=df.format(this.getDatumUpisa())+";";//
 	ad+=this.isStatus()+";";

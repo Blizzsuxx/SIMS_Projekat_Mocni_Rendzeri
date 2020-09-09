@@ -17,10 +17,10 @@ import model.Uloga;
 public class UrednikHomepage extends Homepage {
 	 private static final long serialVersionUID = 1L;
 
-	 private JMenu listaMenu, korisniciMenu;
-	 private JMenuItem listaItem1, listaItem2, listaItem3, listaItem4,
+	 private JMenu recenzijeMenu, korisniciMenu, listeMenu;
+	 private JMenuItem recenzijeItem1, recenzijeItem2, recenzijeItem3,
 	 korisniciItem1, korisniciItem2, korisniciItem3, korisniciItem4, korisniciItem5, korisniciItem6,
-	 korisniciItem7;
+	 korisniciItem7, listeItem1, listeItem2;
 	 
 	public UrednikHomepage(Sesija sesija) {
 	    super(sesija);
@@ -43,23 +43,17 @@ public class UrednikHomepage extends Homepage {
 	}
 	    
 	private void initGUI() {
-		listaMenu = new JMenu("Liste");
-		    	
-		listaItem1 = new JMenuItem("Top Liste");
-		listaMenu.add(listaItem1);
-		listaItem2 = new JMenuItem("Recenzirani Sadrzaj");
-		listaMenu.add(listaItem2);
-		listaMenu.addSeparator();
-		listaItem3 = new JMenuItem("Istorija Recenzija");
-		listaMenu.add(listaItem3);
-		listaItem4 = new JMenuItem("Istorija Zakazanih Recenzija");
-		listaMenu.add(listaItem4);
-		menubar.add(listaMenu);
+		recenzijeMenu = new JMenu("Recenzije");  	
+		recenzijeItem1 = new JMenuItem("Recenzirani Sadrzaj");
+		recenzijeMenu.add(recenzijeItem1);
+		recenzijeItem2= new JMenuItem("Istorija Recenzija");
+		recenzijeMenu.add(recenzijeItem2);
+		recenzijeItem3 = new JMenuItem("Istorija Zakazanih Recenzija");
+		recenzijeMenu.add(recenzijeItem3);
+		menubar.add(recenzijeMenu);
 		    	
 		korisniciMenu = new JMenu("Korisnici");
-		    	
 		korisniciItem1 = new JMenuItem("Korisnici");
-
 		korisniciMenu.add(korisniciItem1);
 		korisniciItem2 = new JMenuItem("Korisnici Aplikacije");
 		korisniciMenu.add(korisniciItem2);
@@ -68,11 +62,7 @@ public class UrednikHomepage extends Homepage {
 		korisniciItem4 = new JMenuItem("Admini");
 		korisniciMenu.add(korisniciItem4);
 		korisniciMenu.addSeparator();
-
-	
-
 		korisniciItem5 = new JMenuItem("Registracija Izvodjaca");
-
 		korisniciMenu.add(korisniciItem5);
 		korisniciMenu.addSeparator();
 		korisniciItem6 = new JMenuItem("Neprihvaceni Izvodjaci");
@@ -80,10 +70,18 @@ public class UrednikHomepage extends Homepage {
 		korisniciItem7 = new JMenuItem("Prihvaceni Izvodjaci");
 		korisniciMenu.add(korisniciItem7);
 		menubar.add(korisniciMenu);
+		
+		listeMenu = new JMenu("Liste");
+		listeItem1 = new JMenuItem("Kreiranje Top Liste");
+		listeMenu.add(listeItem1);
+		listeItem2 = new JMenuItem("Pregled Top Listi");
+		listeMenu.add(listeItem2);
+		menubar.add(listeMenu);
+		
 	}
 	    
 	private void initAction() {
-		listaItem1.addActionListener(new ActionListener() {
+		recenzijeItem1.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -95,7 +93,7 @@ public class UrednikHomepage extends Homepage {
 	    		
 	    });
 	    	
-	    listaItem2.addActionListener(new ActionListener() {
+		recenzijeItem2.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -105,7 +103,7 @@ public class UrednikHomepage extends Homepage {
 	    		
 	    });
 	    
-	    listaItem3.addActionListener(new ActionListener() {
+		recenzijeItem3.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -115,15 +113,6 @@ public class UrednikHomepage extends Homepage {
 	    	
 	    });
 	    
-	    listaItem4.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-	    	
-	    });
 	    
 	    korisniciItem1.addActionListener(new ActionListener() {
 
@@ -222,6 +211,26 @@ public class UrednikHomepage extends Homepage {
 						UrednikHomepage.this.getSesija().getIzvodjacMenadzer().vratiIzvodjaceNaOsnovuOdobrenosti(true));
 				ip.setVisible(true);
 				
+				
+			}
+	    	
+	    });
+	    
+	    listeItem1.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+	    	
+	    });
+	    
+	    listeItem2.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
 				
 			}
 	    	

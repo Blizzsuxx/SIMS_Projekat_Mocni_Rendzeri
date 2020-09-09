@@ -6,7 +6,6 @@
 package model;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import controler.Constants;
@@ -138,7 +137,6 @@ public class ZakazanaRecenzija {
 
 public String toFileString() {
 	//opis tru dan dan rec
-	String pattern = "dd.MM.yyyy.";
 	DateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;
 	String ad=this.getOpis()+";"+this.isUradeno()+";";
 	ad+=df.format(this.getDatumZakazivanja())+";";

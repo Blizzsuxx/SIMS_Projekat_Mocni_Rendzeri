@@ -22,6 +22,7 @@ public class IzvestajIzvodjaca extends JFrame {
 	private Sesija sesija;
 	private Izvodjac izvodjac;
 	private JButton btnBack;
+	@SuppressWarnings("unused")
 	private JTable table;
 	private JTextField tfImeUrednika, tfUkupnoDela, tfbrojRec, tfBrojkom, tfOcenaUr, tfOcenaKor;
 	private IzvestajJednogIzvodjaca jedan;

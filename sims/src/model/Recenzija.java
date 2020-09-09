@@ -4,7 +4,6 @@
  * Purpose: Defines the Class Recenzija
  ***********************************************************************/
 package model;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -79,7 +78,6 @@ public void setAll(String text, String naslov2, Izvodjac i, MuzickoDelo md) {
 public String toFileString() {
 	String ad="";
 	ad+=this.getDelo().getNaziv()+";";
-	String pattern = "dd.MM.yyyy.";
 	SimpleDateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;
 	ad+=df.format(this.getDatumUpisa())+";";//
 	ad+=this.isStatus()+";";

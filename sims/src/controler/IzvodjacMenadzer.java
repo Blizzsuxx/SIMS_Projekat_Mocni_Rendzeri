@@ -13,7 +13,6 @@ import model.Grupa;
 import model.Izvodjac;
 import model.Pojedinacanizvodjac;
 import model.Pol;
-import model.Zanr;
 import view.Slikovit;
 import view.TableModelWrapper;
 

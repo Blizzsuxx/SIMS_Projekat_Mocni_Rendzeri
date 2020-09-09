@@ -117,7 +117,9 @@ public class LoginMenadzer {
       // TODO: implement
 	   KorisnikAplikacije novKorisnik = new KorisnikAplikacije();
 	   DijalogKorisnickihInformacija dijalog = new DijalogKorisnickihInformacija(prozor, novKorisnik) {
-		   @Override
+		private static final long serialVersionUID = 1L;
+
+		@Override
 		   protected void buttonTriggered() {
 			   if(novKorisnik.getNalog() != null && !korisnici.provjeriKorisnickoIme(novKorisnik.getNalog().getKorisnickoIme())) {
 					korisnici.dodaj(novKorisnik);

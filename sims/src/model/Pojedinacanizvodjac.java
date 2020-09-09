@@ -6,7 +6,6 @@
 package model;
 import java.awt.image.BufferedImage;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -110,6 +109,7 @@ public class Pojedinacanizvodjac extends Izvodjac {
 		}
 		return imena;
 	}
+	@SuppressWarnings("deprecation")
 	@Override
 	public String toFileString() {
 		String ad="";
@@ -139,7 +139,6 @@ public class Pojedinacanizvodjac extends Izvodjac {
 	}
 	
 	public static String PojedinacniIzvodjac2String(Pojedinacanizvodjac pi) {
-		String pattern = "dd.MM.yyyy.";
 		DateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;
 		return pi.isOdobrenost()+";"+pi.getUmetnickoIme() + ";"  + pi.getZanr().getNazivZanra() + ";" + bool2String(pi.isStatus()) + ";" + pi.getIme() + ";" +
 				pi.getPrezime() + ";" + df.format(pi.getDatumRodjenja()) + ";" + df.format(pi.getDatumSmrti()) +

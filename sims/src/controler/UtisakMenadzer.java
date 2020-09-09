@@ -5,15 +5,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import model.FrontEndKorisnik;
-import model.Grupa;
 import model.Komentar;
 import model.Korisnik;
 import model.MuzickoDelo;

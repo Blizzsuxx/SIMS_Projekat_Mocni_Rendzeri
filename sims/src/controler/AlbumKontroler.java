@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.List;
 
 import model.Album;
-import model.Grupa;
 import model.Izvodjac;
 import model.MuzickoDelo;
 import model.Urednik;

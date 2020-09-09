@@ -39,6 +39,7 @@ public class IzvestajViseUrednika extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Collection<Urednik> urednici;
+	@SuppressWarnings("unused")
 	private JButton btnBack, btnOk, btnPregledaj;
 	private JTable table;
 	private JDatePickerImpl DatePicker2, DatePicker1;

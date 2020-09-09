@@ -2,7 +2,6 @@ package model;
 
 import java.awt.image.BufferedImage;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -90,7 +89,6 @@ public class Album implements Slikovit {
 
 	public String toFileString() {
 		//izvodjac,urednik, dan,odobreno, naslov, izbrisi, dela....
-		String pattern = "dd.MM.yyyy.";
 		DateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;;
 		String ad="";
 		ad+=this.getIzvodjac().getUmetnickoIme()+",";

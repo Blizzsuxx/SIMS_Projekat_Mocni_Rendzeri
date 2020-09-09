@@ -44,9 +44,11 @@ public class ZakazanaRecenzijaMenadzer {
 					for(String[] linije : data){
 					DateTimeFormatter df=DateTimeFormatter.ofPattern("dd.MM.yyyy.");
 					LocalDate dan=LocalDate.parse(linije[1].trim(), df);
+					@SuppressWarnings("deprecation")
 					Date d=new Date(dan.getYear(), dan.getMonthValue(), dan.getDayOfMonth());
 					
 					LocalDate rok=LocalDate.parse(linije[2].trim(), df);
+					@SuppressWarnings("deprecation")
 					Date rok2=new Date(rok.getYear(), rok.getMonthValue(), rok.getDayOfMonth());
 					Recenzija r=pronadiRecenziju(linije[4].trim(), recenzije);
 					if(r!=null) {

@@ -180,6 +180,18 @@ public class MuzickiSadrzajMenadzer {
 		}
 		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
 	}
+	
+	public TableModelWrapper getTabelaMuzickihDela()  throws Exception {
+		String[] columns = { "Naziv" ,"Opis", "Datum izdavanja"};
+		Class<?>[] columnTypes = { String.class, String.class, Date.class};
+		boolean[] editableColumns = { false, false, false};
+		int[] columnWidths = { 200, 200, 200};
+		ArrayList<Object[]> data = new ArrayList<Object[]>();
+		for (MuzickoDelo md : muzickaDela) {
+			data.add(new Object[] {md.getNaslov(), md.getOpis(), md.getDatumIzadavanja()});
+		}
+		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
+	}
 
 	public ArrayList<Slikovit> trazi(String substring) {
 		ArrayList<Slikovit> delaKojaSadzeString = new ArrayList<>();

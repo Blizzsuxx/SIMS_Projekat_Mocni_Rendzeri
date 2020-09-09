@@ -1,6 +1,5 @@
 package view;
 
-import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.JLabel;
 import javax.swing.ListSelectionModel;
@@ -26,19 +25,22 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class DodelaRecenzija extends JFrame {
+public class DodelaRecenzija extends MojDialog {
 	private static final long serialVersionUID = 1L;
 	private JTable zakazaneRecenzije;
 	private JTable recenzijeZaIzmenu;
 	@SuppressWarnings("rawtypes")
 	private JComboBox cmbUrednici;
 	private Sesija sesija;
+	private String title;
 
 	@SuppressWarnings("rawtypes")
-	public DodelaRecenzija(Sesija sesija) throws Exception {
+	public DodelaRecenzija(Sesija sesija, String title, int dim1, int dim2) throws Exception {
+		super(title, dim1, dim2);
 		this.sesija = sesija;
+		this.title = title;
 		setResizable(false);
-		setTitle("Dodela recenzija");
+		setTitle(title);
 		getContentPane().setLayout(null);
 		
 		zakazaneRecenzije = new JTable();
@@ -56,7 +58,7 @@ public class DodelaRecenzija extends JFrame {
 		getContentPane().add(lblZakazaneRecenzije);
 		
 		JLabel lblRecenzijeZaIzmenu = new JLabel("Recenzije za izmenu");
-		lblRecenzijeZaIzmenu.setBounds(400, 11, 111, 14);
+		lblRecenzijeZaIzmenu.setBounds(400, 11, 157, 14);
 		getContentPane().add(lblRecenzijeZaIzmenu);
 		
 		cmbUrednici = new JComboBox();
@@ -82,6 +84,8 @@ public class DodelaRecenzija extends JFrame {
 		ucitajRecenzijeZaIzmenu();
 		
 		ucitajUrednike();
+		
+		setVisible(true);
 	}
 	
 	private void ucitajZakazaneRecenzije() throws Exception {
@@ -109,7 +113,6 @@ public class DodelaRecenzija extends JFrame {
 			if (k.getClass() == Urednik.class) {
 				cmbUrednici.addItem(k.getNalog().getKorisnickoIme());
 			}
-	        it.remove();
 	    }
 	}
 	
@@ -147,7 +150,6 @@ public class DodelaRecenzija extends JFrame {
 				urednik = (Urednik)k;
 				break;
 			}
-	        it.remove();
 	    }
 		if (urednik != null)
 			setuj(urednik, zakazaneRecenzije, recenzijeZaIzmenu);

@@ -1,6 +1,5 @@
 package view;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -36,7 +35,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 
-public class RegistarcijaAlbuma extends JFrame {
+public class RegistarcijaAlbuma extends MojDialog {
 	private static final long serialVersionUID = 1L;
 	private JTextField txtNaziv;
 	private JTable pesme;
@@ -47,12 +46,15 @@ public class RegistarcijaAlbuma extends JFrame {
 	private Sesija sesija;
 	private JButton btnDodajPesmu;
 	private Urednik urednik;
+	private String title;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public RegistarcijaAlbuma(Sesija sesija) throws Exception {
+	public RegistarcijaAlbuma(Sesija sesija, String title, int dim1, int dim2) throws Exception {
+		super(title, dim1, dim2);
 		this.sesija = sesija;
+		this.title = title;
 		setResizable(false);
-		setTitle("Registracija albuma");
+		setTitle(title);
 		getContentPane().setLayout(null);
 		
 		JLabel lblNaziv = new JLabel("Naziv:");
@@ -60,7 +62,7 @@ public class RegistarcijaAlbuma extends JFrame {
 		getContentPane().add(lblNaziv);
 		
 		txtNaziv = new JTextField();
-		txtNaziv.setBounds(24, 35, 627, 20);
+		txtNaziv.setBounds(24, 35, 627, 40);
 		getContentPane().add(txtNaziv);
 		txtNaziv.setColumns(10);
 		
@@ -98,6 +100,7 @@ public class RegistarcijaAlbuma extends JFrame {
 		p.put("text.year", "Godina");
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
 		dtDor = new JDatePickerImpl(datePanel, new DataLabelFormatter());
+		sl_dtDor = new SpringLayout();
 		sl_dtDor.putConstraint(SpringLayout.NORTH, dtDor.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDor);
 		sl_dtDor.putConstraint(SpringLayout.WEST, dtDor.getJFormattedTextField(), 33, SpringLayout.WEST, dtDor);
 		sl_dtDor.putConstraint(SpringLayout.EAST, dtDor.getJFormattedTextField(), 211, SpringLayout.WEST, dtDor);
@@ -156,8 +159,10 @@ public class RegistarcijaAlbuma extends JFrame {
 		
 		if (urednik == null) {
 			JOptionPane.showMessageDialog(null, "Nemaju zahtevi za registraciju albuma.");
-			RegistarcijaAlbuma.this.dispose();
+			return;
 		}
+		
+		setVisible(true);
 	}
 	
 	private void ucitajPesme(String umetnickoIme) throws Exception {
@@ -229,7 +234,7 @@ public class RegistarcijaAlbuma extends JFrame {
 		urednik = ucitajZahteve();
 		if (urednik == null) {
 			JOptionPane.showMessageDialog(null, "Nemaju zahtevi za registraciju albuma.");
-			RegistarcijaAlbuma.this.dispose();
+			return;
 		}
 		pesme.setModel(new DefaultTableModel(null, new String[] {"Naziv" ,"Opis", "Datum izdavanja"}));
 	}
@@ -252,7 +257,7 @@ public class RegistarcijaAlbuma extends JFrame {
 	}
 	
 	private void dodajPesmu(String umetnickoIme) throws Exception {
-		new DodajMuzickoDelo(sesija,sesija.getIzvodjac(umetnickoIme), 0);
+		new DodajMuzickoDelo(sesija, "Dodavanje muzickog dela", 500, 500, sesija.getIzvodjac(umetnickoIme), 0);
 		ucitajPesme(umetnickoIme);
 	}
 }

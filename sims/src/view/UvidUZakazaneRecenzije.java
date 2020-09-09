@@ -1,6 +1,5 @@
 package view;
 
-import javax.swing.JFrame;
 import javax.swing.JTable;
 
 import controler.KorisniciMenadzer;
@@ -14,14 +13,17 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class UvidUZakazaneRecenzije extends JFrame {
+public class UvidUZakazaneRecenzije extends MojDialog {
 	private static final long serialVersionUID = 1L;
 	private JTable zakazaneRecenzije;
 	private Sesija sesija;
+	private String title;
 	
-	public UvidUZakazaneRecenzije(Sesija sesija) throws Exception {
+	public UvidUZakazaneRecenzije(Sesija sesija, String title, int dim1, int dim2) throws Exception {
+		super(title, dim1, dim2);
 		this.sesija = sesija;
-		setTitle("Uvid u zakazane recenzije");
+		this.title = title;
+		setTitle(title);
 		setResizable(false);
 		getContentPane().setLayout(null);
 		
@@ -64,7 +66,7 @@ public class UvidUZakazaneRecenzije extends JFrame {
 			}
 		}
 		if (recenzija != null) {
-			new DodavanjeRecenzije(sesija, recenzija);
+			new DodavanjeRecenzije(sesija, recenzija, "Izmena recenzije", 500, 500);
 			Urednik urednik = (Urednik)Sesija.getTrenutniKorisnik();
 			KorisniciMenadzer km = sesija.getKorisnici();
 			km.getKorisnici().replace(urednik.getNalog().getKorisnickoIme(), urednik);

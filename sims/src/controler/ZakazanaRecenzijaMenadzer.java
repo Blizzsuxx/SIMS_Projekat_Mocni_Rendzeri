@@ -3,6 +3,7 @@ package controler;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class ZakazanaRecenzijaMenadzer {
 		this.sve = new ArrayList<ZakazanaRecenzija>();
 	}
 
-	public ZakazanaRecenzijaMenadzer(KorisniciMenadzer korisnici,ArrayList<Recenzija> recenzije, List<String[]> data) {
+	public ZakazanaRecenzijaMenadzer(KorisniciMenadzer korisnici,ArrayList<Recenzija> recenzije, List<String[]> data) throws ParseException {
 		this();
 		ucitajZakazane(korisnici, recenzije, data);
 
@@ -39,21 +40,16 @@ public class ZakazanaRecenzijaMenadzer {
 	}
 
 
-	private void ucitajZakazane(KorisniciMenadzer korisnici,ArrayList<Recenzija> recenzije, List<String[]> data) {
+	private void ucitajZakazane(KorisniciMenadzer korisnici,ArrayList<Recenzija> recenzije, List<String[]> data) throws ParseException {
 		
 					for(String[] linije : data){
-					DateTimeFormatter df=DateTimeFormatter.ofPattern("dd.MM.yyyy.");
-					LocalDate dan=LocalDate.parse(linije[1].trim(), df);
-					@SuppressWarnings("deprecation")
-					Date d=new Date(dan.getYear(), dan.getMonthValue(), dan.getDayOfMonth());
-					
-					LocalDate rok=LocalDate.parse(linije[2].trim(), df);
-					@SuppressWarnings("deprecation")
-					Date rok2=new Date(rok.getYear(), rok.getMonthValue(), rok.getDayOfMonth());
+					Date d = Constants.NATASIN_FORMAT_ZA_DATUM.parse(linije[2].trim());
+					Date rok2=Constants.NATASIN_FORMAT_ZA_DATUM.parse(linije[3].trim());
 					Recenzija r=pronadiRecenziju(linije[4].trim(), recenzije);
 					if(r!=null) {
-					ZakazanaRecenzija a = new ZakazanaRecenzija(d,linije[0].trim(), false,rok2, r, r.getUrednik() );
-					if (linije[5].trim().equals("true")) {
+					ZakazanaRecenzija a = new ZakazanaRecenzija(d,linije[0].trim(), Boolean.parseBoolean(linije[1].trim()),
+							rok2, r, r.getUrednik() );
+					if (linije[1].trim().equals("true")) {
 					a.setUradeno(true);
 					}
 					sve.add( a);}

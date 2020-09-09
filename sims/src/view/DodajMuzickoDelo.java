@@ -9,7 +9,6 @@ import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -28,9 +27,9 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 import javax.swing.SwingConstants;
 
-public class DodajMuzickoDelo extends JDialog {
+public class DodajMuzickoDelo extends MojDialog {
 	private static final long serialVersionUID = 1L;
-	public Sesija sesija;
+	private Sesija sesija;
 	public Izvodjac izv;
 	public JTextField naziv, opis;
 	public String naslov, opisDela, datumIzdavanja;
@@ -41,21 +40,22 @@ public class DodajMuzickoDelo extends JDialog {
 	private JDatePickerImpl dtDop;
 	private SpringLayout sl_dtDop;
 	private JLabel lblIzvodjac;
+	private String title;
 	@SuppressWarnings("rawtypes")
 	private JComboBox izvodjaci;
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public DodajMuzickoDelo(Sesija sesija, Izvodjac izv, int br) {
-		super();
+	public DodajMuzickoDelo(Sesija sesija, String title, int dim1, int dim2, Izvodjac izv, int br) {
+		super(title, dim1, dim2);
 		setResizable(false);
-		this.sesija = sesija;
 		this.izv = izv;
+		this.sesija = sesija;
 		if (br == 1) {
 			izvodjaci = new JComboBox(sesija.izvadiImenaIzvodjaca());
 			izvodjaci.setSelectedIndex(0);
 		}
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setSize(422,417);
-		setTitle("Dodavanje muzickog dela");
+		setTitle(title);
 		initGui();
 		initActions();
 	}
@@ -102,13 +102,14 @@ public class DodajMuzickoDelo extends JDialog {
 		p.put("text.year", "Godina");
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
 		dtDop = new JDatePickerImpl(datePanel, new DataLabelFormatter());
+		sl_dtDop = new SpringLayout();
 		sl_dtDop.putConstraint(SpringLayout.NORTH, dtDop.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDop);
 		sl_dtDop.putConstraint(SpringLayout.WEST, dtDop.getJFormattedTextField(), 33, SpringLayout.WEST, dtDop);
 		sl_dtDop.putConstraint(SpringLayout.EAST, dtDop.getJFormattedTextField(), 211, SpringLayout.WEST, dtDop);
 		sl_dtDop = (SpringLayout) dtDop.getLayout();
 		getContentPane().add(dtDop, "cell 1 2");
 		
-		ZanroviMenadzer zm = sesija.getZanroviMenadzer();
+		ZanroviMenadzer zm = (sesija.getZanroviMenadzer());
 		TableModelWrapper tmw = zm.getTabelaZanrova();
 		
 		lblZanrovi = new JLabel("Zanrovi:");
@@ -131,6 +132,8 @@ public class DodajMuzickoDelo extends JDialog {
 		btnNazad = new JButton("Nazad");
 		btnNazad.setHorizontalAlignment(SwingConstants.RIGHT);
 		getContentPane().add(btnNazad, "cell 1 8,alignx right");
+		
+		setVisible(true);
 	}
 	
 	private void dodaj() throws ParseException {
@@ -141,7 +144,7 @@ public class DodajMuzickoDelo extends JDialog {
 		naslov = naziv.getText();
 		opisDela = opis.getText();
 		if (br == 1) {
-			izv = sesija.getIzvodjac((String) izvodjaci.getSelectedItem());
+			izv = (sesija.getIzvodjac((String) izvodjaci.getSelectedItem()));
 		}
 		ZanroviMenadzer zm = sesija.getZanroviMenadzer();
 		ArrayList<Zanr> listaZanrova = new ArrayList<Zanr>();

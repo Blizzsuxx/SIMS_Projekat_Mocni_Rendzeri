@@ -1,7 +1,5 @@
 package view;
 
-import javax.swing.JFrame;
-
 import model.Izvodjac;
 import model.MuzickoDelo;
 import model.Recenzija;
@@ -25,9 +23,10 @@ import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.ListSelectionModel;
 
-public class DodavanjeRecenzije extends JFrame {
+public class DodavanjeRecenzije extends MojDialog {
 	private static final long serialVersionUID = 1L;
 	private Sesija sesija;
+	private String title;
 	private Recenzija recenzija;
 	private JTextField txtNaslov;
 	private JTable dela;
@@ -36,9 +35,11 @@ public class DodavanjeRecenzije extends JFrame {
 	private JComboBox cmbIzvodjaci;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public DodavanjeRecenzije(Sesija sesija, Recenzija recenzija) {
+	public DodavanjeRecenzije(Sesija sesija, Recenzija recenzija, String title, int dim1, int dim2) {
+		super(title, dim1, dim2);
 		this.recenzija = recenzija;
 		this.sesija = sesija;
+		this.title = title;
 		setResizable(false);
 		getContentPane().setLayout(null);
 		
@@ -94,13 +95,13 @@ public class DodavanjeRecenzije extends JFrame {
 		
 		JButton btnDodaj;
 		if (recenzija != null) {
-			setTitle("Izmena recenzije");
+			setTitle(title);
 			btnDodaj = new JButton("Izmeni");
 			cmbIzvodjaci.setEnabled(false);
 			dela.setEnabled(false);
 		}
 		else {
-			setTitle("Dodavanje recenzije");
+			setTitle(title);
 			btnDodaj = new JButton("Dodaj");
 		}
 		
@@ -114,6 +115,8 @@ public class DodavanjeRecenzije extends JFrame {
 		});
 		btnDodaj.setBounds(615, 365, 89, 23);
 		getContentPane().add(btnDodaj);
+		
+		setVisible(true);
 	}
 	
 	private void ucitajPesme(String umetnickoIme) throws Exception {

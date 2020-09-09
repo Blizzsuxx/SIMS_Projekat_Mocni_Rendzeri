@@ -153,6 +153,10 @@ public class LoginMenadzer {
 		   JOptionPane.showMessageDialog(prozor, "Pogresni username ili sifra");
 		   return;
 	   }
+	   if (!korisnik.isStatus()) {
+		   JOptionPane.showMessageDialog(prozor, "Ovaj nalog je blokiran!");
+		   return;
+	   }
 	   prozor.setVisible(false);
 	   zapocniSesiju(korisnik);
 	   

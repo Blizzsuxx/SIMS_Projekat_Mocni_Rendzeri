@@ -16,9 +16,9 @@ import model.Uloga;
 public class AdminHomepage extends Homepage {
 	private static final long serialVersionUID = 1L;
 
-	private JMenu korisniciMenu, izvodjaciMenu, zanroviMenu;
-	private JMenuItem korisniciItem1, korisniciItem2, korisniciItem3, korisniciItem4,
-	izvodjaciItem1, izvodjaciItem2, zanroviItem1;
+	private JMenu korisniciMenu, izvodjaciMenu, zanroviMenu, recenzijeMenu;
+	private JMenuItem korisniciItem1, korisniciItem2, korisniciItem3, korisniciItem4, korisniciItem5,
+	izvodjaciItem1, izvodjaciItem2, izvodjaciItem3, zanroviItem1, recenzijeItem1, recenzijeItem2, recenzijeItem3;
 	
 	public AdminHomepage(Sesija sesija) {
 		super(sesija);
@@ -50,6 +50,8 @@ public class AdminHomepage extends Homepage {
 		korisniciMenu.add(korisniciItem3);
 		korisniciItem4 = new JMenuItem("Admini");
 		korisniciMenu.add(korisniciItem4);
+		korisniciItem5 = new JMenuItem("Nalozi");
+		korisniciMenu.add(korisniciItem5);
 		menubar.add(korisniciMenu);
 		
 		izvodjaciMenu = new JMenu("Izvodjaci");
@@ -57,12 +59,24 @@ public class AdminHomepage extends Homepage {
 		izvodjaciMenu.add(izvodjaciItem1);
 		izvodjaciItem2 = new JMenuItem("Prihvaceni Izvodjaci");
 		izvodjaciMenu.add(izvodjaciItem2);
+		izvodjaciItem3 = new JMenuItem("Promena zanra izvodjaca");
+		izvodjaciMenu.add(izvodjaciItem3);
 		menubar.add(izvodjaciMenu);
 		
 		zanroviMenu = new JMenu("Zanrovi");
 		zanroviItem1 = new JMenuItem("Aktivni Zanrovi");
 		zanroviMenu.add(zanroviItem1);
 		menubar.add(zanroviMenu);
+		
+		recenzijeMenu = new JMenu("Recenzije");
+		recenzijeItem1 = new JMenuItem("Narucivanje recenzija");
+		recenzijeMenu.add(recenzijeItem1);
+		recenzijeItem2 = new JMenuItem("Dodela recenzija");
+		recenzijeMenu.add(recenzijeItem2);
+		recenzijeItem3 = new JMenuItem("Uvid u zavrsene recenzije");
+		recenzijeMenu.add(recenzijeItem3);
+		menubar.add(recenzijeMenu);
+		
 	}
 	
 	private void actionGUI() {
@@ -121,6 +135,20 @@ public class AdminHomepage extends Homepage {
 			}
 		});
 		
+		korisniciItem5.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new BlokiranjeNaloga(AdminHomepage.this.getSesija(), "Blokiranje naloga", 450, 300);
+				} 
+				catch (Exception e1) {
+	
+					e1.printStackTrace();
+				}	
+			}
+		});
+		
 		izvodjaciItem1.addActionListener(new ActionListener() {
 
 			@Override
@@ -147,6 +175,20 @@ public class AdminHomepage extends Homepage {
 			
 		});
 		
+		izvodjaciItem3.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new PromenaZanraIzvodjaca(AdminHomepage.this.getSesija(), "Promena zanra izvodjaca", 710, 550);
+				} 
+				catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+			
+		});
+		
 		zanroviItem1.addActionListener(new ActionListener() {
 
 			@Override
@@ -155,6 +197,48 @@ public class AdminHomepage extends Homepage {
 						AdminHomepage.this.getSesija().getZanroviMenadzer().vratiAktivneZanrove());
 				zp.setVisible(true);
 				
+			}
+			
+		});
+		
+		recenzijeItem1.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new DodavanjeZakRecIRecZaIzemnu(AdminHomepage.this.getSesija(), "Narucivanje recenzija", 415, 500);
+				} 
+				catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+			
+		});
+		
+		recenzijeItem2.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new DodelaRecenzija(AdminHomepage.this.getSesija(), "Dodela recenzija", 790, 350);
+				} 
+				catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+			
+		});
+		
+		recenzijeItem3.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new UvidUZavrseneRecenzije(AdminHomepage.this.getSesija(), "Uvid u zavrsene recenzije", 625, 326);
+				} 
+				catch (Exception e1) {
+					e1.printStackTrace();
+				}
 			}
 			
 		});

@@ -143,8 +143,6 @@ public String toFileString() {
 	ad+=df.format(this.rok)+";";
 	ad+=this.getRecenzija().getNaslov()+";";
 	ad+=this.getUrednik().getNalog().getKorisnickoIme()+";";
-	ad+=this.isUradeno();
-	
 	return ad;
 }
 

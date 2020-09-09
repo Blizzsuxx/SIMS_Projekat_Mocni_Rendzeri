@@ -352,13 +352,13 @@ public ArrayList<Recenzija> getRecenzije() {
 }
 
 
-public Collection<Pojedinacanizvodjac> getUmetnici() {
+public ArrayList<Pojedinacanizvodjac> getUmetnici() {
 	// TODO Auto-generated method stub
 	return this.izvodjacMenadzer.getSolo();
 }
 
 
-public Collection<Grupa> getGrupe() {
+public ArrayList<Grupa> getGrupe() {
 	// TODO Auto-generated method stub
 	return this.izvodjacMenadzer.getGrupe();
 }

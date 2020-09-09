@@ -1,6 +1,5 @@
 package view;
 
-import javax.swing.JFrame;
 import javax.swing.JTable;
 
 import controler.IzvodjacMenadzer;
@@ -18,17 +17,22 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
-public class PromenaZanraIzvodjaca extends JFrame {
+public class PromenaZanraIzvodjaca extends MojDialog {
 	private static final long serialVersionUID = 1L;
 	private JTable pojedninacniIzvodjaci;
-	public Sesija sesija;
 	private JTable grupe;
+	private String title;
+	private Sesija sesija;
+	@SuppressWarnings("rawtypes")
+	private JComboBox cmbZanr;
 	
-	@SuppressWarnings("unchecked")
-	public PromenaZanraIzvodjaca(Sesija sesija) throws Exception {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public PromenaZanraIzvodjaca(Sesija sesija, String title, int dim1, int dim2) throws Exception {
+		super(title, dim1, dim2);
+		this.title = title;
 		this.sesija = sesija;
 		setResizable(false);
-		setTitle("Promena zanra izvodjaca");
+		setTitle(title);
 		getContentPane().setLayout(null);
 		
 		pojedninacniIzvodjaci = new JTable();
@@ -36,8 +40,7 @@ public class PromenaZanraIzvodjaca extends JFrame {
 		pojedninacniIzvodjaci.setBounds(10, 26, 674, 207);
 		getContentPane().add(pojedninacniIzvodjaci);
 		
-		@SuppressWarnings("rawtypes")
-		JComboBox cmbZanr = new JComboBox();
+		cmbZanr = new JComboBox();
 		cmbZanr.setBounds(312, 244, 273, 22);
 		getContentPane().add(cmbZanr);
 		
@@ -49,22 +52,7 @@ public class PromenaZanraIzvodjaca extends JFrame {
 		JButton btnPromeni = new JButton("Promeni");
 		btnPromeni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (!pojedninacniIzvodjaci.getSelectionModel().isSelectionEmpty()) {
-					for (Pojedinacanizvodjac pi : sesija.getUmetnici()) {
-						if (pi.getUmetnickoIme().equals((String)pojedninacniIzvodjaci.getValueAt(pojedninacniIzvodjaci.getSelectedRow(), 0))) {
-							pi.setZanr(new Zanr((String)cmbZanr.getSelectedItem(), true));
-							break;
-						}
-					}
-				}
-				if(!grupe.getSelectionModel().isSelectionEmpty()) {
-					for (Grupa g : sesija.getGrupe()) {
-						if (g.getUmetnickoIme().equals((String)grupe.getValueAt(grupe.getSelectedRow(), 0))) {
-							g.setZanr(new Zanr((String)cmbZanr.getSelectedItem(), true));
-							break;
-						}
-					}
-				}
+				promeniZanr();
 			}
 		});
 		btnPromeni.setBounds(595, 244, 89, 23);
@@ -80,7 +68,7 @@ public class PromenaZanraIzvodjaca extends JFrame {
 		getContentPane().add(lblGrupe);
 		
 		JLabel lblPojedinacniIzvodjaci = new JLabel("Pojedinacni izvodjaci");
-		lblPojedinacniIzvodjaci.setBounds(10, 11, 105, 14);
+		lblPojedinacniIzvodjaci.setBounds(10, 11, 130, 14);
 		getContentPane().add(lblPojedinacniIzvodjaci);
 		
 		ucitajIzvodjace();
@@ -91,6 +79,8 @@ public class PromenaZanraIzvodjaca extends JFrame {
 			cmbZanr.addItem(z.getNazivZanra());
 		}
 		
+		setVisible(true);
+		
 	}
 	
 	private void ucitajIzvodjace() throws Exception {
@@ -99,5 +89,34 @@ public class PromenaZanraIzvodjaca extends JFrame {
 		pojedninacniIzvodjaci.setModel(tmw1);
 		TableModelWrapper tmw2 = izvodjacMenadzer.getTabelaGrupa();
 		grupe.setModel(tmw2);
+	}
+	
+	private void promeniZanr() {
+		if (!pojedninacniIzvodjaci.getSelectionModel().isSelectionEmpty()) {
+			for (Pojedinacanizvodjac pi : sesija.getUmetnici()) {
+				if (pi.getUmetnickoIme().equals((String)pojedninacniIzvodjaci.getValueAt(pojedninacniIzvodjaci.getSelectedRow(), 0))) {
+					Zanr zanr = (sesija.getZanroviMenadzer().trazi((String)cmbZanr.getSelectedItem()));
+					pi.setZanr(zanr);
+					sesija.getIzvodjacMenadzer().setSolo(sesija.getUmetnici());
+					break;
+				}
+			}
+		}
+		if(!grupe.getSelectionModel().isSelectionEmpty()) {
+			for (Grupa g : sesija.getGrupe()) {
+				if (g.getUmetnickoIme().equals((String)grupe.getValueAt(grupe.getSelectedRow(), 0))) {
+					Zanr zanr = sesija.getZanroviMenadzer().trazi((String)cmbZanr.getSelectedItem());
+					g.setZanr(zanr);
+					sesija.getIzvodjacMenadzer().setGrupe(sesija.getGrupe());
+					break;
+				}
+			}
+		}
+		try {
+			ucitajIzvodjace();
+		} 
+		catch (Exception e1) {
+			e1.printStackTrace();
+		}
 	}
 }

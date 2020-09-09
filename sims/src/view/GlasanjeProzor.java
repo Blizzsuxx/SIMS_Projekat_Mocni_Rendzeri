@@ -1,6 +1,5 @@
 package view;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
@@ -17,19 +16,22 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ListSelectionModel;
 
-public class GlasanjeProzor extends JFrame {
+public class GlasanjeProzor extends MojDialog {
 	private static final long serialVersionUID = 1L;
 	private JTable muzickaDela;
 	private JButton btnPokreniNovoGlasanje;
 	private JButton btnZaustavi;
 	private JButton btnGlasaj;
-	private Sesija sesija;
 	private Uloga uloga;
-	public GlasanjeProzor(Sesija sesija, Uloga uloga) throws Exception {
+	private String title;
+	private Sesija sesija;
+	public GlasanjeProzor(Sesija sesija, String title, int dim1, int dim2, Uloga uloga) throws Exception {
+		super(title, dim1, dim2);
 		this.uloga = uloga;
 		this.sesija = sesija;
 		setResizable(false);
 		getContentPane().setLayout(null);
+		setTitle(title);
 		
 		muzickaDela = new JTable();
 		muzickaDela.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -72,14 +74,16 @@ public class GlasanjeProzor extends JFrame {
 		if (uloga == Uloga.UREDNIK && !gm.isPokrenutoGlasanje()) {
 			btnGlasaj.setEnabled(false);
 			JOptionPane.showMessageDialog(null, "Glasanje nije zapoceto.");
+			return;
 		}
 		
 		ucitajMuzickaDela();
+		setVisible(true);
 	}
 	
 	private void ucitajMuzickaDela() throws Exception {
 		MuzickiSadrzajMenadzer mdm = sesija.getMuzickiSadrzajMenadzer();
-		TableModelWrapper tmw = mdm.getTabelaMuzickihDela(null);
+		TableModelWrapper tmw = mdm.getTabelaMuzickihDela();
 		muzickaDela.setModel(tmw);
 	}
 	
@@ -109,7 +113,7 @@ public class GlasanjeProzor extends JFrame {
 		for (Glasanje g : gm.getGlasovi()) {
 			if (g.getMuzickoDelo().getNaslov().equals(nazivDela)) {
 				g.setBrojGlasova(g.getBrojGlasova() + 1);
-				gm.addUrednik((Urednik)sesija.getTrenutniKorisnik());
+				gm.addUrednik((Urednik)(Sesija.getTrenutniKorisnik()));
 				dodan = true;
 				break;
 			}
@@ -119,7 +123,7 @@ public class GlasanjeProzor extends JFrame {
 				if (md.getNaslov().equals(nazivDela)) {
 					Glasanje g = new Glasanje(md, 1);
 					gm.addGlas(g);
-					gm.addUrednik((Urednik)sesija.getTrenutniKorisnik());
+					gm.addUrednik((Urednik)(Sesija.getTrenutniKorisnik()));
 					break;
 				}
 			}
@@ -130,11 +134,11 @@ public class GlasanjeProzor extends JFrame {
 	private String validacijaGlasanja() {
 		GlasanjeMenadzer gm = sesija.getGlasanjeMenadzer();
 		for (Urednik urednik : gm.getUredniciKojiSuGlasali()) {
-			if (urednik.getNalog().getKorisnickoIme().equals(sesija.getTrenutniKorisnik().getNalog().getKorisnickoIme())) {
+			if (urednik.getNalog().getKorisnickoIme().equals(Sesija.getTrenutniKorisnik().getNalog().getKorisnickoIme())) {
 				return "Ne mozete glasati vise.";
 			}
 		}
 		return "";
 	}
+	
 }
-

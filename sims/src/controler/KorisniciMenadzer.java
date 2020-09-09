@@ -119,7 +119,6 @@ public class KorisniciMenadzer {
 			HashMap.Entry pair = (HashMap.Entry)it.next();
 			Korisnik k = (Korisnik)pair.getValue();
 			data.add(new Object[] {k.getNalog().getKorisnickoIme(), k.getIme(), k.getPrezime(), k.getDatumRodjenja(), k.isStatus()});
-	        it.remove();
 		}
 		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
 	}
@@ -239,7 +238,6 @@ private void sacuvajZahteve() {
 				HashMap.Entry pair = (HashMap.Entry)it.next();
 				Urednik urednik = (Urednik)pair.getValue();
 				pw.print(Urednik.ZahtevUrednika2String(urednik));
-		        it.remove();
 		    }
 		   pw.close();
 	   }

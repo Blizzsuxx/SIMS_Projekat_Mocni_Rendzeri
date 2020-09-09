@@ -157,7 +157,8 @@ public class RegistracijaIzvodjaca extends JDialog {
 		lblNewLabel_2.setBounds(10, 122, 75, 14);
 		pnlPojedinacniIzvodjac.add(lblNewLabel_2);
 		
-		JDatePanelImpl date2Panel = new JDatePanelImpl(model, p);
+		UtilDateModel model2 = new UtilDateModel();
+		JDatePanelImpl date2Panel = new JDatePanelImpl(model2, p);
 		dtDod = new JDatePickerImpl(date2Panel, new DataLabelFormatter());
 		sl_dtDod = new SpringLayout();
 		sl_dtDod.putConstraint(SpringLayout.NORTH, dtDod.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDod);
@@ -186,7 +187,8 @@ public class RegistracijaIzvodjaca extends JDialog {
 		lblDatumOsnivanja.setBounds(10, 45, 94, 14);
 		pnlGrupa.add(lblDatumOsnivanja);
 		
-		JDatePanelImpl date3Panel = new JDatePanelImpl(model, p);
+		UtilDateModel model3 = new UtilDateModel();
+		JDatePanelImpl date3Panel = new JDatePanelImpl(model3, p);
 		dtDof = new JDatePickerImpl(date3Panel, new DataLabelFormatter());
 		sl_dtDof = new SpringLayout();
 		sl_dtDof.putConstraint(SpringLayout.NORTH, dtDof.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDof);
@@ -196,7 +198,8 @@ public class RegistracijaIzvodjaca extends JDialog {
 		dtDof.setBounds(112, 38, 189, 25);
 		pnlGrupa.add(dtDof);
 		
-		JDatePanelImpl date4Panel = new JDatePanelImpl(model, p);
+		UtilDateModel model4 = new UtilDateModel();
+		JDatePanelImpl date4Panel = new JDatePanelImpl(model4, p);
 		dtDor = new JDatePickerImpl(date4Panel, new DataLabelFormatter());
 		sl_dtDor = new SpringLayout();
 		sl_dtDor.putConstraint(SpringLayout.NORTH, dtDor.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDor);

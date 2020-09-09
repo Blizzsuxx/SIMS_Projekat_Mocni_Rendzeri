@@ -6,7 +6,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Properties;
 
-import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.SpringLayout;
 
@@ -32,7 +31,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ListSelectionModel;
 
-public class DodavanjeZakRecIRecZaIzemnu extends JFrame {
+public class DodavanjeZakRecIRecZaIzemnu extends MojDialog {
 	private static final long serialVersionUID = 1L;
 	private JTable recenzije;
 	private JDatePickerImpl dtDor;
@@ -44,12 +43,15 @@ public class DodavanjeZakRecIRecZaIzemnu extends JFrame {
 	private JPanel pnlRecZaIzmenu;
 	private JTextField txtPoruka;
 	private Sesija sesija;
+	private String title;
 	private JRadioButton rbIzmena;
 	private JRadioButton rbBrisanje;
 	
-	public DodavanjeZakRecIRecZaIzemnu(Sesija sesija) throws Exception {
+	public DodavanjeZakRecIRecZaIzemnu(Sesija sesija,  String title, int dim1, int dim2) throws Exception {
+		super(title, dim1, dim2);
 		this.sesija = sesija;
-		setTitle("Zakazivanje recenzija i zahtevanje izmena recenzija");
+		this.title = title;
+		setTitle(title);
 		setResizable(false);
 		getContentPane().setLayout(null);
 		
@@ -65,18 +67,18 @@ public class DodavanjeZakRecIRecZaIzemnu extends JFrame {
 				pnlRecZaIzmenu.setVisible(false);
 			}
 		});
-		rbZakaziRecenziju.setSelected(true);
-		rbZakaziRecenziju.setBounds(10, 224, 109, 23);
+		rbZakaziRecenziju.setBounds(10, 224, 145, 23);
 		getContentPane().add(rbZakaziRecenziju);
 		
 		JRadioButton rbZahtevZaIzmenu = new JRadioButton("Zahtev za izmenu");
+		rbZahtevZaIzmenu.setSelected(true);
 		rbZahtevZaIzmenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				pnlRecZaIzmenu.setVisible(true);
 				pnlZakRec.setVisible(false);
 			}
 		});
-		rbZahtevZaIzmenu.setBounds(133, 224, 127, 23);
+		rbZahtevZaIzmenu.setBounds(272, 224, 127, 23);
 		getContentPane().add(rbZahtevZaIzmenu);
 		
 		pnlZakRec = new JPanel();
@@ -96,22 +98,23 @@ public class DodavanjeZakRecIRecZaIzemnu extends JFrame {
 		sl_dtDor.putConstraint(SpringLayout.WEST, dtDor.getJFormattedTextField(), 33, SpringLayout.WEST, dtDor);
 		sl_dtDor.putConstraint(SpringLayout.EAST, dtDor.getJFormattedTextField(), 211, SpringLayout.WEST, dtDor);
 		sl_dtDor = (SpringLayout) dtDor.getLayout();
-		dtDor.setBounds(116, 11, 228, 23);
+		dtDor.setBounds(151, 14, 228, 23);
 		pnlZakRec.add(dtDor);
 		
 		JLabel lblDatumZakazivanja = new JLabel("Datum zakazivanja");
-		lblDatumZakazivanja.setBounds(10, 14, 120, 14);
+		lblDatumZakazivanja.setBounds(10, 20, 131, 14);
 		pnlZakRec.add(lblDatumZakazivanja);
 		
-		JDatePanelImpl datePanel2 = new JDatePanelImpl(model, p);
+		UtilDateModel model2 = new UtilDateModel();
+		JDatePanelImpl datePanel2 = new JDatePanelImpl(model2, p);
 		dtDod = new JDatePickerImpl(datePanel2, new DataLabelFormatter());
 		sl_dtDod = new SpringLayout();
 		pnlZakRec.setLayout(null);
-		sl_dtDod.putConstraint(SpringLayout.NORTH, dtDor.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDod);
-		sl_dtDod.putConstraint(SpringLayout.WEST, dtDor.getJFormattedTextField(), 33, SpringLayout.WEST, dtDod);
-		sl_dtDod.putConstraint(SpringLayout.EAST, dtDor.getJFormattedTextField(), 211, SpringLayout.WEST, dtDod);
+		sl_dtDod.putConstraint(SpringLayout.NORTH, dtDod.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDod);
+		sl_dtDod.putConstraint(SpringLayout.WEST, dtDod.getJFormattedTextField(), 33, SpringLayout.WEST, dtDod);
+		sl_dtDod.putConstraint(SpringLayout.EAST, dtDod.getJFormattedTextField(), 211, SpringLayout.WEST, dtDod);
 		sl_dtDod = (SpringLayout) dtDod.getLayout();
-		dtDod.setBounds(116, 50, 228, 23);
+		dtDod.setBounds(151, 48, 228, 23);
 		pnlZakRec.add(dtDod);
 		
 		JLabel lblRok = new JLabel("Rok");
@@ -119,11 +122,11 @@ public class DodavanjeZakRecIRecZaIzemnu extends JFrame {
 		pnlZakRec.add(lblRok);
 		
 		JLabel lblOpis = new JLabel("Opis");
-		lblOpis.setBounds(10, 96, 48, 14);
+		lblOpis.setBounds(10, 101, 48, 14);
 		pnlZakRec.add(lblOpis);
 		
 		txtOpis = new JTextField();
-		txtOpis.setBounds(116, 93, 228, 20);
+		txtOpis.setBounds(151, 93, 228, 31);
 		pnlZakRec.add(txtOpis);
 		txtOpis.setColumns(10);
 		
@@ -152,11 +155,11 @@ public class DodavanjeZakRecIRecZaIzemnu extends JFrame {
 		pnlRecZaIzmenu.add(rbIzmena);
 		
 		rbBrisanje = new JRadioButton("Brisanje");
-		rbBrisanje.setBounds(93, 7, 71, 23);
+		rbBrisanje.setBounds(134, 7, 71, 23);
 		pnlRecZaIzmenu.add(rbBrisanje);
 		
 		JLabel lblPoruka = new JLabel("Poruka");
-		lblPoruka.setBounds(10, 48, 48, 14);
+		lblPoruka.setBounds(6, 53, 48, 14);
 		pnlRecZaIzmenu.add(lblPoruka);
 		
 		JButton btnPosaljiZahtev = new JButton("Posalji zahtev");
@@ -165,11 +168,11 @@ public class DodavanjeZakRecIRecZaIzemnu extends JFrame {
 				zahtevajIzmenu();
 			}
 		});
-		btnPosaljiZahtev.setBounds(280, 175, 99, 23);
+		btnPosaljiZahtev.setBounds(251, 175, 128, 23);
 		pnlRecZaIzmenu.add(btnPosaljiZahtev);
 		
 		txtPoruka = new JTextField();
-		txtPoruka.setBounds(79, 45, 300, 20);
+		txtPoruka.setBounds(79, 45, 300, 31);
 		pnlRecZaIzmenu.add(txtPoruka);
 		txtPoruka.setColumns(10);
 		
@@ -181,6 +184,8 @@ public class DodavanjeZakRecIRecZaIzemnu extends JFrame {
 		});
 		
 		ucitajRecenzije();
+		
+		setVisible(true);
 	}
 	
 	private void ucitajRecenzije() throws Exception {

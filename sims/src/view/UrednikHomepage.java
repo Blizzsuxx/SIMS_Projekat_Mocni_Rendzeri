@@ -17,10 +17,10 @@ import model.Uloga;
 public class UrednikHomepage extends Homepage {
 	 private static final long serialVersionUID = 1L;
 
-	 private JMenu recenzijeMenu, korisniciMenu, listeMenu;
+	 private JMenu recenzijeMenu, korisniciMenu, listeMenu, glasanjeMenu;
 	 private JMenuItem recenzijeItem1, recenzijeItem2, recenzijeItem3,
 	 korisniciItem1, korisniciItem2, korisniciItem3, korisniciItem4, korisniciItem5, korisniciItem6,
-	 korisniciItem7, listeItem1, listeItem2;
+	 korisniciItem7, listeItem1, listeItem2, glasanjeItem1;
 	 
 	public UrednikHomepage(Sesija sesija) {
 	    super(sesija);
@@ -77,6 +77,11 @@ public class UrednikHomepage extends Homepage {
 		listeItem2 = new JMenuItem("Pregled Top Listi");
 		listeMenu.add(listeItem2);
 		menubar.add(listeMenu);
+		
+		glasanjeMenu = new JMenu("Glasanje");
+		glasanjeItem1 = new JMenuItem("Glasaj");
+		glasanjeMenu.add(glasanjeItem1);
+		menubar.add(glasanjeMenu);
 		
 	}
 	    
@@ -231,6 +236,21 @@ public class UrednikHomepage extends Homepage {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				
+			}
+	    	
+	    });
+	    
+	    glasanjeItem1.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new GlasanjeProzor(UrednikHomepage.this.getSesija(), "Glasanje", 620, 413, Uloga.UREDNIK);
+				} 
+				catch (Exception e1) {
+					e1.printStackTrace();
+				}
 				
 			}
 	    	

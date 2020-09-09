@@ -111,8 +111,8 @@ public class ZakazanaRecenzijaMenadzer {
 		boolean[] editableColumns = { false, false, false, false};
 		int[] columnWidths = { 120, 120, 100, 80};
 		ArrayList<Object[]> data = new ArrayList<Object[]>();
-		for (ZakazanaRecenzija zr : urednik.getZakazaneRecenzije()) {
-			if (!zr.isUradeno())
+		for (ZakazanaRecenzija zr : sve) {
+			if (!zr.isUradeno() && zr.getUrednik().getNalog().getKorisnickoIme().equals(urednik.getNalog().getKorisnickoIme()))
 				data.add(new Object[] {zr.getRecenzija().getNaslov(), zr.getOpis(), zr.getRok()});
 		}
 		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);

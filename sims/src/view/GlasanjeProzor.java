@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import controler.GlasanjeMenadzer;
@@ -44,7 +45,7 @@ public class GlasanjeProzor extends MojDialog {
 				setujStatusGlasanja(true);
 			}
 		});
-		btnPokreniNovoGlasanje.setBounds(357, 328, 139, 23);
+		btnPokreniNovoGlasanje.setBounds(342, 328, 154, 23);
 		getContentPane().add(btnPokreniNovoGlasanje);
 		
 		btnZaustavi = new JButton("Zaustavi");

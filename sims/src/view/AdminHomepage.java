@@ -16,9 +16,9 @@ import model.Uloga;
 public class AdminHomepage extends Homepage {
 	private static final long serialVersionUID = 1L;
 
-	private JMenu korisniciMenu, izvodjaciMenu, zanroviMenu, recenzijeMenu;
+	private JMenu korisniciMenu, izvodjaciMenu, zanroviMenu, recenzijeMenu, glasanjeMenu;
 	private JMenuItem korisniciItem1, korisniciItem2, korisniciItem3, korisniciItem4, korisniciItem5,
-	izvodjaciItem1, izvodjaciItem2, izvodjaciItem3, zanroviItem1, recenzijeItem1, recenzijeItem2, recenzijeItem3;
+	izvodjaciItem1, izvodjaciItem2, izvodjaciItem3, zanroviItem1, recenzijeItem1, recenzijeItem2, recenzijeItem3, glasanjeItem1;
 	
 	public AdminHomepage(Sesija sesija) {
 		super(sesija);
@@ -76,6 +76,11 @@ public class AdminHomepage extends Homepage {
 		recenzijeItem3 = new JMenuItem("Uvid u zavrsene recenzije");
 		recenzijeMenu.add(recenzijeItem3);
 		menubar.add(recenzijeMenu);
+		
+		glasanjeMenu = new JMenu("Glasanje");
+		glasanjeItem1 = new JMenuItem("Pokreni/Zaustavi");
+		glasanjeMenu.add(glasanjeItem1);
+		menubar.add(glasanjeMenu);
 		
 	}
 	
@@ -235,6 +240,20 @@ public class AdminHomepage extends Homepage {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					new UvidUZavrseneRecenzije(AdminHomepage.this.getSesija(), "Uvid u zavrsene recenzije", 625, 326);
+				} 
+				catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+			
+		});
+		
+		glasanjeItem1.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new GlasanjeProzor(AdminHomepage.this.getSesija(), "Pokretanje/Zaustavljanje glasanje", 620, 413, Uloga.ADMIN);
 				} 
 				catch (Exception e1) {
 					e1.printStackTrace();

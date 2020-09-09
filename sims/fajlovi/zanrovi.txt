@@ -1,11 +1,5 @@
-Pop,false
-Dance,false
+Pop,true
+Dance,true
 rock,true
 clasic,false
 hip-hop,true
-gasiranje,true
-ludilo,false
-alo,false
-tttt,false
-sdadsadasda,true
-hahahahah,true

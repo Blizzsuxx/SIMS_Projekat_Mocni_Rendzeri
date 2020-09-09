@@ -11,7 +11,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import controler.AlbumKontroler;
 import controler.CitacDatoteka;
 import controler.Constants;
 import controler.GlasanjeMenadzer;
@@ -20,7 +19,7 @@ import controler.IzvestajSvihZanrovaMenadzer;
 import controler.IzvodjacMenadzer;
 import controler.KorisniciMenadzer;
 import controler.LoginMenadzer;
-import controler.MuzickoDeloMenadzer;
+import controler.MuzickiSadrzajMenadzer;
 import controler.RecenzijeZaIzmenuMenadzer;
 import controler.UtisakMenadzer;
 import controler.ZakazanaRecenzijaMenadzer;
@@ -39,11 +38,9 @@ public class Sesija {
    
    private ZanroviMenadzer zanroviMenadzer;
    
-   private MuzickoDeloMenadzer muzickoDeloMenadzer;
+   private MuzickiSadrzajMenadzer muzickiSadrzajMenadzer;
    
    private ZakazanaRecenzijaMenadzer zakazanaRecenzijaMenadzer;
-   
-   private AlbumKontroler albumKontroler;
    
    private GlasanjeMenadzer glasanjeMenadzer;
    
@@ -124,28 +121,12 @@ public class Sesija {
 	   this.zanroviMenadzer = zanroviMenadzer;
    }
    
-   public MuzickoDeloMenadzer getMuzickoDeloMenadzer() {
-	   return muzickoDeloMenadzer;
-   }
-   
-   public void setMuzickoDeloMenadzer(MuzickoDeloMenadzer muzickoDeloMenadzer) {
-	   this.muzickoDeloMenadzer = muzickoDeloMenadzer;
-   }
-   
    public ZakazanaRecenzijaMenadzer getZakazanaRecenzijaMenadzer() {
 	   return zakazanaRecenzijaMenadzer;
    }
    
    public void setZakazanaRecenzijaMenadzer(ZakazanaRecenzijaMenadzer zakazanaRecenzijaMenadzer) {
 	   this.zakazanaRecenzijaMenadzer = zakazanaRecenzijaMenadzer;
-   }
-   
-   public AlbumKontroler getAlbumKontroler() {
-	   return albumKontroler;
-   }
-   
-   public void setAlbumKontroler(AlbumKontroler albumKontroler) {
-	   this.albumKontroler = albumKontroler;
    }
    
    public GlasanjeMenadzer getGlasanjeMenadzer() {
@@ -200,27 +181,28 @@ public class Sesija {
     	  Sesija.setTrenutniKorisnik(korisnik);
          return trenutnaSesija;
       } else {
-         trenutnaSesija = new Sesija(korisnik, datoteke.getKorisnici(), datoteke.getIzvodjaci(), datoteke.getZanrovi(), datoteke.getDeloMenadzer(), datoteke.getMuzickaDela(), datoteke.getGrupe(),
-               datoteke.getIzvodjaci().getSolo(), datoteke.getRecenzije(), datoteke.getUtisakmenadzer(), datoteke.getZakRecMenadzer(), datoteke.getIzmena(), datoteke.getAlbumi(), datoteke.getGlasanjeMenadzer(),menadzer);
+         trenutnaSesija = new Sesija(korisnik, datoteke.getKorisnici(), datoteke.getIzvodjaci(), datoteke.getZanrovi(), datoteke.getMuzickiSadrzajMenadzer(),
+        		 datoteke.getMuzickiSadrzajMenadzer().getMuzickaDela()
+        		 , datoteke.getGrupe(),
+               datoteke.getIzvodjaci().getSolo(), datoteke.getRecenzije(), datoteke.getUtisakmenadzer(), datoteke.getZakRecMenadzer(), datoteke.getIzmena(), datoteke.getGlasanjeMenadzer(),menadzer);
          return trenutnaSesija;
       }
    }
 
-   private Sesija(Korisnik trenutniKorisnik, KorisniciMenadzer korisnici, IzvodjacMenadzer izvodjacMenadzer, ZanroviMenadzer zanroviMenadzer, MuzickoDeloMenadzer muzickoDeloMenadzer,
+   private Sesija(Korisnik trenutniKorisnik, KorisniciMenadzer korisnici, IzvodjacMenadzer izvodjacMenadzer, ZanroviMenadzer zanroviMenadzer, MuzickiSadrzajMenadzer muzickiSadrzajMenadzer,
 		   Collection<MuzickoDelo> dela, Collection<Grupa> grupe, Collection<Pojedinacanizvodjac> umetnici, 
 		   Collection<Recenzija> recenzije, UtisakMenadzer utisakMenadzer,ZakazanaRecenzijaMenadzer zakazanaRecenzijaMenadzer,
-         RecenzijeZaIzmenuMenadzer recenzijeZaIzmenuMenadzer, AlbumKontroler albumKontroler, GlasanjeMenadzer glasanjeMenadzer, LoginMenadzer loginMenadzer) {
+         RecenzijeZaIzmenuMenadzer recenzijeZaIzmenuMenadzer, GlasanjeMenadzer glasanjeMenadzer, LoginMenadzer loginMenadzer) {
       super();
       this.setKorisnici(korisnici);
       this.setIzvodjacMenadzer(izvodjacMenadzer);
       this.setZanroviMenadzer(zanroviMenadzer);
-      this.setMuzickoDeloMenadzer(muzickoDeloMenadzer);
+      this.setMuzickiSadrzajMenadzer(muzickiSadrzajMenadzer);
       this.setUtisakMenadzer(utisakMenadzer);
       this.setZakazanaRecenzijaMenadzer(zakazanaRecenzijaMenadzer);
       this.setRecenzijeZaIzmenuMenadzer(recenzijeZaIzmenuMenadzer);
       //this.setTrenutniKorisnik(trenutniKorisnik);
       Sesija.setTrenutniKorisnik(trenutniKorisnik);
-      this.setAlbumKontroler(albumKontroler);
       this.setGlasanjeMenadzer(glasanjeMenadzer);
 	this.loginMenadzer = loginMenadzer;
 }
@@ -252,7 +234,7 @@ public void izvrsi() {
 
 
 public IzvestajSvihZanrovaMenadzer namestiIzvestaj() {
-	   this.izvestajSvihZanrova=new IzvestajSvihZanrovaMenadzer(this.muzickoDeloMenadzer.getDela(), this.utisakMenadzer.getRecenzije(), sviZanrovi);
+	   this.izvestajSvihZanrova=new IzvestajSvihZanrovaMenadzer(this.getMuzickiSadrzajMenadzer().getMuzickaDela(), this.utisakMenadzer.getRecenzije(), sviZanrovi);
 	   
 	return izvestajSvihZanrova;
 	   
@@ -265,7 +247,7 @@ public IzvestajSvihZanrovaMenadzer namestiIzvestaj() {
 
 
 private void pronadiDela(String naziv) {
-	for(MuzickoDelo d:this.muzickoDeloMenadzer.getDela()) {
+	for(MuzickoDelo d:this.muzickiSadrzajMenadzer.getMuzickaDela()) {
 		for(Zanr z:d.getZanrovi()) {
 			if(z.getNazivZanra().equals(naziv)) {
 				for(Utisak u:d.getUtisci()) {
@@ -343,9 +325,9 @@ public Izvodjac getIzvodjac(String ime) {
 
 public boolean napraviDelo(String datumIzdavanja, String naslov, String opis, Izvodjac izv, ArrayList<Zanr> zanrovi) {
 	try {
-		MuzickoDelo md = new MuzickoDelo(naslov, opis, Constants.NATASIN_FORMAT_ZA_DATUM.parse(datumIzdavanja), true, zanrovi);
+		MuzickoDelo md = new MuzickoDelo(naslov, opis, Constants.NATASIN_FORMAT_ZA_DATUM.parse(datumIzdavanja), izv, null, true, zanrovi);
 		izv.getMuzickaDela().add(md);
-		this.muzickoDeloMenadzer.getDela().add(md);
+		this.muzickiSadrzajMenadzer.getMuzickiSadrzaj().add(md);
 		return true;
 	}
 	catch(ParseException e) {
@@ -407,4 +389,14 @@ public Collection<Urednik> getUrednici() {
 }
 
 
+public MuzickiSadrzajMenadzer getMuzickiSadrzajMenadzer() {
+	return muzickiSadrzajMenadzer;
+}
+
+
+public void setMuzickiSadrzajMenadzer(MuzickiSadrzajMenadzer muzickiSadrzajMenadzer) {
+	this.muzickiSadrzajMenadzer = muzickiSadrzajMenadzer;
+}
+
+	
 }

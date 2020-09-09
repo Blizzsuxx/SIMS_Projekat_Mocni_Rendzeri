@@ -66,7 +66,7 @@ public class MediaPlayer extends MojDialog {
         this.delo = delo;
         this.setResizable(true);
         this.getContentPane().setLayout(new MigLayout());
-        MP3Player mediaPlayer = getMediaPlayer(delo.getNaziv(), ".mp3");
+        MP3Player mediaPlayer = getMediaPlayer(delo.getNaslov(), ".mp3");
         mediaPlayer.setPreferredSize(new Dimension(this.getWidth() , 20));
         MuzickoDeloLabel labela = new MuzickoDeloLabel(trenutniKorisnik, this.getWidth()-50, 100, delo);
         labela.setClickable(false);
@@ -75,7 +75,7 @@ public class MediaPlayer extends MojDialog {
 
         JPanel dataPanel = new JPanel(new MigLayout());
         StarRater rater = new StarRater(5, 3, 3);
-        JLabel datum = new JLabel("Datum izdavanja: " + delo.getDatumIzdavanja());
+        JLabel datum = new JLabel("Datum izdavanja: " + delo.getDatumIzadavanja());
         dataPanel.add(rater);
         dataPanel.add(datum, "gapleft 50");
         this.add(dataPanel, "wrap 20");

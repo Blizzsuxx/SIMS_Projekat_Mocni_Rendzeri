@@ -21,7 +21,7 @@ public class OceneKontroler {
 		this.sveOcene = new ArrayList<Ocena>();
 	}
 
-	public OceneKontroler(MuzickoDeloMenadzer muzickaDela, KorisniciMenadzer korisnici, List<String[]> data){
+	public OceneKontroler(MuzickiSadrzajMenadzer muzickaDela, KorisniciMenadzer korisnici, List<String[]> data){
 		this();
 		ucitaj(muzickaDela, korisnici, data);
 	}
@@ -37,13 +37,13 @@ public class OceneKontroler {
 	}
 
 
-	public void ucitaj(MuzickoDeloMenadzer muzickaDela, KorisniciMenadzer korisnici, List<String[]> data) {
+	public void ucitaj(MuzickiSadrzajMenadzer muzickaDela, KorisniciMenadzer korisnici, List<String[]> data) {
 		//ocena, korisnik, delo
 		
 		for(String[] linije : data){
 			//System.out.print(linije[2]);
 					FrontEndKorisnik fKorisnik= (FrontEndKorisnik) korisnici.trazi(linije[2].trim());
-					MuzickoDelo delo=muzickaDela.pronadiPoNazivu(linije[1].trim());
+					MuzickoDelo delo=(MuzickoDelo) muzickaDela.vratiNaOsnovuNazive(linije[1].trim());
 					Ocena a = new Ocena(Float.parseFloat(linije[0].trim()),fKorisnik);
 					a.delo=delo;
 					if(fKorisnik instanceof Urednik) {

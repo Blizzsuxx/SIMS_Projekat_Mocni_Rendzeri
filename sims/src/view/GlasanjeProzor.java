@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 import controler.GlasanjeMenadzer;
-import controler.MuzickoDeloMenadzer;
+import controler.MuzickiSadrzajMenadzer;
 import model.Glasanje;
 import model.MuzickoDelo;
 import model.Sesija;
@@ -78,7 +78,7 @@ public class GlasanjeProzor extends JFrame {
 	}
 	
 	private void ucitajMuzickaDela() throws Exception {
-		MuzickoDeloMenadzer mdm = sesija.getMuzickoDeloMenadzer();
+		MuzickiSadrzajMenadzer mdm = sesija.getMuzickiSadrzajMenadzer();
 		TableModelWrapper tmw = mdm.getTabelaMuzickihDela(null);
 		muzickaDela.setModel(tmw);
 	}
@@ -103,11 +103,11 @@ public class GlasanjeProzor extends JFrame {
 		}
 		int selektovanoMuzickoDelo = muzickaDela.getSelectedRow();
 		String nazivDela = (String) muzickaDela.getValueAt(selektovanoMuzickoDelo, 0);
-		MuzickoDeloMenadzer mdm = sesija.getMuzickoDeloMenadzer();
+		MuzickiSadrzajMenadzer mdm = sesija.getMuzickiSadrzajMenadzer();
 		GlasanjeMenadzer gm = sesija.getGlasanjeMenadzer();
 		boolean dodan = false;
 		for (Glasanje g : gm.getGlasovi()) {
-			if (g.getMuzickoDelo().getNaziv().equals(nazivDela)) {
+			if (g.getMuzickoDelo().getNaslov().equals(nazivDela)) {
 				g.setBrojGlasova(g.getBrojGlasova() + 1);
 				gm.addUrednik((Urednik)sesija.getTrenutniKorisnik());
 				dodan = true;
@@ -115,8 +115,8 @@ public class GlasanjeProzor extends JFrame {
 			}
 		}
 		if (!dodan) {
-			for (MuzickoDelo md : mdm.getDela()) {
-				if (md.getNaziv().equals(nazivDela)) {
+			for (MuzickoDelo md : mdm.getMuzickaDela()) {
+				if (md.getNaslov().equals(nazivDela)) {
 					Glasanje g = new Glasanje(md, 1);
 					gm.addGlas(g);
 					gm.addUrednik((Urednik)sesija.getTrenutniKorisnik());

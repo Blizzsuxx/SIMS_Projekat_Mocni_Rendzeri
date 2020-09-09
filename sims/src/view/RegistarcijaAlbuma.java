@@ -13,10 +13,9 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import controler.AlbumKontroler;
 import controler.IzvodjacMenadzer;
 import controler.KorisniciMenadzer;
-import controler.MuzickoDeloMenadzer;
+import controler.MuzickiSadrzajMenadzer;
 import model.Album;
 import model.Izvodjac;
 import model.MuzickoDelo;
@@ -162,7 +161,7 @@ public class RegistarcijaAlbuma extends JFrame {
 	}
 	
 	private void ucitajPesme(String umetnickoIme) throws Exception {
-		MuzickoDeloMenadzer mdm = sesija.getMuzickoDeloMenadzer();
+		MuzickiSadrzajMenadzer mdm = sesija.getMuzickiSadrzajMenadzer();
 		Izvodjac i = sesija.getIzvodjac(umetnickoIme);
 		TableModelWrapper tmw = mdm.getTabelaMuzickihDela(i);
 		pesme.setModel(tmw);
@@ -191,11 +190,11 @@ public class RegistarcijaAlbuma extends JFrame {
 		}
 		String naziv = txtNaziv.getText();
 		ArrayList<MuzickoDelo> dela = new ArrayList<MuzickoDelo>();
-		MuzickoDeloMenadzer mdm = sesija.getMuzickoDeloMenadzer();
+		MuzickiSadrzajMenadzer mdm = sesija.getMuzickiSadrzajMenadzer();
 		int[] redovi = pesme.getSelectedRows();
 		for (int i = 0; i < redovi.length; i++) {
-			for (MuzickoDelo m : mdm.getDela()) {
-				if (pesme.getValueAt(redovi[i], 0).equals(m.getNaziv())) {
+			for (MuzickoDelo m : mdm.getMuzickaDela()) {
+				if (pesme.getValueAt(redovi[i], 0).equals(m.getNaslov())) {
 					dela.add(m);
 				}
 			}
@@ -206,11 +205,9 @@ public class RegistarcijaAlbuma extends JFrame {
 		String txtRegistracije2 = sdf2.format(sdf1.parse(txtRegistracije));
 		Date danRegistracije = new SimpleDateFormat("dd.MM.yyyy.").parse(txtRegistracije2);
 		Izvodjac izvodjac = sesija.getIzvodjac((String)cmbIzvodjac.getSelectedItem());
-		Album noviAlbum = new Album(naziv, dela, urednik, izvodjac, danRegistracije, true);
+		//Album noviAlbum = new Album(naziv, dela, urednik, izvodjac, danRegistracije, true); // NA OVO SE VRATITI
+		Album noviAlbum = new Album(txtRegistracije2, txtRegistracije2, danRegistracije, izvodjac, urednik, rootPaneCheckingEnabled);
 		noviAlbum.getIzvodjac().addIzdatAlbum(noviAlbum);
-		AlbumKontroler albumKontroler = sesija.getAlbumKontroler();
-		albumKontroler.addAlbum(noviAlbum);
-		sesija.setAlbumKontroler(albumKontroler);
 		refresh();
 	}
 	

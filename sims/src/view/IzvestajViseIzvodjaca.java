@@ -160,7 +160,7 @@ public class IzvestajViseIzvodjaca extends JFrame{
 				LocalDate dan=convertToLocalDateViaInstant(d1, month, year);
 				LocalDate dan1=convertToLocalDateViaInstant(d2, month2, year2);
 				String imeZanra=(String) cbZanr.getSelectedItem(); 
-				IzvestajViseIzvodjaca.this.men.izlistajPoDatumimaIZanru(dan, dan1, imeZanra);
+				//IzvestajViseIzvodjaca.this.men.izlistajPoDatumimaIZanru(dan, dan1, imeZanra);
 				//table1.new JTable(new SinglIzvodjaciModel(men.getIzvodjaci()));
 				refreshData(); 
 				

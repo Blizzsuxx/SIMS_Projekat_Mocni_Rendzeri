@@ -76,7 +76,7 @@ public class Grupa extends Izvodjac {
 		if(this.getMuzickaDela().size()==0) {String[] imenaa= {""};return imenaa;}
 		int j=0;
 		for(MuzickoDelo m:this.getMuzickaDela()) {
-			imena[j]=m.getNaziv();
+			imena[j]=m.getNaslov();
 			j++;
 		}
 		return imena;

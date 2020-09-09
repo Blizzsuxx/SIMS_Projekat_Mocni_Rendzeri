@@ -86,7 +86,7 @@ public class UtisakMenadzer {
 
 	private MuzickoDelo pronadiDelo(Collection<MuzickoDelo> muzickaDela, String string) {
 		for(MuzickoDelo md:muzickaDela) {
-			if(md.getNaziv().equals(string)) {
+			if(md.getNaslov().equals(string)) {
 				return md;
 			}
 		}
@@ -133,7 +133,7 @@ public class UtisakMenadzer {
 		ArrayList<Object[]> data = new ArrayList<Object[]>();
 		for (Recenzija r : rec) {
 			if (r.isStatus())
-				data.add(new Object[] {r.getNaslov(), r.getDatumUpisa(), r.getDelo().getNaziv(), r.getPisac().getNalog().getKorisnickoIme()});
+				data.add(new Object[] {r.getNaslov(), r.getDatumUpisa(), r.getDelo().getNaslov(), r.getPisac().getNalog().getKorisnickoIme()});
 		}
 		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
 	}

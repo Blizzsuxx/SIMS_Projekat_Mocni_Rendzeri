@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import controler.MuzickoDeloMenadzer;
+import controler.MuzickiSadrzajMenadzer;
 import controler.UtisakMenadzer;
 
 import javax.swing.JTextArea;
@@ -117,7 +117,7 @@ public class DodavanjeRecenzije extends JFrame {
 	}
 	
 	private void ucitajPesme(String umetnickoIme) throws Exception {
-		MuzickoDeloMenadzer mdm = sesija.getMuzickoDeloMenadzer();
+		MuzickiSadrzajMenadzer mdm = sesija.getMuzickiSadrzajMenadzer(); // PROMJENA
 		Izvodjac i = sesija.getIzvodjac(umetnickoIme);
 		TableModelWrapper tmw = mdm.getTabelaMuzickihDela(i);
 		dela.setModel(tmw);
@@ -136,10 +136,10 @@ public class DodavanjeRecenzije extends JFrame {
 		String tekst = txtTekst.getText();
 		int selektovaniRed = dela.getSelectedRow();
 		String sDelo = (String)dela.getValueAt(selektovaniRed, 0);
-		MuzickoDeloMenadzer mdm = sesija.getMuzickoDeloMenadzer();
+		MuzickiSadrzajMenadzer mdm = sesija.getMuzickiSadrzajMenadzer();
 		MuzickoDelo muzickoDelo = null;
-		for (MuzickoDelo md : mdm.getDela()) {
-			if (md.getNaziv().equals(sDelo)) {
+		for (MuzickoDelo md : mdm.getMuzickaDela()) {
+			if (md.getNaslov().equals(sDelo)) {
 				muzickoDelo = md;
 				break;
 			}

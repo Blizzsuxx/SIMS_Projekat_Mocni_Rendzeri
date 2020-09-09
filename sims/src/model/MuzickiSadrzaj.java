@@ -1,15 +1,30 @@
 package model;
 
+import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import controler.Constants;
 
 public abstract class MuzickiSadrzaj {
-	private String naslov;
-	private String opis;
-	private Date datumIzadavanja;
-	private Izvodjac izvodjac;
-	private Urednik urednik;
-	private boolean status;
+	protected String naslov;
+	protected String opis;
+	protected Date datumIzdavanja;
+	protected Izvodjac izvodjac;
+	protected Urednik urednik;
+	protected boolean status;
+	protected List<Zanr> zanrovi;
 	
+	public String toFileString() {
+		DateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;
+		StringBuilder sb = new StringBuilder();
+		sb.append(String.format("%s;%s;%s;%s;%s;%s;", naslov, opis, df.format(datumIzdavanja), izvodjac.getUmetnickoIme(),
+				urednik.getNalog().getKorisnickoIme(), status));
+		for (Zanr z: zanrovi) // pretpostavljamo da ima bar jedan zanr (u programu implementirano)
+			sb.append(z.getNazivZanra()+",");
+		return sb.toString();
+	}
 	
 	public MuzickiSadrzaj() {
 		super();
@@ -20,10 +35,23 @@ public abstract class MuzickiSadrzaj {
 		super();
 		this.naslov = naslov;
 		this.opis = opis;
-		this.datumIzadavanja = datumIzadavanja;
+		this.datumIzdavanja = datumIzadavanja;
 		this.izvodjac = izvodjac;
 		this.urednik = urednik;
 		this.status = status;
+		this.zanrovi = new ArrayList<>();
+	}
+
+	public MuzickiSadrzaj(String naslov, String opis, Date datumIzadavanja, Izvodjac izvodjac, Urednik urednik,
+			boolean status, List<Zanr> zanrovi) {
+		super();
+		this.naslov = naslov;
+		this.opis = opis;
+		this.datumIzdavanja = datumIzadavanja;
+		this.izvodjac = izvodjac;
+		this.urednik = urednik;
+		this.status = status;
+		this.zanrovi = zanrovi;
 	}
 
 	public String getNaslov() {
@@ -39,10 +67,10 @@ public abstract class MuzickiSadrzaj {
 		this.opis = opis;
 	}
 	public Date getDatumIzadavanja() {
-		return datumIzadavanja;
+		return datumIzdavanja;
 	}
-	public void setDatumIzadavanja(Date datumIzadavanja) {
-		this.datumIzadavanja = datumIzadavanja;
+	public void setDatumIzdavanja(Date datumIzadavanja) {
+		this.datumIzdavanja = datumIzadavanja;
 	}
 	public Izvodjac getIzvodjac() {
 		return izvodjac;
@@ -61,6 +89,14 @@ public abstract class MuzickiSadrzaj {
 	}
 	public void setStatus(boolean status) {
 		this.status = status;
+	}
+
+	public List<Zanr> getZanrovi() {
+		return zanrovi;
+	}
+
+	public void setZanrovi(List<Zanr> zanrovi) {
+		this.zanrovi = zanrovi;
 	}
 	
 	

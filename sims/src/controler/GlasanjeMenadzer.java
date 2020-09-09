@@ -37,7 +37,7 @@ public class GlasanjeMenadzer {
 				String nazivDela = parts[0];
 				int brojGlasova = Integer.parseInt(parts[1]);
 				for (MuzickoDelo m : dela) {
-					if (m.getNaziv().equals(nazivDela)) {
+					if (m.getNaslov().equals(nazivDela)) {
 						Glasanje g = new Glasanje(m, brojGlasova);
 						glasovi.add(g);
 					}
@@ -78,7 +78,7 @@ public class GlasanjeMenadzer {
 	
 	public void addGlas(Glasanje g) {
 		for (Glasanje glas : glasovi) {
-			if (glas.getMuzickoDelo().getNaziv().equals(g.getMuzickoDelo().getNaziv())) {
+			if (glas.getMuzickoDelo().getNaslov().equals(g.getMuzickoDelo().getNaslov())) {
 				return;
 			}
 		}

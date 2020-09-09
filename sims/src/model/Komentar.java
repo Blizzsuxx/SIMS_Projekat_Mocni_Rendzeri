@@ -21,7 +21,7 @@ public Komentar(String text, Date datumUpisa, boolean status, MuzickoDelo delo, 
 //@Override
 public String toFileString() {
 	String ad="";
-	ad+=this.getDelo().getNaziv()+";";
+	ad+=this.getDelo().getNaslov()+";";
 	SimpleDateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;;
 	ad+=df.format(this.getDatumUpisa())+";";//
 	ad+=this.isStatus()+";";

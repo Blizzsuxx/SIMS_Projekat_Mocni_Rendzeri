@@ -32,11 +32,9 @@ import view.TableModelWrapper;
 public class KorisniciMenadzer {
    /** @pdRoleInfo migr=no name=Korisnik assc=association25 mult=1 type=Aggregation */
    private HashMap<String, Korisnik> korisnici;
-   private HashMap<String, Urednik> zahteviUrednika;
-	public KorisniciMenadzer(List<String[]> readAll,ArrayList<String> zahteviZaReg) {
+	public KorisniciMenadzer(List<String[]> readAll) {
 	// TODO Auto-generated constructor stub
 	   korisnici = new HashMap<String, Korisnik>();
-	   zahteviUrednika = new HashMap<String, Urednik>();
 	   SimpleDateFormat format = Constants.FORMAT_ZA_DATUM;
 	   for(String[] s : readAll) {
 		   String ime = s[0].trim();
@@ -76,26 +74,7 @@ public class KorisniciMenadzer {
 				break;
 		   }
 	   }
-	   ucitajZahteve(zahteviZaReg);
 	}
-	
-	private void ucitajZahteve(ArrayList<String> zahtevi) {
-		for (String linija : zahtevi) {
-			String[] parts = linija.split(";");
-			Urednik urednik = (Urednik)trazi(parts[0]);
-			urednik.setAlbumZaRegistracju(parts[1]);
-			zahteviUrednika.put(urednik.getNalog().getKorisnickoIme(), urednik);
-		}
-	}
-	
-	public HashMap<String, Urednik> getZahteviUrednika() {
-		   return zahteviUrednika;
-	   	}
-
-	   public void setZahteviUrednika(HashMap<String, Urednik> zahteviUrednika) {
-		   this.zahteviUrednika = zahteviUrednika;
-	   	}
-   
    
    public HashMap<String, Korisnik> getKorisnici()
    {
@@ -136,12 +115,7 @@ public class KorisniciMenadzer {
     	  korisnici.put(k.getNalog().getKorisnickoIme(), k);
    }
    
-   public void dodajZahtevUrednika(Urednik urednik, String nazivAlbuma) {
-	   if (!zahteviUrednika.containsKey(urednik.getNalog().getKorisnickoIme())) {
-		   urednik.setAlbumZaRegistracju(nazivAlbuma);
-		   zahteviUrednika.put(urednik.getNalog().getKorisnickoIme(), urednik);
-	   }
-   }
+ 
    
    /** @pdOid 59cb0526-ada2-4d39-93a6-eaaf6a8f1733 */
    public Korisnik trazi(String korisnickoIme) {
@@ -175,7 +149,6 @@ public class KorisniciMenadzer {
 			if(pw!=null) {
 				pw.close();
 			}
-			sacuvajZahteve();
 		}
 	  
    }
@@ -225,35 +198,5 @@ public Collection<? extends Slikovit> traziZaSearch(String textZaSearch) {
 	}
 	return rezultat;
 }
-private void sacuvajZahteve() {
-	   PrintWriter pw = null;
-	   String sep=System.getProperty("file.separator");
-	   String putanja ="." + sep + "fajlovi" + sep + "zahteviZaRegAlbuma.txt";
-	   try {
-		   pw = new PrintWriter(new FileWriter(putanja, false));
-		   if (zahteviUrednika.isEmpty()) {
-				  pw.print("");
-				  return;
-		   }
-		   Iterator<Entry<String, Urednik>> it = zahteviUrednika.entrySet().iterator();
-			while (it.hasNext()) {
-				@SuppressWarnings("rawtypes")
-				HashMap.Entry pair = (HashMap.Entry)it.next();
-				Urednik urednik = (Urednik)pair.getValue();
-				pw.print(Urednik.ZahtevUrednika2String(urednik));
-		    }
-		   pw.close();
-	   }
-	   catch(IOException e) {
-		   e.printStackTrace();
-	   }
-	   finally {
-		   if(pw != null) {
-				pw.close();
-		   }
-	   }
-	   
-}
-
 
 }

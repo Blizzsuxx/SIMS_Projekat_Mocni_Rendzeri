@@ -120,7 +120,7 @@ public class CitacDatoteka {
 	public void inicijalizuj() throws ParseException, IOException {
 		// TODO Auto-generated method stub
 
-		korisnici = new KorisniciMenadzer(ucitaj("korisnici.txt", ','), ucitajBuffered("zahteviZaRegAlbuma.txt"));
+		korisnici = new KorisniciMenadzer(ucitaj("korisnici.txt", ','));
 		zanrovi = new ZanroviMenadzer(ucitaj("zanrovi.txt", ','), korisnici);
 		izvodjaci = new IzvodjacMenadzer(ucitaj("izvodjaci.txt", ';'), zanrovi);
 

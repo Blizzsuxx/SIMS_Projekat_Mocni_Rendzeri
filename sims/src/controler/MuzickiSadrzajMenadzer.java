@@ -152,6 +152,23 @@ public class MuzickiSadrzajMenadzer {
 		return null;
 	}
 	
+	public List<Album> vratiAlbumeNaOsnovuOdobrenosti(boolean indikator){
+		List<Album> albumi = new ArrayList<>();
+		for(Album a: this.albumi)
+			if (a.isOdobreno() == indikator)
+				albumi.add(a);
+		return albumi;
+	}
+	
+	public boolean dozvolaAlbuma(String naslov) {
+		for (Album a : this.albumi )
+			if (a.isStatus() && !a.isOdobreno() && a.getNaslov().equals(naslov)) {
+				a.setOdobreno(true);
+				return true;
+			}
+		return false;
+	}
+	
 	
 	public List<Album> vratiAktivneAlbume(){
 		List<Album> temp = new ArrayList<>();
@@ -175,8 +192,9 @@ public class MuzickiSadrzajMenadzer {
 		boolean[] editableColumns = { false, false, false};
 		int[] columnWidths = { 200, 200, 200};
 		ArrayList<Object[]> data = new ArrayList<Object[]>();
-		for (MuzickoDelo md : izvodjac.getMuzickaDela()) {
-			data.add(new Object[] {md.getNaslov(), md.getOpis(), md.getDatumIzadavanja()});
+		for (MuzickoDelo md : muzickaDela) {
+			if (md.getIzvodjac().getUmetnickoIme().equals(izvodjac.getUmetnickoIme()))
+				data.add(new Object[] {md.getNaslov(), md.getOpis(), md.getDatumIzadavanja()});
 		}
 		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
 	}

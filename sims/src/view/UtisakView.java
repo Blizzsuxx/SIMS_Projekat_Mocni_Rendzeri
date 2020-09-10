@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,6 +19,7 @@ public class UtisakView extends JPanel{
      */
     private static final long serialVersionUID = 1L;
     
+    private int brojUtisaka=0;
 
     public void addKomentar(Utisak komentar){
         JLabel username = new JLabel(komentar.getPisac().getNalog().getKorisnickoIme());
@@ -38,13 +40,24 @@ public class UtisakView extends JPanel{
         this.add(panel, componentConstraints);
         sadrzaj.setSize(panel.getSize());
         sadrzaj.setPreferredSize(panel.getPreferredSize());
-        
+        brojUtisaka++;
+        try{
+            this.setPreferredSize(new Dimension(adjust(this.getWidth()), adjust(this.getHeight())));
+            this.setSize(adjust(this.getWidth()), adjust(this.getHeight()));
+        } catch(Exception e) {
+
+        }
+    }
+
+    private int adjust(int number){
+        return (number/(brojUtisaka-1)) * brojUtisaka;
     }
 
     
 
     public UtisakView() {
         super(new MigLayout("fillx"));
+
     }
     
 }

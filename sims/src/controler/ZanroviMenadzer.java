@@ -95,7 +95,8 @@ public class ZanroviMenadzer { //ovu klasu ili treba da ima sesija ili da bude p
 		int[] columnWidths = {80};
 		ArrayList<Object[]> data = new ArrayList<Object[]>();
 		for (Zanr z : sviZanrovi) {
-			data.add(new Object[] {z.getNazivZanra()});
+			if (z.isStatus())
+				data.add(new Object[] {z.getNazivZanra()});
 		}
 		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
 	}

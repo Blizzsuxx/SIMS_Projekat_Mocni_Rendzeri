@@ -21,7 +21,6 @@ public class Urednik extends FrontEndKorisnik {
    /** @pdRoleInfo migr=no name=RecezijaZaIzmenu assc=association41 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
    public java.util.Collection<RecezijaZaIzmenu> recezijaZaIzmenu;
    
-   private String albumZaRegistracju;
    
    private List<Zanr> zanrovi;
    
@@ -256,22 +255,6 @@ public class Urednik extends FrontEndKorisnik {
 				";" + df.format(urednik.getNalog().getDatumKreiranja()) + ";" + urednik.getNalog().isStatus() + System.lineSeparator();
 	}
    
-   	public static String ZahtevUrednika2String(Urednik urednik) {
-	   return urednik.getNalog().getKorisnickoIme() + ";" + 
-			   urednik.getAlbumZaRegistracju() + System.lineSeparator();
-	}
-
-   	public String getAlbumZaRegistracju() {
-		return albumZaRegistracju;
-	}
-
-   	public void setAlbumZaRegistracju(String albumZaRegistracju) {
-		this.albumZaRegistracju = albumZaRegistracju;
-	}
-
-
-   	
-
    	public List<Zanr> getZanrovi() {
 		return zanrovi;
 	}

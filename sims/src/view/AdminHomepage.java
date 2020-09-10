@@ -16,9 +16,10 @@ import model.Uloga;
 public class AdminHomepage extends Homepage {
 	private static final long serialVersionUID = 1L;
 
-	private JMenu korisniciMenu, izvodjaciMenu, zanroviMenu, recenzijeMenu, glasanjeMenu;
+	private JMenu korisniciMenu, izvodjaciMenu, albumiMenu, zanroviMenu, recenzijeMenu, glasanjeMenu;
 	private JMenuItem korisniciItem1, korisniciItem2, korisniciItem3, korisniciItem4, korisniciItem5,
-	izvodjaciItem1, izvodjaciItem2, izvodjaciItem3, zanroviItem1, recenzijeItem1, recenzijeItem2, recenzijeItem3, glasanjeItem1;
+	izvodjaciItem1, izvodjaciItem2, izvodjaciItem3, albumiItem1, albumiItem2, 
+	zanroviItem1, recenzijeItem1, recenzijeItem2, recenzijeItem3, glasanjeItem1;
 	
 	public AdminHomepage(Sesija sesija) {
 		super(sesija);
@@ -62,6 +63,13 @@ public class AdminHomepage extends Homepage {
 		izvodjaciItem3 = new JMenuItem("Promena zanra izvodjaca");
 		izvodjaciMenu.add(izvodjaciItem3);
 		menubar.add(izvodjaciMenu);
+		
+		albumiMenu = new JMenu("Albumi");
+		albumiItem1 = new JMenuItem("Neprihvaceni Albumi");
+		albumiMenu.add(albumiItem1);
+		albumiItem2 = new JMenuItem("Prihvaceni Albumi");
+		albumiMenu.add(albumiItem2);
+		menubar.add(albumiMenu);
 		
 		zanroviMenu = new JMenu("Zanrovi");
 		zanroviItem1 = new JMenuItem("Aktivni Zanrovi");
@@ -190,6 +198,27 @@ public class AdminHomepage extends Homepage {
 				catch (Exception e1) {
 					e1.printStackTrace();
 				}
+			}
+			
+		});
+		
+		albumiItem1.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					new AlbumiProzor(AdminHomepage.this, "Neprihvaceni Albumi", 700, 300, 
+						AdminHomepage.this.getSesija().getMuzickiSadrzajMenadzer().vratiAlbumeNaOsnovuOdobrenosti(false));
+				
+			}
+			
+		});
+		
+		albumiItem2.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new AlbumiProzor(AdminHomepage.this, "Prihvaceni Albumi", 700, 300, 
+						AdminHomepage.this.getSesija().getMuzickiSadrzajMenadzer().vratiAlbumeNaOsnovuOdobrenosti(true));
 			}
 			
 		});

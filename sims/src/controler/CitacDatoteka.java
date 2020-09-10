@@ -192,18 +192,14 @@ public class CitacDatoteka {
 	}
 
 
-	public void sacuvaj() {
+	public void sacuvaj() throws ParseException {
 		korisnici.sacuvaj();
 		clanoviGrupe.sacuvaj();
 		ocene.sacuvaj();
 		zakRecMenadzer.sacuvaj();
 		utisakmenadzer.sacuvaj();
-		/*try {
-			izvodjaci.sacuvaj();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+
+		izvodjaci.sacuvaj();
 		zanrovi.sacuvaj();//jos nesto treba sacuvati?? treba uzitati za izmenu
 		izmena.sacuvaj();
 		glasanjeMenadzer.sacuvaj();

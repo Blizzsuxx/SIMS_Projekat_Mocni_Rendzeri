@@ -165,7 +165,7 @@ public class IzvodjacMenadzer {
 					pw.print(Grupa.Grupa2String((Grupa)i));
 				
 			}
-			pw.close();	
+			pw.close();
 		}
 		catch(IOException e) {
 			e.printStackTrace();

@@ -46,6 +46,8 @@ public class DodavanjeZakRecIRecZaIzemnu extends MojDialog {
 	private String title;
 	private JRadioButton rbIzmena;
 	private JRadioButton rbBrisanje;
+	private JRadioButton rbZahtevZaIzmenu;
+	private JRadioButton rbZakaziRecenziju;
 	
 	public DodavanjeZakRecIRecZaIzemnu(Sesija sesija,  String title, int dim1, int dim2) throws Exception {
 		super(title, dim1, dim2);
@@ -60,22 +62,24 @@ public class DodavanjeZakRecIRecZaIzemnu extends MojDialog {
 		recenzije.setBounds(10, 11, 389, 188);
 		getContentPane().add(recenzije);
 		
-		JRadioButton rbZakaziRecenziju = new JRadioButton("Zakazi recenziju");
+		rbZakaziRecenziju = new JRadioButton("Zakazi recenziju");
+		rbZakaziRecenziju.setSelected(true);
 		rbZakaziRecenziju.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				pnlZakRec.setVisible(true);
 				pnlRecZaIzmenu.setVisible(false);
+				rbZahtevZaIzmenu.setSelected(false);
 			}
 		});
 		rbZakaziRecenziju.setBounds(10, 224, 145, 23);
 		getContentPane().add(rbZakaziRecenziju);
 		
-		JRadioButton rbZahtevZaIzmenu = new JRadioButton("Zahtev za izmenu");
-		rbZahtevZaIzmenu.setSelected(true);
+		rbZahtevZaIzmenu = new JRadioButton("Zahtev za izmenu");
 		rbZahtevZaIzmenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				pnlRecZaIzmenu.setVisible(true);
 				pnlZakRec.setVisible(false);
+				rbZakaziRecenziju.setSelected(false);
 			}
 		});
 		rbZahtevZaIzmenu.setBounds(272, 224, 127, 23);
@@ -185,6 +189,7 @@ public class DodavanjeZakRecIRecZaIzemnu extends MojDialog {
 		
 		ucitajRecenzije();
 		
+		pnlRecZaIzmenu.setVisible(false);
 		setVisible(true);
 	}
 	

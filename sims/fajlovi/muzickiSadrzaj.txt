@@ -7,3 +7,4 @@ Aqua;pPeric;13.09.2014.;Ariana Grande;miki1;true;rock,;true
 Bon Jovi;miki1;17.05.2002.;Ariana Grande;miki1;true;rock,;true
 AAAAAAAAAAAAAAAAAAAA;AAAAAAAAAAAAAAAAAAAAAAAAAA;10.09.2020.;Hurricane;pPeric;true;Pop,Dance,;false
 EEEEEEEEEE;EEEEEEEEEE;10.09.2020.;Aqua;pPeric;true;rock,hip-hop,;0.0;0.0
+ariana album;album ariana;10.09.2020.;Ariana Grande;pPeric;true;Pop,Dance,;true

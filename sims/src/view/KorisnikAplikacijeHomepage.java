@@ -43,7 +43,7 @@ public class KorisnikAplikacijeHomepage extends Homepage {
 
 		JPanel pane = new JPanel(new MigLayout());
 		for(int i = 0; i < numberOfElements; ++i){
-			MuzickoDeloLabel labela = new MuzickoDeloLabel(this.getSesija().getTrenutniKorisnik(), Constants.BARBIE_GIRL);
+			MuzickoDeloLabel labela = new MuzickoDeloLabel(Constants.BARBIE_GIRL);
 			pane.add(labela, "gapleft 10");
 			lista.add(labela);
 		}

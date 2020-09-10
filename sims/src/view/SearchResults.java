@@ -21,17 +21,17 @@ public class SearchResults extends JScrollPane {
 	private static final long serialVersionUID = 1L;
 	
 	public SearchResults(ArrayList<Slikovit> prikaz, Korisnik trenutniKorisnik) {
-		super(initGui(prikaz, trenutniKorisnik));
+		super(initGui(prikaz));
 	}
 
-	public static JPanel initGui(ArrayList<Slikovit> prikaz, Korisnik trenutniKorisnik) {
+	public static JPanel initGui(ArrayList<Slikovit> prikaz) {
 		
 		JPanel content = new JPanel(new MigLayout());
 		for(Slikovit sadrzaj : prikaz) {
 			JPanel slika = null;
 			if(sadrzaj instanceof MuzickoDelo) {
 				slika = new JPanel(new FlowLayout(FlowLayout.LEFT));
-				JPanel deoSaSlikom = new MuzickoDeloLabel(trenutniKorisnik, sadrzaj);
+				JPanel deoSaSlikom = new MuzickoDeloLabel(sadrzaj);
 				slika.add(deoSaSlikom);
 				JPanel deoSaOpisom = new JPanel(new BorderLayout());
 				StarRater rater = new StarRater(5, 3, 3);

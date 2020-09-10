@@ -23,17 +23,17 @@ public class MuzickoDeloLabel extends ImageLabel {
 		
 	}
 
-	public MuzickoDeloLabel(Korisnik trenutniKorisnik, ImageIcon ikona, Slikovit delo) {
+	public MuzickoDeloLabel(ImageIcon ikona, Slikovit delo) {
 		super(ikona, delo);
 		// TODO Auto-generated constructor stub
 	}
 
-	public MuzickoDeloLabel(Korisnik trenutniKorisnik, int sirina, int duzina, Slikovit delo) {
+	public MuzickoDeloLabel(int sirina, int duzina, Slikovit delo) {
 		super(sirina, duzina, delo);
 		// TODO Auto-generated constructor stub
 	}
 
-	public MuzickoDeloLabel(Korisnik trenutniKorisnik, Slikovit delo) {
+	public MuzickoDeloLabel(Slikovit delo) {
 		super(delo);
 		// TODO Auto-generated constructor stub
 	}

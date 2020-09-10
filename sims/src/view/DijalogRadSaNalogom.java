@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 
 import org.jdesktop.swingx.JXCollapsiblePane;
 import org.jdesktop.swingx.JXImagePanel;
@@ -25,7 +26,8 @@ public class DijalogRadSaNalogom extends MojDialog {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JLabel imeLabela, prezLabela, mailLabela, polLabela, dateLabela, sifraLabela, userLabela;
-	private MojTextField poljeIme, poljePrez, poljeMail, poljePol, poljeDate, poljeSifra, poljeUser;
+	private MojTextField poljeIme, poljePrez, poljeMail, poljePol, poljeDate, poljeUser;
+	private JPasswordField poljeSifra;
 	private JButton izadjiBtn, potvrdiBtn;
 	private Korisnik korisnik;
 
@@ -105,7 +107,7 @@ public class DijalogRadSaNalogom extends MojDialog {
 		poljeDate  = new MojTextField(20); poljeDate.setText(korisnik.getDatumRodjenja());
 		poljeUser =  new MojTextField(20); poljeUser.setText(korisnik.getNalog().getKorisnickoIme());
 		
-		poljeSifra = new MojTextField(20, true); poljeSifra.setText(korisnik.getNalog().getSifra());
+		poljeSifra = new JPasswordField(20);
 		
 		izadjiBtn  = new JButton("Izadji");
 		potvrdiBtn = new JButton("Potvrdi");

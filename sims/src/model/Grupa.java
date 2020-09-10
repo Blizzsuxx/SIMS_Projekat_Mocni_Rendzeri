@@ -99,19 +99,15 @@ public class Grupa extends Izvodjac {
 		
 		return ad;
 	}
-	public static boolean string2Bool(String value) {
-		return (value.equals("1") ? true : false);
-	}
-	
-	public static String bool2String(boolean value) {
-		return (value ? "1" : "0");
-	}
 	
 	public static String Grupa2String(Grupa g) {
 		String pattern = "dd.MM.yyyy.";
+		String datumRaspada = "/";
 		DateFormat df = new SimpleDateFormat(pattern);
-		return g.isOdobrenost()+";"+g.getUmetnickoIme() + ";" + g.getZanr().getNazivZanra() + ";" + bool2String(g.isStatus()) + ";" + g.getBrojClanova() + ";" +
-				 df.format(g.getDatumOsnivanja()) + ";" + df.format(g.getDatumRaspada()) + System.lineSeparator();
+		if (g.getDatumRaspada() != null)
+			datumRaspada = df.format(g.getDatumRaspada());
+		return g.isOdobrenost()+";"+g.getUmetnickoIme() + ";" + g.getZanr().getNazivZanra() + ";" + g.isStatus() + ";" + g.getBrojClanova() + ";" +
+				 df.format(g.getDatumOsnivanja()) + ";" + datumRaspada + System.lineSeparator();
 	}
 	
 	@Override

@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.ParseException;
 
 import javax.swing.JOptionPane;
 
@@ -90,8 +91,11 @@ public class LoginMenadzer {
 		   prozor.addWindowListener(new WindowAdapter() {
 			   @Override
 			public void windowClosed(WindowEvent e) {
-				// TODO Auto-generated method stub
-				datoteke.sacuvaj();
+				try {
+					datoteke.sacuvaj();
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
    }

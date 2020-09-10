@@ -130,18 +130,14 @@ public class Pojedinacanizvodjac extends Izvodjac {
 		return ad;
 	}
 	
-	public static boolean string2Bool(String value) {
-		return (value.equals("1") ? true : false);
-	}
-	
-	public static String bool2String(boolean value) {
-		return (value ? "1" : "0");
-	}
 	
 	public static String PojedinacniIzvodjac2String(Pojedinacanizvodjac pi) {
 		DateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;
-		return pi.isOdobrenost()+";"+pi.getUmetnickoIme() + ";"  + pi.getZanr().getNazivZanra() + ";" + bool2String(pi.isStatus()) + ";" + pi.getIme() + ";" +
-				pi.getPrezime() + ";" + df.format(pi.getDatumRodjenja()) + ";" + df.format(pi.getDatumSmrti()) +
+		String datumSmrti = "/";
+		if (pi.getDatumSmrti() != null)
+			datumSmrti = df.format(pi.getDatumSmrti());
+		return pi.isOdobrenost()+";"+pi.getUmetnickoIme() + ";"  + pi.getZanr().getNazivZanra() + ";" + pi.isStatus() + ";" + pi.getIme() + ";" +
+				pi.getPrezime() + ";" + df.format(pi.getDatumRodjenja()) + ";" + datumSmrti +
 				";" + pi.getOpis() + ";" + pi.getPol() + System.lineSeparator();
 	}
 

@@ -4,7 +4,6 @@
  * Purpose: Defines the Class RecezijaZaIzmenu
  ***********************************************************************/
 package model;
-import java.util.*;
 
 /** @pdOid 4fb52d4e-b575-4fd4-9014-e10a987168db */
 public class RecezijaZaIzmenu {

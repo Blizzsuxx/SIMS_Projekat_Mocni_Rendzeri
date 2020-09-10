@@ -6,9 +6,9 @@
 package model;
 import java.awt.image.BufferedImage;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import controler.Constants;
 
@@ -23,26 +23,23 @@ public class Urednik extends FrontEndKorisnik {
    
    private String albumZaRegistracju;
    
+   private List<Zanr> zanrovi;
+   
    public Urednik(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, String sifra,
 			String korisnickoIme, Date datum, boolean status) {
 		super(ime, prezime, eMail, pol, datumRodjenja, sifra, korisnickoIme, datum, status);
 		   this.istorijaRecenzija = new ArrayList<>();
 		   this.zakazaneRecenzije = new ArrayList<>();
 		   this.recezijaZaIzmenu = new ArrayList<>();
-		// TODO Auto-generated constructor stub
+		   this.zanrovi = new ArrayList<>();
 	}
 
-
-
-
-public Urednik() {
-	 this.istorijaRecenzija = new ArrayList<>();
+   public Urednik() {
+	   this.istorijaRecenzija = new ArrayList<>();
 	   this.zakazaneRecenzije = new ArrayList<>();
 	   this.recezijaZaIzmenu = new ArrayList<>();
-}
-
-
-
+	   this.zanrovi = new ArrayList<>();
+   }
 
 /** @pdOid f9c63904-e42a-4710-8822-3e3f1e173c5e */
    public void pokreniGlasanje() {
@@ -270,6 +267,20 @@ public Urednik() {
 
    	public void setAlbumZaRegistracju(String albumZaRegistracju) {
 		this.albumZaRegistracju = albumZaRegistracju;
+	}
+
+
+   	
+
+   	public List<Zanr> getZanrovi() {
+		return zanrovi;
+	}
+
+
+
+
+	public void setZanrovi(List<Zanr> zanrovi) {
+		this.zanrovi = zanrovi;
 	}
 
 

@@ -203,7 +203,7 @@ public abstract class FrontEndKorisnik extends Korisnik {
 		   if(i!=0) {
 			   ad+=";";
 		   }
-		   ad+=d.getNaziv();
+		   ad+=d.getNaslov();
 	   }
 	   return ad;
    }

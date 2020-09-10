@@ -1,17 +1,18 @@
 package view;
 
-import javax.swing.JFrame;
-
 import model.Izvodjac;
 import model.MuzickoDelo;
 import model.Recenzija;
 import model.Sesija;
 import model.Urednik;
+import model.ZakazanaRecenzija;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import controler.MuzickoDeloMenadzer;
+import controler.MuzickiSadrzajMenadzer;
+import controler.UtisakMenadzer;
 
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
@@ -22,9 +23,11 @@ import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.ListSelectionModel;
 
-public class DodavanjeRecenzije extends JFrame {
+public class DodavanjeRecenzije extends MojDialog {
 	private static final long serialVersionUID = 1L;
 	private Sesija sesija;
+	private String title;
+	private Recenzija recenzija;
 	private JTextField txtNaslov;
 	private JTable dela;
 	private JTextArea txtTekst;
@@ -32,9 +35,11 @@ public class DodavanjeRecenzije extends JFrame {
 	private JComboBox cmbIzvodjaci;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public DodavanjeRecenzije(Sesija sesija) {
+	public DodavanjeRecenzije(Sesija sesija, Recenzija recenzija, String title, int dim1, int dim2) {
+		super(title, dim1, dim2);
+		this.recenzija = recenzija;
 		this.sesija = sesija;
-		setTitle("Dodavanje recenzije");
+		this.title = title;
 		setResizable(false);
 		getContentPane().setLayout(null);
 		
@@ -88,38 +93,91 @@ public class DodavanjeRecenzije extends JFrame {
 		lblDela.setBounds(10, 204, 38, 14);
 		getContentPane().add(lblDela);
 		
-		JButton btnDodaj = new JButton("Dodaj");
+		JButton btnDodaj;
+		if (recenzija != null) {
+			setTitle(title);
+			btnDodaj = new JButton("Izmeni");
+			cmbIzvodjaci.setEnabled(false);
+			dela.setEnabled(false);
+		}
+		else {
+			setTitle(title);
+			btnDodaj = new JButton("Dodaj");
+		}
+		
 		btnDodaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dodajRecenziju();
+				if (recenzija != null)
+					izmeniRecenziju();
+				else	
+					dodajRecenziju();
 			}
 		});
 		btnDodaj.setBounds(615, 365, 89, 23);
 		getContentPane().add(btnDodaj);
+		
+		setVisible(true);
 	}
 	
 	private void ucitajPesme(String umetnickoIme) throws Exception {
-		MuzickoDeloMenadzer mdm = sesija.getMuzickoDeloMenadzer();
+		MuzickiSadrzajMenadzer mdm = sesija.getMuzickiSadrzajMenadzer(); // PROMJENA
 		Izvodjac i = sesija.getIzvodjac(umetnickoIme);
 		TableModelWrapper tmw = mdm.getTabelaMuzickihDela(i);
 		dela.setModel(tmw);
 	}
 	
 	private void dodajRecenziju() {
+		if (txtNaslov.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Naslov je obavezno polje.");
+			return;
+		}
+		if (dela.getSelectionModel().isSelectionEmpty()) {
+			JOptionPane.showMessageDialog(null, "Morate odabrati muzicko delo.");
+			return;
+		}
 		String naslov = txtNaslov.getText();
 		String tekst = txtTekst.getText();
 		int selektovaniRed = dela.getSelectedRow();
 		String sDelo = (String)dela.getValueAt(selektovaniRed, 0);
-		MuzickoDeloMenadzer mdm = sesija.getMuzickoDeloMenadzer();
+		MuzickiSadrzajMenadzer mdm = sesija.getMuzickiSadrzajMenadzer();
 		MuzickoDelo muzickoDelo = null;
-		for (MuzickoDelo md : mdm.getDela()) {
-			if (md.getNaziv().equals(sDelo)) {
+		for (MuzickoDelo md : mdm.getMuzickaDela()) {
+			if (md.getNaslov().equals(sDelo)) {
 				muzickoDelo = md;
 				break;
 			}
 		}
-		Urednik urednik = (Urednik)sesija.getTrenutniKorisnik();
+		Urednik urednik = (Urednik)Sesija.getTrenutniKorisnik();
 		Recenzija recenzija = new Recenzija(tekst, new Date(), true, urednik, muzickoDelo, naslov);
 		sesija.addRecenzije(recenzija);
+	}
+	
+	private void izmeniRecenziju() {
+		if (txtNaslov.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Naslov je obavezno polje.");
+			return;
+		}
+		if (txtTekst.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Tekst je obavezno polje.");
+			return;
+		}
+		UtisakMenadzer um = sesija.getUtisakMenadzer();
+		for (Recenzija r : um.getRecenzije()) {
+			if (recenzija.getNaslov().equals(r.getNaslov()))
+				r.setNaslov(txtNaslov.getText());
+				r.setText(txtTekst.getText());
+				r.setUrednik((Urednik)Sesija.getTrenutniKorisnik());
+				sesija.setUtisakMenadzer(um);
+				break;
+		}
+		Urednik urednik = (Urednik) Sesija.getTrenutniKorisnik();
+		for (ZakazanaRecenzija zr : urednik.getZakazaneRecenzije()) {
+			if (recenzija.getNaslov().equals(zr.getRecenzija().getNaslov())) {
+					zr.setUradeno(true);
+					break;
+			}
+		}
+		Sesija.setTrenutniKorisnik(urednik);
+		DodavanjeRecenzije.this.dispose();
 	}
 }

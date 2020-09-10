@@ -1,0 +1,3 @@
+AAAAAAA;false;09.09.2020.;23.11.2020.;Naslov;milan1;
+EEEEEE;true;07.09.2020.;09.09.2020.;It's my life recenzija;miki1;
+IIIII;true;07.09.2020.;09.09.2020.;Naslov;milan1;

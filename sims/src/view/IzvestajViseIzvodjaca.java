@@ -28,7 +28,6 @@ import org.jdatepicker.impl.UtilDateModel;
 
 import controler.IzvestajSvihIzvodjacaMenadzer;
 import controler.ZanroviMenadzer;
-import model.Izvodjac;
 import model.Sesija;
 import model.Zanr;
 import net.miginfocom.swing.MigLayout;
@@ -38,6 +37,7 @@ public class IzvestajViseIzvodjaca extends JFrame{
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
+	@SuppressWarnings("unused")
 	private Sesija sesija;
 	private IzvestajSvihIzvodjacaMenadzer men;
 	private JButton btnBack, btnOk;
@@ -49,6 +49,7 @@ public class IzvestajViseIzvodjaca extends JFrame{
 	
 	
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public IzvestajViseIzvodjaca(Sesija s, ZanroviMenadzer zm) {
 		this.sesija=s;
 		this.men=s.namestiIzvestajIzvodjaca();
@@ -159,7 +160,7 @@ public class IzvestajViseIzvodjaca extends JFrame{
 				LocalDate dan=convertToLocalDateViaInstant(d1, month, year);
 				LocalDate dan1=convertToLocalDateViaInstant(d2, month2, year2);
 				String imeZanra=(String) cbZanr.getSelectedItem(); 
-				IzvestajViseIzvodjaca.this.men.izlistajPoDatumimaIZanru(dan, dan1, imeZanra);
+				//IzvestajViseIzvodjaca.this.men.izlistajPoDatumimaIZanru(dan, dan1, imeZanra);
 				//table1.new JTable(new SinglIzvodjaciModel(men.getIzvodjaci()));
 				refreshData(); 
 				

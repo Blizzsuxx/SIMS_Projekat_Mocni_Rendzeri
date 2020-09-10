@@ -117,7 +117,9 @@ public class LoginMenadzer {
       // TODO: implement
 	   KorisnikAplikacije novKorisnik = new KorisnikAplikacije();
 	   DijalogKorisnickihInformacija dijalog = new DijalogKorisnickihInformacija(prozor, novKorisnik) {
-		   @Override
+		private static final long serialVersionUID = 1L;
+
+		@Override
 		   protected void buttonTriggered() {
 			   if(novKorisnik.getNalog() != null && !korisnici.provjeriKorisnickoIme(novKorisnik.getNalog().getKorisnickoIme())) {
 					korisnici.dodaj(novKorisnik);
@@ -149,6 +151,10 @@ public class LoginMenadzer {
 	   korisnik = korisnici.trazi(korisnickoIme);
 	   if(korisnik == null || !korisnik.getNalog().potvrdiSifru(sifra)){
 		   JOptionPane.showMessageDialog(prozor, "Pogresni username ili sifra");
+		   return;
+	   }
+	   if (!korisnik.isStatus()) {
+		   JOptionPane.showMessageDialog(prozor, "Ovaj nalog je blokiran!");
 		   return;
 	   }
 	   prozor.setVisible(false);

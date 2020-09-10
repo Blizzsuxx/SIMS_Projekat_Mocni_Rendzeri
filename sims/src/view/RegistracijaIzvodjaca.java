@@ -157,7 +157,8 @@ public class RegistracijaIzvodjaca extends JDialog {
 		lblNewLabel_2.setBounds(10, 122, 75, 14);
 		pnlPojedinacniIzvodjac.add(lblNewLabel_2);
 		
-		JDatePanelImpl date2Panel = new JDatePanelImpl(model, p);
+		UtilDateModel model2 = new UtilDateModel();
+		JDatePanelImpl date2Panel = new JDatePanelImpl(model2, p);
 		dtDod = new JDatePickerImpl(date2Panel, new DataLabelFormatter());
 		sl_dtDod = new SpringLayout();
 		sl_dtDod.putConstraint(SpringLayout.NORTH, dtDod.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDod);
@@ -186,7 +187,8 @@ public class RegistracijaIzvodjaca extends JDialog {
 		lblDatumOsnivanja.setBounds(10, 45, 94, 14);
 		pnlGrupa.add(lblDatumOsnivanja);
 		
-		JDatePanelImpl date3Panel = new JDatePanelImpl(model, p);
+		UtilDateModel model3 = new UtilDateModel();
+		JDatePanelImpl date3Panel = new JDatePanelImpl(model3, p);
 		dtDof = new JDatePickerImpl(date3Panel, new DataLabelFormatter());
 		sl_dtDof = new SpringLayout();
 		sl_dtDof.putConstraint(SpringLayout.NORTH, dtDof.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDof);
@@ -196,7 +198,8 @@ public class RegistracijaIzvodjaca extends JDialog {
 		dtDof.setBounds(112, 38, 189, 25);
 		pnlGrupa.add(dtDof);
 		
-		JDatePanelImpl date4Panel = new JDatePanelImpl(model, p);
+		UtilDateModel model4 = new UtilDateModel();
+		JDatePanelImpl date4Panel = new JDatePanelImpl(model4, p);
 		dtDor = new JDatePickerImpl(date4Panel, new DataLabelFormatter());
 		sl_dtDor = new SpringLayout();
 		sl_dtDor.putConstraint(SpringLayout.NORTH, dtDor.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDor);
@@ -329,17 +332,21 @@ public class RegistracijaIzvodjaca extends JDialog {
 	
 	private void registrujIzvodjaca(String umetnickoIme, Zanr zanr, String ime, String prezime, String dob, String dod, String pol, String opis) throws ParseException
 	{ 
+		SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyyy.");
+		String dob2 = sdf2.format(sdf1.parse(dob));
 		Pol p = Pol.valueOf(pol);
 		Pojedinacanizvodjac pi = null;
 		if (!dod.isEmpty()) { 
-
-			pi = new Pojedinacanizvodjac(false, umetnickoIme, zanr, true, ime, prezime, new SimpleDateFormat("dd.MM.yyyy.").parse(dob),
-					new SimpleDateFormat("dd.MM.yyyy").parse(dod), opis, p);
+			
+			String dod2 = sdf2.format(sdf1.parse(dod));
+			pi = new Pojedinacanizvodjac(false, umetnickoIme, zanr, true, ime, prezime, new SimpleDateFormat("dd.MM.yyyy.").parse(dob2),
+					new SimpleDateFormat("dd.MM.yyyy.").parse(dod2), opis, p);
 		}
 		else {
 
 
-			pi = new Pojedinacanizvodjac(false, umetnickoIme, zanr, true, ime, prezime, new SimpleDateFormat("dd.MM.yyyy.").parse(dob),
+			pi = new Pojedinacanizvodjac(false, umetnickoIme, zanr, true, ime, prezime, new SimpleDateFormat("dd.MM.yyyy.").parse(dob2),
 					null, opis, p);
 		}
 			if (!sesija.addUmetnici(pi))
@@ -348,19 +355,20 @@ public class RegistracijaIzvodjaca extends JDialog {
 	
 	private void registrujGrupu(String umetnickoIme, Zanr zanr, int brojClanova, String dof, String dor) throws ParseException
 	{
+		SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyyy.");
+		String dof2 = sdf2.format(sdf1.parse(dof));
 		Grupa g = null;
 		if (!dor.isEmpty()) {
-
-			g = new Grupa(false,umetnickoIme, zanr, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy").parse(dof), 
-					new SimpleDateFormat("dd.MM.yyyy").parse(dor));
-
-			g = new Grupa(false, umetnickoIme, zanr, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy.").parse(dof), 
-					new SimpleDateFormat("dd.MM.yyyy.").parse(dor));
+			
+			String dor2 = sdf2.format(sdf1.parse(dor));
+			g = new Grupa(false,umetnickoIme, zanr, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy.").parse(dof2), 
+					new SimpleDateFormat("dd.MM.yyyy.").parse(dor2));
 
 		}
 		else {
 
-			g = new Grupa(false, umetnickoIme, zanr, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy.").parse(dof),
+			g = new Grupa(false, umetnickoIme, zanr, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy.").parse(dof2),
 					null);
 		}
 		if (!sesija.addGrupe(g))

@@ -138,14 +138,14 @@ public abstract class Izvodjac implements Slikovit {
 	public MuzickoDelo pronadiDelo(String br1) {
 		if(this.muzickaDela==null) {return null;}
 		for(MuzickoDelo md:this.muzickaDela) {
-			if(md.getNaziv().equals(br1)) {return md;}
+			if(md.getNaslov().equals(br1)) {return md;}
 		}
 		return null;
 	}
 	
 	public void addDelo(MuzickoDelo md) {
 		for (MuzickoDelo muzickoDelo : muzickaDela) {
-			if (muzickoDelo.getNaziv().equals(md.getNaziv())) {
+			if (muzickoDelo.getNaslov().equals(md.getNaslov())) {
 				return;
 			}
 		}

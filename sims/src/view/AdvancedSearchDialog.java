@@ -50,7 +50,12 @@ public class AdvancedSearchDialog extends MojDialog {
 
 		final JButton button = new JButton();
 		button.setAction(new AbstractAction("Court") {
-		    @Override
+		    /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
 		    public void actionPerformed(ActionEvent e) {
 		        menu.show(button, 0, button.getHeight());
 		    }

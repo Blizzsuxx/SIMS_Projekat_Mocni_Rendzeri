@@ -22,13 +22,11 @@ import model.Administrator;
 import model.Korisnik;
 import model.KorisnikAplikacije;
 import model.Pol;
+import model.Sesija;
 import model.Urednik;
-import view.KorisnikAddEdit;
 import view.Slikovit;
 import view.TableModelWrapper;
 
-import model.Uloga;
-import model.Album;
 
 /** @pdOid 121daa1d-b073-437c-95b7-7f061b5ef5df */
 public class KorisniciMenadzer {
@@ -121,8 +119,9 @@ public class KorisniciMenadzer {
 			@SuppressWarnings("rawtypes")
 			HashMap.Entry pair = (HashMap.Entry)it.next();
 			Korisnik k = (Korisnik)pair.getValue();
+			if (k.getNalog().getKorisnickoIme().equals(Sesija.getTrenutniKorisnik().getNalog().getKorisnickoIme()))
+				continue;
 			data.add(new Object[] {k.getNalog().getKorisnickoIme(), k.getIme(), k.getPrezime(), k.getDatumRodjenja(), k.isStatus()});
-	        it.remove();
 		}
 		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
 	}
@@ -185,7 +184,7 @@ public class KorisniciMenadzer {
 	   List<Korisnik> lista = new ArrayList<>();
 	   for (Korisnik k : korisnici.values()) 
 		   if (k.isStatus() && k instanceof Urednik)
-			   lista.add(k);
+			   lista.add((Urednik) k);
 	   
 	   return lista;
 	   
@@ -242,7 +241,6 @@ private void sacuvajZahteve() {
 				HashMap.Entry pair = (HashMap.Entry)it.next();
 				Urednik urednik = (Urednik)pair.getValue();
 				pw.print(Urednik.ZahtevUrednika2String(urednik));
-		        it.remove();
 		    }
 		   pw.close();
 	   }
@@ -256,7 +254,6 @@ private void sacuvajZahteve() {
 	   }
 	   
 }
-
 
 
 }

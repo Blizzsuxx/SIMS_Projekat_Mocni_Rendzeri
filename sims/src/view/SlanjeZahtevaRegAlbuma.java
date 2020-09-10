@@ -1,6 +1,5 @@
 package view;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -13,13 +12,17 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class SlanjeZahtevaRegAlbuma extends JFrame {
+public class SlanjeZahtevaRegAlbuma extends MojDialog {
 	private static final long serialVersionUID = 1L;
 	private JTextField txtNazivAlbuma;
 	private Sesija sesija;
-	public SlanjeZahtevaRegAlbuma(Sesija sesija) {
+	private String title;
+	
+	public SlanjeZahtevaRegAlbuma(Sesija sesija, String title, int dim1, int dim2) {
+		super(title, dim1, dim2);
 		this.sesija = sesija;
-		setTitle("Slanje zahteva za registraciju albuma");
+		this.title = title;
+		setTitle(title);
 		setResizable(false);
 		getContentPane().setLayout(null);
 		
@@ -40,14 +43,16 @@ public class SlanjeZahtevaRegAlbuma extends JFrame {
 					JOptionPane.showMessageDialog(null, "Morate uneti naziv albuma.");
 					return;
 				}
-				if (sesija.getTrenutniKorisnik().getClass() == Urednik.class) {
+				if (Sesija.getTrenutniKorisnik().getClass() == Urednik.class) {
 					KorisniciMenadzer km = sesija.getKorisnici();
-					km.dodajZahtevUrednika((Urednik)sesija.getTrenutniKorisnik(), nazivAlbuma);
+					km.dodajZahtevUrednika((Urednik)Sesija.getTrenutniKorisnik(), nazivAlbuma);
 					sesija.setKorisnici(km);
 				}
 			}
 		});
 		btnPosalji.setBounds(324, 52, 110, 23);
 		getContentPane().add(btnPosalji);
+		
+		setVisible(true);
 	}
 }

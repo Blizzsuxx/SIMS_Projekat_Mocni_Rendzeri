@@ -31,6 +31,7 @@ public class IzvestajViseZanrova extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTable table;
+	@SuppressWarnings("unused")
 	private Sesija sesija;
 	private JButton btnBack;
 	ArrayList<IzvestajSvihZanrova> lista;

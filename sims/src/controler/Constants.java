@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -44,7 +43,7 @@ public abstract class Constants {
 	
 	public static BufferedImage GRUPA_IKONA;
 	
-
+	// dodaj konsruktor za ovaj dio
 	public static final MuzickoDelo BARBIE_GIRL = new MuzickoDelo("Aqua - Barbie Girl", "Barbi devojka");
 
 	public static final String FILE_SEPARATOR = System.getProperty("file.separator");

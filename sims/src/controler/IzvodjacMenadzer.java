@@ -13,7 +13,6 @@ import model.Grupa;
 import model.Izvodjac;
 import model.Pojedinacanizvodjac;
 import model.Pol;
-import model.Zanr;
 import view.Slikovit;
 import view.TableModelWrapper;
 
@@ -185,7 +184,8 @@ public class IzvodjacMenadzer {
 		int[] columnWidths = { 120, 80, 120, 120, 120};
 		ArrayList<Object[]> data = new ArrayList<Object[]>();
 		for (Pojedinacanizvodjac pi : solo) {
-			data.add(new Object[] {pi.getUmetnickoIme(), pi.getZanr().getNazivZanra(), pi.getIme(), pi.getPrezime(), pi.getDatumRodjenja()});
+			if (pi.isOdobrenost())
+				data.add(new Object[] {pi.getUmetnickoIme(), pi.getZanr().getNazivZanra(), pi.getIme(), pi.getPrezime(), pi.getDatumRodjenja()});
 		}
 		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
 	}
@@ -197,7 +197,8 @@ public class IzvodjacMenadzer {
 		int[] columnWidths = { 120, 80, 80, 120, 120};
 		ArrayList<Object[]> data = new ArrayList<Object[]>();
 		for (Grupa g : grupe) {
-			data.add(new Object[] {g.getUmetnickoIme(), g.getZanr().getNazivZanra(), g.getBrojClanova(), g.getDatumOsnivanja(), g.getDatumRaspada()});
+			if (g.isOdobrenost())
+				data.add(new Object[] {g.getUmetnickoIme(), g.getZanr().getNazivZanra(), g.getBrojClanova(), g.getDatumOsnivanja(), g.getDatumRaspada()});
 		}
 		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
 	}
@@ -240,5 +241,12 @@ public class IzvodjacMenadzer {
 				return true;
 			}
 		return false;
+	}
+
+	public void dodaj(Izvodjac pi) {
+		// TODO Auto-generated method stub
+		this.svi.add(pi);
+		if(pi instanceof Pojedinacanizvodjac) this.solo.add((Pojedinacanizvodjac) pi);
+		else this.grupe.add((Grupa) pi);
 	}
 }

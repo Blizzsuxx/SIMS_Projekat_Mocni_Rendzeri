@@ -1,129 +1,82 @@
 package model;
 
 import java.awt.image.BufferedImage;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import controler.Constants;
-
 import view.Slikovit;
 
-public class Album implements Slikovit {
-
-	private Izvodjac izvodjac;
-	private ArrayList<MuzickoDelo> listaPesama;
-	private Urednik urednik; //urednik koji je izvrsio registraciju tog albuma
-	private Date danRegistracije;
-	private boolean odobreno; 
-	private String naslov;
-	private boolean izbrisi;
+public class Album extends MuzickiSadrzaj implements Slikovit {
+	private List<MuzickoDelo> listaPesama;
+	private boolean odobreno;
 	
-	public boolean isIzbrisi() {
-		return izbrisi;
+	
+	public Album(String naslov, String opis, Date datumIzadavanja, Izvodjac izvodjac, Urednik urednik, boolean status) {
+		super(naslov, opis, datumIzadavanja, izvodjac, urednik, status);
+		this.listaPesama = new ArrayList<>();
 	}
 
-	public void setIzbrisi(boolean izbrisi) {
-		this.izbrisi = izbrisi;
-	}
-
-	public String getNaslov() {
-		return naslov;
-	}
-
-	public void setNaslov(String naslov) {
-		this.naslov = naslov;
-	}
-
-	public ArrayList<MuzickoDelo> getListaPesama() {
-		return listaPesama;
+	
+	public Album(String naslov, String opis, Date datumIzadavanja, Izvodjac izvodjac, Urednik urednik, boolean status,
+			List<Zanr> zanrovi) {
+		super(naslov, opis, datumIzadavanja, izvodjac, urednik, status, zanrovi);
+		this.listaPesama = new ArrayList<>();
 	}
 	
-	public Izvodjac getIzvodjac() {
-		return izvodjac;
-	}
-
-	public void setIzvodjac(Izvodjac izvodjac) {
-		this.izvodjac = izvodjac;
-	}
-
-	public void setListaPesama(ArrayList<MuzickoDelo> listaPesama) {
+	public Album(String naslov, String opis, Date datumIzadavanja, Izvodjac izvodjac, Urednik urednik, boolean status,
+			List<Zanr> zanrovi, List<MuzickoDelo> listaPesama, boolean odobreno) {
+		super(naslov, opis, datumIzadavanja, izvodjac, urednik, status, zanrovi);
 		this.listaPesama = listaPesama;
-	}
-	public Urednik getUrednik() {
-		return urednik;
-	}
-	public void setUrednik(Urednik urednik) {
-		this.urednik = urednik;
-	}
-	public Date getDanRegistracije() {
-		return danRegistracije;
-	}
-	public void setDanRegistracije(Date danRegistracije) {
-		this.danRegistracije = danRegistracije;
-	}
-	public boolean isOdobreno() {
-		return odobreno;
-	}
-	public void setOdobreno(boolean odobreno) {
 		this.odobreno = odobreno;
 	}
-	public Album(String naziv,ArrayList<MuzickoDelo> listaPesama, Urednik urednik,Izvodjac izv, Date danRegistracije, boolean odobreno) {
-		super();
-		this.naslov=naziv;
-		this.listaPesama = listaPesama;
-		this.urednik = urednik;
-		this.danRegistracije = danRegistracije;
+
+	
+	public Album(String naslov, String opis, Date datumIzadavanja, Izvodjac izvodjac, Urednik urednik, boolean status,
+			List<Zanr> zanrovi, boolean odobreno) {
+		super(naslov, opis, datumIzadavanja, izvodjac, urednik, status, zanrovi);
 		this.odobreno = odobreno;
-		this.izvodjac=izv;
-	}
-	public Album(String naziv, ArrayList<MuzickoDelo> listaPesama, Urednik urednik, Izvodjac izv) {
-		super();
-		this.naslov=naziv;
-		this.listaPesama = listaPesama;
-		this.urednik = urednik;
-		this.danRegistracije=new Date();
-		this.odobreno=false;
-		this.izvodjac=izv;
+		this.listaPesama = new ArrayList<>();
 	}
 
+
+	@Override
 	public String toFileString() {
-		//izvodjac,urednik, dan,odobreno, naslov, izbrisi, dela....
-		String pattern = "dd.MM.yyyy.";
-		DateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;;
-		String ad="";
-		ad+=this.getIzvodjac().getUmetnickoIme()+",";
-		ad+=this.getUrednik().getNalog().getKorisnickoIme()+",";
-		ad+=df.format(this.getDanRegistracije())+",";
-		ad+=this.isOdobreno()+",";
-		ad+=this.getNaslov()+",";
-		ad+=this.isIzbrisi()+",";
-		int i=0;
-		for(MuzickoDelo md:this.getListaPesama()) {
-			if(i!=0) {
-				ad+="|";
-			}i++;
-			ad+= md.getNaziv();
-		}
-		return ad;
+		return String.format("%s;%s\n", super.toFileString(), this.odobreno);
 	}
+
 
 	@Override
 	public String Ime() {
-		// TODO Auto-generated method stub
 		return this.getNaslov();
 	}
 
 	@Override
 	public String putDoSlike() {
-		// TODO Auto-generated method stub
 		return "fajlovi/" + Ime() + ".jpg";
 	}
 
 	@Override
 	public BufferedImage defaultSlika() {
-		// TODO Auto-generated method stub
 		return Constants.ALBUM_IKONA;
 	}
+
+	public List<MuzickoDelo> getListaPesama() {
+		return listaPesama;
+	}
+
+	public void setListaPesama(List<MuzickoDelo> listaPesama) {
+		this.listaPesama = listaPesama;
+	}
+
+	public boolean isOdobreno() {
+		return odobreno;
+	}
+
+	public void setOdobreno(boolean odobreno) {
+		this.odobreno = odobreno;
+	}
+	
+	
 }

@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
@@ -16,17 +15,21 @@ import model.Korisnik;
 import model.Sesija;
 
 
-public class BlokiranjeNaloga extends JFrame {
+public class BlokiranjeNaloga extends MojDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JTable nalozi;
-	public Sesija sesija;
+	private Sesija sesija;
+	private String title;
+	private JButton btnNewButton;
+	private JButton btnOdblokiraj;
 	
-	public BlokiranjeNaloga(Sesija sesija) throws Exception {
+	public BlokiranjeNaloga(Sesija sesija, String title, int dim1, int dim2) throws Exception {
+		super(title, dim1, dim2);
 		setResizable(false);
+		this.title = title;
 		this.sesija = sesija;
-		setTitle("Blokiranje naloga");
+		setTitle(title);
 		getContentPane().setLayout(null);
-		
 		
 		nalozi = new JTable();
 		nalozi.setFillsViewportHeight(true);
@@ -34,28 +37,18 @@ public class BlokiranjeNaloga extends JFrame {
 		nalozi.setBounds(10, 11, 414, 205);
 		getContentPane().add(nalozi);
 		
-		JButton btnNewButton = new JButton("Blokiraj");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int selektovaniRed = nalozi.getSelectedRow();
-				setujStatus(selektovaniRed, false);
-			}
-			
-		});
+		btnNewButton = new JButton("Blokiraj");
+		btnNewButton.addActionListener(this);
 		btnNewButton.setBounds(10, 227, 89, 23);
 		getContentPane().add(btnNewButton);
 		
-		JButton btnOdblokiraj = new JButton("Odblokiraj");
-		btnOdblokiraj.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int selektovaniRed = nalozi.getSelectedRow();
-				setujStatus(selektovaniRed, true);
-			}
-		});
+		btnOdblokiraj = new JButton("Odblokiraj");
+		btnOdblokiraj.addActionListener(this);
 		btnOdblokiraj.setBounds(109, 227, 89, 23);
 		getContentPane().add(btnOdblokiraj);
 		
 		ucitajNaloge();
+		setVisible(true);
 	}
 	
 	private void ucitajNaloge() throws Exception {
@@ -75,13 +68,21 @@ public class BlokiranjeNaloga extends JFrame {
 			Korisnik k = (Korisnik)pair.getValue();
 			String korisnickoIme = (String)nalozi.getValueAt(selektovaniRed, 0);
 			if (korisnickoIme.equals((String)pair.getKey())) {
-				k.getNalog().setStatus(status);
+				k.setStatus(status);
 				korisnici.replace((String)pair.getKey(), k);
 				break;
 			}
-	        it.remove();
 	    }
-		km.setKorisnici(korisnici);
-		sesija.setKorisnici(km);
+		sesija.getKorisnici().setKorisnici(korisnici);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		int selektovaniRed = nalozi.getSelectedRow();
+		if (e.getSource() == btnNewButton)
+			setujStatus(selektovaniRed, false);
+		if (e.getSource() == btnOdblokiraj)
+			setujStatus(selektovaniRed, true);
+		
 	}
 }

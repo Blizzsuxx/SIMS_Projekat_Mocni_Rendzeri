@@ -8,19 +8,20 @@ package model;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
-import controler.AlbumKontroler;
 import controler.CitacDatoteka;
+import controler.Constants;
 import controler.GlasanjeMenadzer;
 import controler.IzvestajSvihIzvodjacaMenadzer;
 import controler.IzvestajSvihZanrovaMenadzer;
 import controler.IzvodjacMenadzer;
 import controler.KorisniciMenadzer;
 import controler.LoginMenadzer;
-import controler.MuzickoDeloMenadzer;
+import controler.MuzickiSadrzajMenadzer;
 import controler.RecenzijeZaIzmenuMenadzer;
 import controler.UtisakMenadzer;
 import controler.ZakazanaRecenzijaMenadzer;
@@ -39,39 +40,18 @@ public class Sesija {
    
    private ZanroviMenadzer zanroviMenadzer;
    
-   private MuzickoDeloMenadzer muzickoDeloMenadzer;
+   private MuzickiSadrzajMenadzer muzickiSadrzajMenadzer;
    
    private ZakazanaRecenzijaMenadzer zakazanaRecenzijaMenadzer;
-   
-   private AlbumKontroler albumKontroler;
    
    private GlasanjeMenadzer glasanjeMenadzer;
    
    private RecenzijeZaIzmenuMenadzer recenzijeZaIzmenuMenadzer;
    
+   private static Korisnik trenutniKorisnik;
+   
    private UtisakMenadzer utisakMenadzer;
-   /**
-    * @pdRoleInfo migr=no name=MuzickoDelo assc=association38
-    *             coll=java.util.Collection impl=java.util.HashSet mult=0..*
-    */
-   private java.util.Collection<MuzickoDelo> dela;
-   /**
-    * @pdRoleInfo migr=no name=Grupa assc=association42 coll=java.util.Collection
-    *             impl=java.util.HashSet mult=0..*
-    */
-   private java.util.Collection<Grupa> grupe;
-   /**
-    * @pdRoleInfo migr=no name=Pojedinacanizvodjac assc=association43
-    *             coll=java.util.Collection impl=java.util.HashSet mult=0..*
-    */
-   private java.util.Collection<Pojedinacanizvodjac> umetnici;
-   /**
-    * @pdRoleInfo migr=no name=Recenzija assc=association44
-    *             coll=java.util.Collection impl=java.util.HashSet mult=0..*
-    */
-   private java.util.Collection<Recenzija> recenzije;
-
-   private java.util.List<Urednik> urednici;
+   
 
    private IzvestajSvihZanrovaMenadzer izvestajSvihZanrova;// ovo ne treba da bude inicijalizovano, inic se u
                                                            // izvestajima kod admina
@@ -79,7 +59,6 @@ public class Sesija {
    private IzvestajSvihZanrova jedanZanr;
    private IzvestajSvihIzvodjacaMenadzer menIzvodjaca;// ovo ne treba biti inic, nego tek kad se pokrene izv
    private LoginMenadzer loginMenadzer;
-   private Korisnik trenutniKorisnik;
 
    private static Sesija trenutnaSesija;
    
@@ -91,19 +70,6 @@ public class Sesija {
       // TODO: implement
    }
 
-   /**
-    * @return the urednici
-    */
-   public java.util.List<Urednik> getUrednici() {
-      return urednici;
-   }
-
-   /**
-    * @param urednici the urednici to set
-    */
-   public void setUrednici(java.util.List<Urednik> urednici) {
-      this.urednici = urednici;
-   }
    
    public ArrayList<Zanr> getZanrovi() {
 	   return this.sviZanrovi;
@@ -116,15 +82,15 @@ public class Sesija {
    /**
     * @return the trenutniKorisnik
     */
-   public Korisnik getTrenutniKorisnik() {
+   public static Korisnik getTrenutniKorisnik() {
       return trenutniKorisnik;
    }
 
    /**
     * @param trenutniKorisnik the trenutniKorisnik to set
     */
-   public void setTrenutniKorisnik(Korisnik trenutniKorisnik) {
-      this.trenutniKorisnik = trenutniKorisnik;
+   public static void setTrenutniKorisnik(Korisnik trenutniKorisnik) {
+      Sesija.trenutniKorisnik = trenutniKorisnik;
    }
 
    /**
@@ -157,28 +123,12 @@ public class Sesija {
 	   this.zanroviMenadzer = zanroviMenadzer;
    }
    
-   public MuzickoDeloMenadzer getMuzickoDeloMenadzer() {
-	   return muzickoDeloMenadzer;
-   }
-   
-   public void setMuzickoDeloMenadzer(MuzickoDeloMenadzer muzickoDeloMenadzer) {
-	   this.muzickoDeloMenadzer = muzickoDeloMenadzer;
-   }
-   
    public ZakazanaRecenzijaMenadzer getZakazanaRecenzijaMenadzer() {
 	   return zakazanaRecenzijaMenadzer;
    }
    
    public void setZakazanaRecenzijaMenadzer(ZakazanaRecenzijaMenadzer zakazanaRecenzijaMenadzer) {
 	   this.zakazanaRecenzijaMenadzer = zakazanaRecenzijaMenadzer;
-   }
-   
-   public AlbumKontroler getAlbumKontroler() {
-	   return albumKontroler;
-   }
-   
-   public void setAlbumKontroler(AlbumKontroler albumKontroler) {
-	   this.albumKontroler = albumKontroler;
    }
    
    public GlasanjeMenadzer getGlasanjeMenadzer() {
@@ -206,242 +156,6 @@ public class Sesija {
    }
    
 
-   /** @pdGenerated default getter */
-   public java.util.Collection<MuzickoDelo> getDela() {
-      if (dela == null)
-         dela = new java.util.HashSet<MuzickoDelo>();
-      return dela;
-   }
-
-   /** @pdGenerated default iterator getter */
-   public java.util.Iterator<MuzickoDelo> getIteratorDela() {
-      if (dela == null)
-         dela = new java.util.HashSet<MuzickoDelo>();
-      return dela.iterator();
-   }
-
-   /**
-    * @pdGenerated default setter
-    * @param newDela
-    */
-   public void setDela(java.util.Collection<MuzickoDelo> newDela) {
-      removeAllDela();
-      for (java.util.Iterator<MuzickoDelo> iter = newDela.iterator(); iter.hasNext();)
-         addDela((MuzickoDelo) iter.next());
-   }
-
-   /**
-    * @pdGenerated default add
-    * @param newMuzickoDjelo
-    */
-   public void addDela(MuzickoDelo newMuzickoDjelo) {
-	      if (newMuzickoDjelo == null)
-	         return;
-	      if (this.dela == null)
-	         this.dela = new java.util.HashSet<MuzickoDelo>();
-	      for (MuzickoDelo md : this.dela) {
-	    	  if (md.getNaziv().equals(newMuzickoDjelo.getNaziv())) {
-	    		  return;
-	    	  }
-	      }
-	      this.dela.add(newMuzickoDjelo);
-	   }
-
-   /**
-    * @pdGenerated default remove
-    * @param oldMuzickoDjelo
-    */
-   public void removeDela(MuzickoDelo oldMuzickoDjelo) {
-      if (oldMuzickoDjelo == null)
-         return;
-      if (this.dela != null)
-         if (this.dela.contains(oldMuzickoDjelo))
-            this.dela.remove(oldMuzickoDjelo);
-   }
-
-   /** @pdGenerated default removeAll */
-   public void removeAllDela() {
-      if (dela != null)
-         dela.clear();
-   }
-
-   /** @pdGenerated default getter */
-   public java.util.Collection<Grupa> getGrupe() {
-      if (grupe == null)
-         grupe = new java.util.HashSet<Grupa>();
-      return grupe;
-   }
-
-   /** @pdGenerated default iterator getter */
-   public java.util.Iterator<Grupa> getIteratorGrupe() {
-      if (grupe == null)
-         grupe = new java.util.HashSet<Grupa>();
-      return grupe.iterator();
-   }
-
-   /**
-    * @pdGenerated default setter
-    * @param newGrupe
-    */
-   public void setGrupe(java.util.Collection<Grupa> newGrupe) {
-      removeAllGrupe();
-      for (java.util.Iterator<Grupa> iter = newGrupe.iterator(); iter.hasNext();)
-         addGrupe((Grupa) iter.next());
-   }
-
-   /**
-    * @pdGenerated default add
-    * @param newGrupa
-    */
-   public boolean addGrupe(Grupa newGrupa) {
-	  if (newGrupa == null)
-		  return false;
-      if (this.grupe == null)
-         this.grupe = new java.util.HashSet<Grupa>();
-      for (Grupa g : grupe)
-      {
-    	  if (g.getUmetnickoIme().equals(newGrupa.getUmetnickoIme()))
-    		  return false;
-      }
-      this.grupe.add(newGrupa);
-      return true;
-   }
-
-   /**
-    * @pdGenerated default remove
-    * @param oldGrupa
-    */
-   public void removeGrupe(Grupa oldGrupa) {
-      if (oldGrupa == null)
-         return;
-      if (this.grupe != null)
-         if (this.grupe.contains(oldGrupa))
-            this.grupe.remove(oldGrupa);
-   }
-
-   /** @pdGenerated default removeAll */
-   public void removeAllGrupe() {
-      if (grupe != null)
-         grupe.clear();
-   }
-
-   /** @pdGenerated default getter */
-   public java.util.Collection<Pojedinacanizvodjac> getUmetnici() {
-      if (umetnici == null)
-         umetnici = new java.util.HashSet<Pojedinacanizvodjac>();
-      return umetnici;
-   }
-
-   /** @pdGenerated default iterator getter */
-   public java.util.Iterator<Pojedinacanizvodjac> getIteratorUmetnici() {
-      if (umetnici == null)
-         umetnici = new java.util.HashSet<Pojedinacanizvodjac>();
-      return umetnici.iterator();
-   }
-
-   /**
-    * @pdGenerated default setter
-    * @param newUmetnici
-    */
-   public void setUmetnici(java.util.Collection<Pojedinacanizvodjac> newUmetnici) {
-      removeAllUmetnici();
-      for (java.util.Iterator<Pojedinacanizvodjac> iter = newUmetnici.iterator(); iter.hasNext();)
-         addUmetnici((Pojedinacanizvodjac) iter.next());
-   }
-
-   /**
-    * @pdGenerated default add
-    * @param newPojedinacanizvodjac
-    */
-   public boolean addUmetnici(Pojedinacanizvodjac newPojedinacanizvodjac) {
-	  if (newPojedinacanizvodjac == null)
-		  return false;
-      if (this.umetnici == null)
-         this.umetnici = new java.util.HashSet<Pojedinacanizvodjac>();
-      for (Pojedinacanizvodjac pi : umetnici)
-      {
-    	  if (pi.getUmetnickoIme().equals(newPojedinacanizvodjac.getUmetnickoIme()))
-    		  return false;
-      }
-      this.umetnici.add(newPojedinacanizvodjac);
-      return true;
-   }
-
-   /**
-    * @pdGenerated default remove
-    * @param oldPojedinacanizvodjac
-    */
-   public void removeUmetnici(Pojedinacanizvodjac oldPojedinacanizvodjac) {
-      if (oldPojedinacanizvodjac == null)
-         return;
-      if (this.umetnici != null)
-         if (this.umetnici.contains(oldPojedinacanizvodjac))
-            this.umetnici.remove(oldPojedinacanizvodjac);
-   }
-
-   /** @pdGenerated default removeAll */
-   public void removeAllUmetnici() {
-      if (umetnici != null)
-         umetnici.clear();
-   }
-
-   /** @pdGenerated default getter */
-   public java.util.Collection<Recenzija> getRecenzije() {
-      if (recenzije == null)
-         recenzije = new java.util.HashSet<Recenzija>();
-      return recenzije;
-   }
-
-   /** @pdGenerated default iterator getter */
-   public java.util.Iterator<Recenzija> getIteratorRecenzije() {
-      if (recenzije == null)
-         recenzije = new java.util.HashSet<Recenzija>();
-      return recenzije.iterator();
-   }
-
-   /**
-    * @pdGenerated default setter
-    * @param newRecenzije
-    */
-   public void setRecenzije(java.util.Collection<Recenzija> newRecenzije) {
-      removeAllRecenzije();
-      for (java.util.Iterator<Recenzija> iter = newRecenzije.iterator(); iter.hasNext();)
-         addRecenzije((Recenzija) iter.next());
-   }
-
-   /**
-    * @pdGenerated default add
-    * @param newRecenzija
-    */
-   public void addRecenzije(Recenzija newRecenzija) {
-      if (newRecenzija == null)
-         return;
-      if (this.recenzije == null)
-         this.recenzije = new java.util.HashSet<Recenzija>();
-      for (Recenzija r : recenzije) {
-    	  if (r.getNaslov().equals(newRecenzija.getNaslov()))
-    		  return;
-      }
-      this.recenzije.add(newRecenzija);
-   }
-
-   /**
-    * @pdGenerated default remove
-    * @param oldRecenzija
-    */
-   public void removeRecenzije(Recenzija oldRecenzija) {
-      if (oldRecenzija == null)
-         return;
-      if (this.recenzije != null)
-         if (this.recenzije.contains(oldRecenzija))
-            this.recenzije.remove(oldRecenzija);
-   }
-
-   /** @pdGenerated default removeAll */
-   public void removeAllRecenzije() {
-      if (recenzije != null)
-         recenzije.clear();
-   }
    
    public void setZakazanaRecenzija(Recenzija recenzija, Urednik urednik) {
 	   for (ZakazanaRecenzija zr : zakazanaRecenzijaMenadzer.getSve()) {
@@ -465,33 +179,32 @@ public class Sesija {
    public static Sesija namestiSesiju(Korisnik korisnik, CitacDatoteka datoteke, LoginMenadzer menadzer) {
       // TODO Auto-generated method stub
       if (trenutnaSesija != null) {
-         trenutnaSesija.setTrenutniKorisnik(korisnik);
+         //trenutnaSesija.setTrenutniKorisnik(korisnik);
+    	  Sesija.setTrenutniKorisnik(korisnik);
          return trenutnaSesija;
       } else {
-         trenutnaSesija = new Sesija(korisnik, datoteke.getKorisnici(), datoteke.getIzvodjaci(), datoteke.getZanrovi(), datoteke.getDeloMenadzer(), datoteke.getMuzickaDela(), datoteke.getGrupe(),
-               datoteke.getIzvodjaci().getSolo(), datoteke.getRecenzije(), datoteke.getUtisakmenadzer(), datoteke.getZakRecMenadzer(), datoteke.getIzmena(), datoteke.getAlbumi(), datoteke.getGlasanjeMenadzer(),menadzer);
+         trenutnaSesija = new Sesija(korisnik, datoteke.getKorisnici(), datoteke.getIzvodjaci(), datoteke.getZanrovi(), datoteke.getMuzickiSadrzajMenadzer(),
+        		 datoteke.getMuzickiSadrzajMenadzer().getMuzickaDela()
+        		 , datoteke.getGrupe(),
+               datoteke.getIzvodjaci().getSolo(), datoteke.getRecenzije(), datoteke.getUtisakmenadzer(), datoteke.getZakRecMenadzer(), datoteke.getIzmena(), datoteke.getGlasanjeMenadzer(),menadzer);
          return trenutnaSesija;
       }
    }
 
-   private Sesija(Korisnik trenutniKorisnik, KorisniciMenadzer korisnici, IzvodjacMenadzer izvodjacMenadzer, ZanroviMenadzer zanroviMenadzer, MuzickoDeloMenadzer muzickoDeloMenadzer,
+   private Sesija(Korisnik trenutniKorisnik, KorisniciMenadzer korisnici, IzvodjacMenadzer izvodjacMenadzer, ZanroviMenadzer zanroviMenadzer, MuzickiSadrzajMenadzer muzickiSadrzajMenadzer,
 		   Collection<MuzickoDelo> dela, Collection<Grupa> grupe, Collection<Pojedinacanizvodjac> umetnici, 
 		   Collection<Recenzija> recenzije, UtisakMenadzer utisakMenadzer,ZakazanaRecenzijaMenadzer zakazanaRecenzijaMenadzer,
-         RecenzijeZaIzmenuMenadzer recenzijeZaIzmenuMenadzer, AlbumKontroler albumKontroler, GlasanjeMenadzer glasanjeMenadzer, LoginMenadzer loginMenadzer) {
+         RecenzijeZaIzmenuMenadzer recenzijeZaIzmenuMenadzer, GlasanjeMenadzer glasanjeMenadzer, LoginMenadzer loginMenadzer) {
       super();
       this.setKorisnici(korisnici);
       this.setIzvodjacMenadzer(izvodjacMenadzer);
       this.setZanroviMenadzer(zanroviMenadzer);
-      this.setMuzickoDeloMenadzer(muzickoDeloMenadzer);
-      this.dela = dela;
-      this.grupe = grupe;
-      this.umetnici = umetnici;
-      this.recenzije = recenzije;
+      this.setMuzickiSadrzajMenadzer(muzickiSadrzajMenadzer);
       this.setUtisakMenadzer(utisakMenadzer);
       this.setZakazanaRecenzijaMenadzer(zakazanaRecenzijaMenadzer);
       this.setRecenzijeZaIzmenuMenadzer(recenzijeZaIzmenuMenadzer);
-      this.setTrenutniKorisnik(trenutniKorisnik);
-      this.setAlbumKontroler(albumKontroler);
+      //this.setTrenutniKorisnik(trenutniKorisnik);
+      Sesija.setTrenutniKorisnik(trenutniKorisnik);
       this.setGlasanjeMenadzer(glasanjeMenadzer);
 	this.loginMenadzer = loginMenadzer;
 }
@@ -523,7 +236,7 @@ public void izvrsi() {
 
 
 public IzvestajSvihZanrovaMenadzer namestiIzvestaj() {
-	   this.izvestajSvihZanrova=new IzvestajSvihZanrovaMenadzer(dela, recenzije, sviZanrovi);
+	   this.izvestajSvihZanrova=new IzvestajSvihZanrovaMenadzer(this.getMuzickiSadrzajMenadzer().getMuzickaDela(), this.utisakMenadzer.getRecenzije(), sviZanrovi);
 	   
 	return izvestajSvihZanrova;
 	   
@@ -536,7 +249,7 @@ public IzvestajSvihZanrovaMenadzer namestiIzvestaj() {
 
 
 private void pronadiDela(String naziv) {
-	for(MuzickoDelo d:dela) {
+	for(MuzickoDelo d:this.muzickiSadrzajMenadzer.getMuzickaDela()) {
 		for(Zanr z:d.getZanrovi()) {
 			if(z.getNazivZanra().equals(naziv)) {
 				for(Utisak u:d.getUtisci()) {
@@ -556,8 +269,9 @@ private void pronadiDela(String naziv) {
    public IzvestajSvihIzvodjacaMenadzer namestiIzvestajIzvodjaca() {
 	   this.menIzvodjaca=new IzvestajSvihIzvodjacaMenadzer();
 	   ArrayList<Izvodjac> sviizv=new ArrayList<Izvodjac>();
-	   for(Grupa g:this.grupe) { sviizv.add(g);}
-	   for(Pojedinacanizvodjac p:this.umetnici) {sviizv.add(p);}
+	   for(Grupa g : this.izvodjacMenadzer.getGrupe()) { sviizv.add(g);}
+	   
+	   for(Pojedinacanizvodjac p : this.izvodjacMenadzer.getSolo()) {sviizv.add(p);}
 	   this.menIzvodjaca.namestiIzvestaj(sviizv);
 	   
 	   return this.menIzvodjaca;
@@ -585,49 +299,39 @@ private void pronadiDela(String naziv) {
 	   
    }
    public String[] izvadiImenaIzvodjaca() {
-	   String[] imena= new String[this.grupe.size()+this.umetnici.size()];
-	   int j=0;
-	   for(Grupa i:this.grupe) {
-		   imena[j]=i.getUmetnickoIme();
-		   j++;
-	   }
-	   for(Pojedinacanizvodjac p:this.umetnici) {
-		   imena[j]=p.getUmetnickoIme();
-		   j++;
-	   }
+	   String[] imena = new String[this.izvodjacMenadzer.getSvi().size()];
+	   ArrayList<Izvodjac> izvodjaci = this.izvodjacMenadzer.getSvi();
+	   for(int i = 0; i < izvodjaci.size(); ++i ) 
+		   if (izvodjaci.get(i).isOdobrenost())
+			   imena[i] = izvodjaci.get(i).getUmetnickoIme();
 	   return imena;
 	   
 	   
    }
-public String[] izvadiImenaDela(String i) {
-	for(Izvodjac iz:this.getGrupe()) {
-		if(iz.getUmetnickoIme().equals(i)) {return iz.getImenaDela();}
-	}
-	for(Izvodjac iz:this.getUmetnici()) {
-		if(iz.getUmetnickoIme().equals(i)) {return iz.getImenaDela();}
-	}
+public String[] izvadiImenaDela(String ime) {
+	
+	 ArrayList<Izvodjac> izvodjaci = this.izvodjacMenadzer.getSvi();
+	   for(int i = 0; i <izvodjaci.size(); ++i ) if(izvodjaci.get(i).getUmetnickoIme().equals(ime)) return izvodjaci.get(i).getImenaDela();
 	String[] s= {""};
 	return s;
 	
 }
 
 
-public Izvodjac getIzvodjac(String i) {
-	for(Izvodjac iz:this.getGrupe()) {
-		if(iz.getUmetnickoIme().equals(i)) {return iz;}
-	}
-	for(Izvodjac iz:this.getUmetnici()) {
-		if(iz.getUmetnickoIme().equals(i)) {return iz;}
-	}
+public Izvodjac getIzvodjac(String ime) {
+	
+	ArrayList<Izvodjac> izvodjaci = this.izvodjacMenadzer.getSvi();
+	   for(int i = 0; i <izvodjaci.size(); ++i ) if(izvodjaci.get(i).getUmetnickoIme().equals(ime)) return izvodjaci.get(i);
+
 	return null;
 }
 
-
 public boolean napraviDelo(String datumIzdavanja, String naslov, String opis, Izvodjac izv, ArrayList<Zanr> zanrovi) {
 	try {
-		MuzickoDelo md = new MuzickoDelo(naslov, opis, new SimpleDateFormat("dd.MM.yyyy.").parse(datumIzdavanja), true, zanrovi);
+		MuzickoDelo md = new MuzickoDelo(naslov, opis, Constants.NATASIN_FORMAT_ZA_DATUM.parse(datumIzdavanja), 
+				izv, (Urednik)Sesija.getTrenutniKorisnik(), true, zanrovi, 0, 0);
 		izv.getMuzickaDela().add(md);
-		this.getDela().add(md);
+		this.muzickiSadrzajMenadzer.getMuzickiSadrzaj().add(md);
 		return true;
 	}
 	catch(ParseException e) {
@@ -640,4 +344,63 @@ public IzvestajSvihZanrovaMenadzer getIzvestajSvihZanrova() {
 }
 
 
+public void addRecenzije(Recenzija recenzija) {
+	this.utisakMenadzer.getRecenzije().add(recenzija);
+	
+}
+
+
+public ArrayList<Recenzija> getRecenzije() {
+	// TODO Auto-generated method stub
+	return this.utisakMenadzer.getRecenzije();
+}
+
+
+public ArrayList<Pojedinacanizvodjac> getUmetnici() {
+	// TODO Auto-generated method stub
+	return this.izvodjacMenadzer.getSolo();
+}
+
+
+public ArrayList<Grupa> getGrupe() {
+	// TODO Auto-generated method stub
+	return this.izvodjacMenadzer.getGrupe();
+}
+
+
+public boolean addUmetnici(Pojedinacanizvodjac pi) {
+	for(Pojedinacanizvodjac s : this.izvodjacMenadzer.getSolo()) {
+		if(pi.equals(s)) return false;
+	}
+	this.izvodjacMenadzer.dodaj(pi);
+	return true;
+}
+
+
+public boolean addGrupe(Grupa pi) {
+	for(Grupa s : this.izvodjacMenadzer.getGrupe()) {
+		if(pi.equals(s)) return false;
+	}
+	this.izvodjacMenadzer.dodaj(pi);
+	return true;
+}
+
+
+@SuppressWarnings("unchecked")
+public Collection<Urednik> getUrednici() {
+	// TODO Auto-generated method stub
+	return (Collection<Urednik>)(Collection<?>) this.korisnici.vratiUrednike();
+}
+
+
+public MuzickiSadrzajMenadzer getMuzickiSadrzajMenadzer() {
+	return muzickiSadrzajMenadzer;
+}
+
+
+public void setMuzickiSadrzajMenadzer(MuzickiSadrzajMenadzer muzickiSadrzajMenadzer) {
+	this.muzickiSadrzajMenadzer = muzickiSadrzajMenadzer;
+}
+
+	
 }

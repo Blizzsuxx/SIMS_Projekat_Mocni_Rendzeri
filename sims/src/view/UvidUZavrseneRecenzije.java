@@ -1,6 +1,5 @@
 package view;
 
-import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -12,15 +11,19 @@ import model.Sesija;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class UvidUZavrseneRecenzije extends JFrame {
+public class UvidUZavrseneRecenzije extends MojDialog {
 	private static final long serialVersionUID = 1L;
 	private JTable zavrseneRecenzije;
 	private JTextField txtSearch;
+	private JButton btnRefresh;
 	public Sesija sesija;
+	private String title;
 	
-	public UvidUZavrseneRecenzije(Sesija sesija) throws Exception {
+	public UvidUZavrseneRecenzije(Sesija sesija, String title, int dim1, int dim2) throws Exception {
+		super(title, dim1, dim2);
 		this.sesija = sesija;
-		setTitle("Uvid u zavrsene recenzije");
+		this.title = title;
+		setTitle(title);
 		setResizable(false);
 		getContentPane().setLayout(null);
 		
@@ -36,15 +39,17 @@ public class UvidUZavrseneRecenzije extends JFrame {
 			    zavrseneRecenzije.setRowSorter(sorter);
 			}
 		});
-		btnFilter.setBounds(508, 251, 89, 23);
+		btnFilter.setBounds(508, 251, 89, 32);
 		getContentPane().add(btnFilter);
 		
 		txtSearch = new JTextField();
-		txtSearch.setBounds(10, 252, 488, 20);
+		txtSearch.setBounds(10, 252, 488, 31);
 		getContentPane().add(txtSearch);
 		txtSearch.setColumns(10);
-		
+
 		ucitajZavrseneRecenzije();
+		
+		setVisible(true);
 	}
 	
 	private void ucitajZavrseneRecenzije() throws Exception {

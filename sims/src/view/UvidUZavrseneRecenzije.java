@@ -2,13 +2,17 @@ package view;
 
 import javax.swing.JTable;
 import javax.swing.JButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
+import javax.swing.ScrollPaneLayout;
 import javax.swing.table.TableRowSorter;
 
 import controler.ZakazanaRecenzijaMenadzer;
 import model.Sesija;
 import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 
 public class UvidUZavrseneRecenzije extends MojDialog {
@@ -28,8 +32,18 @@ public class UvidUZavrseneRecenzije extends MojDialog {
 		getContentPane().setLayout(null);
 		
 		zavrseneRecenzije = new JTable();
-		zavrseneRecenzije.setBounds(10, 11, 587, 224);
-		getContentPane().add(zavrseneRecenzije);
+		zavrseneRecenzije.setBorder(null);
+		zavrseneRecenzije.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		zavrseneRecenzije.getTableHeader().setReorderingAllowed(false);
+		zavrseneRecenzije.getTableHeader().setResizingAllowed(false);
+		zavrseneRecenzije.setAutoCreateRowSorter(true);
+		
+		JScrollPane scrollPaneGrid = new JScrollPane(zavrseneRecenzije);
+		scrollPaneGrid.setViewportBorder(null);
+		scrollPaneGrid.setBounds(10, 11, 587, 224);
+		scrollPaneGrid.setLayout(new ScrollPaneLayout());
+		getContentPane().add(scrollPaneGrid, BorderLayout.CENTER);
+		zavrseneRecenzije.setFillsViewportHeight(true);
 		
 		JButton btnFilter = new JButton("Filtriraj");
 		btnFilter.addActionListener(new ActionListener() {

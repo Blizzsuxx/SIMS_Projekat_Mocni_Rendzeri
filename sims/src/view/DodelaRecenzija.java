@@ -1,8 +1,9 @@
 package view;
 
-import javax.swing.JTable;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneLayout;
 
 import org.jdesktop.swingx.JXTable;
 
@@ -25,6 +26,7 @@ import java.util.Map.Entry;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 
 public class DodelaRecenzija extends MojDialog {
@@ -47,13 +49,31 @@ public class DodelaRecenzija extends MojDialog {
 		
 		zakazaneRecenzije = new JXTable();
 		zakazaneRecenzije.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		zakazaneRecenzije.setBounds(10, 26, 362, 189);
-		getContentPane().add(zakazaneRecenzije);
+		zakazaneRecenzije.setBorder(null);
+		zakazaneRecenzije.getTableHeader().setReorderingAllowed(false);
+		zakazaneRecenzije.getTableHeader().setResizingAllowed(false);
+		zakazaneRecenzije.setAutoCreateRowSorter(true);
+		
+		JScrollPane scrollPaneGrid = new JScrollPane(zakazaneRecenzije);
+		scrollPaneGrid.setViewportBorder(null);
+		scrollPaneGrid.setBounds(10, 26, 362, 189);
+		scrollPaneGrid.setLayout(new ScrollPaneLayout());
+		getContentPane().add(scrollPaneGrid, BorderLayout.CENTER);
+		zakazaneRecenzije.setFillsViewportHeight(true);
 		
 		recenzijeZaIzmenu = new JXTable();
 		recenzijeZaIzmenu.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		recenzijeZaIzmenu.setBounds(400, 26, 362, 189);
-		getContentPane().add(recenzijeZaIzmenu);
+		recenzijeZaIzmenu.setBorder(null);
+		recenzijeZaIzmenu.getTableHeader().setReorderingAllowed(false);
+		recenzijeZaIzmenu.getTableHeader().setResizingAllowed(false);
+		recenzijeZaIzmenu.setAutoCreateRowSorter(true);
+		
+		JScrollPane scrollPaneGrid1 = new JScrollPane(recenzijeZaIzmenu);
+		scrollPaneGrid1.setViewportBorder(null);
+		scrollPaneGrid1.setBounds(400, 26, 362, 189);
+		scrollPaneGrid1.setLayout(new ScrollPaneLayout());
+		getContentPane().add(scrollPaneGrid1, BorderLayout.CENTER);
+		recenzijeZaIzmenu.setFillsViewportHeight(true);
 		
 		JLabel lblZakazaneRecenzije = new JLabel("Zakazane recenzije");
 		lblZakazaneRecenzije.setBounds(10, 11, 111, 14);

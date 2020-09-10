@@ -2,9 +2,11 @@ package view;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneLayout;
 import javax.swing.SpringLayout;
 
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -31,6 +33,7 @@ import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 
 public class RegistarcijaAlbuma extends MojDialog {
@@ -70,9 +73,18 @@ public class RegistarcijaAlbuma extends MojDialog {
 		getContentPane().add(lblPesme);
 		
 		pesme = new JTable();
+		pesme.setBorder(null);
 		pesme.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		pesme.setBounds(24, 294, 627, 139);
-		getContentPane().add(pesme);
+		pesme.getTableHeader().setReorderingAllowed(false);
+		pesme.getTableHeader().setResizingAllowed(false);
+		pesme.setAutoCreateRowSorter(true);
+		
+		JScrollPane scrollPaneGrid = new JScrollPane(pesme);
+		scrollPaneGrid.setViewportBorder(null);
+		scrollPaneGrid.setBounds(24, 294, 627, 139);
+		scrollPaneGrid.setLayout(new ScrollPaneLayout());
+		getContentPane().add(scrollPaneGrid, BorderLayout.CENTER);
+		pesme.setFillsViewportHeight(true);
 		
 		JLabel lblDatumRegistracije = new JLabel("Datum registracije:");
 		lblDatumRegistracije.setBounds(24, 219, 107, 20);

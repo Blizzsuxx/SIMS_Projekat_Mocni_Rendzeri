@@ -11,9 +11,13 @@ import model.Zanr;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneLayout;
+
 import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
@@ -36,9 +40,18 @@ public class PromenaZanraIzvodjaca extends MojDialog {
 		getContentPane().setLayout(null);
 		
 		pojedninacniIzvodjaci = new JTable();
+		pojedninacniIzvodjaci.setBorder(null);
 		pojedninacniIzvodjaci.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		pojedninacniIzvodjaci.setBounds(10, 26, 674, 207);
-		getContentPane().add(pojedninacniIzvodjaci);
+		pojedninacniIzvodjaci.getTableHeader().setReorderingAllowed(false);
+		pojedninacniIzvodjaci.getTableHeader().setResizingAllowed(false);
+		pojedninacniIzvodjaci.setAutoCreateRowSorter(true);
+		
+		JScrollPane scrollPaneGrid = new JScrollPane(pojedninacniIzvodjaci);
+		scrollPaneGrid.setViewportBorder(null);
+		scrollPaneGrid.setBounds(10, 26, 674, 207);
+		scrollPaneGrid.setLayout(new ScrollPaneLayout());
+		getContentPane().add(scrollPaneGrid, BorderLayout.CENTER);
+		pojedninacniIzvodjaci.setFillsViewportHeight(true);
 		
 		cmbZanr = new JComboBox();
 		cmbZanr.setBounds(312, 244, 273, 22);
@@ -59,9 +72,19 @@ public class PromenaZanraIzvodjaca extends MojDialog {
 		getContentPane().add(btnPromeni);
 		
 		grupe = new JTable();
+
+		grupe.setBorder(null);
 		grupe.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		grupe.setBounds(10, 274, 674, 218);
-		getContentPane().add(grupe);
+		grupe.getTableHeader().setReorderingAllowed(false);
+		grupe.getTableHeader().setResizingAllowed(false);
+		grupe.setAutoCreateRowSorter(true);
+		
+		JScrollPane scrollPaneGrid1 = new JScrollPane(grupe);
+		scrollPaneGrid1.setViewportBorder(null);
+		scrollPaneGrid1.setBounds(10, 274, 674, 218);
+		scrollPaneGrid1.setLayout(new ScrollPaneLayout());
+		getContentPane().add(scrollPaneGrid1, BorderLayout.CENTER);
+		grupe.setFillsViewportHeight(true);
 		
 		JLabel lblGrupe = new JLabel("Grupe");
 		lblGrupe.setBounds(10, 255, 48, 18);

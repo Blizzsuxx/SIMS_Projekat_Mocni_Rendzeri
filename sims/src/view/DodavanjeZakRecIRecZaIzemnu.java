@@ -6,7 +6,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Properties;
 
-import javax.swing.JTable;
 import javax.swing.SpringLayout;
 
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -23,14 +22,17 @@ import model.Sesija;
 import model.ZakazanaRecenzija;
 
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneLayout;
 
 public class DodavanjeZakRecIRecZaIzemnu extends MojDialog {
 	private static final long serialVersionUID = 1L;
@@ -60,8 +62,17 @@ public class DodavanjeZakRecIRecZaIzemnu extends MojDialog {
 		
 		recenzije = new JXTable();
 		recenzije.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		recenzije.setBounds(10, 11, 389, 188);
-		getContentPane().add(recenzije);
+		recenzije.setBorder(null);
+		recenzije.getTableHeader().setReorderingAllowed(false);
+		recenzije.getTableHeader().setResizingAllowed(false);
+		recenzije.setAutoCreateRowSorter(true);
+		
+		JScrollPane scrollPaneGrid = new JScrollPane(recenzije);
+		scrollPaneGrid.setViewportBorder(null);
+		scrollPaneGrid.setBounds(10, 11, 389, 188);
+		scrollPaneGrid.setLayout(new ScrollPaneLayout());
+		getContentPane().add(scrollPaneGrid, BorderLayout.CENTER);
+		recenzije.setFillsViewportHeight(true);
 		
 		rbZakaziRecenziju = new JRadioButton("Zakazi recenziju");
 		rbZakaziRecenziju.setSelected(true);

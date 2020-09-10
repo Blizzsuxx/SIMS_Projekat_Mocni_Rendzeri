@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -7,8 +8,9 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import javax.swing.JButton;
-import javax.swing.JTable;
+import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneLayout;
 
 import org.jdesktop.swingx.JXTable;
 
@@ -34,10 +36,18 @@ public class BlokiranjeNaloga extends MojDialog implements ActionListener {
 		getContentPane().setLayout(null);
 		
 		nalozi = new JXTable();
-		nalozi.setFillsViewportHeight(true);
+		nalozi.setBorder(null);
 		nalozi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		nalozi.setBounds(10, 11, 414, 205);
-		getContentPane().add(nalozi);
+		nalozi.getTableHeader().setReorderingAllowed(false);
+		nalozi.getTableHeader().setResizingAllowed(false);
+		nalozi.setAutoCreateRowSorter(true);
+		
+		JScrollPane scrollPaneGrid = new JScrollPane(nalozi);
+		scrollPaneGrid.setViewportBorder(null);
+		scrollPaneGrid.setBounds(10, 11, 414, 205);
+		scrollPaneGrid.setLayout(new ScrollPaneLayout());
+		getContentPane().add(scrollPaneGrid, BorderLayout.CENTER);
+		nalozi.setFillsViewportHeight(true);
 		
 		btnNewButton = new JButton("Blokiraj");
 		btnNewButton.addActionListener(this);

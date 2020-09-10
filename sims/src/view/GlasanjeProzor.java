@@ -14,8 +14,10 @@ import model.Urednik;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneLayout;
 
 public class GlasanjeProzor extends MojDialog {
 	private static final long serialVersionUID = 1L;
@@ -35,9 +37,18 @@ public class GlasanjeProzor extends MojDialog {
 		setTitle(title);
 		
 		muzickaDela = new JTable();
+		muzickaDela.setBorder(null);
 		muzickaDela.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		muzickaDela.setBounds(10, 11, 585, 295);
-		getContentPane().add(muzickaDela);
+		muzickaDela.getTableHeader().setReorderingAllowed(false);
+		muzickaDela.getTableHeader().setResizingAllowed(false);
+		muzickaDela.setAutoCreateRowSorter(true);
+		
+		JScrollPane scrollPaneGrid = new JScrollPane(muzickaDela);
+		scrollPaneGrid.setViewportBorder(null);
+		scrollPaneGrid.setBounds(10, 11, 585, 295);
+		scrollPaneGrid.setLayout(new ScrollPaneLayout());
+		getContentPane().add(scrollPaneGrid, BorderLayout.CENTER);
+		muzickaDela.setFillsViewportHeight(true);
 		
 		btnPokreniNovoGlasanje = new JButton("Pokreni novo glasanje");
 		btnPokreniNovoGlasanje.addActionListener(new ActionListener() {

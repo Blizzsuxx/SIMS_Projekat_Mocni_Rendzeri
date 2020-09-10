@@ -51,7 +51,7 @@ public class AdminHomepage extends Homepage {
 		korisniciMenu.add(korisniciItem3);
 		korisniciItem4 = new JMenuItem("Admini");
 		korisniciMenu.add(korisniciItem4);
-		korisniciItem5 = new JMenuItem("Nalozi");
+		korisniciItem5 = new JMenuItem("Blokiranje/Odblokiranje naloga");
 		korisniciMenu.add(korisniciItem5);
 		menubar.add(korisniciMenu);
 		
@@ -153,7 +153,7 @@ public class AdminHomepage extends Homepage {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new BlokiranjeNaloga(AdminHomepage.this.getSesija(), "Blokiranje naloga", 450, 300);
+					new BlokiranjeNaloga(AdminHomepage.this.getSesija(), "Blokiranje/Odblokiranje naloga", 450, 300);
 				} 
 				catch (Exception e1) {
 	

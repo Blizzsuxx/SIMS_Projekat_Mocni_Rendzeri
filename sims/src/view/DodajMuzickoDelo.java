@@ -64,7 +64,7 @@ public class DodajMuzickoDelo extends MojDialog {
 		opis = new JTextField(50);
 		getContentPane().add(opis, "cell 1 1");
 	
-		getContentPane().add(new JLabel("Datum izdavanja u obliku dd.mm.yyyy: "), "cell 0 2");
+		getContentPane().add(new JLabel("Datum izdavanja: "), "cell 0 2");
 		UtilDateModel model = new UtilDateModel();
 		Properties p = new Properties();
 		p.put("text.today", "Danas");
@@ -77,7 +77,7 @@ public class DodajMuzickoDelo extends MojDialog {
 		sl_dtDop.putConstraint(SpringLayout.WEST, dtDop.getJFormattedTextField(), 33, SpringLayout.WEST, dtDop);
 		sl_dtDop.putConstraint(SpringLayout.EAST, dtDop.getJFormattedTextField(), 211, SpringLayout.WEST, dtDop);
 		sl_dtDop = (SpringLayout) dtDop.getLayout();
-		getContentPane().add(dtDop, "cell 1 2");
+		getContentPane().add(dtDop, "cell 1 2,grow");
 		
 		ZanroviMenadzer zm = (sesija.getZanroviMenadzer());
 		TableModelWrapper tmw = zm.getTabelaZanrova();

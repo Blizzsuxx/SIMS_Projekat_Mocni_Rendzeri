@@ -175,6 +175,28 @@ public class Sesija {
 		   }
 	   }
    }
+   
+   public void setMuzickaDelaIzvodjaci() {
+	   for (MuzickoDelo md : muzickiSadrzajMenadzer.getMuzickaDela()) {
+		   for (Izvodjac i : izvodjacMenadzer.getSvi()) {
+			   if (md.getIzvodjac().getUmetnickoIme().equals(i.getUmetnickoIme())) {
+				   i.addDelo(md);
+			   }
+		   }
+	   }
+   }
+   
+   public void setIzdateAlbume() {
+	   for (Album a : muzickiSadrzajMenadzer.getAlbumi()) {
+		   if (a.isOdobreno() && a.isStatus()) {
+			   for (Izvodjac i : izvodjacMenadzer.getSvi()) {
+				   if (a.getIzvodjac().getUmetnickoIme().equals(i.getUmetnickoIme())) {
+					   i.addIzdatAlbum(a);
+				   }
+			   }
+		   }
+	   }
+   }
 
    public static Sesija namestiSesiju(Korisnik korisnik, CitacDatoteka datoteke, LoginMenadzer menadzer) {
       // TODO Auto-generated method stub
@@ -206,6 +228,8 @@ public class Sesija {
       //this.setTrenutniKorisnik(trenutniKorisnik);
       Sesija.setTrenutniKorisnik(trenutniKorisnik);
       this.setGlasanjeMenadzer(glasanjeMenadzer);
+      setMuzickaDelaIzvodjaci();
+      setIzdateAlbume();
 	this.loginMenadzer = loginMenadzer;
 }
 
@@ -330,8 +354,14 @@ public boolean napraviDelo(String datumIzdavanja, String naslov, String opis, Iz
 	try {
 		MuzickoDelo md = new MuzickoDelo(naslov, opis, Constants.NATASIN_FORMAT_ZA_DATUM.parse(datumIzdavanja), 
 				izv, (Urednik)Sesija.getTrenutniKorisnik(), true, zanrovi, 0, 0);
-		izv.getMuzickaDela().add(md);
+		for (Izvodjac i : izvodjacMenadzer.getSvi()) {
+			if (i.getUmetnickoIme().equals(izv.getUmetnickoIme())) {
+				i.addDelo(md);
+				break;
+			}
+		}
 		this.muzickiSadrzajMenadzer.getMuzickiSadrzaj().add(md);
+		this.muzickiSadrzajMenadzer.getMuzickaDela().add(md);
 		return true;
 	}
 	catch(ParseException e) {

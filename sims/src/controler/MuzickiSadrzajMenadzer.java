@@ -164,6 +164,7 @@ public class MuzickiSadrzajMenadzer {
 		for (Album a : this.albumi )
 			if (a.isStatus() && !a.isOdobreno() && a.getNaslov().equals(naslov)) {
 				a.setOdobreno(true);
+				a.getIzvodjac().addIzdatAlbum(a);
 				return true;
 			}
 		return false;

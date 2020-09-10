@@ -2,13 +2,12 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import model.Korisnik;
 import model.MuzickoDelo;
 import net.miginfocom.swing.MigLayout;
 
@@ -20,11 +19,11 @@ public class SearchResults extends JScrollPane {
 
 	private static final long serialVersionUID = 1L;
 	
-	public SearchResults(ArrayList<Slikovit> prikaz, Korisnik trenutniKorisnik) {
+	public SearchResults(Collection<Slikovit> prikaz) {
 		super(initGui(prikaz));
 	}
 
-	public static JPanel initGui(ArrayList<Slikovit> prikaz) {
+	public static JPanel initGui(Collection<Slikovit> prikaz) {
 		
 		JPanel content = new JPanel(new MigLayout());
 		for(Slikovit sadrzaj : prikaz) {

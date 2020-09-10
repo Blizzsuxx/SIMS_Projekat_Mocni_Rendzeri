@@ -119,6 +119,18 @@ public class ExpandingPanel extends JPanel {
         return this.content;
     }
 
+    public void setContent(JXCollapsiblePane pane){
+        this.expandingButton.removeActionListener(content.getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION));
+        CC componentConstraints2 = new CC();
+        componentConstraints2.alignX("center").spanX();
+        componentConstraints2.grow();
+        this.remove(this.content);
+        this.add(pane, componentConstraints2);
+        this.content = pane;
+        this.expandingButton.addActionListener(content.getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION));
+        this.content.setCollapsed(true);
+    }
+
     public BasicArrowButton getExpandingButton() {
         return this.expandingButton;
     }

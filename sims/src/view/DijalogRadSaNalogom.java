@@ -1,8 +1,10 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 import java.util.concurrent.Callable;
 
 import javax.swing.JButton;
@@ -10,8 +12,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import org.jdesktop.swingx.JXCollapsiblePane;
 import org.jdesktop.swingx.JXImagePanel;
 
+import model.FrontEndKorisnik;
 import model.Korisnik;
 import net.miginfocom.swing.MigLayout;
 
@@ -59,10 +63,15 @@ public class DijalogRadSaNalogom extends MojDialog {
 
 	private void initGui() {
 		this.setSize(450, 600);
+		
+		this.setLayout(new MigLayout("fillx"));
+
+		ExpandingPanel userInfo = new ExpandingPanel("Korisnicke informacije");
+
 		MigLayout mig = new MigLayout("",
 									  "50 [] 50 []", //Kolone
-									  "[] 30 [] 10 [] 10 [] 10 [] 10 [] 10 [] 10 [] 10 [] 10 [] 10"); //Vrste
-		this.setLayout(mig);
+									  "10 [] 10 [] 10 [] 10 [] 10 [] 10 [] 10 [] 10 [] 10 [] 10"); //Vrste
+		userInfo.getContent().setLayout(mig);
 		
 		///////////////// - mali dodatak od strane Dragana, ako ti se ne svidja obrisi
 		///////////////// - izbrisi takodje i prvi red u MigLayout-u, tj "[] 30" deo
@@ -101,17 +110,30 @@ public class DijalogRadSaNalogom extends MojDialog {
 		izadjiBtn  = new JButton("Izadji");
 		potvrdiBtn = new JButton("Potvrdi");
 		
-		this.add(imeLabela);   this.add(poljeIme,   "wrap");
-		this.add(prezLabela);  this.add(poljePrez,  "wrap");
-		this.add(mailLabela);  this.add(poljeMail,  "wrap");
-		this.add(polLabela);   this.add(poljePol,   "wrap");
-		this.add(dateLabela);  this.add(poljeDate,  "wrap");
-		this.add(userLabela);  this.add(poljeUser,  "wrap");
-		this.add(sifraLabela); this.add(poljeSifra, "wrap");
+		userInfo.getContent().add(imeLabela);   userInfo.getContent().add(poljeIme,   "wrap");
+		userInfo.getContent().add(prezLabela);  userInfo.getContent().add(poljePrez,  "wrap");
+		userInfo.getContent().add(mailLabela);  userInfo.getContent().add(poljeMail,  "wrap");
+		userInfo.getContent().add(polLabela);   userInfo.getContent().add(poljePol,   "wrap");
+		userInfo.getContent().add(dateLabela);  userInfo.getContent().add(poljeDate,  "wrap");
+		userInfo.getContent().add(userLabela);  userInfo.getContent().add(poljeUser,  "wrap");
+		userInfo.getContent().add(sifraLabela); userInfo.getContent().add(poljeSifra, "wrap");
 		
-		this.add(izadjiBtn);
-		this.add(potvrdiBtn);
-		
+		userInfo.getContent().add(potvrdiBtn);
+
+		this.add(userInfo, "spanx, wrap");
+
+		if(korisnik instanceof FrontEndKorisnik){
+			FrontEndKorisnik k = (FrontEndKorisnik) this.korisnik;
+			ExpandingPanel istorija = new ExpandingPanel("istorija");
+			Collection<Slikovit> slike = (Collection<Slikovit>)  (Collection<?>) k.getIstorija();
+
+			JXCollapsiblePane p = new JXCollapsiblePane();
+			p.setContentPane(new SearchResults(slike));
+
+			istorija.setContent(p);
+			this.add(istorija, "growx, wrap");
+		}
+		this.add(izadjiBtn, "wrap");
 		if (indikator) { // ako gledamo korisnika cisto radi informacija
 			poljeSifra.setVisible(false);
 			sifraLabela.setVisible(false);

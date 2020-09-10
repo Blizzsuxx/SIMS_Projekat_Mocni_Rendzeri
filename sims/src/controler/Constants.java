@@ -16,6 +16,7 @@ import model.MuzickoDelo;
 import model.Par;
 import model.Pol;
 import model.Zanr;
+import view.Slikovit;
 
 public abstract class Constants {
 	
@@ -45,6 +46,8 @@ public abstract class Constants {
 	
 	// dodaj konsruktor za ovaj dio
 	public static final MuzickoDelo BARBIE_GIRL = new MuzickoDelo("Aqua - Barbie Girl", "Barbi devojka");
+	public static final MuzickoDelo PANTERI = new MuzickoDelo("Roki Vulovic - Panteri", "Panteri");
+	public static final ArrayList<Slikovit> DELA = new ArrayList<Slikovit>();
 
 	public static final String FILE_SEPARATOR = System.getProperty("file.separator");
 	

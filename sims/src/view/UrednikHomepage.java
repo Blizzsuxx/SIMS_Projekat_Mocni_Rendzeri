@@ -11,6 +11,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import controler.Constants;
 import model.Sesija;
 import model.Uloga;
 
@@ -18,7 +19,7 @@ public class UrednikHomepage extends Homepage {
 	 private static final long serialVersionUID = 1L;
 
 	 private JMenu recenzijeMenu, korisniciMenu, listeMenu, glasanjeMenu, muzickaSadrzajMenu;
-	 private JMenuItem recenzijeItem1, recenzijeItem2, recenzijeItem3,
+	 private JMenuItem recenzijeItem2, recenzijeItem3,
 	 korisniciItem1, korisniciItem2, korisniciItem3, korisniciItem4, korisniciItem5, korisniciItem6,
 	 korisniciItem7, listeItem1, listeItem2, glasanjeItem1, muzickiSadrzajItem1, muzickiSadrzajItem2;
 	 
@@ -44,11 +45,9 @@ public class UrednikHomepage extends Homepage {
 	    
 	private void initGUI() {
 		recenzijeMenu = new JMenu("Recenzije");  	
-		recenzijeItem1 = new JMenuItem("Recenzirani Sadrzaj");
-		recenzijeMenu.add(recenzijeItem1);
 		recenzijeItem2= new JMenuItem("Istorija Recenzija");
 		recenzijeMenu.add(recenzijeItem2);
-		recenzijeItem3 = new JMenuItem("Istorija Zakazanih Recenzija");
+		recenzijeItem3 = new JMenuItem("Zakazane recenzije");
 		recenzijeMenu.add(recenzijeItem3);
 		menubar.add(recenzijeMenu);
 		    	
@@ -93,23 +92,12 @@ public class UrednikHomepage extends Homepage {
 	}
 	    
 	private void initAction() {
-		recenzijeItem1.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-					
-			}
-
-				
-	    		
-	    });
 	    	
 		recenzijeItem2.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
+					
 					
 			}
 	    		

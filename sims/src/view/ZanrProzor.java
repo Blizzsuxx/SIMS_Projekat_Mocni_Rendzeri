@@ -15,6 +15,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
+import org.jdesktop.swingx.JXTable;
+
 import model.Zanr;
 import net.miginfocom.swing.MigLayout;
 
@@ -26,7 +28,7 @@ public class ZanrProzor extends MojDialog implements ActionListener{
 	
 	private JButton btnAdd,btnEdit;
 	private JFrame parent;
-	private JTable table;
+	private JXTable table;
 	private TablePopupMenu popupMenu;
 	
 	public ZanrProzor(JFrame parent, String ime, int dimension1, int dimension2, List<Zanr> zanrovi) {
@@ -51,7 +53,7 @@ public class ZanrProzor extends MojDialog implements ActionListener{
 		base.add(btnAdd);
 		base.add(btnEdit);
 	
-		table = new JTable(new ZanrModel(imenaKolona, zanrovi));
+		table = new JXTable(new ZanrModel(imenaKolona, zanrovi));
 		table.getTableHeader().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getTableHeader().setReorderingAllowed(false);

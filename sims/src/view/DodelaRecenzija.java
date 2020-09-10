@@ -4,6 +4,8 @@ import javax.swing.JTable;
 import javax.swing.JLabel;
 import javax.swing.ListSelectionModel;
 
+import org.jdesktop.swingx.JXTable;
+
 import controler.KorisniciMenadzer;
 import controler.RecenzijeZaIzmenuMenadzer;
 import controler.ZakazanaRecenzijaMenadzer;
@@ -27,8 +29,8 @@ import java.awt.event.ActionEvent;
 
 public class DodelaRecenzija extends MojDialog {
 	private static final long serialVersionUID = 1L;
-	private JTable zakazaneRecenzije;
-	private JTable recenzijeZaIzmenu;
+	private JXTable zakazaneRecenzije;
+	private JXTable recenzijeZaIzmenu;
 	@SuppressWarnings("rawtypes")
 	private JComboBox cmbUrednici;
 	private Sesija sesija;
@@ -43,12 +45,12 @@ public class DodelaRecenzija extends MojDialog {
 		setTitle(title);
 		getContentPane().setLayout(null);
 		
-		zakazaneRecenzije = new JTable();
+		zakazaneRecenzije = new JXTable();
 		zakazaneRecenzije.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		zakazaneRecenzije.setBounds(10, 26, 362, 189);
 		getContentPane().add(zakazaneRecenzije);
 		
-		recenzijeZaIzmenu = new JTable();
+		recenzijeZaIzmenu = new JXTable();
 		recenzijeZaIzmenu.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		recenzijeZaIzmenu.setBounds(400, 26, 362, 189);
 		getContentPane().add(recenzijeZaIzmenu);

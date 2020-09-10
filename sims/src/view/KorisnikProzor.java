@@ -14,8 +14,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+
+import org.jdesktop.swingx.JXTable;
 
 import model.Korisnik;
 import model.Uloga;
@@ -30,7 +31,7 @@ public class KorisnikProzor extends MojDialog implements ActionListener{
 	private Uloga indikator;
 	
 	private JFrame parent;
-	private JTable table;
+	private JXTable table;
 	private JButton info;
 	
 	private ImageIcon addI = new ImageIcon("slike/add.gif");
@@ -76,7 +77,7 @@ public class KorisnikProzor extends MojDialog implements ActionListener{
 		base.add(info);
 		this.add(base, BorderLayout.NORTH);
 		
-		table = new JTable(new KorisnikModel(imenaKolona, korisnici, indikator));
+		table = new JXTable(new KorisnikModel(imenaKolona, korisnici, indikator));
 		table.getTableHeader().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getTableHeader().setReorderingAllowed(false);
@@ -115,7 +116,7 @@ public class KorisnikProzor extends MojDialog implements ActionListener{
 							 "Info", JOptionPane.INFORMATION_MESSAGE);
 				} else {
 					String korisnickoIme = table.getModel().getValueAt(rIndex, 0).toString();
-					Korisnik k = ((AdminHomepage)parent).getSesija().getKorisnici().trazi(korisnickoIme);
+					Korisnik k = ((Homepage)parent).getSesija().getKorisnici().trazi(korisnickoIme);
 					DijalogRadSaNalogom drsn = new DijalogRadSaNalogom(null, k, k.getNalog().getKorisnickoIme(), true);
 					drsn.setVisible(true);
 				}

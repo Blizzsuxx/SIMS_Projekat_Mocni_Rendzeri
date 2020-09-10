@@ -14,6 +14,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
+import org.jdesktop.swingx.JXTable;
+
 import model.Album;
 import net.miginfocom.swing.MigLayout;
 
@@ -23,7 +25,7 @@ public class AlbumiProzor extends MojDialog {
 	private List<Album> albumi;
 	private String[] imeKolona = {"Naslov", "Opis", "Datum registacije", "Izvodjac", "Dozvola"};
 	
-	private JTable table;
+	private JXTable table;
 	private JButton dozvolaBtn;
 	private JFrame parent;
 	
@@ -84,7 +86,7 @@ public class AlbumiProzor extends MojDialog {
 			dozvolaBtn.setVisible(false);
 		}
 		
-		table = new JTable(new AlbumModel(imeKolona, albumi, indikator));
+		table = new JXTable(new AlbumModel(imeKolona, albumi, indikator));
 		table.getTableHeader().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getTableHeader().setReorderingAllowed(false);

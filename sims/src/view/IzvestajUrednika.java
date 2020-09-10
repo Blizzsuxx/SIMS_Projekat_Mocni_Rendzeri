@@ -19,6 +19,8 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import org.jdesktop.swingx.JXTable;
+
 import model.Sesija;
 import model.Urednik;
 import net.miginfocom.swing.MigLayout;
@@ -31,7 +33,7 @@ public class IzvestajUrednika extends JFrame { // izvestaj o odabranom uredniku
 	private Sesija sesija;
 	private Urednik urednik;
 	private JButton btnBack;
-	private JTable table;
+	private JXTable table;
 	private JTextField tfImeUrednika, tfUkupno, tfZadate, tfZaIzmenu;
 
 	public IzvestajUrednika(Sesija s, Urednik u) {
@@ -97,7 +99,7 @@ public class IzvestajUrednika extends JFrame { // izvestaj o odabranom uredniku
 		add(btnBack);
 		btnBack.setText("Nazad");
 		
-		table = new JTable(new RecenzijeOdUrednikaModel(this.urednik.getIstorijaRecenzija()));
+		table = new JXTable(new RecenzijeOdUrednikaModel(this.urednik.getIstorijaRecenzija()));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getTableHeader().setReorderingAllowed(false);
 		JScrollPane sp = new JScrollPane(table);

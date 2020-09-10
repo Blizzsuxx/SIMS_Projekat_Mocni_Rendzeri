@@ -14,6 +14,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
+import org.jdesktop.swingx.JXTable;
+
 import model.Izvodjac;
 import net.miginfocom.swing.MigLayout;
 
@@ -23,7 +25,7 @@ public class IzvodjaciProzor extends MojDialog {
 	private List<Izvodjac> izvodjaci;
 	private String[] imeKolona = {"Umjetnicko Ime", "Ime Zanra", "Broj Izdatih Albuma", "Broj Muzickih Djela", "Dozvola"};
 	
-	private JTable table;
+	private JXTable table;
 	// dugme koje prikaze detaljan prikaz informacija o izabranom izvodjacu
 	private JButton info, dozvolaBtn;
 	private JFrame parent;
@@ -65,7 +67,7 @@ public class IzvodjaciProzor extends MojDialog {
 			dozvolaBtn.setVisible(false);
 		}
 		
-		table = new JTable(new IzvodjaciModel(imeKolona, izvodjaci, indikator));
+		table = new JXTable(new IzvodjaciModel(imeKolona, izvodjaci, indikator));
 		table.getTableHeader().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getTableHeader().setReorderingAllowed(false);

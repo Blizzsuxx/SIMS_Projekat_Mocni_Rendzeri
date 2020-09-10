@@ -26,6 +26,7 @@ import javax.swing.table.TableRowSorter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
+import org.jdesktop.swingx.JXTable;
 
 import controler.IzvestajViseUrednikaMenadzer;
 import model.Sesija;
@@ -41,7 +42,7 @@ public class IzvestajViseUrednika extends JFrame {
 	private Collection<Urednik> urednici;
 	@SuppressWarnings("unused")
 	private JButton btnBack, btnOk, btnPregledaj;
-	private JTable table;
+	private JXTable table;
 	private JDatePickerImpl DatePicker2, DatePicker1;
 	private UtilDateModel model1, model2;
 	private Sesija s;
@@ -58,7 +59,7 @@ public class IzvestajViseUrednika extends JFrame {
 	MigLayout mig =  new MigLayout("wrap 2", "[]10[]", "[]10[]10[]10[]"); //dodati datume
 	setLayout(mig);
 	
-	table = new JTable(new UrednikModel(this.urednici));
+	table = new JXTable(new UrednikModel(this.urednici));
 	table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	table.getTableHeader().setReorderingAllowed(false);
 	JScrollPane sp = new JScrollPane(table);
@@ -151,7 +152,7 @@ public class IzvestajViseUrednika extends JFrame {
 				//TODO mozda ne radi??? i proveri da li moze ovako ili mora preko sesije??
 				LocalDate dan1=convertToLocalDateViaInstant(d2, month2, year2);
 				IzvestajViseUrednikaMenadzer men=new IzvestajViseUrednikaMenadzer(dan, dan1, (ArrayList<Urednik>)s.getUrednici());
-				table=new JTable(new UrednikModel(men.getPodaci()));
+				table=new JXTable(new UrednikModel(men.getPodaci()));
 				refreshData();
 				
 			}

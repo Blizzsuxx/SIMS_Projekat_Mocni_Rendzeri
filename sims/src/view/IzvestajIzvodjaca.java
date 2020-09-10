@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import org.jdesktop.swingx.JXTable;
+
 import model.IzvestajJednogIzvodjaca;
 import model.Izvodjac;
 import model.Sesija;
@@ -23,7 +25,7 @@ public class IzvestajIzvodjaca extends JFrame {
 	private Izvodjac izvodjac;
 	private JButton btnBack;
 	@SuppressWarnings("unused")
-	private JTable table;
+	private JXTable table;
 	private JTextField tfImeUrednika, tfUkupnoDela, tfbrojRec, tfBrojkom, tfOcenaUr, tfOcenaKor;
 	private IzvestajJednogIzvodjaca jedan;
 

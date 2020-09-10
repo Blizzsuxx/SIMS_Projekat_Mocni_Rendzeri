@@ -20,6 +20,8 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import org.jdesktop.swingx.JXTable;
+
 import model.IzvestajSvihZanrova;
 import model.Sesija;
 import net.miginfocom.swing.MigLayout;
@@ -30,7 +32,7 @@ public class IzvestajViseZanrova extends JFrame {
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	private JTable table;
+	private JXTable table;
 	@SuppressWarnings("unused")
 	private Sesija sesija;
 	private JButton btnBack;
@@ -63,7 +65,7 @@ public class IzvestajViseZanrova extends JFrame {
 		MigLayout mig =  new MigLayout("wrap 2", "[]10[]", "[]"); 
 		setLayout(mig);
 		
-		table = new JTable(new ViseZanrovaModel(lista));
+		table = new JXTable(new ViseZanrovaModel(lista));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getTableHeader().setReorderingAllowed(false);
 		JScrollPane sp = new JScrollPane(table);

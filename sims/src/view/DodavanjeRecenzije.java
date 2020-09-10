@@ -23,13 +23,15 @@ import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.ListSelectionModel;
 
+import org.jdesktop.swingx.JXTable;
+
 public class DodavanjeRecenzije extends MojDialog {
 	private static final long serialVersionUID = 1L;
 	private Sesija sesija;
 	private String title;
 	private Recenzija recenzija;
 	private JTextField txtNaslov;
-	private JTable dela;
+	private JXTable dela;
 	private JTextArea txtTekst;
 	@SuppressWarnings("rawtypes")
 	private JComboBox cmbIzvodjaci;
@@ -84,7 +86,7 @@ public class DodavanjeRecenzije extends MojDialog {
 		cmbIzvodjaci.setBounds(68, 140, 205, 22);
 		getContentPane().add(cmbIzvodjaci);
 		
-		dela = new JTable();
+		dela = new JXTable();
 		dela.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		dela.setBounds(68, 204, 636, 135);
 		getContentPane().add(dela);

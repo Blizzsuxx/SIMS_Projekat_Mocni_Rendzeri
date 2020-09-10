@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
+import org.jdesktop.swingx.JXTable;
+
 import controler.KorisniciMenadzer;
 import model.Korisnik;
 import model.Sesija;
@@ -17,7 +19,7 @@ import model.Sesija;
 
 public class BlokiranjeNaloga extends MojDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
-	private JTable nalozi;
+	private JXTable nalozi;
 	private Sesija sesija;
 	private String title;
 	private JButton btnNewButton;
@@ -31,7 +33,7 @@ public class BlokiranjeNaloga extends MojDialog implements ActionListener {
 		setTitle(title);
 		getContentPane().setLayout(null);
 		
-		nalozi = new JTable();
+		nalozi = new JXTable();
 		nalozi.setFillsViewportHeight(true);
 		nalozi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		nalozi.setBounds(10, 11, 414, 205);

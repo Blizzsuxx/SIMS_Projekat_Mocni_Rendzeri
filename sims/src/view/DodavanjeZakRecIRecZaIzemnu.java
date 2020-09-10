@@ -12,6 +12,7 @@ import javax.swing.SpringLayout;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
+import org.jdesktop.swingx.JXTable;
 
 import controler.RecenzijeZaIzmenuMenadzer;
 import controler.UtisakMenadzer;
@@ -33,7 +34,7 @@ import javax.swing.ListSelectionModel;
 
 public class DodavanjeZakRecIRecZaIzemnu extends MojDialog {
 	private static final long serialVersionUID = 1L;
-	private JTable recenzije;
+	private JXTable recenzije;
 	private JDatePickerImpl dtDor;
 	private SpringLayout sl_dtDor;
 	private JDatePickerImpl dtDod;
@@ -57,7 +58,7 @@ public class DodavanjeZakRecIRecZaIzemnu extends MojDialog {
 		setResizable(false);
 		getContentPane().setLayout(null);
 		
-		recenzije = new JTable();
+		recenzije = new JXTable();
 		recenzije.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		recenzije.setBounds(10, 11, 389, 188);
 		getContentPane().add(recenzije);

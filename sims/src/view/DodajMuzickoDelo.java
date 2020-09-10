@@ -26,6 +26,8 @@ import javax.swing.SpringLayout;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
+import org.jdesktop.swingx.JXTable;
+
 import javax.swing.SwingConstants;
 
 public class DodajMuzickoDelo extends MojDialog {
@@ -36,7 +38,7 @@ public class DodajMuzickoDelo extends MojDialog {
 	public String naslov, opisDela, datumIzdavanja;
 	public JButton btnNazad, btnNapravi;
 	public int br; //ako se ovo poziva iz pravljenja albuma onda je 0, tj ima Izvodjaca, ako je 1 nema i ide combo
-	private JTable zanrovi;
+	private JXTable zanrovi;
 	private JLabel lblZanrovi;
 	private JDatePickerImpl dtDop;
 	private SpringLayout sl_dtDop;
@@ -85,7 +87,7 @@ public class DodajMuzickoDelo extends MojDialog {
 		lblZanrovi = new JLabel("Zanrovi:");
 		getContentPane().add(lblZanrovi, "cell 0 3");
 		
-		zanrovi = new JTable();
+		zanrovi = new JXTable();
 		zanrovi.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		getContentPane().add(zanrovi, "cell 1 3,grow");
 		zanrovi.setModel(tmw);

@@ -63,6 +63,11 @@ public class MediaPlayer extends MojDialog {
     public MediaPlayer(JFrame parent, MuzickoDelo delo) {
         super(parent, "Media Player");
         this.trenutniKorisnik = Sesija.getTrenutniKorisnik();
+
+        if(trenutniKorisnik instanceof KorisnikAplikacije){
+            ((KorisnikAplikacije) trenutniKorisnik).addIstorija(delo);
+        }
+
         this.delo = delo;
         this.setResizable(true);
         this.getContentPane().setLayout(new MigLayout());

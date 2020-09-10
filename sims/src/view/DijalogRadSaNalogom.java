@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +15,7 @@ import javax.swing.JPasswordField;
 import org.jdesktop.swingx.JXCollapsiblePane;
 import org.jdesktop.swingx.JXImagePanel;
 
+import controler.Constants;
 import model.FrontEndKorisnik;
 import model.Korisnik;
 import net.miginfocom.swing.MigLayout;
@@ -128,6 +128,8 @@ public class DijalogRadSaNalogom extends MojDialog {
 			FrontEndKorisnik k = (FrontEndKorisnik) this.korisnik;
 			ExpandingPanel istorija = new ExpandingPanel("istorija");
 			Collection<Slikovit> slike = (Collection<Slikovit>)  (Collection<?>) k.getIstorija();
+
+			slike = slike.size() == 0 ? Constants.DELA : slike; 
 
 			JXCollapsiblePane p = new JXCollapsiblePane();
 			p.setContentPane(new SearchResults(slike));

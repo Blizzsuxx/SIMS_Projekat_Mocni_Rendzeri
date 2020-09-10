@@ -191,7 +191,7 @@ public List<Korisnik> vratiSveAktivneKorisnike() {
 }
 public Collection<? extends Slikovit> traziZaSearch(String textZaSearch) {
 	ArrayList<Slikovit> rezultat = new ArrayList<>();
-	for(Korisnik a : this.korisnici.values()) {
+	for(Korisnik a : this.vratiUrednike()) {
 		if(a.Ime().contains(textZaSearch)) {
 			rezultat.add(a);
 		}

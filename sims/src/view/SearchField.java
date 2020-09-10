@@ -138,7 +138,7 @@ public class SearchField extends JXSearchField {
 		}
 		
 		
-		SearchResults rezultatiPanel = new SearchResults(rezultati, sesija.getTrenutniKorisnik());
+		SearchResults rezultatiPanel = new SearchResults(rezultati);
 		MojDialog dialog = new MojDialog(this.owner, "Rezultati pretrage");
 		dialog.setContentPane(rezultatiPanel);
 		dialog.setVisible(true);

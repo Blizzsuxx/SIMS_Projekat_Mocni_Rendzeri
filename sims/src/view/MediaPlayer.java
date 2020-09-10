@@ -37,12 +37,12 @@ public class MediaPlayer extends MojDialog {
      */
     private static final long serialVersionUID = 1L;
     
-    UtisakView komentari;
+    UtisakView komentari, recenzije;
     MuzickoDelo delo;
     
-    private JButton dugmeKomentar;
-    Korisnik trenutniKorisnik;
-    JTextArea poljeKomentar;
+    private JButton dugmeKomentar, dugmeRecenzija, dugmeIzbrisiRecenziju;
+    private Korisnik trenutniKorisnik;
+    private JTextArea poljeKomentar, poljeRecenzija;
     
 
     private MP3Player getMediaPlayer(String nazivPesme, String ekstenzija) {
@@ -80,19 +80,30 @@ public class MediaPlayer extends MojDialog {
         dataPanel.add(datum, "gapleft 50");
         this.add(dataPanel, "wrap 20");
 
-
-        UtisakView recenzije = new UtisakView();
+        recenzije = new UtisakView();
         
         ExpandingPanel recenzijePanel = new ExpandingPanel("Recenzije");
+        
+        JPanel panelRecenzija = new JPanel(new MigLayout()); // new MigLayout("", "[]", "20[]");
+        JPanel panelDugmadiRecenzija = new JPanel(new MigLayout());
+        poljeRecenzija = new JTextArea(3, 42);
+        dugmeRecenzija = new JButton("Napisi recenziju");
+        dugmeIzbrisiRecenziju = new JButton("Izbrisi recenziju");
+        panelRecenzija.add(poljeRecenzija);
+        panelDugmadiRecenzija.add(dugmeRecenzija);
+        panelDugmadiRecenzija.add(dugmeIzbrisiRecenziju);
+        recenzijePanel.getContent().add(panelRecenzija, BorderLayout.NORTH); 
+        recenzijePanel.getContent().add(panelDugmadiRecenzija, BorderLayout.NORTH);
+        
         recenzijePanel.getContent().add(recenzije, BorderLayout.CENTER);
         recenzije.setSize(this.getWidth()-5, 100);
         recenzije.setPreferredSize(new Dimension(this.getWidth()-5, 100));
+        
         this.add(recenzijePanel, "wrap 20");
         
         Urednik urednik = new Urednik();
         urednik.setKorisnickoIme("urednik");
         recenzije.addKomentar(new Recenzija("text", new Date(), true, urednik, delo, "naslov"));
-
 
         JTextArea opis = new JTextArea(delo.getOpis());
         JScrollPane pane = new JScrollPane(opis);

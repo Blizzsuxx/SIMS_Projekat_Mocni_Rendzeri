@@ -3,6 +3,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,11 +21,11 @@ public class SearchResults extends JScrollPane {
 
 	private static final long serialVersionUID = 1L;
 	
-	public SearchResults(ArrayList<Slikovit> prikaz, Korisnik trenutniKorisnik) {
+	public SearchResults(List<Slikovit> prikaz) {
 		super(initGui(prikaz));
 	}
 
-	public static JPanel initGui(ArrayList<Slikovit> prikaz) {
+	public static JPanel initGui(List<Slikovit> prikaz) {
 		
 		JPanel content = new JPanel(new MigLayout());
 		for(Slikovit sadrzaj : prikaz) {

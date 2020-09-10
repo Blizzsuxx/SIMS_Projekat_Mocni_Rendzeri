@@ -1,17 +1,19 @@
 package view;
 
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import controler.Constants;
+import controler.Constants;import model.Recenzija;
 import model.Sesija;
 import model.Uloga;
 
@@ -97,8 +99,12 @@ public class UrednikHomepage extends Homepage {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-					
-					
+					MojDialog recenzije = new MojDialog(UrednikHomepage.this, "Izvrsene Recenzije");
+					//Search-u se prosledjuju dela za koje je neko napisao recenziju
+					//Ovde koriscena hardkodovana konstanta Dela
+					SearchResults mojeRecenzije = new SearchResults(Constants.DELA);
+					recenzije.setContentPane(mojeRecenzije);
+					recenzije.setVisible(true);
 			}
 	    		
 	    });
@@ -107,8 +113,12 @@ public class UrednikHomepage extends Homepage {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
+				MojDialog recenzije = new MojDialog(UrednikHomepage.this, "Moje Recenzije");
+				//Search-u se prosledjujju dela za koje je trenutni korisnik urednik napisao recenziju
+				//Koriscena hardkodovana konstanta Dela2
+				SearchResults mojeRecenzije = new SearchResults(Constants.DELA2);
+				recenzije.setContentPane(mojeRecenzije);
+				recenzije.setVisible(true);
 			}
 	    	
 	    });

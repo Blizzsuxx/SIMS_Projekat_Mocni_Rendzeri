@@ -236,7 +236,7 @@ public class CitacDatoteka {
 			}
 			String[] dela=linija[3].trim().split(";");
 			for(String d:dela) {
-				k.getMuzickoDjelo().add((MuzickoDelo)md.vratiNaOsnovuNazive(d.trim()));
+				k.getIstorija().add((MuzickoDelo)md.vratiNaOsnovuNazive(d.trim()));
 			}
 			if(linija.length>4) {
 			String[] pratilac=linija[4].trim().split(";");

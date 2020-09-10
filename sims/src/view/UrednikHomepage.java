@@ -17,10 +17,10 @@ import model.Uloga;
 public class UrednikHomepage extends Homepage {
 	 private static final long serialVersionUID = 1L;
 
-	 private JMenu recenzijeMenu, korisniciMenu, listeMenu, glasanjeMenu;
+	 private JMenu recenzijeMenu, korisniciMenu, listeMenu, glasanjeMenu, muzickaDelaMenu;
 	 private JMenuItem recenzijeItem1, recenzijeItem2, recenzijeItem3,
 	 korisniciItem1, korisniciItem2, korisniciItem3, korisniciItem4, korisniciItem5, korisniciItem6,
-	 korisniciItem7, listeItem1, listeItem2, glasanjeItem1;
+	 korisniciItem7, listeItem1, listeItem2, glasanjeItem1, muzickaDelaItem1;
 	 
 	public UrednikHomepage(Sesija sesija) {
 	    super(sesija);
@@ -82,6 +82,11 @@ public class UrednikHomepage extends Homepage {
 		glasanjeItem1 = new JMenuItem("Glasaj");
 		glasanjeMenu.add(glasanjeItem1);
 		menubar.add(glasanjeMenu);
+		
+		muzickaDelaMenu = new JMenu("Muzicka dela");
+		muzickaDelaItem1 = new JMenuItem("Dodaj muzicko delo");
+		muzickaDelaMenu.add(muzickaDelaItem1);
+		menubar.add(muzickaDelaMenu);
 		
 	}
 	    
@@ -255,6 +260,20 @@ public class UrednikHomepage extends Homepage {
 			}
 	    	
 	    });
+	    
+	    muzickaDelaItem1.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new DodajMuzickoDelo(UrednikHomepage.this.getSesija(), "Dodavanje muzickog dela izvodjacu", 422, 422, null, 1);
+				} 
+				catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+			
+		});
 	}
 
 }

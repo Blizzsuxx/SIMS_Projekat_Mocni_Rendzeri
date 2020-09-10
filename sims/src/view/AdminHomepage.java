@@ -211,7 +211,7 @@ public class AdminHomepage extends Homepage {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new DodavanjeZakRecIRecZaIzemnu(AdminHomepage.this.getSesija(), "Narucivanje recenzija", 415, 500);
+					new DodavanjeZakRecIRecZaIzemnu(AdminHomepage.this.getSesija(), "Narucivanje recenzija", 430, 500);
 				} 
 				catch (Exception e1) {
 					e1.printStackTrace();

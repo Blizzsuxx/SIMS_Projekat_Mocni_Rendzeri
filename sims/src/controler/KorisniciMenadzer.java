@@ -22,6 +22,7 @@ import model.Administrator;
 import model.Korisnik;
 import model.KorisnikAplikacije;
 import model.Pol;
+import model.Sesija;
 import model.Urednik;
 import view.Slikovit;
 import view.TableModelWrapper;
@@ -118,6 +119,8 @@ public class KorisniciMenadzer {
 			@SuppressWarnings("rawtypes")
 			HashMap.Entry pair = (HashMap.Entry)it.next();
 			Korisnik k = (Korisnik)pair.getValue();
+			if (k.getNalog().getKorisnickoIme().equals(Sesija.getTrenutniKorisnik().getNalog().getKorisnickoIme()))
+				continue;
 			data.add(new Object[] {k.getNalog().getKorisnickoIme(), k.getIme(), k.getPrezime(), k.getDatumRodjenja(), k.isStatus()});
 		}
 		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);

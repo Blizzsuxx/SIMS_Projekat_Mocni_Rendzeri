@@ -10,6 +10,8 @@ import java.awt.event.WindowEvent;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 import controler.CitacDatoteka;
 import controler.Constants;
@@ -297,9 +299,11 @@ private void pronadiDela(String naziv) {
 	   
    }
    public String[] izvadiImenaIzvodjaca() {
-	   String[] imena= new String[this.izvodjacMenadzer.getSvi().size()];
+	   String[] imena = new String[this.izvodjacMenadzer.getSvi().size()];
 	   ArrayList<Izvodjac> izvodjaci = this.izvodjacMenadzer.getSvi();
-	   for(int i = 0; i <izvodjaci.size(); ++i ) imena[i]=izvodjaci.get(i).getUmetnickoIme();
+	   for(int i = 0; i < izvodjaci.size(); ++i ) 
+		   if (izvodjaci.get(i).isOdobrenost())
+			   imena[i] = izvodjaci.get(i).getUmetnickoIme();
 	   return imena;
 	   
 	   
@@ -322,10 +326,10 @@ public Izvodjac getIzvodjac(String ime) {
 	return null;
 }
 
-
 public boolean napraviDelo(String datumIzdavanja, String naslov, String opis, Izvodjac izv, ArrayList<Zanr> zanrovi) {
 	try {
-		MuzickoDelo md = new MuzickoDelo(naslov, opis, Constants.NATASIN_FORMAT_ZA_DATUM.parse(datumIzdavanja), izv, null, true, zanrovi);
+		MuzickoDelo md = new MuzickoDelo(naslov, opis, Constants.NATASIN_FORMAT_ZA_DATUM.parse(datumIzdavanja), 
+				izv, (Urednik)Sesija.getTrenutniKorisnik(), true, zanrovi, 0, 0);
 		izv.getMuzickaDela().add(md);
 		this.muzickiSadrzajMenadzer.getMuzickiSadrzaj().add(md);
 		return true;

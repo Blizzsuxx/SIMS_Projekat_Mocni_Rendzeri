@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import controler.IzvodjacMenadzer;
 import controler.ZanroviMenadzer;
 import model.Izvodjac;
 import model.Sesija;
@@ -49,41 +50,10 @@ public class DodajMuzickoDelo extends MojDialog {
 		setResizable(false);
 		this.izv = izv;
 		this.sesija = sesija;
-		if (br == 1) {
-			izvodjaci = new JComboBox(sesija.izvadiImenaIzvodjaca());
-			izvodjaci.setSelectedIndex(0);
-		}
+		this.br = br;
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setSize(422,417);
 		setTitle(title);
-		initGui();
-		initActions();
-	}
-	private void initActions() {
-		btnNapravi.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					dodaj();
-				}
-				catch (ParseException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnNazad.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				DodajMuzickoDelo.this.dispose();
-				
-			}
-		});
 		
-	}
-	@SuppressWarnings("rawtypes")
-	private void initGui() {
 		MigLayout mig =  new MigLayout("wrap 2", "[grow]10[grow]", "[]10[]10[21.00]10[67.00,grow][][][][][]");
 		getContentPane().setLayout(mig);
 		getContentPane().add(new JLabel("Naziv: "), "cell 0 0");
@@ -124,16 +94,43 @@ public class DodajMuzickoDelo extends MojDialog {
 		getContentPane().add(lblIzvodjac, "cell 0 4");
 		
 		izvodjaci = new JComboBox();
+		if (br == 1) {
+			IzvodjacMenadzer im = sesija.getIzvodjacMenadzer();
+			for (Izvodjac i : im.getSvi()) {
+				izvodjaci.addItem(i.getUmetnickoIme());
+			}
+			izvodjaci.setSelectedIndex(0);
+		}
+		
 		getContentPane().add(izvodjaci, "cell 1 4,growx");
 		
 		btnNapravi = new JButton("Dodaj delo");
 		getContentPane().add(btnNapravi, "cell 0 8");
+		btnNapravi.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					dodaj();
+				}
+				catch (ParseException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		
 		btnNazad = new JButton("Nazad");
 		btnNazad.setHorizontalAlignment(SwingConstants.RIGHT);
 		getContentPane().add(btnNazad, "cell 1 8,alignx right");
+		btnNazad.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DodajMuzickoDelo.this.dispose();
+			}
+		});
 		
-		setVisible(true);
+		setVisible(true);	
 	}
 	
 	private void dodaj() throws ParseException {

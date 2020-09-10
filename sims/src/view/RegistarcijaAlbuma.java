@@ -152,7 +152,8 @@ public class RegistarcijaAlbuma extends MojDialog {
 		IzvodjacMenadzer im = sesija.getIzvodjacMenadzer();
 		for (Izvodjac i : im.getSvi())
 		{
-			cmbIzvodjac.addItem(i.getUmetnickoIme());
+			if (i.isOdobrenost())
+				cmbIzvodjac.addItem(i.getUmetnickoIme());
 		}
 		
 		urednik = ucitajZahteve();
@@ -257,7 +258,7 @@ public class RegistarcijaAlbuma extends MojDialog {
 	}
 	
 	private void dodajPesmu(String umetnickoIme) throws Exception {
-		new DodajMuzickoDelo(sesija, "Dodavanje muzickog dela", 500, 500, sesija.getIzvodjac(umetnickoIme), 0);
+		new DodajMuzickoDelo(sesija, "Dodavanje muzickog dela", 422, 422, sesija.getIzvodjac(umetnickoIme), 0);
 		ucitajPesme(umetnickoIme);
 	}
 }

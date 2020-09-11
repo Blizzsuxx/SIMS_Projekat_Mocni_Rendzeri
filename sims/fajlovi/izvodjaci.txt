@@ -1,6 +1,6 @@
 true;Aqua;Pop;true;;;09.09.1987.;/;BBG;zenski
 true;Ariana Grande;Pop;true;Ariana;Grande;26.06.1993.;/;opis;zenski
-true;Bon Jovi;rock;true;3;01.01.1983.;/
+true;Bon Jovi;Dance;true;3;01.01.1983.;/
 true;Hurricane;Pop;true;3;01.01.2018.;/
 true;Sanja Vucic;Pop;true;Sanja;Vucic;08.08.1993.;/;nema;zenski
 true;Ksenija Knezevic;Pop;true;Ksenija;Knezevic;24.01.1996.;/;nema;zenski

@@ -16,9 +16,10 @@ import model.Uloga;
 public class AdminHomepage extends Homepage {
 	private static final long serialVersionUID = 1L;
 
-	private JMenu korisniciMenu, izvodjaciMenu, albumiMenu, zanroviMenu, recenzijeMenu, glasanjeMenu;
+	private JMenu korisniciMenu, izvodjaciMenu, muzickiSadrzajMenu, zanroviMenu, recenzijeMenu, glasanjeMenu;
 	private JMenuItem korisniciItem1, korisniciItem2, korisniciItem3, korisniciItem4, korisniciItem5,
-	izvodjaciItem1, izvodjaciItem2, izvodjaciItem3, albumiItem1, albumiItem2, 
+	izvodjaciItem1, izvodjaciItem2, izvodjaciItem3, muzickiSadrzajItem1, muzickiSadrzajItem2,
+	muzickiSadrzajItem3, muzickiSadrzajItem4, muzickiSadrzajItem5,
 	zanroviItem1, recenzijeItem1, recenzijeItem2, recenzijeItem3, glasanjeItem1;
 	
 	public AdminHomepage(Sesija sesija) {
@@ -64,12 +65,19 @@ public class AdminHomepage extends Homepage {
 		izvodjaciMenu.add(izvodjaciItem3);
 		menubar.add(izvodjaciMenu);
 		
-		albumiMenu = new JMenu("Albumi");
-		albumiItem1 = new JMenuItem("Neprihvaceni Albumi");
-		albumiMenu.add(albumiItem1);
-		albumiItem2 = new JMenuItem("Prihvaceni Albumi");
-		albumiMenu.add(albumiItem2);
-		menubar.add(albumiMenu);
+		muzickiSadrzajMenu = new JMenu("Muzicki Sadrzaj");
+		muzickiSadrzajItem1 = new JMenuItem("Muzicki Sadrzaj");
+		muzickiSadrzajMenu.add(muzickiSadrzajItem1);
+		muzickiSadrzajItem2 = new JMenuItem("Albumi");
+		muzickiSadrzajMenu.add(muzickiSadrzajItem2);
+		muzickiSadrzajItem3 = new JMenuItem("Muzicka Dela");
+		muzickiSadrzajMenu.add(muzickiSadrzajItem3);
+		muzickiSadrzajMenu.addSeparator();
+		muzickiSadrzajItem4 = new JMenuItem("Neprihvaceni Albumi");
+		muzickiSadrzajMenu.add(muzickiSadrzajItem4);
+		muzickiSadrzajItem5 = new JMenuItem("Prihvaceni Albumi");
+		muzickiSadrzajMenu.add(muzickiSadrzajItem5);
+		menubar.add(muzickiSadrzajMenu);
 		
 		zanroviMenu = new JMenu("Zanrovi");
 		zanroviItem1 = new JMenuItem("Aktivni Zanrovi");
@@ -202,7 +210,37 @@ public class AdminHomepage extends Homepage {
 			
 		});
 		
-		albumiItem1.addActionListener(new ActionListener(){
+		muzickiSadrzajItem1.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		muzickiSadrzajItem2.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		muzickiSadrzajItem3.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		muzickiSadrzajItem4.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -213,7 +251,7 @@ public class AdminHomepage extends Homepage {
 			
 		});
 		
-		albumiItem2.addActionListener(new ActionListener(){
+		muzickiSadrzajItem5.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {

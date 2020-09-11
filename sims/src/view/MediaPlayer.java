@@ -95,7 +95,7 @@ public class MediaPlayer extends MojDialog {
         dugmeRecenzija = new JButton("Napisi recenziju");
         panelRecenzija.add(poljeRecenzija, "wrap");
         panelRecenzija.add(dugmeRecenzija);
-        if((FrontEndKorisnik)trenutniKorisnik instanceof Urednik)	//Ako je urednik prikazi panel za dodavanje rec
+        if((FrontEndKorisnik)trenutniKorisnik instanceof Urednik)//Ako je urednik prikazi mu panel za dodavanje rec
         {
             recenzijePanel.getContent().add(panelRecenzija, BorderLayout.NORTH); 
         }

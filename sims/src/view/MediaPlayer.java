@@ -89,16 +89,16 @@ public class MediaPlayer extends MojDialog {
         
         ExpandingPanel recenzijePanel = new ExpandingPanel("Recenzije");
         
-        JPanel panelRecenzija = new JPanel(new MigLayout()); // new MigLayout("", "[]", "20[]");
-        JPanel panelDugmadiRecenzija = new JPanel(new MigLayout());
+       
+    	JPanel panelRecenzija = new JPanel(new MigLayout()); // new MigLayout("", "[]", "20[]");
         poljeRecenzija = new JTextArea(3, 42);
         dugmeRecenzija = new JButton("Napisi recenziju");
-        dugmeIzbrisiRecenziju = new JButton("Izbrisi recenziju");
-        panelRecenzija.add(poljeRecenzija);
-        panelDugmadiRecenzija.add(dugmeRecenzija);
-        panelDugmadiRecenzija.add(dugmeIzbrisiRecenziju);
-        recenzijePanel.getContent().add(panelRecenzija, BorderLayout.NORTH); 
-        recenzijePanel.getContent().add(panelDugmadiRecenzija, BorderLayout.NORTH);
+        panelRecenzija.add(poljeRecenzija, "wrap");
+        panelRecenzija.add(dugmeRecenzija);
+        if((FrontEndKorisnik)trenutniKorisnik instanceof Urednik)	//Ako je urednik prikazi panel za dodavanje rec
+        {
+            recenzijePanel.getContent().add(panelRecenzija, BorderLayout.NORTH); 
+        }
         
         recenzijePanel.getContent().add(recenzije, BorderLayout.CENTER);
         recenzije.setSize(this.getWidth()-5, 100);
@@ -163,6 +163,15 @@ public class MediaPlayer extends MojDialog {
     
     public void setListeners()
     {
+    	dugmeRecenzija.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				recension();
+			}
+		});
+    	
+    	
     	dugmeKomentar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -225,6 +234,16 @@ public class MediaPlayer extends MojDialog {
     		JOptionPane.showMessageDialog(MediaPlayer.this, "Uspesno ste dodali komentar", "Komentar", JOptionPane.INFORMATION_MESSAGE);
     		poljeKomentar.setText("");
     	}
+    }
+    
+    private void recension()
+    {
+    	if(poljeRecenzija.getText().equals(""))
+    		return;
+    	Komentar rec = new Komentar(poljeRecenzija.getText(), new Date(), true, delo, (FrontEndKorisnik)trenutniKorisnik);
+    	recenzije.addKomentar(rec);
+    	JOptionPane.showMessageDialog(MediaPlayer.this, "Uspesno ste dodali recenziju", "Recenzija", JOptionPane.INFORMATION_MESSAGE);
+    	poljeRecenzija.setText("");
     }
 
         

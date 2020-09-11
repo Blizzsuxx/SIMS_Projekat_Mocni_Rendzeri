@@ -20,6 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import jaco.mp3.player.MP3Player;
+import model.Administrator;
 import model.FrontEndKorisnik;
 import model.Komentar;
 import model.Korisnik;
@@ -142,7 +143,12 @@ public class MediaPlayer extends MojDialog {
         dugmeKomentar = new JButton("Komentarisi");
         panelKomentar.add(poljeKomentar, "wrap");
         panelKomentar.add(dugmeKomentar);
-        expandingPanel.getContent().add(panelKomentar, BorderLayout.NORTH);
+        
+        if(!((FrontEndKorisnik)trenutniKorisnik instanceof Urednik))
+        {
+        	expandingPanel.getContent().add(panelKomentar, BorderLayout.NORTH);
+        }
+        
         setListeners();	//Funkcija za dodavanje listenera
         
         expandingPanel.getContent().add(komentari, BorderLayout.CENTER);

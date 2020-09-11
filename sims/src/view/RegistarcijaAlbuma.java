@@ -241,15 +241,17 @@ public class RegistarcijaAlbuma extends MojDialog {
 		if (txtNaziv.getText().isEmpty()) {
 			return "Naziv je obavezno polje.";
 		}
-		if (pesme.getSelectionModel().isSelectionEmpty()) {
-			return "Morate odabrati pesmu.";
-		
-		}
 		if (cmbIzvodjac.getSelectedIndex() == -1) {
 			return "Morate odabrati izvodjaca.";
 		}
 		if (dtDor.getJFormattedTextField().getText().isEmpty()) {
 			return "Morate odabrati datum.";
+		}
+		if (pesme.getSelectionModel().isSelectionEmpty()) {
+			return "Morate odabrati pesmu.";
+		}
+		if (zanrovi.getSelectionModel().isSelectionEmpty()) {
+			return "Morate odabrati bar jedan zanr.";
 		}
 		return "";
 	}

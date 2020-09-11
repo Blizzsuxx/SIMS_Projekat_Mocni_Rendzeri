@@ -144,6 +144,9 @@ public class GlasanjeProzor extends MojDialog {
 	}
 	
 	private String validacijaGlasanja() {
+		if (muzickaDela.getSelectionModel().isSelectionEmpty()) {
+			return "Morate odabrati pesmu";
+		}
 		GlasanjeMenadzer gm = sesija.getGlasanjeMenadzer();
 		for (Urednik urednik : gm.getUredniciKojiSuGlasali()) {
 			if (urednik.getNalog().getKorisnickoIme().equals(Sesija.getTrenutniKorisnik().getNalog().getKorisnickoIme())) {

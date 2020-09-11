@@ -104,6 +104,10 @@ public class DodajMuzickoDelo extends MojDialog {
 			}
 			izvodjaci.setSelectedIndex(0);
 		}
+		else {
+			izvodjaci.addItem(izv.getUmetnickoIme());
+			izvodjaci.setEditable(false);
+		}
 		
 		getContentPane().add(izvodjaci, "cell 1 4,growx");
 		
@@ -137,6 +141,11 @@ public class DodajMuzickoDelo extends MojDialog {
 	}
 	
 	private void dodaj() throws ParseException {
+		String msg = validiraj();
+		if (!msg.equals("")) {
+			JOptionPane.showMessageDialog(null, msg);
+			return;
+		}
 		datumIzdavanja = dtDop.getJFormattedTextField().getText();
 		SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
 		SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyyy.");
@@ -160,5 +169,15 @@ public class DodajMuzickoDelo extends MojDialog {
 		if (!validno) {
 			JOptionPane.showMessageDialog(DodajMuzickoDelo.this, "Datum nije ispravan.");
 		}
+	}
+	
+	private String validiraj() {
+		if (naziv.getText().isEmpty()) 
+			return "Naziv je obavezno polje.";
+		if (dtDop.getJFormattedTextField().getText().isEmpty()) 
+			return "Morate uneti datum izdavanja.";
+		if (zanrovi.getSelectionModel().isSelectionEmpty()) 
+			return "Morate odabrati bar jedan zanr.";
+		return "";
 	}
 }

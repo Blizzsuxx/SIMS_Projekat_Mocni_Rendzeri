@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneLayout;
@@ -70,6 +71,10 @@ public class BlokiranjeNaloga extends MojDialog implements ActionListener {
 	}
 	
 	private void setujStatus(int selektovaniRed, boolean status) {
+		if (nalozi.getSelectionModel().isSelectionEmpty()) {
+			JOptionPane.showMessageDialog(null, "Morate odabrati nalog");
+			return;
+		}
 		nalozi.setValueAt(status, selektovaniRed, 4);
 		KorisniciMenadzer km = sesija.getKorisnici();
 		HashMap<String,Korisnik> korisnici = km.getKorisnici();

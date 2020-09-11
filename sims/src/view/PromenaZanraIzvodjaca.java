@@ -11,6 +11,7 @@ import model.Zanr;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.ListSelectionModel;
@@ -126,7 +127,7 @@ public class PromenaZanraIzvodjaca extends MojDialog {
 				}
 			}
 		}
-		if(!grupe.getSelectionModel().isSelectionEmpty()) {
+		if (!grupe.getSelectionModel().isSelectionEmpty()) {
 			for (Grupa g : sesija.getGrupe()) {
 				if (g.getUmetnickoIme().equals((String)grupe.getValueAt(grupe.getSelectedRow(), 0))) {
 					Zanr zanr = sesija.getZanroviMenadzer().trazi((String)cmbZanr.getSelectedItem());

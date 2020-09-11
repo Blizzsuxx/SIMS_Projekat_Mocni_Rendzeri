@@ -114,10 +114,11 @@ public class IzvestajViseUrednika extends JFrame {
 	JDatePanelImpl datePanel2=new JDatePanelImpl(model2, p);
 	this.DatePicker2=new JDatePickerImpl(datePanel2, new DataLabelFormatter());
 	add(DatePicker1);
-	
+	btnBack =new JButton("Nazad");
 	add(btnBack);
 	
 	add(DatePicker2);
+	btnOk=new JButton();
 	btnOk.setText("Filtriraj");
 	add(btnOk);
 	

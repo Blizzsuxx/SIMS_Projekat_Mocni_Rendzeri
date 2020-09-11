@@ -94,8 +94,9 @@ public class IzvestajUrednika extends JFrame { // izvestaj o odabranom uredniku
 		tfZadate = new JTextField(20);
 		add(tfZadate);
 		tfZadate.setText(urednik.getZakazaneRecenzije().size()+"");
+		btnBack=new JButton("Nazad");
 		add(btnBack);
-		btnBack.setText("Nazad");
+		
 		
 		table = new JTable(new RecenzijeOdUrednikaModel(this.urednik.getIstorijaRecenzija()));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

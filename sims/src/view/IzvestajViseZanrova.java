@@ -106,6 +106,8 @@ public class IzvestajViseZanrova extends JFrame {
 			
 		});
 		
+		btnBack =new JButton("Nazad");
+		add(btnBack);
 	}
 
 }

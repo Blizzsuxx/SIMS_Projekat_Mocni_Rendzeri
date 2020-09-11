@@ -126,10 +126,10 @@ public class IzvestajViseIzvodjaca extends JFrame{
 			
 		});
 		
-
+		btnBack= new JButton("Nazad");
+		btnOk =new JButton("Filtriraj");
 		add(cbZanr);
 		add(btnBack);
-		btnOk.setName("Filtriraj");
 		add(btnOk);//dugme za filtriranje
 	}
 	private void initActions() {

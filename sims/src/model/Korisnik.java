@@ -168,6 +168,8 @@ public abstract class Korisnik implements Slikovit {
 		ad+=df.format(this.getDatumRodjenja())+","+this.nalog.getSifra();
 	ad+=","+this.nalog.getKorisnickoIme()+","+df.format(this.nalog.getDatumKreiranja())+",";
 	ad+=Boolean.toString(this.isStatus())+",";
+	System.out.println(isStatus());
+	
 	return ad;
 	}
 	public abstract String pratiociUpis();

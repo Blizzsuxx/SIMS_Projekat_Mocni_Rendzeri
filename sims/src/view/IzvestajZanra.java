@@ -82,7 +82,7 @@ public class IzvestajZanra extends JFrame {
 	private void initGui() {
 		MigLayout mig =  new MigLayout("wrap 2", "[]10[]", "[]10[]10[]20[]");
 		setLayout(mig);
-		
+		btnBack=new JButton("Nazad");
 		add(new JLabel("Ukupno recenzija zanra: "));
 		tfUkupno = new JTextField(10);
 		add(tfUkupno);
@@ -97,7 +97,7 @@ public class IzvestajZanra extends JFrame {
 		tfProsecnaOcena = new JTextField(10);
 		add(tfProsecnaOcena);
 		tfProsecnaOcena.setText(jedanZanr.getBrojMuzdela()+" ");
-		
+		add(btnBack);
 		
 	}
 	private void initActions() {

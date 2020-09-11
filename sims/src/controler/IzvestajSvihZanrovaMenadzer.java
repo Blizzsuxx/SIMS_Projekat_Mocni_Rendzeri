@@ -26,6 +26,7 @@ public class IzvestajSvihZanrovaMenadzer {
 	}
 
 	public IzvestajSvihZanrovaMenadzer(Collection<MuzickoDelo> dela, Collection<Recenzija> recenzije, ArrayList<Zanr> z) {
+		this.sviZanrovi=new ArrayList<IzvestajSvihZanrova>();
 		for(Zanr za:z) {
 			IzvestajSvihZanrova iz=new IzvestajSvihZanrova(za.getNazivZanra());
 			this.sviZanrovi.add(iz);

@@ -134,6 +134,7 @@ public MuzickoDelo(String naziv, String opis, Date datumIzdavanja, boolean statu
 
 public MuzickoDelo() {
 	super();
+	this.utisci=new ArrayList<Utisak>();
 	this.dosadasnjeOceneKorisnika=new ArrayList<Integer>();
 	this.dosadasnjeOceneUrednika=new ArrayList<Integer>();
 }
@@ -148,6 +149,7 @@ public MuzickoDelo(String naslov, String opis2, Date datumIzdavanja2, boolean b,
 	this.status=b;
 	this.zanrovi=zanrovi;
 	this.datumIzdavanja=datumIzdavanja2;
+	this.utisci=new ArrayList<Utisak>();
 }
 
 
@@ -161,12 +163,14 @@ public MuzickoDelo(String trim, String trim2, Date d, boolean b) {
 	this.status=b;
 	this.zanrovi=new ArrayList<Zanr>();
 	this.datumIzdavanja=d;
+	this.utisci=new ArrayList<Utisak>();
 }
 
 public MuzickoDelo(String naziv, String opis) {
 	this.naziv = naziv;
 	this.opis = opis;
 	this.status = true;
+	this.utisci=new ArrayList<Utisak>();
  }
 
 public void dodajocenuKorisnika(int ocena) {

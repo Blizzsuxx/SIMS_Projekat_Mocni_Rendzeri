@@ -25,6 +25,7 @@ import controler.RecenzijeZaIzmenuMenadzer;
 import controler.UtisakMenadzer;
 import controler.ZakazanaRecenzijaMenadzer;
 import controler.ZanroviMenadzer;
+import jaco.mp3.a.A;
 import view.AdminHomepage;
 import view.Homepage;
 import view.KorisnikAplikacijeHomepage;
@@ -95,6 +96,12 @@ public class Sesija {
     * @return the urednici
     */
    public java.util.List<Urednik> getUrednici() {
+	   this.urednici=new ArrayList<Urednik>();
+	   for(Korisnik k:this.getKorisnici().getKorisnici().values()){
+		  if(k instanceof Urednik) {
+			  this.urednici.add((Urednik) k);
+		  } 
+	   }
       return urednici;
    }
 
@@ -484,6 +491,7 @@ public class Sesija {
       this.grupe = grupe;
       this.umetnici = umetnici;
       this.recenzije = recenzije;
+      this.sviZanrovi=zanroviMenadzer.getSviZanrovi();
       this.setUtisakMenadzer(utisakMenadzer);
       this.setZakazanaRecenzijaMenadzer(zakazanaRecenzijaMenadzer);
       this.setRecenzijeZaIzmenuMenadzer(recenzijeZaIzmenuMenadzer);

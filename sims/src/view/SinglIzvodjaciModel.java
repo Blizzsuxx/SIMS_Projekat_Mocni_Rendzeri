@@ -19,7 +19,10 @@ public class SinglIzvodjaciModel extends AbstractTableModel { //srediti
 	public SinglIzvodjaciModel(ArrayList<IzvestajJednogIzvodjaca> umetnici) {
 		this.sviIzv=umetnici;
 	}
-
+	@Override
+	public String getColumnName(int index) {
+	    return naslovi[index];
+	}
 	@Override
 	public int getRowCount() {
 		

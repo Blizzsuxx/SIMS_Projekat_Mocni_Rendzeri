@@ -35,7 +35,7 @@ public class ZanroviMenadzer { //ovu klasu ili treba da ima sesija ili da bude p
 	
 	
 	public String[] izlistajSveZanrove() {
-		String[] imena= {};
+		String[] imena= new String[sviZanrovi.size()];
 		int i=0;
 		for(Zanr z:sviZanrovi) {
 			imena[i]=z.getNazivZanra();

@@ -87,8 +87,9 @@ public class IzvestajRecenzije extends JFrame {
 		tfIzvodjac = new JTextField(20);
 		add(tfIzvodjac);
 		tfIzvodjac.setText(recenzija.getDelo().getNaziv()+"");
+		btnBack=new JButton("Nazad");
 		add(btnBack);
-		btnBack.setText("Nazad");
+		
 		//prikaz teksta recenzije,, broja kon=mentara ocena, komentara.....
 		
 		}

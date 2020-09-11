@@ -68,14 +68,20 @@ public class UtisakMenadzer {
 					svi.add(a);
 					
 					rec.add(a);
+				
+					if(delo!=null) {
+							delo.getUtisci().add(a);}
 					}
 					else if(linije.length==5) {
 						FrontEndKorisnik km=(FrontEndKorisnik)pronadiKorisnika(korisnici, linije[4].trim());
 						Komentar k=new Komentar(linije[3], datum, status, delo, km);
 						svi.add(k);
 						komentar.add(k);
+						if(delo!=null) {
+							delo.getUtisci().add(k);}
+					}
 						
-					}else {
+					else {
 						System.out.println("Greska  u fajlu:");
 					}
 				}

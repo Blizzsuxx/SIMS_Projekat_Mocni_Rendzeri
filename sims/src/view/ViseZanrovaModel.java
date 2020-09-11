@@ -17,6 +17,10 @@ public class ViseZanrovaModel extends AbstractTableModel {
 	public ViseZanrovaModel(ArrayList<IzvestajSvihZanrova> lista) {
 		this.lista=lista;
 	}
+	@Override
+	public String getColumnName(int index) {
+	    return naslovi[index];
+	}
 
 	@Override
 	public int getRowCount() {

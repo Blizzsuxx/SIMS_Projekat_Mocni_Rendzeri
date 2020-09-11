@@ -140,7 +140,7 @@ public class MediaPlayer extends MojDialog {
         
         ExpandingPanel expandingPanel = new ExpandingPanel("Komentari");
         
-        //Dodavanje JPanel za upis komentara u kome ce biti JTextArea i JButton
+        //Dodavanje JPanel za upis komentara u kome ce biti JTextArea i JButton 
         JPanel panelKomentar = new JPanel(new MigLayout());
         poljeKomentar = new JTextArea(3, 42);
         if(trenutniKorisnik == null) poljeKomentar.setEditable(false);

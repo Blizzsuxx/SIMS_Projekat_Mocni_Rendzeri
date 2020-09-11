@@ -96,9 +96,13 @@ public class MediaPlayer extends MojDialog {
         dugmeRecenzija = new JButton("Napisi recenziju");
         panelRecenzija.add(poljeRecenzija, "wrap");
         panelRecenzija.add(dugmeRecenzija);
-        if((FrontEndKorisnik)trenutniKorisnik instanceof Urednik)//Ako je urednik prikazi mu panel za dodavanje rec
+        
+        if(!(trenutniKorisnik instanceof Administrator))
         {
-            recenzijePanel.getContent().add(panelRecenzija, BorderLayout.NORTH); 
+        	if((FrontEndKorisnik)trenutniKorisnik instanceof Urednik)//Ako je urednik prikazi mu panel za dodavanje rec
+            {
+                recenzijePanel.getContent().add(panelRecenzija, BorderLayout.NORTH); 
+            }
         }
         
         recenzijePanel.getContent().add(recenzije, BorderLayout.CENTER);
@@ -144,9 +148,13 @@ public class MediaPlayer extends MojDialog {
         panelKomentar.add(poljeKomentar, "wrap");
         panelKomentar.add(dugmeKomentar);
         
-        if(!((FrontEndKorisnik)trenutniKorisnik instanceof Urednik))
+        
+        if(!(trenutniKorisnik instanceof Administrator))
         {
-        	expandingPanel.getContent().add(panelKomentar, BorderLayout.NORTH);
+        	if((FrontEndKorisnik)trenutniKorisnik instanceof KorisnikAplikacije || (trenutniKorisnik == null))
+            {
+            	expandingPanel.getContent().add(panelKomentar, BorderLayout.NORTH);
+            }
         }
         
         setListeners();	//Funkcija za dodavanje listenera

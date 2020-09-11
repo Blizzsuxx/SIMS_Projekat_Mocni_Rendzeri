@@ -37,13 +37,13 @@ public class Main {
 		datoteke.inicijalizuj();
 		
 		
-		//LoginMenadzer login = new LoginMenadzer(datoteke);
-		//login.uloguj();
+		LoginMenadzer login = new LoginMenadzer(datoteke);
+		login.uloguj();
 		Sesija s=Sesija.namestiSesiju(datoteke.getKorisnici().trazi("pera1"), datoteke,null);
 		
-		IzvestajViseZanrova iz=new IzvestajViseZanrova(s);
+		//IzvestajViseZanrova iz=new IzvestajViseZanrova(s);
 		
-		iz.setVisible(true);
+		//iz.setVisible(true);
 	}
 
 	private static void initUI() {

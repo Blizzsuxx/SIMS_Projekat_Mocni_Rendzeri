@@ -17,6 +17,7 @@ import model.Album;
 import model.Izvodjac;
 import model.MuzickiSadrzaj;
 import model.MuzickoDelo;
+import model.TipMuzickogSadrzaja;
 import model.Urednik;
 import model.Zanr;
 import view.Slikovit;
@@ -170,21 +171,68 @@ public class MuzickiSadrzajMenadzer {
 		return false;
 	}
 	
+	public List<MuzickiSadrzaj> vratiAktivanMuzickiSadrzaj(){
+		List<MuzickiSadrzaj> temp = new ArrayList<>();
+		for (MuzickiSadrzaj ms: this.muzickiSadrzaj)
+			if (ms.isStatus())
+				temp.add(ms);
+		return temp;
+	}
+	
+	public List<MuzickiSadrzaj> vratiAktivneAlbumeSadrzaja(){
+		List<MuzickiSadrzaj> temp = new ArrayList<>();
+		for (MuzickiSadrzaj ms: this.muzickiSadrzaj)
+			if (ms.isStatus() && ms instanceof Album)
+				temp.add(ms);
+		return temp;
+	}
+	
+	public List<MuzickiSadrzaj> vratiAktivnaMuzickaDjelaSadrzaja(){
+		List<MuzickiSadrzaj> temp = new ArrayList<>();
+		for (MuzickiSadrzaj ms: this.muzickiSadrzaj)
+			if (ms.isStatus() && ms instanceof MuzickoDelo)
+				temp.add(ms);
+		return temp;
+	}
 	
 	public List<Album> vratiAktivneAlbume(){
 		List<Album> temp = new ArrayList<>();
-		for (MuzickiSadrzaj ms: this.muzickiSadrzaj)
-			if (ms instanceof Album && ms.isStatus())
-				temp.add((Album)ms);
+		for (Album ms: this.albumi)
+			if (ms.isStatus())
+				temp.add(ms);
 		return temp;
 	}
 	
 	public List<MuzickoDelo> vratiAktivnaMuzickaDjela(){
 		List<MuzickoDelo> temp = new ArrayList<>();
-		for (MuzickiSadrzaj ms: this.muzickiSadrzaj)
-			if (ms instanceof MuzickoDelo && ms.isStatus())
-				temp.add((MuzickoDelo)ms);
+		for (MuzickoDelo ms: this.muzickaDela)
+			if (ms.isStatus())
+				temp.add(ms);
 		return temp;
+	}
+
+	public void pretrageMuzickogSadrzajaNaOsnovuZanrova(List<MuzickiSadrzaj> muzickiSadrzaj, List<Zanr> zanrovi, TipMuzickogSadrzaja tip) {
+		muzickiSadrzaj.clear();
+		boolean provjera;
+		for (MuzickiSadrzaj ms: this.muzickiSadrzaj) {
+			if (ms.isStatus()) {
+				provjera = false;
+				if (tip == TipMuzickogSadrzaja.ALBUM && ms instanceof Album)
+					provjera = true;
+				else if (tip == TipMuzickogSadrzaja.MUZICKO_DELO && ms instanceof MuzickoDelo)
+					provjera = true;
+				else if (tip == null)
+					provjera = true;
+				if (provjera) {
+					for (Zanr z: ms.getZanrovi()) {
+						if (zanrovi.contains(z)) {
+							muzickiSadrzaj.add(ms);
+							break;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	public TableModelWrapper getTabelaMuzickihDela(Izvodjac izvodjac)  throws Exception {

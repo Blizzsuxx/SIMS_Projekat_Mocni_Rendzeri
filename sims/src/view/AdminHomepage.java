@@ -11,12 +11,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import model.Sesija;
+import model.TipMuzickogSadrzaja;
 import model.Uloga;
 
 public class AdminHomepage extends Homepage {
 	private static final long serialVersionUID = 1L;
 
-	private JMenu korisniciMenu, izvodjaciMenu, muzickiSadrzajMenu, zanroviMenu, recenzijeMenu, glasanjeMenu, izvestajiMenu;;
+	private JMenu korisniciMenu, izvodjaciMenu, muzickiSadrzajMenu, zanroviMenu, recenzijeMenu, glasanjeMenu, izvestajiMenu;
 	private JMenuItem korisniciItem1, korisniciItem2, korisniciItem3, korisniciItem4, korisniciItem5,
 	izvodjaciItem1, izvodjaciItem2, izvodjaciItem3, muzickiSadrzajItem1, muzickiSadrzajItem2,
 	muzickiSadrzajItem3, muzickiSadrzajItem4, muzickiSadrzajItem5,
@@ -219,7 +220,10 @@ public class AdminHomepage extends Homepage {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+				MuzickiSadrzajProzor msp = new MuzickiSadrzajProzor(AdminHomepage.this, "Muzicki Sadrzaj",
+						700, 300, AdminHomepage.this.getSesija().getMuzickiSadrzajMenadzer().vratiAktivanMuzickiSadrzaj(),
+						koloneMuzickogSadrzaja, null);
+				msp.setVisible(true);
 				
 			}
 			
@@ -229,7 +233,10 @@ public class AdminHomepage extends Homepage {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				MuzickiSadrzajProzor msp = new MuzickiSadrzajProzor(AdminHomepage.this, "Albumi",
+						700, 300, AdminHomepage.this.getSesija().getMuzickiSadrzajMenadzer().vratiAktivneAlbumeSadrzaja(),
+						koloneMuzickogSadrzaja, TipMuzickogSadrzaja.ALBUM);
+				msp.setVisible(true);
 				
 			}
 			
@@ -239,7 +246,10 @@ public class AdminHomepage extends Homepage {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				MuzickiSadrzajProzor msp = new MuzickiSadrzajProzor(AdminHomepage.this, "Muzicka Dela",
+						700, 300, AdminHomepage.this.getSesija().getMuzickiSadrzajMenadzer().vratiAktivnaMuzickaDjelaSadrzaja(),
+						koloneMuzickogSadrzaja, TipMuzickogSadrzaja.MUZICKO_DELO);
+				msp.setVisible(true);
 				
 			}
 			

@@ -99,7 +99,8 @@ public class PromenaZanraIzvodjaca extends MojDialog {
 		ZanroviMenadzer zm = sesija.getZanroviMenadzer();
 		for (Zanr z : zm.getSviZanrovi())
 		{
-			cmbZanr.addItem(z.getNazivZanra());
+			if (z.isStatus())
+				cmbZanr.addItem(z.getNazivZanra());
 		}
 		
 		setVisible(true);

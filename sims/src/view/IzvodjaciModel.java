@@ -24,17 +24,19 @@ public class IzvodjaciModel extends ApstraktniModel {
 	@Override
 	public Object getValueAt(int row, int col) {
 		Object temp = null;
-		Izvodjac i = izvodjaci.get(row);
-		if (col == 0) {
-			temp = i.getUmetnickoIme();
-		} else if (col == 1) {
-			temp = i.getZanr().getNazivZanra();
-		} else if (col == 2) {
-			temp = i.getIzdatiAlbumi().size();
-		} else if (col == 3) {
-			temp = i.getMuzickaDela().size();
-		} else if (col == 4) {
-			temp = i.isOdobrenost();
+		if (!izvodjaci.isEmpty()) {
+			Izvodjac i = izvodjaci.get(row);
+			if (col == 0) {
+				temp = i.getUmetnickoIme();
+			} else if (col == 1) {
+				temp = i.getZanr().getNazivZanra();
+			} else if (col == 2) {
+				temp = i.getIzdatiAlbumi().size();
+			} else if (col == 3) {
+				temp = i.getMuzickaDela().size();
+			} else if (col == 4) {
+				temp = i.isOdobrenost();
+			}
 		}
 		return temp;
 	}

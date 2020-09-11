@@ -81,7 +81,7 @@ public class DodajMuzickoDelo extends MojDialog {
 		sl_dtDop = (SpringLayout) dtDop.getLayout();
 		getContentPane().add(dtDop, "cell 1 2,grow");
 		
-		ZanroviMenadzer zm = (sesija.getZanroviMenadzer());
+		ZanroviMenadzer zm = sesija.getZanroviMenadzer();
 		TableModelWrapper tmw = zm.getTabelaZanrova();
 		
 		lblZanrovi = new JLabel("Zanrovi:");
@@ -99,7 +99,8 @@ public class DodajMuzickoDelo extends MojDialog {
 		if (br == 1) {
 			IzvodjacMenadzer im = sesija.getIzvodjacMenadzer();
 			for (Izvodjac i : im.getSvi()) {
-				izvodjaci.addItem(i.getUmetnickoIme());
+				if (i.isOdobrenost())
+					izvodjaci.addItem(i.getUmetnickoIme());
 			}
 			izvodjaci.setSelectedIndex(0);
 		}

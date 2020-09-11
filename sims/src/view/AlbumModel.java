@@ -24,17 +24,19 @@ public class AlbumModel extends ApstraktniModel {
 	@Override
 	public Object getValueAt(int row, int col) {
 		Object temp = null;
-		Album a = albumi.get(row);
-		if (col == 0) {
-			temp = a.getNaslov();
-		} else if (col == 1) {
-			temp = a.getOpis();
-		} else if (col == 2) {
-			temp = a.getDatumIzadavanja();
-		} else if (col == 3) {
-			temp = a.getIzvodjac().getUmetnickoIme();
-		} else if (col == 4) {
-			temp = a.isOdobreno();
+		if (!albumi.isEmpty()) {
+			Album a = albumi.get(row);
+			if (col == 0) {
+				temp = a.getNaslov();
+			} else if (col == 1) {
+				temp = a.getOpis();
+			} else if (col == 2) {
+				temp = a.getDatumIzadavanja();
+			} else if (col == 3) {
+				temp = a.getIzvodjac().getUmetnickoIme();
+			} else if (col == 4) {
+				temp = a.isOdobreno();
+			}
 		}
 		return temp;
 	}

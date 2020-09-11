@@ -62,6 +62,7 @@ public class RegistracijaIzvodjaca extends JDialog {
 	private JRadioButton rbGrupa;
 	private JTextArea txtOpis;
 	private JRadioButton rbMuski;
+	private JRadioButton rbtZenski;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public RegistracijaIzvodjaca(Sesija sesija) throws Exception {
@@ -229,7 +230,7 @@ public class RegistracijaIzvodjaca extends JDialog {
 		rbMuski.setBounds(178, 201, 61, 23);
 		pnlPojedinacniIzvodjac.add(rbMuski);
 		
-		JRadioButton rbtZenski = new JRadioButton("Zenski");
+		rbtZenski = new JRadioButton("Zenski");
 		rbtZenski.setBounds(286, 201, 67, 23);
 		pnlPojedinacniIzvodjac.add(rbtZenski);
 		
@@ -262,7 +263,8 @@ public class RegistracijaIzvodjaca extends JDialog {
 		ZanroviMenadzer zm = sesija.getZanroviMenadzer();
 		for (Zanr z : zm.getSviZanrovi())
 		{
-			cmbZanr.addItem(z.getNazivZanra());
+			if (z.isStatus())
+				cmbZanr.addItem(z.getNazivZanra());
 		}
 		
 		addComponentListener(new ComponentAdapter() {
@@ -290,6 +292,11 @@ public class RegistracijaIzvodjaca extends JDialog {
 					JOptionPane.showMessageDialog(null, msg);
 					return;
 				}
+				
+				if (rbMuski.isSelected())
+					rbtZenski.setSelected(false);
+				else
+					rbMuski.setSelected(false);
 				
 				if (!dtDod.getJFormattedTextField().getText().isEmpty()) {
 					registrujIzvodjaca(txtUmetnickoIme.getText(), new Zanr((String)cmbZanr.getSelectedItem(), true), txtIme.getText(), txtPrezime.getText(), 

@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 
 import org.jdesktop.swingx.JXTable;
 
@@ -86,7 +87,14 @@ public class AlbumiProzor extends MojDialog {
 			dozvolaBtn.setVisible(false);
 		}
 		
-		table = new JXTable(new AlbumModel(imeKolona, albumi, indikator));
+		if (albumi.isEmpty()) {
+			DefaultTableModel model = new DefaultTableModel(0, imeKolona.length) ;
+			model.setColumnIdentifiers(imeKolona);
+			table = new JXTable(model);
+		}
+		else	
+			table = new JXTable(new AlbumModel(imeKolona, albumi, indikator));
+		
 		table.getTableHeader().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getTableHeader().setReorderingAllowed(false);

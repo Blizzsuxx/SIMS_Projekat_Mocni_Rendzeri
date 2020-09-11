@@ -327,15 +327,15 @@ public class RegistracijaIzvodjaca extends JDialog {
 					return;
 				}
 					
-				if (!dtDof.getJFormattedTextField().getText().isEmpty()) {
+				if (!dtDor.getJFormattedTextField().getText().isEmpty()) {
 					registrujGrupu(txtUmetnickoIme.getText(), new Zanr((String)cmbZanr.getSelectedItem(),true), 
 							((Integer)spnBrojClanova.getValue()), dtDof.getJFormattedTextField().getText(), 
 							dtDor.getJFormattedTextField().getText());
 				}
 				else {
 					registrujGrupu(txtUmetnickoIme.getText(), new Zanr((String)cmbZanr.getSelectedItem(),true), 
-							((Integer)spnBrojClanova.getValue()), null, 
-							dtDor.getJFormattedTextField().getText());
+							((Integer)spnBrojClanova.getValue()), dtDof.getJFormattedTextField().getText(), 
+							null);
 				}
 			} 
 			catch (ParseException e1) {
@@ -398,8 +398,8 @@ public class RegistracijaIzvodjaca extends JDialog {
 		{
 			return "Prezime je obavezno polje.";
 		}
-		if (dtDob.getJFormattedTextField().getText() == null) {
-			return "Morate odabrati datum.";
+		if (dtDob.getJFormattedTextField().getText().isEmpty()) {
+			return "Morate odabrati datum rodjenja.";
 		}
 		return "";
 	}
@@ -409,8 +409,8 @@ public class RegistracijaIzvodjaca extends JDialog {
 		{
 			return "Broj clanova mora biti veci od jedan.";
 		}
-		if (dtDof.getJFormattedTextField().getText() == null) {
-			return "Morate odabrati datum.";
+		if (dtDof.getJFormattedTextField().getText().isEmpty()) {
+			return "Morate odabrati datum formiranja.";
 		}
 		return "";
 	}

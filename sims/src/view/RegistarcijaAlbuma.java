@@ -245,7 +245,7 @@ public class RegistarcijaAlbuma extends MojDialog {
 			return "Morate odabrati izvodjaca.";
 		}
 		if (dtDor.getJFormattedTextField().getText().isEmpty()) {
-			return "Morate odabrati datum.";
+			return "Morate odabrati datum registracije.";
 		}
 		if (pesme.getSelectionModel().isSelectionEmpty()) {
 			return "Morate odabrati pesmu.";

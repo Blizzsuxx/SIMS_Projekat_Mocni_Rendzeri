@@ -16,11 +16,11 @@ import model.Uloga;
 public class AdminHomepage extends Homepage {
 	private static final long serialVersionUID = 1L;
 
-	private JMenu korisniciMenu, izvodjaciMenu, muzickiSadrzajMenu, zanroviMenu, recenzijeMenu, glasanjeMenu;
+	private JMenu korisniciMenu, izvodjaciMenu, muzickiSadrzajMenu, zanroviMenu, recenzijeMenu, glasanjeMenu, izvestajiMenu;;
 	private JMenuItem korisniciItem1, korisniciItem2, korisniciItem3, korisniciItem4, korisniciItem5,
 	izvodjaciItem1, izvodjaciItem2, izvodjaciItem3, muzickiSadrzajItem1, muzickiSadrzajItem2,
 	muzickiSadrzajItem3, muzickiSadrzajItem4, muzickiSadrzajItem5,
-	zanroviItem1, recenzijeItem1, recenzijeItem2, recenzijeItem3, glasanjeItem1;
+	zanroviItem1, recenzijeItem1, recenzijeItem2, recenzijeItem3, glasanjeItem1, izvestajiItem1;
 	
 	public AdminHomepage(Sesija sesija) {
 		super(sesija);
@@ -97,6 +97,11 @@ public class AdminHomepage extends Homepage {
 		glasanjeItem1 = new JMenuItem("Pokreni/Zaustavi");
 		glasanjeMenu.add(glasanjeItem1);
 		menubar.add(glasanjeMenu);
+		
+		izvestajiMenu = new JMenu("Izvestaji");
+		izvestajiItem1 = new JMenuItem("Izvestaj izvodjaca");
+		izvestajiMenu.add(izvestajiItem1);
+		menubar.add(izvestajiMenu);
 		
 	}
 	
@@ -325,6 +330,21 @@ public class AdminHomepage extends Homepage {
 				catch (Exception e1) {
 					e1.printStackTrace();
 				}
+			}
+			
+		});
+		
+		izvestajiItem1.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					try {
+						new IzvestajIzvodjaca(AdminHomepage.this.getSesija(), "Izvestaj izvodjaca", 615, 455);
+					} 
+					catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				
 			}
 			
 		});

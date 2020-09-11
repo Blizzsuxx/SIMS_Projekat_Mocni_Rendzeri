@@ -197,6 +197,23 @@ public class Sesija {
 		   }
 	   }
    }
+   
+   public void setRecenzijeZaMuzickoDelo() {
+	   for (MuzickoDelo md : muzickiSadrzajMenadzer.getMuzickaDela()) {
+		   if (md.isStatus()) {
+			   for (Recenzija r : utisakMenadzer.getRecenzije()) {
+				   if (r.getDelo().getNaslov().equals(md.getNaslov())) {
+					   md.getUtisci().add(r);
+				   }
+			   }
+			   for (Komentar k : utisakMenadzer.getKomentari()) {
+				   if (k.getDelo().getNaslov().equals(md.getNaslov())) {
+					   md.getUtisci().add(k);
+				   }
+			   }
+		   }
+	   }
+   }
 
    public static Sesija namestiSesiju(Korisnik korisnik, CitacDatoteka datoteke, LoginMenadzer menadzer) {
       // TODO Auto-generated method stub
@@ -230,6 +247,7 @@ public class Sesija {
       this.setGlasanjeMenadzer(glasanjeMenadzer);
       setMuzickaDelaIzvodjaci();
       setIzdateAlbume();
+      setRecenzijeZaMuzickoDelo();
 	this.loginMenadzer = loginMenadzer;
 }
 

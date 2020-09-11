@@ -255,7 +255,7 @@ public class DodavanjeZakRecIRecZaIzemnu extends MojDialog {
 			return "Morate odabrati recenziju.";			
 		}
 		if (dtDor.getJFormattedTextField().getText().isEmpty()) {
-			return "Morate odabrati datum zakazivanje";
+			return "Morate odabrati datum zakazivanja";
 		}
 		if (dtDod.getJFormattedTextField().getText().isEmpty()) {
 			return "Morate odabrati rok";

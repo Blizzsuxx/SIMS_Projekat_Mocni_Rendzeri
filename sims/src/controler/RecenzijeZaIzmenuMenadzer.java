@@ -77,14 +77,14 @@ public class RecenzijeZaIzmenuMenadzer {
 	}
 	
 	public TableModelWrapper getTabelaRecenzijaZaIzmenu()  throws Exception { 
-		String[] columns = { "Naziv" ,"Poruka", "Menjanje"};
-		Class<?>[] columnTypes = { String.class, String.class, Boolean.class};
-		boolean[] editableColumns = { false, false, false};
-		int[] columnWidths = { 120, 120, 100};
+		String[] columns = { "Naziv" ,"Poruka", "Menjanje", "Brisanje"};
+		Class<?>[] columnTypes = { String.class, String.class, Boolean.class, Boolean.class};
+		boolean[] editableColumns = { false, false, false, false};
+		int[] columnWidths = { 120, 120, 50, 50};
 		ArrayList<Object[]> data = new ArrayList<Object[]>();
 		for (RecezijaZaIzmenu rzi : sveizmene) {
 			if (!rzi.isUradeno()) {
-				data.add(new Object[] {rzi.getRecenzija().getNaslov(), rzi.poruka, rzi.isMenjanje()});
+				data.add(new Object[] {rzi.getRecenzija().getNaslov(), rzi.poruka, rzi.isMenjanje(), rzi.isBrisanje()});
 			}
 		}
 		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);

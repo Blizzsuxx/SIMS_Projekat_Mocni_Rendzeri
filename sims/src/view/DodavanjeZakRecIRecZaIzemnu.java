@@ -166,11 +166,21 @@ public class DodavanjeZakRecIRecZaIzemnu extends MojDialog {
 		pnlRecZaIzmenu.setLayout(null);
 		
 		rbIzmena = new JRadioButton("Izmena");
+		rbIzmena.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rbBrisanje.setSelected(false);
+			}
+		});
 		rbIzmena.setSelected(true);
 		rbIzmena.setBounds(6, 7, 71, 23);
 		pnlRecZaIzmenu.add(rbIzmena);
 		
 		rbBrisanje = new JRadioButton("Brisanje");
+		rbBrisanje.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rbIzmena.setSelected(false);
+			}
+		});
 		rbBrisanje.setBounds(134, 7, 71, 23);
 		pnlRecZaIzmenu.add(rbBrisanje);
 		

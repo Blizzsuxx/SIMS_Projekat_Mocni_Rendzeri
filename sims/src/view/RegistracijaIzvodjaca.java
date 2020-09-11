@@ -98,8 +98,7 @@ public class RegistracijaIzvodjaca extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				pnlPojedinacniIzvodjac.setVisible(true);
 				pnlGrupa.setVisible(false);
-				rbGrupa.setSelected(false);
-				
+				rbGrupa.setSelected(false);	
 			}
 		});
 		rbPojedinacniIzvodjac.setBounds(20, 48, 151, 23);
@@ -226,11 +225,21 @@ public class RegistracijaIzvodjaca extends JDialog {
 		pnlPojedinacniIzvodjac.add(lblPol);
 		
 		rbMuski = new JRadioButton("Muski");
+		rbMuski.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rbtZenski.setSelected(false);
+			}
+		});
 		rbMuski.setSelected(true);
 		rbMuski.setBounds(178, 201, 61, 23);
 		pnlPojedinacniIzvodjac.add(rbMuski);
 		
 		rbtZenski = new JRadioButton("Zenski");
+		rbtZenski.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rbMuski.setSelected(false);
+			}
+		});
 		rbtZenski.setBounds(286, 201, 67, 23);
 		pnlPojedinacniIzvodjac.add(rbtZenski);
 		
@@ -292,12 +301,6 @@ public class RegistracijaIzvodjaca extends JDialog {
 					JOptionPane.showMessageDialog(null, msg);
 					return;
 				}
-				
-				if (rbMuski.isSelected())
-					rbtZenski.setSelected(false);
-				else
-					rbMuski.setSelected(false);
-				
 				if (!dtDod.getJFormattedTextField().getText().isEmpty()) {
 					registrujIzvodjaca(txtUmetnickoIme.getText(), new Zanr((String)cmbZanr.getSelectedItem(), true), txtIme.getText(), txtPrezime.getText(), 
 							dtDob.getJFormattedTextField().getText(), 

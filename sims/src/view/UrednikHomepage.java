@@ -1,36 +1,27 @@
 package view;
 
-import java.awt.Color;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import model.Izvodjac;
+import controler.Constants;
 import model.Sesija;
 import model.Uloga;
 
 public class UrednikHomepage extends Homepage {
 	 private static final long serialVersionUID = 1L;
 
-	 private JMenu listaMenu, korisniciMenu;
-	 private JMenuItem listaItem1, listaItem2, listaItem3, listaItem4,
+	 private JMenu recenzijeMenu, korisniciMenu, listeMenu, glasanjeMenu, muzickaSadrzajMenu;
+	 private JMenuItem recenzijeItem2, recenzijeItem3,
 	 korisniciItem1, korisniciItem2, korisniciItem3, korisniciItem4, korisniciItem5, korisniciItem6,
-	 korisniciItem7;
-	 
-	 private String[] koloneSvihKorisnika = {"Korisnicko Ime", "Ime", "Prezime", "Email", "Pol", "Datum Rodjenja"};
-	 private String[] koloneSvihObicnihKorisnika = {"Korisnicko Ime", "Ime", "Prezime", "Email", "Pol", "Datum Rodjenja",
-			 "Broj Korisnika", "Broj Izvodjaca"};
-	 private String[] koloneSvihUrednika = {"Korisnicko Ime", "Ime", "Prezime", "Email", "Pol", "Datum Rodjenja",
-			 "Broj Recenzija"};
-	 private String[] koloneSvihAdmina = {"Korisnicko Ime", "Ime", "Prezime", "Email", "Pol", "Datum Rodjenja",
-			 "Broj Zakazanih", "Broj Za Izmjenu"};
+	 korisniciItem7, listeItem1, listeItem2, glasanjeItem1, muzickiSadrzajItem1, muzickiSadrzajItem2;
 	 
 	public UrednikHomepage(Sesija sesija) {
 	    super(sesija);
@@ -53,108 +44,83 @@ public class UrednikHomepage extends Homepage {
 	}
 	    
 	private void initGUI() {
-		listaMenu = new JMenu("Liste");
-    	listaMenu.setBackground(Color.BLACK);
-    	listaMenu.setForeground(Color.WHITE);
-		    	
-		listaItem1 = new JMenuItem("Top Liste");
-		listaItem1.setBackground(Color.BLACK);
-		listaItem1.setForeground(Color.WHITE);
-		listaMenu.add(listaItem1);
-		listaItem2 = new JMenuItem("Recenzirani Sadrzaj");
-		listaItem2.setBackground(Color.BLACK);
-		listaItem2.setForeground(Color.WHITE);
-		listaMenu.add(listaItem2);
-		listaMenu.addSeparator();
-		listaItem3 = new JMenuItem("Istorija Recenzija");
-		listaItem3.setBackground(Color.BLACK);
-		listaItem3.setForeground(Color.WHITE);
-		listaMenu.add(listaItem3);
-		listaItem4 = new JMenuItem("Istorija Zakazanih Recenzija");
-		listaItem4.setBackground(Color.BLACK);
-		listaItem4.setForeground(Color.WHITE);
-		listaMenu.add(listaItem4);
-		menubar.add(listaMenu);
+		recenzijeMenu = new JMenu("Recenzije");  	
+		recenzijeItem2= new JMenuItem("Istorija Recenzija");
+		recenzijeMenu.add(recenzijeItem2);
+		recenzijeItem3 = new JMenuItem("Zakazane recenzije");
+		recenzijeMenu.add(recenzijeItem3);
+		menubar.add(recenzijeMenu);
 		    	
 		korisniciMenu = new JMenu("Korisnici");
-		korisniciMenu.setBackground(Color.BLACK);
-		korisniciMenu.setForeground(Color.WHITE);
-		    	
 		korisniciItem1 = new JMenuItem("Korisnici");
-		korisniciItem1.setBackground(Color.BLACK);
-		korisniciItem1.setForeground(Color.WHITE);
 		korisniciMenu.add(korisniciItem1);
 		korisniciItem2 = new JMenuItem("Korisnici Aplikacije");
-		korisniciItem2.setBackground(Color.BLACK);
-		korisniciItem2.setForeground(Color.WHITE);
 		korisniciMenu.add(korisniciItem2);
 		korisniciItem3 = new JMenuItem("Urednici");
-		korisniciItem3.setBackground(Color.BLACK);
-		korisniciItem3.setForeground(Color.WHITE);
 		korisniciMenu.add(korisniciItem3);
 		korisniciItem4 = new JMenuItem("Admini");
-		korisniciItem4.setBackground(Color.BLACK);
-		korisniciItem4.setForeground(Color.WHITE);
 		korisniciMenu.add(korisniciItem4);
 		korisniciMenu.addSeparator();
-		korisniciItem5 = new JMenuItem("Zahtjevi Registracije");
-		korisniciItem5.setBackground(Color.BLACK);
-		korisniciItem5.setForeground(Color.WHITE);
+		korisniciItem5 = new JMenuItem("Registracija Izvodjaca");
 		korisniciMenu.add(korisniciItem5);
 		korisniciMenu.addSeparator();
 		korisniciItem6 = new JMenuItem("Neprihvaceni Izvodjaci");
-		korisniciItem6.setBackground(Color.BLACK);
-		korisniciItem6.setForeground(Color.WHITE);
 		korisniciMenu.add(korisniciItem6);
 		korisniciItem7 = new JMenuItem("Prihvaceni Izvodjaci");
-		korisniciItem7.setBackground(Color.BLACK);
-		korisniciItem7.setForeground(Color.WHITE);
 		korisniciMenu.add(korisniciItem7);
 		menubar.add(korisniciMenu);
+		
+		listeMenu = new JMenu("Liste");
+		listeItem1 = new JMenuItem("Kreiranje Top Liste");
+		listeMenu.add(listeItem1);
+		listeItem2 = new JMenuItem("Pregled Top Listi");
+		listeMenu.add(listeItem2);
+		menubar.add(listeMenu);
+		
+		glasanjeMenu = new JMenu("Glasanje");
+		glasanjeItem1 = new JMenuItem("Glasaj");
+		glasanjeMenu.add(glasanjeItem1);
+		menubar.add(glasanjeMenu);
+		
+		muzickaSadrzajMenu = new JMenu("Muzicki sadrzaj");
+		muzickiSadrzajItem1 = new JMenuItem("Dodaj muzicko delo");
+		muzickaSadrzajMenu.add(muzickiSadrzajItem1);
+		muzickiSadrzajItem2 = new JMenuItem("Registarcija albuma");
+		muzickaSadrzajMenu.add(muzickiSadrzajItem2);
+		menubar.add(muzickaSadrzajMenu);
+		
 	}
 	    
 	private void initAction() {
-		listaItem1.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-					
-			}
-
-				
-	    		
-	    });
 	    	
-	    listaItem2.addActionListener(new ActionListener() {
+		recenzijeItem2.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					
+					MojDialog recenzije = new MojDialog(UrednikHomepage.this, "Izvrsene Recenzije");
+					//Search-u se prosledjuju dela za koje je neko napisao recenziju
+					//Ovde koriscena hardkodovana konstanta Dela
+					SearchResults mojeRecenzije = new SearchResults(Constants.DELA);
+					recenzije.setContentPane(mojeRecenzije);
+					recenzije.setVisible(true);
 			}
 	    		
 	    });
 	    
-	    listaItem3.addActionListener(new ActionListener() {
+		recenzijeItem3.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
+				MojDialog recenzije = new MojDialog(UrednikHomepage.this, "Moje Recenzije");
+				//Search-u se prosledjujju dela za koje je trenutni korisnik urednik napisao recenziju
+				//Koriscena hardkodovana konstanta Dela2
+				SearchResults mojeRecenzije = new SearchResults(Constants.DELA2);
+				recenzije.setContentPane(mojeRecenzije);
+				recenzije.setVisible(true);
 			}
 	    	
 	    });
 	    
-	    listaItem4.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-	    	
-	    });
 	    
 	    korisniciItem1.addActionListener(new ActionListener() {
 
@@ -236,7 +202,8 @@ public class UrednikHomepage extends Homepage {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				IzvodjaciProzor ip = new IzvodjaciProzor(UrednikHomepage.this, "Neprihvaceni Izvodjaci",
-						700, 300, new ArrayList<Izvodjac>());
+						700, 300,
+						UrednikHomepage.this.getSesija().getIzvodjacMenadzer().vratiIzvodjaceNaOsnovuOdobrenosti(false));
 				ip.setVisible(true);
 				
 			}
@@ -248,13 +215,77 @@ public class UrednikHomepage extends Homepage {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				IzvodjaciProzor ip = new IzvodjaciProzor(UrednikHomepage.this, "Prihvaceni Izvodjaci",
-						700, 300, new ArrayList<Izvodjac>());
+						700, 300, 
+						UrednikHomepage.this.getSesija().getIzvodjacMenadzer().vratiIzvodjaceNaOsnovuOdobrenosti(true));
 				ip.setVisible(true);
 				
 				
 			}
 	    	
 	    });
+	    
+	    listeItem1.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+	    	
+	    });
+	    
+	    listeItem2.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+	    	
+	    });
+	    
+	    glasanjeItem1.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new GlasanjeProzor(UrednikHomepage.this.getSesija(), "Glasanje", 620, 413, Uloga.UREDNIK);
+				} 
+				catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+	    	
+	    });
+	    
+	    muzickiSadrzajItem1.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new DodajMuzickoDelo(UrednikHomepage.this.getSesija(), "Dodavanje muzickog dela izvodjacu", 422, 422, null, 1);
+				} 
+				catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+			
+		});
+	    
+	    muzickiSadrzajItem2.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new RegistarcijaAlbuma(UrednikHomepage.this.getSesija(), "Registarcija albuma", 700, 550);
+				} 
+				catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+			
+		});
 	}
 
 }

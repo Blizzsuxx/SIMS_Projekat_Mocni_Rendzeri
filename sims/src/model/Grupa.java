@@ -52,21 +52,21 @@ public class Grupa extends Izvodjac {
 		this.brojClanova = brojClanova;
 		this.datumOsnivanja = datumOsnivanja;
 		this.datumRaspada = datumRaspada;
-		this.clanovi=new ArrayList();
+		this.clanovi=new ArrayList<>();
 	}
 	public Grupa(String umetnickoIme, Zanr zanr, boolean status, KorisnikAplikacije[] prati) {
 		super(umetnickoIme, zanr, status, prati);
-		this.clanovi=new ArrayList();
+		this.clanovi=new ArrayList<>();
 	}
 	
 	
-	public Grupa(String umetnickoIme, Zanr zanr, boolean status,  int brojClanova, Date datumOsnivanja,
+	public Grupa(boolean odobrenost, String umetnickoIme, Zanr zanr, boolean status,  int brojClanova, Date datumOsnivanja,
 			Date datumRaspada) {
-		super(umetnickoIme, zanr, status);
+		super(umetnickoIme, zanr, status, odobrenost);
 		this.brojClanova = brojClanova;
 		this.datumOsnivanja = datumOsnivanja;
 		this.datumRaspada = datumRaspada;
-		this.clanovi=new ArrayList();
+		this.clanovi=new ArrayList<>();
 	}
 	@Override
 	protected String[] getImenaDela() {
@@ -76,7 +76,7 @@ public class Grupa extends Izvodjac {
 		if(this.getMuzickaDela().size()==0) {String[] imenaa= {""};return imenaa;}
 		int j=0;
 		for(MuzickoDelo m:this.getMuzickaDela()) {
-			imena[j]=m.getNaziv();
+			imena[j]=m.getNaslov();
 			j++;
 		}
 		return imena;
@@ -84,11 +84,11 @@ public class Grupa extends Izvodjac {
 	@Override
 	public String toFileString() {
 		String ad="";
+		ad+=this.isOdobrenost()+";";
 		ad+=this.getUmetnickoIme()+";";
 		ad+=this.getZanr().getNazivZanra()+";";
 		ad+=this.isStatus()+";";
 		ad+=this.getBrojClanova()+";";
-		String pattern = "dd.MM.yyyy.";
 		DateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;
 		ad+=df.format(this.getDatumOsnivanja())+";";//
 		if(this.getDatumRaspada()==null) {
@@ -99,19 +99,15 @@ public class Grupa extends Izvodjac {
 		
 		return ad;
 	}
-	public static boolean string2Bool(String value) {
-		return (value.equals("1") ? true : false);
-	}
-	
-	public static String bool2String(boolean value) {
-		return (value ? "1" : "0");
-	}
 	
 	public static String Grupa2String(Grupa g) {
 		String pattern = "dd.MM.yyyy.";
+		String datumRaspada = "/";
 		DateFormat df = new SimpleDateFormat(pattern);
-		return g.getUmetnickoIme() + ";" + g.getZanr().getNazivZanra() + ";" + bool2String(g.isStatus()) + ";" + g.getBrojClanova() + ";" +
-				 df.format(g.getDatumOsnivanja()) + ";" + df.format(g.getDatumRaspada()) + System.lineSeparator();
+		if (g.getDatumRaspada() != null)
+			datumRaspada = df.format(g.getDatumRaspada());
+		return g.isOdobrenost()+";"+g.getUmetnickoIme() + ";" + g.getZanr().getNazivZanra() + ";" + g.isStatus() + ";" + g.getBrojClanova() + ";" +
+				 df.format(g.getDatumOsnivanja()) + ";" + datumRaspada + System.lineSeparator();
 	}
 	
 	@Override

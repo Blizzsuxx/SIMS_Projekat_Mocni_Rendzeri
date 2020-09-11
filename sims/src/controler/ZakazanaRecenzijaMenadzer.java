@@ -3,16 +3,16 @@ package controler;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import model.MuzickoDelo;
 import model.Recenzija;
+import model.Urednik;
 import model.ZakazanaRecenzija;
-import model.Zanr;
 import view.TableModelWrapper;
 
 public class ZakazanaRecenzijaMenadzer {
@@ -24,7 +24,7 @@ public class ZakazanaRecenzijaMenadzer {
 		this.sve = new ArrayList<ZakazanaRecenzija>();
 	}
 
-	public ZakazanaRecenzijaMenadzer(KorisniciMenadzer korisnici,ArrayList<Recenzija> recenzije, List<String[]> data) {
+	public ZakazanaRecenzijaMenadzer(KorisniciMenadzer korisnici,ArrayList<Recenzija> recenzije, List<String[]> data) throws ParseException {
 		this();
 		ucitajZakazane(korisnici, recenzije, data);
 
@@ -40,19 +40,16 @@ public class ZakazanaRecenzijaMenadzer {
 	}
 
 
-	private void ucitajZakazane(KorisniciMenadzer korisnici,ArrayList<Recenzija> recenzije, List<String[]> data) {
+	private void ucitajZakazane(KorisniciMenadzer korisnici,ArrayList<Recenzija> recenzije, List<String[]> data) throws ParseException {
 		
 					for(String[] linije : data){
-					DateTimeFormatter df=DateTimeFormatter.ofPattern("dd.MM.yyyy.");
-					LocalDate dan=LocalDate.parse(linije[1].trim(), df);
-					Date d=new Date(dan.getYear(), dan.getMonthValue(), dan.getDayOfMonth());
-					
-					LocalDate rok=LocalDate.parse(linije[2].trim(), df);
-					Date rok2=new Date(rok.getYear(), rok.getMonthValue(), rok.getDayOfMonth());
+					Date d = Constants.NATASIN_FORMAT_ZA_DATUM.parse(linije[2].trim());
+					Date rok2=Constants.NATASIN_FORMAT_ZA_DATUM.parse(linije[3].trim());
 					Recenzija r=pronadiRecenziju(linije[4].trim(), recenzije);
 					if(r!=null) {
-					ZakazanaRecenzija a = new ZakazanaRecenzija(d,linije[0].trim(), false,rok2, r, r.getUrednik() );
-					if (linije[5].trim().equals("true")) {
+					ZakazanaRecenzija a = new ZakazanaRecenzija(d,linije[0].trim(), Boolean.parseBoolean(linije[1].trim()),
+							rok2, r, r.getUrednik() );
+					if (linije[1].trim().equals("true")) {
 					a.setUradeno(true);
 					}
 					sve.add( a);}
@@ -92,10 +89,10 @@ public class ZakazanaRecenzijaMenadzer {
 	}
 	
 	public TableModelWrapper getTabelaZavrsenihRecenzija(boolean zavrsene)  throws Exception { 
-		String[] columns = { "Naziv" ,"Opis", "Datum zakazivanja", "Rok"};
-		Class<?>[] columnTypes = { String.class, String.class, Date.class, Date.class};
-		boolean[] editableColumns = { false, false, false, false};
-		int[] columnWidths = { 120, 120, 100, 80};
+		String[] columns = { "Naziv" ,"Opis", "Rok"};
+		Class<?>[] columnTypes = { String.class, String.class, Date.class};
+		boolean[] editableColumns = { false, false, false};
+		int[] columnWidths = { 120, 120, 100};
 		ArrayList<Object[]> data = new ArrayList<Object[]>();
 		for (ZakazanaRecenzija zr : sve) {
 			if (zavrsene && zr.isUradeno())
@@ -106,5 +103,18 @@ public class ZakazanaRecenzijaMenadzer {
 		}
 		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
 	}
-
+	
+	
+	public TableModelWrapper getTabelaZakazanihRecenzijaZaUrednika(Urednik urednik)  throws Exception { 
+		String[] columns = { "Naziv" ,"Opis", "Datum zakazivanja", "Rok"};
+		Class<?>[] columnTypes = { String.class, String.class, Date.class, Date.class};
+		boolean[] editableColumns = { false, false, false, false};
+		int[] columnWidths = { 120, 120, 100, 80};
+		ArrayList<Object[]> data = new ArrayList<Object[]>();
+		for (ZakazanaRecenzija zr : sve) {
+			if (!zr.isUradeno() && zr.getUrednik().getNalog().getKorisnickoIme().equals(urednik.getNalog().getKorisnickoIme()))
+				data.add(new Object[] {zr.getRecenzija().getNaslov(), zr.getOpis(), zr.getRok()});
+		}
+		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
+	}
 }

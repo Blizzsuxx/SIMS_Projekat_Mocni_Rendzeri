@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.ParseException;
 
 import javax.swing.JOptionPane;
 
@@ -57,6 +58,16 @@ public class LoginMenadzer {
 			pokusajUlogovanje(prozor.getKorisnickoIme().getText(), String.valueOf(prozor.getSifra().getPassword()));
 		}
 	});
+	   
+	   
+	   prozor.getKorisnickoIme().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				pokusajUlogovanje(prozor.getKorisnickoIme().getText(), String.valueOf(prozor.getSifra().getPassword()));
+			}
+		});
 		   
 		   prozor.getGuestButton().addActionListener(new ActionListener() {
 			
@@ -80,8 +91,11 @@ public class LoginMenadzer {
 		   prozor.addWindowListener(new WindowAdapter() {
 			   @Override
 			public void windowClosed(WindowEvent e) {
-				// TODO Auto-generated method stub
-				datoteke.sacuvaj();
+				try {
+					datoteke.sacuvaj();
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
    }
@@ -107,7 +121,9 @@ public class LoginMenadzer {
       // TODO: implement
 	   KorisnikAplikacije novKorisnik = new KorisnikAplikacije();
 	   DijalogKorisnickihInformacija dijalog = new DijalogKorisnickihInformacija(prozor, novKorisnik) {
-		   @Override
+		private static final long serialVersionUID = 1L;
+
+		@Override
 		   protected void buttonTriggered() {
 			   if(novKorisnik.getNalog() != null && !korisnici.provjeriKorisnickoIme(novKorisnik.getNalog().getKorisnickoIme())) {
 					korisnici.dodaj(novKorisnik);
@@ -139,6 +155,10 @@ public class LoginMenadzer {
 	   korisnik = korisnici.trazi(korisnickoIme);
 	   if(korisnik == null || !korisnik.getNalog().potvrdiSifru(sifra)){
 		   JOptionPane.showMessageDialog(prozor, "Pogresni username ili sifra");
+		   return;
+	   }
+	   if (!korisnik.isStatus()) {
+		   JOptionPane.showMessageDialog(prozor, "Ovaj nalog je blokiran!");
 		   return;
 	   }
 	   prozor.setVisible(false);

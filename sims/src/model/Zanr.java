@@ -4,7 +4,6 @@
  * Purpose: Defines the Class Zanr
  ***********************************************************************/
 package model;
-import java.util.*;
 
 /** @pdOid e84ce192-a75f-4715-aec5-18c9b0cb0079 */
 public class Zanr {

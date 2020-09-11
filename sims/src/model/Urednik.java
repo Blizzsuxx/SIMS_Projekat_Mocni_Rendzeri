@@ -6,9 +6,9 @@
 package model;
 import java.awt.image.BufferedImage;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import controler.Constants;
 
@@ -21,7 +21,8 @@ public class Urednik extends FrontEndKorisnik {
    /** @pdRoleInfo migr=no name=RecezijaZaIzmenu assc=association41 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
    public java.util.Collection<RecezijaZaIzmenu> recezijaZaIzmenu;
    
-   private String albumZaRegistracju;
+   
+   private List<Zanr> zanrovi;
    
    public Urednik(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, String sifra,
 			String korisnickoIme, Date datum, boolean status) {
@@ -29,20 +30,15 @@ public class Urednik extends FrontEndKorisnik {
 		   this.istorijaRecenzija = new ArrayList<>();
 		   this.zakazaneRecenzije = new ArrayList<>();
 		   this.recezijaZaIzmenu = new ArrayList<>();
-		// TODO Auto-generated constructor stub
+		   this.zanrovi = new ArrayList<>();
 	}
 
-
-
-
-public Urednik() {
-	 this.istorijaRecenzija = new ArrayList<>();
+   public Urednik() {
+	   this.istorijaRecenzija = new ArrayList<>();
 	   this.zakazaneRecenzije = new ArrayList<>();
 	   this.recezijaZaIzmenu = new ArrayList<>();
-}
-
-
-
+	   this.zanrovi = new ArrayList<>();
+   }
 
 /** @pdOid f9c63904-e42a-4710-8822-3e3f1e173c5e */
    public void pokreniGlasanje() {
@@ -253,24 +249,21 @@ public Urednik() {
  
    
    public static String Urednik2String(Urednik urednik) {
-	   String pattern = "dd.MM.yyyy.";
 	   DateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;
 	   return urednik.getIme() + ";" + urednik.getPrezime() + ";" + urednik.geteMail() + ";" + urednik.getPol().name()
 				+ ";" + df.format(urednik.getDatumRodjenja()) + ";" + urednik.getNalog().getSifra() + ";" + urednik.getNalog().getKorisnickoIme() +
 				";" + df.format(urednik.getNalog().getDatumKreiranja()) + ";" + urednik.getNalog().isStatus() + System.lineSeparator();
 	}
    
-   	public static String ZahtevUrednika2String(Urednik urednik) {
-	   return urednik.getNalog().getKorisnickoIme() + ";" + 
-			   urednik.getAlbumZaRegistracju() + System.lineSeparator();
+   	public List<Zanr> getZanrovi() {
+		return zanrovi;
 	}
 
-   	public String getAlbumZaRegistracju() {
-		return albumZaRegistracju;
-	}
 
-   	public void setAlbumZaRegistracju(String albumZaRegistracju) {
-		this.albumZaRegistracju = albumZaRegistracju;
+
+
+	public void setZanrovi(List<Zanr> zanrovi) {
+		this.zanrovi = zanrovi;
 	}
 
 

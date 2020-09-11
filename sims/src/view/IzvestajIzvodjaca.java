@@ -1,104 +1,187 @@
 package view;
 
+
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneLayout;
 
+import org.jdesktop.swingx.JXTable;
+
+import controler.IzvodjacMenadzer;
+import controler.MuzickiSadrzajMenadzer;
 import model.IzvestajJednogIzvodjaca;
 import model.Izvodjac;
 import model.Sesija;
-import net.miginfocom.swing.MigLayout;
 
-public class IzvestajIzvodjaca extends JFrame {
-	/**
-	 *
-	 */
+public class IzvestajIzvodjaca extends MojDialog {
 	private static final long serialVersionUID = 1L;
 	private Sesija sesija;
-	private Izvodjac izvodjac;
-	private JButton btnBack;
-	private JTable table;
-	private JTextField tfImeUrednika, tfUkupnoDela, tfbrojRec, tfBrojkom, tfOcenaUr, tfOcenaKor;
+	private JXTable table;
 	private IzvestajJednogIzvodjaca jedan;
+	private String title;
+	private JTextField txtUmetnickoIme;
+	private JTextField txtBrojDela;
+	private JTextField txtBrojRecenzija;
+	private JTextField txtBrojKomentara;
+	private JTextField txtOcenaKorisnika;
+	private JTextField txtOcenaUrednika;
+	private JTable muzickaDela;
+	@SuppressWarnings("rawtypes")
+	private JComboBox cmbIzvodjac;
+	private static DecimalFormat df = new DecimalFormat("0.00");
 
-	public IzvestajIzvodjaca(Sesija s, Izvodjac i) {
-		this.sesija=s;
-		this.izvodjac=i;
-		this.jedan=s.namestiJedanizvestaj(i);
-		setSize(400, 400);
-		setResizable(false);
-		initGui();
-		initActions();
-	}
-
-	/**
-	 * @return the sesija
-	 */
-	public Sesija getSesija() {
-		return sesija;
-	}
-
-	/**
-	 * @param sesija the sesija to set
-	 */
-	public void setSesija(Sesija sesija) {
+	@SuppressWarnings("rawtypes")
+	public IzvestajIzvodjaca(Sesija sesija, String title, int dim1, int dim2) throws Exception {
+		super(title, dim1, dim2);
 		this.sesija = sesija;
-	}
-
-	private void initGui() {
-		MigLayout mig =  new MigLayout("wrap 2", "[]10[]", "[]10[]10[]10[]10[]10[]10[]");
-		setLayout(mig);
+		this.title = title;
 		
-		add(new JLabel("Umetnicko ime: "));
-		tfImeUrednika = new JTextField(10);
-		add(tfImeUrednika);
-		tfImeUrednika.setText(izvodjac.getUmetnickoIme());
+		cmbIzvodjac = new JComboBox();
+		cmbIzvodjac.setBounds(417, 387, 174, 22);
+		getContentPane().add(cmbIzvodjac);
+		ucitajIzvodjace();
+		cmbIzvodjac.setSelectedIndex(0);
 		
-		add(new JLabel("Broj dela: "));
-		tfUkupnoDela = new JTextField(10);
-		add(tfUkupnoDela);
-		tfUkupnoDela.setText(jedan.getBrojDela()+"");
-		 
-		add(new JLabel("Broj recenzija"));
-		tfbrojRec=new JTextField(10);
-		add(tfbrojRec);
-		tfbrojRec.setText(jedan.getBrojRecenzija()+"");
+		Izvodjac izvodjac = sesija.getIzvodjac((String)cmbIzvodjac.getSelectedItem());
+		this.jedan = sesija.namestiJedanizvestaj(izvodjac);
+		setResizable(false);
+		getContentPane().setLayout(null);
 		
-		add(new JLabel("Broj komentara"));
-		tfBrojkom=new JTextField(10);
-		add(tfBrojkom);
-		tfBrojkom.setText(jedan.getBrojKomentara()+"");
+		JLabel lblUmetnickoIme = new JLabel("Umetnicko ime");
+		lblUmetnickoIme.setBounds(10, 48, 91, 19);
+		getContentPane().add(lblUmetnickoIme);
 		
-		add(new JLabel("Ocena urednika"));
-		tfOcenaUr=new JTextField(10);
-		add(tfOcenaUr);
-		tfOcenaUr.setText(jedan.getOcenaUrednika()+"");
+		txtUmetnickoIme = new JTextField();
+		txtUmetnickoIme.setEditable(false);
+		txtUmetnickoIme.setBounds(102, 42, 489, 30);
+		getContentPane().add(txtUmetnickoIme);
+		txtUmetnickoIme.setColumns(10);
+		txtUmetnickoIme.setText(izvodjac.getUmetnickoIme());
 		
-		add(new JLabel("Ocena korisnika"));
-		tfOcenaKor=new JTextField(10);
-		add(tfOcenaKor);
-		tfOcenaKor.setText(jedan.getOcenaKorisnika()+"");
-		//i spisak dela fali
-		add(btnBack);
-	}
-	private void initActions() {
-		btnBack.addActionListener(new ActionListener() {
-			
-			@Override
+		JLabel lblBrojDela = new JLabel("Broj dela");
+		lblBrojDela.setBounds(10, 113, 64, 14);
+		getContentPane().add(lblBrojDela);
+		
+		txtBrojDela = new JTextField();
+		txtBrojDela.setEditable(false);
+		txtBrojDela.setBounds(102, 105, 96, 30);
+		getContentPane().add(txtBrojDela);
+		txtBrojDela.setColumns(10);
+		txtBrojDela.setText(jedan.getBrojDela() + "");
+		
+		JLabel lblBrojRecenzija = new JLabel("Broj recenzija");
+		lblBrojRecenzija.setBounds(10, 182, 84, 14);
+		getContentPane().add(lblBrojRecenzija);
+		
+		txtBrojRecenzija = new JTextField();
+		txtBrojRecenzija.setEditable(false);
+		txtBrojRecenzija.setColumns(10);
+		txtBrojRecenzija.setBounds(102, 174, 96, 30);
+		getContentPane().add(txtBrojRecenzija);
+		txtBrojRecenzija.setText(jedan.getBrojRecenzija() + "");
+		
+		JLabel lblBrojKomentara = new JLabel("Broj komentara");
+		lblBrojKomentara.setBounds(10, 250, 91, 14);
+		getContentPane().add(lblBrojKomentara);
+		
+		txtBrojKomentara = new JTextField();
+		txtBrojKomentara.setEditable(false);
+		txtBrojKomentara.setColumns(10);
+		txtBrojKomentara.setBounds(102, 242, 96, 30);
+		getContentPane().add(txtBrojKomentara);
+		txtBrojKomentara.setText(jedan.getBrojKomentara() + "");
+		
+		JLabel lblOcenaKorisnika = new JLabel("Ocena korisnika");
+		lblOcenaKorisnika.setBounds(10, 320, 91, 14);
+		getContentPane().add(lblOcenaKorisnika);
+		
+		txtOcenaKorisnika = new JTextField();
+		txtOcenaKorisnika.setEditable(false);
+		txtOcenaKorisnika.setColumns(10);
+		txtOcenaKorisnika.setBounds(102, 312, 96, 30);
+		getContentPane().add(txtOcenaKorisnika);
+		txtOcenaKorisnika.setText(df.format(jedan.getOcenaKorisnika()) + "");
+		
+		JLabel lblOcenaUrednika = new JLabel("Ocena urednika");
+		lblOcenaUrednika.setBounds(10, 387, 91, 14);
+		getContentPane().add(lblOcenaUrednika);
+		
+		txtOcenaUrednika = new JTextField();
+		txtOcenaUrednika.setEditable(false);
+		txtOcenaUrednika.setColumns(10);
+		txtOcenaUrednika.setBounds(102, 379, 96, 30);
+		getContentPane().add(txtOcenaUrednika);
+		txtOcenaUrednika.setText(df.format(jedan.getOcenaUrednika()) + "");
+		
+		cmbIzvodjac.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//parent.setVisible(true);
-				IzvestajIzvodjaca.this.dispose();
-				
+				try {
+					ucitajPesme((String)cmbIzvodjac.getSelectedItem());
+					refresh();
+				} 
+				catch (Exception e1) {
+					e1.printStackTrace();
+				}
 			}
-
-			
-		});}
-
-
-
+		});
+		
+		JLabel lblIzvodjac = new JLabel("Izvodjac");
+		lblIzvodjac.setBounds(417, 367, 48, 14);
+		getContentPane().add(lblIzvodjac);
+		
+		muzickaDela = new JTable();
+		muzickaDela.setBorder(null);
+		muzickaDela.getTableHeader().setReorderingAllowed(false);
+		muzickaDela.getTableHeader().setResizingAllowed(false);
+		muzickaDela.setAutoCreateRowSorter(true);
+		
+		JScrollPane scrollPaneGrid = new JScrollPane(muzickaDela);
+		scrollPaneGrid.setViewportBorder(null);
+		scrollPaneGrid.setBounds(220, 105, 371, 237);
+		scrollPaneGrid.setLayout(new ScrollPaneLayout());
+		getContentPane().add(scrollPaneGrid, BorderLayout.CENTER);
+		muzickaDela.setFillsViewportHeight(true);
+		
+		JLabel lblMuzickaDela = new JLabel("Muzicka dela");
+		lblMuzickaDela.setBounds(220, 91, 91, 14);
+		getContentPane().add(lblMuzickaDela);
+		
+		ucitajPesme((String)cmbIzvodjac.getSelectedItem());
+		setVisible(true);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void ucitajIzvodjace() {
+		IzvodjacMenadzer im = sesija.getIzvodjacMenadzer();
+		for (Izvodjac i : im.getSvi()) {
+			if (i.isOdobrenost())
+				cmbIzvodjac.addItem(i.getUmetnickoIme());
+		}
+	}
+	
+	private void ucitajPesme(String umetnickoIme) throws Exception {
+		MuzickiSadrzajMenadzer mdm = sesija.getMuzickiSadrzajMenadzer();
+		Izvodjac i = sesija.getIzvodjac(umetnickoIme);
+		TableModelWrapper tmw = mdm.getTabelaMuzickihDela(i);
+		muzickaDela.setModel(tmw);
+	}
+	
+	private void refresh() {
+		Izvodjac izvodjac = sesija.getIzvodjac((String)cmbIzvodjac.getSelectedItem());
+		this.jedan = sesija.namestiJedanizvestaj(izvodjac);
+		txtUmetnickoIme.setText(izvodjac.getUmetnickoIme());
+		txtBrojDela.setText(jedan.getBrojDela() + "");
+		txtBrojRecenzija.setText(jedan.getBrojRecenzija() + "");
+		txtBrojKomentara.setText(jedan.getBrojKomentara() + "");
+		txtOcenaKorisnika.setText(df.format(jedan.getOcenaKorisnika()) + "");
+		txtOcenaUrednika.setText(df.format(jedan.getOcenaUrednika()) + "");
+	}
 }

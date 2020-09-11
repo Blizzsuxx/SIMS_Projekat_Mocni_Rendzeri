@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import org.jdesktop.swingx.JXTable;
+
 import model.IzvestajSvihZanrova;
 import model.Sesija;
 import model.Zanr;
@@ -23,7 +25,7 @@ public class IzvestajZanra extends JFrame {
 	private Sesija sesija;
 	private Zanr zanr;
 	private JButton btnBack;
-	private JTable table;
+	private JXTable table;
 	private JTextField tfUkupnoKom, tfUkupno, tfProsecnaOcena;
 	private IzvestajSvihZanrova jedanZanr;
 
@@ -40,14 +42,14 @@ public class IzvestajZanra extends JFrame {
 	/**
 	 * @return the table
 	 */
-	public JTable getTable() {
+	public JXTable getTable() {
 		return table;
 	}
 
 	/**
 	 * @param table the table to set
 	 */
-	public void setTable(JTable table) {
+	public void setTable(JXTable table) {
 		this.table = table;
 	}
 

@@ -28,24 +28,29 @@ import model.Recenzija;
 public class CitacDatoteka {
 
 	private KorisniciMenadzer korisnici;
-	private MuzickoDeloMenadzer deloMenadzer;//pozvace ocene, a prosledicu mu zanrove
+	//private MuzickoDeloMenadzer deloMenadzer;//pozvace ocene, a prosledicu mu zanrove
 	private IzvodjacMenadzer izvodjaci;
 	private UtisakMenadzer utisakmenadzer;
 	private ZakazanaRecenzijaMenadzer zakRecMenadzer;
 	private ZanroviMenadzer zanrovi;
-	private AlbumKontroler albumi;
+	//private AlbumKontroler albumi;
 	private OceneKontroler ocene;
 	private ClanoviMenadzer clanoviGrupe;
 	private RecenzijeZaIzmenuMenadzer izmena;
 	private GlasanjeMenadzer glasanjeMenadzer;
 	
+	private MuzickiSadrzajMenadzer muzickiSadrzajMenadzer;
+	
+	public MuzickiSadrzajMenadzer getMuzickiSadrzajMenadzer() {
+		return muzickiSadrzajMenadzer;
+	}
+
+	public void setMuzickiSadrzajMenadzer(MuzickiSadrzajMenadzer muzickiSadrzajMenadzer) {
+		this.muzickiSadrzajMenadzer = muzickiSadrzajMenadzer;
+	}
 
 	public KorisniciMenadzer getKorisnici() {
 		return this.korisnici;
-	}
-
-	public MuzickoDeloMenadzer getDeloMenadzer() {
-		return this.deloMenadzer;
 	}
 
 	public IzvodjacMenadzer getIzvodjaci() {
@@ -62,10 +67,6 @@ public class CitacDatoteka {
 
 	public ZanroviMenadzer getZanrovi() {
 		return this.zanrovi;
-	}
-
-	public AlbumKontroler getAlbumi() {
-		return this.albumi;
 	}
 
 	public OceneKontroler getOcene() {
@@ -119,18 +120,21 @@ public class CitacDatoteka {
 	public void inicijalizuj() throws ParseException, IOException {
 		// TODO Auto-generated method stub
 
-		korisnici = new KorisniciMenadzer(ucitaj("korisnici.txt", ','), ucitajBuffered("zahteviZaRegAlbuma.txt"));
-		zanrovi = new ZanroviMenadzer(ucitaj("zanrovi.txt", ','));
+		korisnici = new KorisniciMenadzer(ucitaj("korisnici.txt", ','));
+		zanrovi = new ZanroviMenadzer(ucitaj("zanrovi.txt", ','), korisnici);
 		izvodjaci = new IzvodjacMenadzer(ucitaj("izvodjaci.txt", ';'), zanrovi);
 
-		deloMenadzer = new MuzickoDeloMenadzer(izvodjaci, zanrovi.getSviZanrovi(), ucitaj("muzickaDela.txt", ','));
-		utisakmenadzer = new UtisakMenadzer(deloMenadzer.getDela(), korisnici, ucitaj("utisci.txt", ';'));
+		muzickiSadrzajMenadzer = new MuzickiSadrzajMenadzer(izvodjaci, korisnici, zanrovi, 
+				"fajlovi"+System.getProperty("file.separator")+"muzickiSadrzaj.txt", 
+				"fajlovi"+System.getProperty("file.separator")+"albumDjela.txt");
+		
+		utisakmenadzer = new UtisakMenadzer(muzickiSadrzajMenadzer.getMuzickaDela(), korisnici, ucitaj("utisci.txt", ';'));
 		zakRecMenadzer = new ZakazanaRecenzijaMenadzer(korisnici,(ArrayList<Recenzija>)utisakmenadzer.getRecenzije(), ucitaj("zakazaneRecenzije.txt", ';'));
-		albumi = new AlbumKontroler(deloMenadzer, izvodjaci, korisnici, ucitaj("albumi.txt", ','));
-		ocene = new OceneKontroler(deloMenadzer, korisnici, ucitaj("ocene.txt", ','));
+		ocene = new OceneKontroler(muzickiSadrzajMenadzer, korisnici, ucitaj("ocene.txt", ','));
 		clanoviGrupe = new ClanoviMenadzer(izvodjaci, izvodjaci.getGrupe(), ucitaj("clanstva.txt",','));
 		izmena = new RecenzijeZaIzmenuMenadzer((ArrayList<Recenzija>)utisakmenadzer.getRecenzije(), ucitaj("recenzijeZaIzmenu.txt", ';'));
-		glasanjeMenadzer = new GlasanjeMenadzer(ucitajBuffered("glasovi.txt"), ucitajBuffered("uredniciKojiSuGlasali.txt"), deloMenadzer.getDela(), korisnici);
+		glasanjeMenadzer = new GlasanjeMenadzer(ucitajBuffered("glasovi.txt"), ucitajBuffered("uredniciKojiSuGlasali.txt"), 
+				(ArrayList<MuzickoDelo>) muzickiSadrzajMenadzer.getMuzickaDela(), korisnici);
 
 		
 
@@ -188,24 +192,23 @@ public class CitacDatoteka {
 	}
 
 
-	public void sacuvaj() {
+	public void sacuvaj() throws ParseException {
 		korisnici.sacuvaj();
 		clanoviGrupe.sacuvaj();
 		ocene.sacuvaj();
-		albumi.sacuvaj();
 		zakRecMenadzer.sacuvaj();
 		utisakmenadzer.sacuvaj();
-		deloMenadzer.sacuvaj(izvodjaci.getSvi());
-		//izvodjaci.sacuvaj();
+
+		izvodjaci.sacuvaj();
 		zanrovi.sacuvaj();//jos nesto treba sacuvati?? treba uzitati za izmenu
 		izmena.sacuvaj();
 		glasanjeMenadzer.sacuvaj();
 		
+		zanrovi.sacuvajZanroveUrednike(); //
+		muzickiSadrzajMenadzer.sacuvaj("fajlovi"+System.getProperty("file.separator")+"muzickiSadrzaj.txt"); //
+		muzickiSadrzajMenadzer.sacuvajAlbumeDjela("fajlovi"+System.getProperty("file.separator")+"albumDjela.txt");
 	}
 
-	public Collection<MuzickoDelo> getMuzickaDela() {
-		return this.deloMenadzer.getDela();
-	}
 
 	public Collection<Grupa> getGrupe() {
 		return this.izvodjaci.getGrupe();
@@ -214,7 +217,7 @@ public class CitacDatoteka {
 	public Collection<Recenzija> getRecenzije() {
 		return this.utisakmenadzer.getRecenzije();
 	}
-	public void ucitajPratioce(KorisniciMenadzer korisnici,MuzickoDeloMenadzer md,ZanroviMenadzer zanrovi,IzvodjacMenadzer izvodjaci) {
+	public void ucitajPratioce(KorisniciMenadzer korisnici, MuzickiSadrzajMenadzer md,ZanroviMenadzer zanrovi,IzvodjacMenadzer izvodjaci) {
 		List<String[]> tekst=ucitaj("pracenje.txt",'|');
 		for(String[] linija:tekst) {
 			FrontEndKorisnik k=(FrontEndKorisnik)korisnici.trazi(linija[0].trim());
@@ -229,7 +232,7 @@ public class CitacDatoteka {
 			}
 			String[] dela=linija[3].trim().split(";");
 			for(String d:dela) {
-				k.getMuzickoDjelo().add(md.pronadiPoNazivu(d.trim()));
+				k.getIstorija().add((MuzickoDelo)md.vratiNaOsnovuNazive(d.trim()));
 			}
 			if(linija.length>4) {
 			String[] pratilac=linija[4].trim().split(";");

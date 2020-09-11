@@ -37,8 +37,8 @@ public class SearchField extends JXSearchField {
 		this.sesija = sesija;
 		
 		String korisnickoIme = null;
-		if(sesija.getTrenutniKorisnik() != null) {
-			korisnickoIme = sesija.getTrenutniKorisnik().getNalog().getKorisnickoIme();
+		if(Sesija.getTrenutniKorisnik() != null) { // promjene
+			korisnickoIme = Sesija.getTrenutniKorisnik().getNalog().getKorisnickoIme();//
 		}
 		
 		this.setSearchMode(SearchMode.REGULAR);
@@ -122,7 +122,7 @@ public class SearchField extends JXSearchField {
 		ArrayList<Slikovit> rezultati = new ArrayList<>();
 		
 		if(this.muzickaDela.isSelected()) {
-			rezultati.addAll(sesija.getMuzickoDeloMenadzer().trazi(textZaSearch));
+			rezultati.addAll(sesija.getMuzickiSadrzajMenadzer().trazi(textZaSearch));
 		}
 		if(this.grupe.isSelected()) {
 			rezultati.addAll(sesija.getIzvodjacMenadzer().traziGrupe(textZaSearch));
@@ -131,7 +131,7 @@ public class SearchField extends JXSearchField {
 			rezultati.addAll(sesija.getIzvodjacMenadzer().traziSoloIzvodjace(textZaSearch));
 		}
 		if(this.albumi.isSelected()) {
-			rezultati.addAll(sesija.getAlbumKontroler().trazi(textZaSearch));
+			rezultati.addAll(sesija.getMuzickiSadrzajMenadzer().trazi(textZaSearch,""));
 		}
 		if(this.korisnici.isSelected()) {
 			rezultati.addAll(sesija.getKorisnici().traziZaSearch(textZaSearch));
@@ -142,6 +142,7 @@ public class SearchField extends JXSearchField {
 		MojDialog dialog = new MojDialog(this.owner, "Rezultati pretrage");
 		dialog.setContentPane(rezultatiPanel);
 		dialog.setVisible(true);
+		
 	}
 
 }

@@ -5,15 +5,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import model.FrontEndKorisnik;
-import model.Grupa;
 import model.Komentar;
 import model.Korisnik;
 import model.MuzickoDelo;
@@ -95,19 +92,19 @@ public class UtisakMenadzer {
 
 	private MuzickoDelo pronadiDelo(Collection<MuzickoDelo> muzickaDela, String string) {
 		for(MuzickoDelo md:muzickaDela) {
-			if(md.getNaziv().equals(string)) {
+			if(md.getNaslov().equals(string)) {
 				return md;
 			}
 		}
 		return null;
 	}
 
-	public Collection<Recenzija> getRecenzije() {
+	public ArrayList<Recenzija> getRecenzije() {
 		
 		return rec;
 	}
 
-	public Collection<Komentar> getKomentari() {
+	public ArrayList<Komentar> getKomentari() {
 		
 		return komentar;
 	}
@@ -142,7 +139,7 @@ public class UtisakMenadzer {
 		ArrayList<Object[]> data = new ArrayList<Object[]>();
 		for (Recenzija r : rec) {
 			if (r.isStatus())
-				data.add(new Object[] {r.getNaslov(), r.getDatumUpisa(), r.getDelo().getNaziv(), r.getPisac().getNalog().getKorisnickoIme()});
+				data.add(new Object[] {r.getNaslov(), r.getDatumUpisa(), r.getDelo().getNaslov(), r.getPisac().getNalog().getKorisnickoIme()});
 		}
 		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
 	}

@@ -25,10 +25,10 @@ import javax.swing.table.TableRowSorter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
+import org.jdesktop.swingx.JXTable;
 
 import controler.IzvestajSvihIzvodjacaMenadzer;
 import controler.ZanroviMenadzer;
-import model.Izvodjac;
 import model.Sesija;
 import model.Zanr;
 import net.miginfocom.swing.MigLayout;
@@ -38,10 +38,11 @@ public class IzvestajViseIzvodjaca extends JFrame{
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
+	@SuppressWarnings("unused")
 	private Sesija sesija;
 	private IzvestajSvihIzvodjacaMenadzer men;
 	private JButton btnBack, btnOk;
-	private JTable  table1;
+	private JXTable  table1;
 	private JComboBox<Zanr> cbZanr;
 	private JDatePickerImpl DatePicker1;
 	private JDatePickerImpl DatePicker2;
@@ -49,6 +50,7 @@ public class IzvestajViseIzvodjaca extends JFrame{
 	
 	
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public IzvestajViseIzvodjaca(Sesija s, ZanroviMenadzer zm) {
 		this.sesija=s;
 		this.men=s.namestiIzvestajIzvodjaca();
@@ -82,7 +84,7 @@ public class IzvestajViseIzvodjaca extends JFrame{
 		add(this.DatePicker1);
 		add(this.DatePicker2);
 		
-		table1 = new JTable(new SinglIzvodjaciModel(men.getIzvodjaci()));
+		table1 = new JXTable(new SinglIzvodjaciModel(men.getIzvodjaci()));
 		table1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table1.getTableHeader().setReorderingAllowed(false);
 		JScrollPane sp1 = new JScrollPane(table1);
@@ -159,8 +161,8 @@ public class IzvestajViseIzvodjaca extends JFrame{
 				LocalDate dan=convertToLocalDateViaInstant(d1, month, year);
 				LocalDate dan1=convertToLocalDateViaInstant(d2, month2, year2);
 				String imeZanra=(String) cbZanr.getSelectedItem(); 
-				IzvestajViseIzvodjaca.this.men.izlistajPoDatumimaIZanru(dan, dan1, imeZanra);
-				//table1.new JTable(new SinglIzvodjaciModel(men.getIzvodjaci()));
+				//IzvestajViseIzvodjaca.this.men.izlistajPoDatumimaIZanru(dan, dan1, imeZanra);
+				//table1.new JXTable(new SinglIzvodjaciModel(men.getIzvodjaci()));
 				refreshData(); 
 				
 				

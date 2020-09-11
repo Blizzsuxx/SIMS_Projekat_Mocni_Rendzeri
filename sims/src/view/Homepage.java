@@ -11,7 +11,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import controler.Constants;
 import model.Sesija;
 import net.miginfocom.swing.MigLayout;
 
@@ -21,8 +20,21 @@ public abstract class Homepage extends JFrame {
 	protected JMenu menu;
 	protected JMenuBar menubar;
 	
+	 protected String[] koloneSvihKorisnika = {"Korisnicko Ime", "Ime", "Prezime", "Email", "Pol", "Datum Rodjenja"};
+	 protected String[] koloneSvihObicnihKorisnika = {"Korisnicko Ime", "Ime", "Prezime", "Email", "Pol", "Datum Rodjenja",
+			 "Broj Korisnika", "Broj Izvodjaca"};
+	 protected String[] koloneSvihUrednika = {"Korisnicko Ime", "Ime", "Prezime", "Email", "Pol", "Datum Rodjenja",
+			 "Broj Recenzija"};
+	 protected String[] koloneSvihAdmina = {"Korisnicko Ime", "Ime", "Prezime", "Email", "Pol", "Datum Rodjenja",
+			 "Broj Zakazanih", "Broj Za Izmjenu"};
+	 
+	 protected String[] koloneMuzickogSadrzaja = {"Naslov", "Opis", "Datum Izdavanja", "Izvodjac", "Urednik"};
+	 protected String[] koloneAlbuma = {"Naslov", "Opis", "Datum Izdavanja", "Izvodjac", "Urednik", "Odobren"};
+	 protected String[] koloneMuzickihDela = {"Naslov", "Opis", "Datum Izdavanja", "Izvodjac", "Urednik", 
+			 "P.O. Korisnika", "P.O. Urednika"};
+	 
 	public Homepage(Sesija sesija) {
-		this.getContentPane().setLayout(new MigLayout());
+		this.getContentPane().setLayout(new MigLayout("fillx"));
 		this.sesija = sesija;
 		initGui();
 	}
@@ -33,6 +45,7 @@ public abstract class Homepage extends JFrame {
 		this.setSize(550, 600);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setResizable(false);
+		this.setTitle("Pocetna strana");
 
 		
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -91,16 +104,17 @@ public abstract class Homepage extends JFrame {
 	}
 
 	private void menuProfilTriggered() {
-		//Kod za pregled profila
+		//Pregled profila
 		
 		//DUMMY - Hardcoded KorisnikAplikacije
-		if(sesija.getTrenutniKorisnik() == null)
+		//sesija.getTrenutniKorisnik()
+		if(Sesija.getTrenutniKorisnik() == null)
 		{
 			JOptionPane.showMessageDialog(this, "Da bi ste pregledali svoj profil morate imati nalog.", "Profil", JOptionPane.INFORMATION_MESSAGE);
 		}
 		else 
 		{
-			DijalogRadSaNalogom radSaNalogom = new DijalogRadSaNalogom(this, Constants.DUMMY, "Rad sa nalogom");
+			DijalogRadSaNalogom radSaNalogom = new DijalogRadSaNalogom(this, Sesija.getTrenutniKorisnik(), "Rad sa nalogom");
 			radSaNalogom.setVisible(true);
 		}	
 	}

@@ -13,7 +13,6 @@ import model.Grupa;
 import model.Izvodjac;
 import model.Pojedinacanizvodjac;
 import model.Pol;
-import model.Zanr;
 import view.Slikovit;
 import view.TableModelWrapper;
 
@@ -82,10 +81,37 @@ public class IzvodjacMenadzer {
 		this.grupe = new ArrayList<Grupa>();
 		for (String[] linije : data)
 		{
-			if(linije.length == 9){
+			if(linije.length == 10){
 				Date smrt = null;
 				Date rodjenje = null;
 				try {
+					rodjenje = Constants.NATASIN_FORMAT_ZA_DATUM.parse(linije[6].trim());
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if(!linije[7].trim().equals("/")) {
+					try {
+						smrt = Constants.NATASIN_FORMAT_ZA_DATUM.parse(linije[7].trim());
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				Pol p = Pol.zenski;
+				if(linije[9].trim().equals(Pol.muski.name())) {p = Pol.muski;}
+				
+				Pojedinacanizvodjac a = new Pojedinacanizvodjac(Boolean.parseBoolean(linije[0].trim()),
+						linije[1].trim(), zm.trazi(linije[2].trim()),
+						Boolean.parseBoolean(linije[3]), linije[4].trim(), linije[5].trim(), rodjenje, smrt, linije[8].trim(), p);
+				svi.add(a);
+				solo.add(a);
+			}
+			else if(linije.length == 7) {
+				Date smrt = null;
+				Date rodjenje = null;
+				try {
+					System.out.println(linije[5]);
 					rodjenje = Constants.NATASIN_FORMAT_ZA_DATUM.parse(linije[5].trim());
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
@@ -99,34 +125,8 @@ public class IzvodjacMenadzer {
 						e.printStackTrace();
 					}
 				}
-				Pol p = Pol.zenski;
-				if(linije[8].trim().equals(Pol.muski.name())) {p = Pol.muski;}
-				
-				Pojedinacanizvodjac a = new Pojedinacanizvodjac(linije[0].trim(), zm.trazi(linije[1].trim()),
-						Boolean.parseBoolean(linije[2]), linije[3].trim(), linije[4].trim(), rodjenje, smrt, linije[7].trim(), p);
-				svi.add(a);
-				solo.add(a);
-			}
-			else if(linije.length == 6) {
-				Date smrt = null;
-				Date rodjenje = null;
-				try {
-					System.out.println(linije[4]);
-					rodjenje = Constants.NATASIN_FORMAT_ZA_DATUM.parse(linije[4].trim());
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				if(!linije[5].trim().equals("/")) {
-					try {
-						smrt = Constants.NATASIN_FORMAT_ZA_DATUM.parse(linije[5].trim());
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				Integer br1 = Integer.parseInt(linije[3].trim());
-				Grupa a = new Grupa(linije[0].trim(), zm.trazi(linije[1].trim()), Boolean.parseBoolean(linije[2]), br1, rodjenje, smrt );
+				Integer br1 = Integer.parseInt(linije[4].trim());
+				Grupa a = new Grupa(Boolean.parseBoolean(linije[0].trim()), linije[1].trim(), zm.trazi(linije[2].trim()), Boolean.parseBoolean(linije[3]), br1, rodjenje, smrt );
 				svi.add(a);
 				this.getGrupe().add(a);
 				
@@ -165,7 +165,7 @@ public class IzvodjacMenadzer {
 					pw.print(Grupa.Grupa2String((Grupa)i));
 				
 			}
-			pw.close();	
+			pw.close();
 		}
 		catch(IOException e) {
 			e.printStackTrace();
@@ -184,7 +184,8 @@ public class IzvodjacMenadzer {
 		int[] columnWidths = { 120, 80, 120, 120, 120};
 		ArrayList<Object[]> data = new ArrayList<Object[]>();
 		for (Pojedinacanizvodjac pi : solo) {
-			data.add(new Object[] {pi.getUmetnickoIme(), pi.getZanr().getNazivZanra(), pi.getIme(), pi.getPrezime(), pi.getDatumRodjenja()});
+			if (pi.isOdobrenost())
+				data.add(new Object[] {pi.getUmetnickoIme(), pi.getZanr().getNazivZanra(), pi.getIme(), pi.getPrezime(), pi.getDatumRodjenja()});
 		}
 		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
 	}
@@ -196,7 +197,8 @@ public class IzvodjacMenadzer {
 		int[] columnWidths = { 120, 80, 80, 120, 120};
 		ArrayList<Object[]> data = new ArrayList<Object[]>();
 		for (Grupa g : grupe) {
-			data.add(new Object[] {g.getUmetnickoIme(), g.getZanr().getNazivZanra(), g.getBrojClanova(), g.getDatumOsnivanja(), g.getDatumRaspada()});
+			if (g.isOdobrenost())
+				data.add(new Object[] {g.getUmetnickoIme(), g.getZanr().getNazivZanra(), g.getBrojClanova(), g.getDatumOsnivanja(), g.getDatumRaspada()});
 		}
 		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
 	}
@@ -220,5 +222,31 @@ public class IzvodjacMenadzer {
 			}
 		}
 		return rezultat;
+	}
+	
+	// POMOCNE FUNKCIJE
+	// na osnovu indikatora po zelji dobijamo odobrene ili neodobrene izvodjace
+	public List<Izvodjac> vratiIzvodjaceNaOsnovuOdobrenosti(boolean indikator){
+		List<Izvodjac> izvodjaci = new ArrayList<>();
+		for(Izvodjac i: this.svi)
+			if (i.isOdobrenost() == indikator)
+				izvodjaci.add(i);
+		return izvodjaci;
+	}
+	
+	public boolean dozvolaIzvodjaca(String umjetnickoIme) {
+		for (Izvodjac i : this.svi)
+			if (i.isStatus() && !i.isOdobrenost() && i.getUmetnickoIme().equals(umjetnickoIme)) {
+				i.setOdobrenost(true);
+				return true;
+			}
+		return false;
+	}
+
+	public void dodaj(Izvodjac pi) {
+		// TODO Auto-generated method stub
+		this.svi.add(pi);
+		if(pi instanceof Pojedinacanizvodjac) this.solo.add((Pojedinacanizvodjac) pi);
+		else this.grupe.add((Grupa) pi);
 	}
 }

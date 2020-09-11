@@ -14,7 +14,7 @@ public abstract class FrontEndKorisnik extends Korisnik {
    public FrontEndKorisnik(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, String sifra,
          String korisnickoIme, Date datum, boolean status) {
       super(ime, prezime, eMail, pol, datumRodjenja, sifra, korisnickoIme, datum, status);
-      this.muzickoDjelo = new ArrayList<>();
+      this.istorija = new ArrayList<>();
       this.pratilac = new ArrayList<>();
       this.preferiraniZanrovi = new ArrayList<>();
 
@@ -26,7 +26,7 @@ public abstract class FrontEndKorisnik extends Korisnik {
    public FrontEndKorisnik(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, String sifra,
    String korisnickoIme, Date datum, boolean status, java.util.Collection<MuzickoDelo> muzickoDjelo, java.util.Collection<Zanr> preferiraniZanrovi, Collection<KorisnikAplikacije> pratilac) {
       super(ime, prezime, eMail, pol, datumRodjenja, sifra, korisnickoIme, datum, status);
-      this.muzickoDjelo = muzickoDjelo;
+      this.istorija = muzickoDjelo;
       this.preferiraniZanrovi = preferiraniZanrovi;
       this.pratilac = pratilac;
    }
@@ -55,7 +55,7 @@ public abstract class FrontEndKorisnik extends Korisnik {
     * @pdRoleInfo migr=no name=MuzickoDjelo assc=association32
     *             coll=java.util.Collection impl=java.util.HashSet mult=0..*
     */
-   private java.util.Collection<MuzickoDelo> muzickoDjelo;
+   private java.util.Collection<MuzickoDelo> istorija;
    /**
     * @pdRoleInfo migr=no name=Zanr assc=association36 coll=java.util.Collection
     *             impl=java.util.HashSet mult=0..*
@@ -85,52 +85,52 @@ public abstract class FrontEndKorisnik extends Korisnik {
    
    
    /** @pdGenerated default getter */
-   public java.util.Collection<MuzickoDelo> getMuzickoDjelo() {
-      if (muzickoDjelo == null)
-         muzickoDjelo = new java.util.HashSet<MuzickoDelo>();
-      return muzickoDjelo;
+   public java.util.Collection<MuzickoDelo> getIstorija() {
+      if (istorija == null)
+         istorija = new java.util.HashSet<MuzickoDelo>();
+      return istorija;
    }
    
    /** @pdGenerated default iterator getter */
-   public java.util.Iterator<MuzickoDelo> getIteratorMuzickoDjelo() {
-      if (muzickoDjelo == null)
-         muzickoDjelo = new java.util.HashSet<MuzickoDelo>();
-      return muzickoDjelo.iterator();
+   public java.util.Iterator<MuzickoDelo> getIteratorIstorija() {
+      if (istorija == null)
+         istorija = new java.util.HashSet<MuzickoDelo>();
+      return istorija.iterator();
    }
    
    /** @pdGenerated default setter
      * @param newMuzickoDjelo */
-   public void setMuzickoDjelo(java.util.Collection<MuzickoDelo> newMuzickoDjelo) {
-      removeAllMuzickoDjelo();
+   public void setIstorija(java.util.Collection<MuzickoDelo> newMuzickoDjelo) {
+      removeAllIstorija();
       for (java.util.Iterator<MuzickoDelo> iter = newMuzickoDjelo.iterator(); iter.hasNext();)
-         addMuzickoDjelo((MuzickoDelo)iter.next());
+         addIstorija((MuzickoDelo)iter.next());
    }
    
    /** @pdGenerated default add
      * @param newMuzickoDjelo */
-   public void addMuzickoDjelo(MuzickoDelo newMuzickoDjelo) {
+   public void addIstorija(MuzickoDelo newMuzickoDjelo) {
       if (newMuzickoDjelo == null)
          return;
-      if (this.muzickoDjelo == null)
-         this.muzickoDjelo = new java.util.HashSet<MuzickoDelo>();
-      if (!this.muzickoDjelo.contains(newMuzickoDjelo))
-         this.muzickoDjelo.add(newMuzickoDjelo);
+      if (this.istorija == null)
+         this.istorija = new java.util.HashSet<MuzickoDelo>();
+      if (!this.istorija.contains(newMuzickoDjelo))
+         this.istorija.add(newMuzickoDjelo);
    }
    
    /** @pdGenerated default remove
      * @param oldMuzickoDjelo */
-   public void removeMuzickoDjelo(MuzickoDelo oldMuzickoDjelo) {
+   public void removeIstorija(MuzickoDelo oldMuzickoDjelo) {
       if (oldMuzickoDjelo == null)
          return;
-      if (this.muzickoDjelo != null)
-         if (this.muzickoDjelo.contains(oldMuzickoDjelo))
-            this.muzickoDjelo.remove(oldMuzickoDjelo);
+      if (this.istorija != null)
+         if (this.istorija.contains(oldMuzickoDjelo))
+            this.istorija.remove(oldMuzickoDjelo);
    }
    
    /** @pdGenerated default removeAll */
-   public void removeAllMuzickoDjelo() {
-      if (muzickoDjelo != null)
-         muzickoDjelo.clear();
+   public void removeAllIstorija() {
+      if (istorija != null)
+         istorija.clear();
    }
    /** @pdGenerated default getter */
    public java.util.Collection<Zanr> getPreferiraniZanrovi() {
@@ -199,11 +199,11 @@ public abstract class FrontEndKorisnik extends Korisnik {
 		   ad+=k.getNalog().getKorisnickoIme();
 	   }
 	   ad+="|";i=0;
-	   for(MuzickoDelo d:muzickoDjelo) {
+	   for(MuzickoDelo d:istorija) {
 		   if(i!=0) {
 			   ad+=";";
 		   }
-		   ad+=d.getNaziv();
+		   ad+=d.getNaslov();
 	   }
 	   return ad;
    }

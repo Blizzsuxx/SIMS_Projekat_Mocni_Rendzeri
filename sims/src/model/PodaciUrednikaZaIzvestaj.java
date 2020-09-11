@@ -60,6 +60,7 @@ public class PodaciUrednikaZaIzvestaj {
 	public PodaciUrednikaZaIzvestaj() {
 		super();
 	}
+	@SuppressWarnings("deprecation")
 	public PodaciUrednikaZaIzvestaj(LocalDate danPocetka, LocalDate danKraja, Urednik u) {
 		super();
 		this.danPocetka = danPocetka;

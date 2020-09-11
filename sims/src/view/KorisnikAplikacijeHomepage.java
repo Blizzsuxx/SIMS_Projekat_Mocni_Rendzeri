@@ -17,6 +17,7 @@ public class KorisnikAplikacijeHomepage extends Homepage {
 	private List<MuzickoDeloLabel> trending;
 	private List<MuzickoDeloLabel> pratite;
 	private List<MuzickoDeloLabel> preporucujemo;
+	
 	public KorisnikAplikacijeHomepage(Sesija sesija) {
 		super(sesija);
 		trending = new ArrayList<>();

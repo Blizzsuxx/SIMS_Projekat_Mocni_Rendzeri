@@ -1,9 +1,11 @@
 package view;
 
-import javax.swing.JFrame;
-import javax.swing.JTable;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneLayout;
+
+import org.jdesktop.swingx.JXTable;
 
 import controler.KorisniciMenadzer;
 import controler.RecenzijeZaIzmenuMenadzer;
@@ -24,39 +26,61 @@ import java.util.Map.Entry;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 
-public class DodelaRecenzija extends JFrame {
+public class DodelaRecenzija extends MojDialog {
 	private static final long serialVersionUID = 1L;
-	private JTable zakazaneRecenzije;
-	private JTable recenzijeZaIzmenu;
+	private JXTable zakazaneRecenzije;
+	private JXTable recenzijeZaIzmenu;
 	@SuppressWarnings("rawtypes")
 	private JComboBox cmbUrednici;
 	private Sesija sesija;
+	private String title;
 
 	@SuppressWarnings("rawtypes")
-	public DodelaRecenzija(Sesija sesija) throws Exception {
+	public DodelaRecenzija(Sesija sesija, String title, int dim1, int dim2) throws Exception {
+		super(title, dim1, dim2);
 		this.sesija = sesija;
+		this.title = title;
 		setResizable(false);
-		setTitle("Dodela recenzija");
+		setTitle(title);
 		getContentPane().setLayout(null);
 		
-		zakazaneRecenzije = new JTable();
+		zakazaneRecenzije = new JXTable();
 		zakazaneRecenzije.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		zakazaneRecenzije.setBounds(10, 26, 362, 189);
-		getContentPane().add(zakazaneRecenzije);
+		zakazaneRecenzije.setBorder(null);
+		zakazaneRecenzije.getTableHeader().setReorderingAllowed(false);
+		zakazaneRecenzije.getTableHeader().setResizingAllowed(false);
+		zakazaneRecenzije.setAutoCreateRowSorter(true);
 		
-		recenzijeZaIzmenu = new JTable();
+		JScrollPane scrollPaneGrid = new JScrollPane(zakazaneRecenzije);
+		scrollPaneGrid.setViewportBorder(null);
+		scrollPaneGrid.setBounds(10, 26, 362, 189);
+		scrollPaneGrid.setLayout(new ScrollPaneLayout());
+		getContentPane().add(scrollPaneGrid, BorderLayout.CENTER);
+		zakazaneRecenzije.setFillsViewportHeight(true);
+		
+		recenzijeZaIzmenu = new JXTable();
 		recenzijeZaIzmenu.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		recenzijeZaIzmenu.setBounds(400, 26, 362, 189);
-		getContentPane().add(recenzijeZaIzmenu);
+		recenzijeZaIzmenu.setBorder(null);
+		recenzijeZaIzmenu.getTableHeader().setReorderingAllowed(false);
+		recenzijeZaIzmenu.getTableHeader().setResizingAllowed(false);
+		recenzijeZaIzmenu.setAutoCreateRowSorter(true);
+		
+		JScrollPane scrollPaneGrid1 = new JScrollPane(recenzijeZaIzmenu);
+		scrollPaneGrid1.setViewportBorder(null);
+		scrollPaneGrid1.setBounds(400, 26, 362, 189);
+		scrollPaneGrid1.setLayout(new ScrollPaneLayout());
+		getContentPane().add(scrollPaneGrid1, BorderLayout.CENTER);
+		recenzijeZaIzmenu.setFillsViewportHeight(true);
 		
 		JLabel lblZakazaneRecenzije = new JLabel("Zakazane recenzije");
 		lblZakazaneRecenzije.setBounds(10, 11, 111, 14);
 		getContentPane().add(lblZakazaneRecenzije);
 		
 		JLabel lblRecenzijeZaIzmenu = new JLabel("Recenzije za izmenu");
-		lblRecenzijeZaIzmenu.setBounds(400, 11, 111, 14);
+		lblRecenzijeZaIzmenu.setBounds(400, 11, 157, 14);
 		getContentPane().add(lblRecenzijeZaIzmenu);
 		
 		cmbUrednici = new JComboBox();
@@ -82,6 +106,8 @@ public class DodelaRecenzija extends JFrame {
 		ucitajRecenzijeZaIzmenu();
 		
 		ucitajUrednike();
+		
+		setVisible(true);
 	}
 	
 	private void ucitajZakazaneRecenzije() throws Exception {
@@ -109,7 +135,6 @@ public class DodelaRecenzija extends JFrame {
 			if (k.getClass() == Urednik.class) {
 				cmbUrednici.addItem(k.getNalog().getKorisnickoIme());
 			}
-	        it.remove();
 	    }
 	}
 	
@@ -147,7 +172,6 @@ public class DodelaRecenzija extends JFrame {
 				urednik = (Urednik)k;
 				break;
 			}
-	        it.remove();
 	    }
 		if (urednik != null)
 			setuj(urednik, zakazaneRecenzije, recenzijeZaIzmenu);
@@ -177,7 +201,7 @@ public class DodelaRecenzija extends JFrame {
 		}
 		KorisniciMenadzer km = sesija.getKorisnici();
 		HashMap<String,Korisnik> korisnici = km.getKorisnici();
-		korisnici.replace(urednik.getNalog().getKorisnickoIme(), (Korisnik)urednik);
+		korisnici.replace(urednik.getNalog().getKorisnickoIme(), urednik);
 		km.setKorisnici(korisnici);
 		sesija.setKorisnici(km);
 	}

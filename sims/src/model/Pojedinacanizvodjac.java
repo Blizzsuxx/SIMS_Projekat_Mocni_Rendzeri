@@ -6,7 +6,6 @@
 package model;
 import java.awt.image.BufferedImage;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -71,9 +70,9 @@ public class Pojedinacanizvodjac extends Izvodjac {
 	public void setPol(Pol pol) {
 		this.pol = pol;
 	}
-	public Pojedinacanizvodjac(String umetnickoIme, Zanr zanr, boolean status, KorisnikAplikacije[] prati, String ime, String prezime,
+	public Pojedinacanizvodjac(boolean odobrenost, String umetnickoIme, Zanr zanr, boolean status, KorisnikAplikacije[] prati, String ime, String prezime,
 			Date datumRodjenja, Date datumSmrti, String opis, Pol pol) {
-		super(umetnickoIme, zanr, status, prati);
+		super(umetnickoIme, zanr, status, prati, odobrenost);
 		this.ime = ime;
 		this.prezime = prezime;
 		this.datumRodjenja = datumRodjenja;
@@ -86,9 +85,9 @@ public class Pojedinacanizvodjac extends Izvodjac {
 		super(umetnickoIme, zanr, status, prati);
 	}
 	
-	public Pojedinacanizvodjac(String umetnickoIme, Zanr zanr, boolean status, String ime, String prezime,
+	public Pojedinacanizvodjac(boolean odobrenost,String umetnickoIme, Zanr zanr, boolean status, String ime, String prezime,
 			Date datumRodjenja, Date datumSmrti, String opis, Pol pol) {
-		super(umetnickoIme, zanr, status);
+		super(umetnickoIme, zanr, status, odobrenost);
 		this.ime = ime;
 		this.prezime = prezime;
 		this.datumRodjenja = datumRodjenja;
@@ -105,14 +104,16 @@ public class Pojedinacanizvodjac extends Izvodjac {
 		if(this.getMuzickaDela().size()==0) {String[] imenaa= {""};return imenaa;}
 		int j=0;
 		for(MuzickoDelo m:this.getMuzickaDela()) {
-			imena[j]=m.getNaziv();
+			imena[j]=m.getNaslov();
 			j++;
 		}
 		return imena;
 	}
+	@SuppressWarnings("deprecation")
 	@Override
 	public String toFileString() {
 		String ad="";
+		ad+=this.isOdobrenost()+";";
 		ad+=this.getUmetnickoIme()+";";
 		ad+=this.getZanr().getNazivZanra()+";";
 		ad+=this.isStatus()+";";
@@ -129,19 +130,14 @@ public class Pojedinacanizvodjac extends Izvodjac {
 		return ad;
 	}
 	
-	public static boolean string2Bool(String value) {
-		return (value.equals("1") ? true : false);
-	}
-	
-	public static String bool2String(boolean value) {
-		return (value ? "1" : "0");
-	}
 	
 	public static String PojedinacniIzvodjac2String(Pojedinacanizvodjac pi) {
-		String pattern = "dd.MM.yyyy.";
 		DateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;
-		return pi.getUmetnickoIme() + ";"  + pi.getZanr().getNazivZanra() + ";" + bool2String(pi.isStatus()) + ";" + pi.getIme() + ";" +
-				pi.getPrezime() + ";" + df.format(pi.getDatumRodjenja()) + ";" + df.format(pi.getDatumSmrti()) +
+		String datumSmrti = "/";
+		if (pi.getDatumSmrti() != null)
+			datumSmrti = df.format(pi.getDatumSmrti());
+		return pi.isOdobrenost()+";"+pi.getUmetnickoIme() + ";"  + pi.getZanr().getNazivZanra() + ";" + pi.isStatus() + ";" + pi.getIme() + ";" +
+				pi.getPrezime() + ";" + df.format(pi.getDatumRodjenja()) + ";" + datumSmrti +
 				";" + pi.getOpis() + ";" + pi.getPol() + System.lineSeparator();
 	}
 

@@ -42,7 +42,7 @@ public class RecenzijeOdUrednikaModel extends AbstractTableModel{
 		case 1:
 			return s.getNaslov();
 		case 2:
-			return s.getDelo().getNaziv();
+			return s.getDelo().getNaslov();
 		default:
 			break;
 		}

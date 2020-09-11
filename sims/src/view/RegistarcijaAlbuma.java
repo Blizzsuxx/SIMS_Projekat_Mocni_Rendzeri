@@ -1,43 +1,42 @@
 package view;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneLayout;
 import javax.swing.SpringLayout;
-import javax.swing.table.DefaultTableModel;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import controler.AlbumKontroler;
 import controler.IzvodjacMenadzer;
-import controler.KorisniciMenadzer;
-import controler.MuzickoDeloMenadzer;
+import controler.MuzickiSadrzajMenadzer;
+import controler.ZanroviMenadzer;
 import model.Album;
 import model.Izvodjac;
 import model.MuzickoDelo;
 import model.Sesija;
 import model.Urednik;
+import model.Zanr;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
-import java.util.Map.Entry;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 
-public class RegistarcijaAlbuma extends JFrame {
+public class RegistarcijaAlbuma extends MojDialog {
 	private static final long serialVersionUID = 1L;
 	private JTextField txtNaziv;
 	private JTable pesme;
@@ -47,13 +46,17 @@ public class RegistarcijaAlbuma extends JFrame {
 	private JDatePickerImpl dtDor;
 	private Sesija sesija;
 	private JButton btnDodajPesmu;
-	private Urednik urednik;
+	private String title;
+	private JTable zanrovi;
+	private JTextField txtOpis;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public RegistarcijaAlbuma(Sesija sesija) throws Exception {
+	public RegistarcijaAlbuma(Sesija sesija, String title, int dim1, int dim2) throws Exception {
+		super(title, dim1, dim2);
 		this.sesija = sesija;
+		this.title = title;
 		setResizable(false);
-		setTitle("Registracija albuma");
+		setTitle(title);
 		getContentPane().setLayout(null);
 		
 		JLabel lblNaziv = new JLabel("Naziv:");
@@ -61,21 +64,30 @@ public class RegistarcijaAlbuma extends JFrame {
 		getContentPane().add(lblNaziv);
 		
 		txtNaziv = new JTextField();
-		txtNaziv.setBounds(24, 35, 627, 20);
+		txtNaziv.setBounds(24, 36, 627, 35);
 		getContentPane().add(txtNaziv);
 		txtNaziv.setColumns(10);
 		
 		JLabel lblPesme = new JLabel("Pesme:");
-		lblPesme.setBounds(24, 170, 48, 14);
+		lblPesme.setBounds(24, 279, 48, 14);
 		getContentPane().add(lblPesme);
 		
 		pesme = new JTable();
+		pesme.setBorder(null);
 		pesme.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		pesme.setBounds(24, 183, 627, 139);
-		getContentPane().add(pesme);
+		pesme.getTableHeader().setReorderingAllowed(false);
+		pesme.getTableHeader().setResizingAllowed(false);
+		pesme.setAutoCreateRowSorter(true);
+		
+		JScrollPane scrollPaneGrid = new JScrollPane(pesme);
+		scrollPaneGrid.setViewportBorder(null);
+		scrollPaneGrid.setBounds(24, 294, 627, 139);
+		scrollPaneGrid.setLayout(new ScrollPaneLayout());
+		getContentPane().add(scrollPaneGrid, BorderLayout.CENTER);
+		pesme.setFillsViewportHeight(true);
 		
 		JLabel lblDatumRegistracije = new JLabel("Datum registracije:");
-		lblDatumRegistracije.setBounds(24, 114, 107, 20);
+		lblDatumRegistracije.setBounds(24, 219, 107, 20);
 		getContentPane().add(lblDatumRegistracije);
 		
 		JButton btnRegistruj = new JButton("Registruj");
@@ -89,7 +101,7 @@ public class RegistarcijaAlbuma extends JFrame {
 				}
 			}
 		});
-		btnRegistruj.setBounds(572, 356, 89, 23);
+		btnRegistruj.setBounds(562, 444, 89, 23);
 		getContentPane().add(btnRegistruj);
 		
 		UtilDateModel model = new UtilDateModel();
@@ -99,15 +111,16 @@ public class RegistarcijaAlbuma extends JFrame {
 		p.put("text.year", "Godina");
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
 		dtDor = new JDatePickerImpl(datePanel, new DataLabelFormatter());
+		sl_dtDor = new SpringLayout();
 		sl_dtDor.putConstraint(SpringLayout.NORTH, dtDor.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDor);
 		sl_dtDor.putConstraint(SpringLayout.WEST, dtDor.getJFormattedTextField(), 33, SpringLayout.WEST, dtDor);
 		sl_dtDor.putConstraint(SpringLayout.EAST, dtDor.getJFormattedTextField(), 211, SpringLayout.WEST, dtDor);
 		sl_dtDor = (SpringLayout) dtDor.getLayout();
-		dtDor.setBounds(24, 134, 274, 25);
+		dtDor.setBounds(24, 234, 274, 25);
 		getContentPane().add(dtDor);
 		
 		JLabel lblIzvodjaci = new JLabel("Izvodjac:");
-		lblIzvodjaci.setBounds(24, 66, 48, 14);
+		lblIzvodjaci.setBounds(24, 172, 48, 14);
 		getContentPane().add(lblIzvodjaci);
 		
 		cmbIzvodjac = new JComboBox();
@@ -127,7 +140,7 @@ public class RegistarcijaAlbuma extends JFrame {
 			}
 		});
 		cmbIzvodjac.setMaximumRowCount(20);
-		cmbIzvodjac.setBounds(24, 81, 338, 22);
+		cmbIzvodjac.setBounds(24, 186, 338, 22);
 		getContentPane().add(cmbIzvodjac);
 		
 		btnDodajPesmu = new JButton("Dodaj pesmu");
@@ -142,45 +155,47 @@ public class RegistarcijaAlbuma extends JFrame {
 				}
 			}
 		});
-		btnDodajPesmu.setBounds(24, 356, 107, 23);
+		btnDodajPesmu.setBounds(24, 444, 107, 23);
 		getContentPane().add(btnDodajPesmu);
+		
+		zanrovi = new JTable();
+		zanrovi.setBounds(544, 186, 107, 97);
+		getContentPane().add(zanrovi);
+		
+		JLabel lblZanrovi = new JLabel("Zanrovi");
+		lblZanrovi.setBounds(544, 172, 54, 14);
+		getContentPane().add(lblZanrovi);
+		
+		txtOpis = new JTextField();
+		txtOpis.setBounds(24, 109, 627, 35);
+		getContentPane().add(txtOpis);
+		txtOpis.setColumns(10);
+		
+		JLabel lblOpis = new JLabel("Opis");
+		lblOpis.setBounds(24, 93, 48, 14);
+		getContentPane().add(lblOpis);
 		
 	
 		
 		IzvodjacMenadzer im = sesija.getIzvodjacMenadzer();
 		for (Izvodjac i : im.getSvi())
 		{
-			cmbIzvodjac.addItem(i.getUmetnickoIme());
+			if (i.isOdobrenost())
+				cmbIzvodjac.addItem(i.getUmetnickoIme());
 		}
 		
-		urednik = ucitajZahteve();
-		
-		if (urednik == null) {
-			JOptionPane.showMessageDialog(null, "Nemaju zahtevi za registraciju albuma.");
-			RegistarcijaAlbuma.this.dispose();
-		}
+		ZanroviMenadzer zm = (sesija.getZanroviMenadzer());
+		TableModelWrapper tmw = zm.getTabelaZanrova();
+		zanrovi.setModel(tmw);
+	
+		setVisible(true);
 	}
 	
 	private void ucitajPesme(String umetnickoIme) throws Exception {
-		MuzickoDeloMenadzer mdm = sesija.getMuzickoDeloMenadzer();
+		MuzickiSadrzajMenadzer mdm = sesija.getMuzickiSadrzajMenadzer();
 		Izvodjac i = sesija.getIzvodjac(umetnickoIme);
 		TableModelWrapper tmw = mdm.getTabelaMuzickihDela(i);
 		pesme.setModel(tmw);
-	}
-	
-	private Urednik ucitajZahteve() {
-		KorisniciMenadzer km = sesija.getKorisnici();
-		HashMap<String, Urednik> zahteviUrednika = km.getZahteviUrednika();
-		Iterator<Entry<String, Urednik>> it = zahteviUrednika.entrySet().iterator();
-		while (it.hasNext()) {
-			@SuppressWarnings("rawtypes")
-			HashMap.Entry pair = (HashMap.Entry)it.next();
-			Urednik u = (Urednik)pair.getValue();
-			txtNaziv.setText(u.getAlbumZaRegistracju());
-			txtNaziv.setEditable(false);
-			return u;
-	    }
-		return null;
 	}
 	
 	private void registrujAlbum() throws ParseException {
@@ -190,68 +205,59 @@ public class RegistarcijaAlbuma extends JFrame {
 			return;
 		}
 		String naziv = txtNaziv.getText();
+		String opis = txtOpis.getText();
 		ArrayList<MuzickoDelo> dela = new ArrayList<MuzickoDelo>();
-		MuzickoDeloMenadzer mdm = sesija.getMuzickoDeloMenadzer();
+		MuzickiSadrzajMenadzer mdm = sesija.getMuzickiSadrzajMenadzer();
 		int[] redovi = pesme.getSelectedRows();
 		for (int i = 0; i < redovi.length; i++) {
-			for (MuzickoDelo m : mdm.getDela()) {
-				if (pesme.getValueAt(redovi[i], 0).equals(m.getNaziv())) {
+			for (MuzickoDelo m : mdm.getMuzickaDela()) {
+				if (pesme.getValueAt(redovi[i], 0).equals(m.getNaslov())) {
 					dela.add(m);
 				}
 			}
 		}
-		Date danRegistracije = new SimpleDateFormat("dd.MM.yyyy").parse(dtDor.getJFormattedTextField().getText());
+		String txtRegistracije = dtDor.getJFormattedTextField().getText();
+		SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyyy.");
+		String txtRegistracije2 = sdf2.format(sdf1.parse(txtRegistracije));
+		Date danRegistracije = new SimpleDateFormat("dd.MM.yyyy.").parse(txtRegistracije2);
 		Izvodjac izvodjac = sesija.getIzvodjac((String)cmbIzvodjac.getSelectedItem());
-		Album noviAlbum = new Album(naziv, dela, urednik, izvodjac, danRegistracije, true);
-		noviAlbum.getIzvodjac().addIzdatAlbum(noviAlbum);
-		AlbumKontroler albumKontroler = sesija.getAlbumKontroler();
-		albumKontroler.addAlbum(noviAlbum);
-		sesija.setAlbumKontroler(albumKontroler);
-		refresh();
-	}
-	
-	private void refresh() {
-		KorisniciMenadzer km = sesija.getKorisnici();
-		HashMap<String, Urednik> zahtevi = km.getZahteviUrednika();
-		Iterator<Entry<String, Urednik>> it = zahtevi.entrySet().iterator();
-		while (it.hasNext()) {
-			@SuppressWarnings("rawtypes")
-			HashMap.Entry pair = (HashMap.Entry)it.next();
-			Urednik u = (Urednik)pair.getValue();
-			if (u.getAlbumZaRegistracju().equals(txtNaziv.getText())) {
-				zahtevi.remove(u.getNalog().getKorisnickoIme());
-				break;
+		ZanroviMenadzer zm = sesija.getZanroviMenadzer();
+		List<Zanr> listaZanrova = new ArrayList<Zanr>();
+		int[] redoviZanrovi = zanrovi.getSelectedRows();
+		for (int i = 0; i < redoviZanrovi.length; i++) {
+			for (Zanr z : zm.getSviZanrovi()) {
+				if (zanrovi.getValueAt(redoviZanrovi[i], 0).equals(z.getNazivZanra())) {
+					listaZanrova.add(z);
+				}
 			}
-	    }
-		km.setZahteviUrednika(zahtevi);
-		sesija.setKorisnici(km);
-		ucitajZahteve();
-		if (urednik == null) {
-			JOptionPane.showMessageDialog(null, "Nemaju zahtevi za registraciju albuma.");
-			RegistarcijaAlbuma.this.dispose();
 		}
-		pesme.setModel(new DefaultTableModel(null, new String[] {"Naziv" ,"Opis", "Datum izdavanja"}));
+		Album noviAlbum = new Album(naziv, opis, danRegistracije,  izvodjac, (Urednik)Sesija.getTrenutniKorisnik(), true, listaZanrova, dela, false); // NA OVO SE VRATITI
+		//Album noviAlbum = new Album(txtRegistracije2, txtRegistracije2, danRegistracije, izvodjac, urednik, rootPaneCheckingEnabled);
+		sesija.getMuzickiSadrzajMenadzer().getMuzickiSadrzaj().add(noviAlbum);
 	}
 	
 	private String validiraj() {
 		if (txtNaziv.getText().isEmpty()) {
 			return "Naziv je obavezno polje.";
 		}
-		if (pesme.getSelectionModel().isSelectionEmpty()) {
-			return "Morate odabrati pesmu.";
-		
-		}
 		if (cmbIzvodjac.getSelectedIndex() == -1) {
 			return "Morate odabrati izvodjaca.";
 		}
 		if (dtDor.getJFormattedTextField().getText().isEmpty()) {
-			return "Morate odabrati datum.";
+			return "Morate odabrati datum registracije.";
+		}
+		if (pesme.getSelectionModel().isSelectionEmpty()) {
+			return "Morate odabrati pesmu.";
+		}
+		if (zanrovi.getSelectionModel().isSelectionEmpty()) {
+			return "Morate odabrati bar jedan zanr.";
 		}
 		return "";
 	}
 	
 	private void dodajPesmu(String umetnickoIme) throws Exception {
-		new DodajMuzickoDelo(sesija,sesija.getIzvodjac(umetnickoIme), 0);
+		new DodajMuzickoDelo(sesija, "Dodavanje muzickog dela", 422, 422, sesija.getIzvodjac(umetnickoIme), 0);
 		ucitajPesme(umetnickoIme);
 	}
 }

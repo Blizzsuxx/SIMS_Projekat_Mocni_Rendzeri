@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +16,7 @@ import model.MuzickoDelo;
 import model.Par;
 import model.Pol;
 import model.Zanr;
+import view.Slikovit;
 
 public abstract class Constants {
 	
@@ -44,8 +44,14 @@ public abstract class Constants {
 	
 	public static BufferedImage GRUPA_IKONA;
 	
-
+	// dodaj konsruktor za ovaj dio
 	public static final MuzickoDelo BARBIE_GIRL = new MuzickoDelo("Aqua - Barbie Girl", "Barbi devojka");
+	public static final MuzickoDelo PANTERI = new MuzickoDelo("Roki Vulovic - Panteri", "Panteri");
+	public static final MuzickoDelo ORELOLA = new MuzickoDelo("Narodna Pesma - Ore Lola", "Ore Lola");
+	
+	public static final List<Slikovit> DELA = Collections.unmodifiableList(Arrays.asList(PANTERI, BARBIE_GIRL));
+	public static final List<Slikovit> DELA2 = Collections.unmodifiableList(Arrays.asList(ORELOLA));
+	
 
 	public static final String FILE_SEPARATOR = System.getProperty("file.separator");
 	

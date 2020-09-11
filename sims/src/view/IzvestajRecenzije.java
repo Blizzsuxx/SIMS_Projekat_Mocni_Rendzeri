@@ -81,13 +81,16 @@ public class IzvestajRecenzije extends JFrame {
 		add(new JLabel("Naziv dela"));
 		tfDelo = new JTextField(20);
 		add(tfDelo);
-		tfDelo.setText(recenzija.getDelo().getNaziv()+"");
+		tfDelo.setText(recenzija.getDelo().getNaslov()+"");
 		
 		add(new JLabel("Izvodjac")); //ovo menjati!!! jer moze biti vise izvodjaca
 		tfIzvodjac = new JTextField(20);
 		add(tfIzvodjac);
-		tfIzvodjac.setText(recenzija.getDelo().getNaziv()+"");
+
+		
 		btnBack=new JButton("Nazad");
+
+		tfIzvodjac.setText(recenzija.getDelo().getNaslov()+"");
 		add(btnBack);
 		
 		//prikaz teksta recenzije,, broja kon=mentara ocena, komentara.....

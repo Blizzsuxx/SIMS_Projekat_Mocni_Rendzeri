@@ -37,7 +37,7 @@ public class GlasanjeMenadzer {
 				String nazivDela = parts[0];
 				int brojGlasova = Integer.parseInt(parts[1]);
 				for (MuzickoDelo m : dela) {
-					if (m.getNaziv().equals(nazivDela)) {
+					if (m.getNaslov().equals(nazivDela)) {
 						Glasanje g = new Glasanje(m, brojGlasova);
 						glasovi.add(g);
 					}
@@ -51,8 +51,8 @@ public class GlasanjeMenadzer {
 			for (String urednik : urednici) {
 				String[] delovi = urednik.split(";");
 				Pol p = Pol.valueOf(delovi[3]);
-				Urednik u = new Urednik(delovi[0], delovi[1], delovi[2], p, new SimpleDateFormat("dd.MM.yyyy").parse(delovi[4]), delovi[5],
-						 delovi[6], new SimpleDateFormat("dd.MM.yyyy").parse(delovi[7]), Boolean.parseBoolean(delovi[8]));
+				Urednik u = new Urednik(delovi[0], delovi[1], delovi[2], p, new SimpleDateFormat("dd.MM.yyyy.").parse(delovi[4]), delovi[5],
+						 delovi[6], new SimpleDateFormat("dd.MM.yyyy.").parse(delovi[7]), Boolean.parseBoolean(delovi[8]));
 				Urednik postoji = (Urednik) km.trazi(u.getNalog().getKorisnickoIme());
 				if (postoji != null)
 					uredniciKojiSuGlasali.add(u);
@@ -78,7 +78,7 @@ public class GlasanjeMenadzer {
 	
 	public void addGlas(Glasanje g) {
 		for (Glasanje glas : glasovi) {
-			if (glas.getMuzickoDelo().getNaziv().equals(g.getMuzickoDelo().getNaziv())) {
+			if (glas.getMuzickoDelo().getNaslov().equals(g.getMuzickoDelo().getNaslov())) {
 				return;
 			}
 		}

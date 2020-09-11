@@ -1,6 +1,5 @@
 package model;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 /***********************************************************************
  * Module:  Clan.java
@@ -81,7 +80,6 @@ public Clan(Date datumPrikljucivanja, Date datumNapustanja, Pojedinacanizvodjac 
 }
 public String toFileString() {
 	String ad="";
-	String pattern = "dd.MM.yyyy.";
 	SimpleDateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;
 	ad+=df.format(datumPrikljucivanja)+",";//
 	if(this.getDatumNapustanja()==null) {

@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.ImageIcon;
 
+import model.Korisnik;
 import model.MuzickoDelo;
 
 public class MuzickoDeloLabel extends ImageLabel {

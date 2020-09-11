@@ -46,13 +46,15 @@ public abstract class Korisnik implements Slikovit {
 	   }
 	   }
    
-   public Korisnik(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, String sifra, String korisnickoIme, Date datum, boolean status) {
+   public Korisnik(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja,
+		   String sifra, String korisnickoIme, Date datum, boolean status) {
 	super();
 	this.ime = ime;
 	this.prezime = prezime;
 	this.eMail = eMail;
 	this.pol = pol;
 	this.datumRodjenja = datumRodjenja;
+	this.status = status;
 	this.nalog = new Nalog(sifra, korisnickoIme, datum, status);
 }
    
@@ -162,7 +164,6 @@ public abstract class Korisnik implements Slikovit {
 
 	public String toFileString() {
 		//pera preic pera@gmail.com muski 02.05.2001. sifra1 pera1 04.11.2010. true a
-		String pattern = "dd/MM/yyyy";
 		SimpleDateFormat df = Constants.FORMAT_ZA_DATUM;
 		String ad=this.ime+","+this.prezime+","+this.eMail+","+this.pol.toString()+",";
 		ad+=df.format(this.getDatumRodjenja())+","+this.nalog.getSifra();

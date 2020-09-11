@@ -22,23 +22,19 @@ import model.Administrator;
 import model.Korisnik;
 import model.KorisnikAplikacije;
 import model.Pol;
+import model.Sesija;
 import model.Urednik;
-import view.KorisnikAddEdit;
 import view.Slikovit;
 import view.TableModelWrapper;
 
-import model.Uloga;
-import model.Album;
 
 /** @pdOid 121daa1d-b073-437c-95b7-7f061b5ef5df */
 public class KorisniciMenadzer {
    /** @pdRoleInfo migr=no name=Korisnik assc=association25 mult=1 type=Aggregation */
    private HashMap<String, Korisnik> korisnici;
-   private HashMap<String, Urednik> zahteviUrednika;
-	public KorisniciMenadzer(List<String[]> readAll,ArrayList<String> zahteviZaReg) {
+	public KorisniciMenadzer(List<String[]> readAll) {
 	// TODO Auto-generated constructor stub
 	   korisnici = new HashMap<String, Korisnik>();
-	   zahteviUrednika = new HashMap<String, Urednik>();
 	   SimpleDateFormat format = Constants.FORMAT_ZA_DATUM;
 	   for(String[] s : readAll) {
 		   String ime = s[0].trim();
@@ -78,26 +74,7 @@ public class KorisniciMenadzer {
 				break;
 		   }
 	   }
-	   ucitajZahteve(zahteviZaReg);
 	}
-	
-	private void ucitajZahteve(ArrayList<String> zahtevi) {
-		for (String linija : zahtevi) {
-			String[] parts = linija.split(";");
-			Urednik urednik = (Urednik)trazi(parts[0]);
-			urednik.setAlbumZaRegistracju(parts[1]);
-			zahteviUrednika.put(urednik.getNalog().getKorisnickoIme(), urednik);
-		}
-	}
-	
-	public HashMap<String, Urednik> getZahteviUrednika() {
-		   return zahteviUrednika;
-	   	}
-
-	   public void setZahteviUrednika(HashMap<String, Urednik> zahteviUrednika) {
-		   this.zahteviUrednika = zahteviUrednika;
-	   	}
-   
    
    public HashMap<String, Korisnik> getKorisnici()
    {
@@ -121,8 +98,9 @@ public class KorisniciMenadzer {
 			@SuppressWarnings("rawtypes")
 			HashMap.Entry pair = (HashMap.Entry)it.next();
 			Korisnik k = (Korisnik)pair.getValue();
+			if (k.getNalog().getKorisnickoIme().equals(Sesija.getTrenutniKorisnik().getNalog().getKorisnickoIme()))
+				continue;
 			data.add(new Object[] {k.getNalog().getKorisnickoIme(), k.getIme(), k.getPrezime(), k.getDatumRodjenja(), k.isStatus()});
-	        it.remove();
 		}
 		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
 	}
@@ -137,12 +115,7 @@ public class KorisniciMenadzer {
     	  korisnici.put(k.getNalog().getKorisnickoIme(), k);
    }
    
-   public void dodajZahtevUrednika(Urednik urednik, String nazivAlbuma) {
-	   if (!zahteviUrednika.containsKey(urednik.getNalog().getKorisnickoIme())) {
-		   urednik.setAlbumZaRegistracju(nazivAlbuma);
-		   zahteviUrednika.put(urednik.getNalog().getKorisnickoIme(), urednik);
-	   }
-   }
+ 
    
    /** @pdOid 59cb0526-ada2-4d39-93a6-eaaf6a8f1733 */
    public Korisnik trazi(String korisnickoIme) {
@@ -184,7 +157,7 @@ public class KorisniciMenadzer {
 	   List<Korisnik> lista = new ArrayList<>();
 	   for (Korisnik k : korisnici.values()) 
 		   if (k.isStatus() && k instanceof Urednik)
-			   lista.add(k);
+			   lista.add((Urednik) k);
 	   
 	   return lista;
 	   
@@ -218,44 +191,12 @@ public List<Korisnik> vratiSveAktivneKorisnike() {
 }
 public Collection<? extends Slikovit> traziZaSearch(String textZaSearch) {
 	ArrayList<Slikovit> rezultat = new ArrayList<>();
-	for(Korisnik a : this.korisnici.values()) {
+	for(Korisnik a : this.vratiUrednike()) {
 		if(a.Ime().contains(textZaSearch)) {
 			rezultat.add(a);
 		}
 	}
 	return rezultat;
 }
-private void sacuvajZahteve() {
-	   PrintWriter pw = null;
-	   String sep=System.getProperty("file.separator");
-	   String putanja ="." + sep + "fajlovi" + sep + "zahteviZaRegAlbuma.txt";
-	   try {
-		   pw = new PrintWriter(new FileWriter(putanja, false));
-		   if (zahteviUrednika.isEmpty()) {
-				  pw.print("");
-				  return;
-		   }
-		   Iterator<Entry<String, Urednik>> it = zahteviUrednika.entrySet().iterator();
-			while (it.hasNext()) {
-				@SuppressWarnings("rawtypes")
-				HashMap.Entry pair = (HashMap.Entry)it.next();
-				Urednik urednik = (Urednik)pair.getValue();
-				pw.print(Urednik.ZahtevUrednika2String(urednik));
-		        it.remove();
-		    }
-		   pw.close();
-	   }
-	   catch(IOException e) {
-		   e.printStackTrace();
-	   }
-	   finally {
-		   if(pw != null) {
-				pw.close();
-		   }
-	   }
-	   
-}
-
-
 
 }

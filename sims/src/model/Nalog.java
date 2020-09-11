@@ -78,6 +78,7 @@ public class Nalog {
 				return true;}
 	}
 
+	@SuppressWarnings("deprecation")
 	public String toFileString(int i) {//txt txt datum tf
 		String ad="";
 		ad+=this.sifra+",";
@@ -98,7 +99,6 @@ public class Nalog {
 	}
 	
 	public static String Nalog2String(Nalog n) {
-		String pattern = "dd.MM.yyyy";
 		DateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;;
 		return n.getKorisnickoIme() + "|" + n.sifra + "|" + df.format(n.getDatumKreiranja()) + "|" +
 				bool2String(n.isStatus()) + System.lineSeparator();

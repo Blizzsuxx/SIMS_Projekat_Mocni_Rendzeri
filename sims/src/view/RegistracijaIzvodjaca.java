@@ -20,7 +20,6 @@ import model.Pojedinacanizvodjac;
 import model.Pol;
 import model.Sesija;
 import model.Zanr;
-import net.miginfocom.swing.MigLayout;
 
 import javax.swing.JRadioButton;
 import javax.swing.JPanel;
@@ -60,12 +59,14 @@ public class RegistracijaIzvodjaca extends JDialog {
 	private SpringLayout sl_dtDor;
 	public Sesija sesija;
 	private JRadioButton rbPojedinacniIzvodjac;
+	private JRadioButton rbGrupa;
 	private JTextArea txtOpis;
 	private JRadioButton rbMuski;
+	private JRadioButton rbtZenski;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public RegistracijaIzvodjaca(Sesija sesija) throws Exception {
-		this.setSize(450, 500);
+		this.setSize(392, 492);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setResizable(false);
 		setBackground(Color.BLACK);
@@ -81,11 +82,11 @@ public class RegistracijaIzvodjaca extends JDialog {
 		getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Umetnicko ime:");
-		lblNewLabel.setBounds(10, 11, 95, 14);
+		lblNewLabel.setBounds(20, 16, 95, 14);
 		getContentPane().add(lblNewLabel);
 		
 		txtUmetnickoIme = new JTextField();
-		txtUmetnickoIme.setBounds(103, 8, 218, 20);
+		txtUmetnickoIme.setBounds(103, 8, 270, 30);
 		getContentPane().add(txtUmetnickoIme);
 		txtUmetnickoIme.setColumns(10);
 		
@@ -97,23 +98,24 @@ public class RegistracijaIzvodjaca extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				pnlPojedinacniIzvodjac.setVisible(true);
 				pnlGrupa.setVisible(false);
-				
+				rbGrupa.setSelected(false);	
 			}
 		});
-		rbPojedinacniIzvodjac.setBounds(10, 48, 151, 23);
+		rbPojedinacniIzvodjac.setBounds(20, 48, 151, 23);
 		getContentPane().add(rbPojedinacniIzvodjac);
 		
-		JRadioButton rbGrupa = new JRadioButton("Grupa");
+		rbGrupa = new JRadioButton("Grupa");
 		rbGrupa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				pnlGrupa.setVisible(true);
 				pnlPojedinacniIzvodjac.setVisible(false);
+				rbPojedinacniIzvodjac.setSelected(false);
 			}
 		});
-		rbGrupa.setBounds(163, 48, 109, 23);
+		rbGrupa.setBounds(177, 48, 109, 23);
 		getContentPane().add(rbGrupa);
 		
-		pnlPojedinacniIzvodjac.setBounds(10, 78, 306, 234);
+		pnlPojedinacniIzvodjac.setBounds(10, 78, 363, 295);
 		getContentPane().add(pnlPojedinacniIzvodjac);
 		pnlPojedinacniIzvodjac.setLayout(null);
 		
@@ -122,16 +124,16 @@ public class RegistracijaIzvodjaca extends JDialog {
 		pnlPojedinacniIzvodjac.add(lblIme);
 		
 		txtIme = new JTextField();
-		txtIme.setBounds(106, 8, 189, 20);
+		txtIme.setBounds(178, 6, 175, 25);
 		pnlPojedinacniIzvodjac.add(txtIme);
 		txtIme.setColumns(10);
 		
 		JLabel lblPrezime = new JLabel("Prezime");
-		lblPrezime.setBounds(10, 42, 48, 14);
+		lblPrezime.setBounds(10, 57, 48, 14);
 		pnlPojedinacniIzvodjac.add(lblPrezime);
 		
 		txtPrezime = new JTextField();
-		txtPrezime.setBounds(106, 39, 189, 20);
+		txtPrezime.setBounds(178, 52, 175, 25);
 		pnlPojedinacniIzvodjac.add(txtPrezime);
 		txtPrezime.setColumns(10);
 		
@@ -147,85 +149,98 @@ public class RegistracijaIzvodjaca extends JDialog {
 		sl_dtDob.putConstraint(SpringLayout.WEST, dtDob.getJFormattedTextField(), 33, SpringLayout.WEST, dtDob);
 		sl_dtDob.putConstraint(SpringLayout.EAST, dtDob.getJFormattedTextField(), 211, SpringLayout.WEST, dtDob);
 		sl_dtDob = (SpringLayout) dtDob.getLayout();
-		dtDob.setBounds(106, 75, 189, 25);
+		dtDob.setBounds(178, 100, 175, 25);
 		pnlPojedinacniIzvodjac.add(dtDob);
 		
 		JLabel lblNewLabel_1 = new JLabel("Datum rodjenja");
-		lblNewLabel_1.setBounds(10, 81, 75, 14);
+		lblNewLabel_1.setBounds(10, 100, 97, 25);
 		pnlPojedinacniIzvodjac.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Datum smrti");
-		lblNewLabel_2.setBounds(10, 122, 75, 14);
+		lblNewLabel_2.setBounds(10, 153, 75, 25);
 		pnlPojedinacniIzvodjac.add(lblNewLabel_2);
 		
-		JDatePanelImpl date2Panel = new JDatePanelImpl(model, p);
+		UtilDateModel model2 = new UtilDateModel();
+		JDatePanelImpl date2Panel = new JDatePanelImpl(model2, p);
 		dtDod = new JDatePickerImpl(date2Panel, new DataLabelFormatter());
 		sl_dtDod = new SpringLayout();
 		sl_dtDod.putConstraint(SpringLayout.NORTH, dtDod.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDod);
 		sl_dtDod.putConstraint(SpringLayout.WEST, dtDod.getJFormattedTextField(), 33, SpringLayout.WEST, dtDod);
 		sl_dtDod.putConstraint(SpringLayout.EAST, dtDod.getJFormattedTextField(), 211, SpringLayout.WEST, dtDod);
 		sl_dtDod = (SpringLayout) dtDod.getLayout();
-		dtDod.setBounds(106, 115, 189, 25);
+		dtDod.setBounds(178, 153, 175, 25);
 		pnlPojedinacniIzvodjac.add(dtDod);
 		
 		pnlGrupa = new JPanel();
-		pnlGrupa.setSize(306, 234);
-		pnlGrupa.setLocation(284, 78);
+		pnlGrupa.setSize(363, 295);
+		pnlGrupa.setLocation(403, 78);
 		pnlGrupa.setLayout(null);
 		getContentPane().add(pnlGrupa);
 		
 		JLabel lblBrojClanova = new JLabel("Broj clanova");
-		lblBrojClanova.setBounds(10, 11, 64, 14);
+		lblBrojClanova.setBounds(10, 84, 94, 14);
 		pnlGrupa.add(lblBrojClanova);
 		
 		spnBrojClanova = new JSpinner();
 		spnBrojClanova.setModel(new SpinnerNumberModel(2, 2, 200, 1));
-		spnBrojClanova.setBounds(112, 8, 51, 20);
+		spnBrojClanova.setBounds(164, 79, 51, 25);
 		pnlGrupa.add(spnBrojClanova);
 		
 		JLabel lblDatumOsnivanja = new JLabel("Datum osnivanja");
-		lblDatumOsnivanja.setBounds(10, 45, 94, 14);
+		lblDatumOsnivanja.setBounds(10, 131, 94, 25);
 		pnlGrupa.add(lblDatumOsnivanja);
 		
-		JDatePanelImpl date3Panel = new JDatePanelImpl(model, p);
+		UtilDateModel model3 = new UtilDateModel();
+		JDatePanelImpl date3Panel = new JDatePanelImpl(model3, p);
 		dtDof = new JDatePickerImpl(date3Panel, new DataLabelFormatter());
 		sl_dtDof = new SpringLayout();
 		sl_dtDof.putConstraint(SpringLayout.NORTH, dtDof.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDof);
 		sl_dtDof.putConstraint(SpringLayout.WEST, dtDof.getJFormattedTextField(), 33, SpringLayout.WEST, dtDof);
 		sl_dtDof.putConstraint(SpringLayout.EAST, dtDof.getJFormattedTextField(), 211, SpringLayout.WEST, dtDof);
 		sl_dtDof = (SpringLayout) dtDof.getLayout();
-		dtDof.setBounds(112, 38, 189, 25);
+		dtDof.setBounds(164, 131, 189, 25);
 		pnlGrupa.add(dtDof);
 		
-		JDatePanelImpl date4Panel = new JDatePanelImpl(model, p);
+		UtilDateModel model4 = new UtilDateModel();
+		JDatePanelImpl date4Panel = new JDatePanelImpl(model4, p);
 		dtDor = new JDatePickerImpl(date4Panel, new DataLabelFormatter());
 		sl_dtDor = new SpringLayout();
 		sl_dtDor.putConstraint(SpringLayout.NORTH, dtDor.getJFormattedTextField(), 0, SpringLayout.NORTH, dtDor);
 		sl_dtDor.putConstraint(SpringLayout.WEST, dtDor.getJFormattedTextField(), 33, SpringLayout.WEST, dtDor);
 		sl_dtDor.putConstraint(SpringLayout.EAST, dtDor.getJFormattedTextField(), 211, SpringLayout.WEST, dtDor);
 		sl_dtDor = (SpringLayout) dtDor.getLayout();
-		dtDor.setBounds(112, 78, 189, 25);
+		dtDor.setBounds(164, 191, 189, 25);
 		pnlGrupa.add(dtDor);
 		
 		JLabel lblDatumRaspada = new JLabel("Datum raspada");
-		lblDatumRaspada.setBounds(10, 86, 86, 14);
+		lblDatumRaspada.setBounds(10, 191, 86, 25);
 		pnlGrupa.add(lblDatumRaspada);
 		
 		JLabel lblOpis = new JLabel("Opis");
-		lblOpis.setBounds(10, 189, 48, 14);
+		lblOpis.setBounds(10, 259, 48, 14);
 		pnlPojedinacniIzvodjac.add(lblOpis);
 		
 		JLabel lblPol = new JLabel("Pol");
-		lblPol.setBounds(10, 160, 48, 14);
+		lblPol.setBounds(10, 205, 48, 14);
 		pnlPojedinacniIzvodjac.add(lblPol);
 		
 		rbMuski = new JRadioButton("Muski");
+		rbMuski.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rbtZenski.setSelected(false);
+			}
+		});
 		rbMuski.setSelected(true);
-		rbMuski.setBounds(101, 156, 61, 23);
+		rbMuski.setBounds(178, 201, 61, 23);
 		pnlPojedinacniIzvodjac.add(rbMuski);
 		
-		JRadioButton rbtZenski = new JRadioButton("Zenski");
-		rbtZenski.setBounds(178, 156, 67, 23);
+		rbtZenski = new JRadioButton("Zenski");
+		rbtZenski.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rbMuski.setSelected(false);
+			}
+		});
+		rbtZenski.setBounds(286, 201, 67, 23);
 		pnlPojedinacniIzvodjac.add(rbtZenski);
 		
 		txtOpis = new JTextArea();
@@ -233,7 +248,7 @@ public class RegistracijaIzvodjaca extends JDialog {
 		txtOpis.setWrapStyleWord(true);
 		txtOpis.setRows(4);
 		txtOpis.setLineWrap(true);
-		txtOpis.setBounds(106, 184, 190, 39);
+		txtOpis.setBounds(178, 245, 175, 39);
 		pnlPojedinacniIzvodjac.add(txtOpis);
 		Border border = BorderFactory.createLineBorder(Color.LIGHT_GRAY);
 		txtOpis.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(10, 10, 10, 10)));
@@ -244,20 +259,21 @@ public class RegistracijaIzvodjaca extends JDialog {
 				registruj();
 			}
 		});
-		btnRegistruj.setBounds(242, 352, 89, 23);
+		btnRegistruj.setBounds(284, 409, 89, 23);
 		getContentPane().add(btnRegistruj);
 		
 		JLabel lblZanr = new JLabel("Zanr:");
-		lblZanr.setBounds(10, 334, 48, 14);
+		lblZanr.setBounds(20, 394, 48, 14);
 		getContentPane().add(lblZanr);
 		
 		cmbZanr = new JComboBox();
-		cmbZanr.setBounds(10, 352, 184, 22);
+		cmbZanr.setBounds(20, 409, 184, 22);
 		getContentPane().add(cmbZanr);
 		ZanroviMenadzer zm = sesija.getZanroviMenadzer();
 		for (Zanr z : zm.getSviZanrovi())
 		{
-			cmbZanr.addItem(z.getNazivZanra());
+			if (z.isStatus())
+				cmbZanr.addItem(z.getNazivZanra());
 		}
 		
 		addComponentListener(new ComponentAdapter() {
@@ -267,6 +283,7 @@ public class RegistracijaIzvodjaca extends JDialog {
 			}
 		});
 		
+		pnlGrupa.setVisible(false);;
 	}
 	
 	private void registruj() {
@@ -284,7 +301,6 @@ public class RegistracijaIzvodjaca extends JDialog {
 					JOptionPane.showMessageDialog(null, msg);
 					return;
 				}
-				
 				if (!dtDod.getJFormattedTextField().getText().isEmpty()) {
 					registrujIzvodjaca(txtUmetnickoIme.getText(), new Zanr((String)cmbZanr.getSelectedItem(), true), txtIme.getText(), txtPrezime.getText(), 
 							dtDob.getJFormattedTextField().getText(), 
@@ -311,15 +327,15 @@ public class RegistracijaIzvodjaca extends JDialog {
 					return;
 				}
 					
-				if (!dtDof.getJFormattedTextField().getText().isEmpty()) {
+				if (!dtDor.getJFormattedTextField().getText().isEmpty()) {
 					registrujGrupu(txtUmetnickoIme.getText(), new Zanr((String)cmbZanr.getSelectedItem(),true), 
 							((Integer)spnBrojClanova.getValue()), dtDof.getJFormattedTextField().getText(), 
 							dtDor.getJFormattedTextField().getText());
 				}
 				else {
 					registrujGrupu(txtUmetnickoIme.getText(), new Zanr((String)cmbZanr.getSelectedItem(),true), 
-							((Integer)spnBrojClanova.getValue()), null, 
-							dtDor.getJFormattedTextField().getText());
+							((Integer)spnBrojClanova.getValue()), dtDof.getJFormattedTextField().getText(), 
+							null);
 				}
 			} 
 			catch (ParseException e1) {
@@ -329,15 +345,22 @@ public class RegistracijaIzvodjaca extends JDialog {
 	}
 	
 	private void registrujIzvodjaca(String umetnickoIme, Zanr zanr, String ime, String prezime, String dob, String dod, String pol, String opis) throws ParseException
-	{
+	{ 
+		SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyyy.");
+		String dob2 = sdf2.format(sdf1.parse(dob));
 		Pol p = Pol.valueOf(pol);
 		Pojedinacanizvodjac pi = null;
-		if (!dod.isEmpty()) {
-			pi = new Pojedinacanizvodjac(umetnickoIme, zanr, true, ime, prezime, new SimpleDateFormat("dd.MM.yyyy").parse(dob), 
-					new SimpleDateFormat("dd.MM.yyyy").parse(dod), opis, p);
+		if (!dod.isEmpty()) { 
+			
+			String dod2 = sdf2.format(sdf1.parse(dod));
+			pi = new Pojedinacanizvodjac(false, umetnickoIme, zanr, true, ime, prezime, new SimpleDateFormat("dd.MM.yyyy.").parse(dob2),
+					new SimpleDateFormat("dd.MM.yyyy.").parse(dod2), opis, p);
 		}
 		else {
-			pi = new Pojedinacanizvodjac(umetnickoIme, zanr, true, ime, prezime, new SimpleDateFormat("dd.MM.yyyy").parse(dob), 
+
+
+			pi = new Pojedinacanizvodjac(false, umetnickoIme, zanr, true, ime, prezime, new SimpleDateFormat("dd.MM.yyyy.").parse(dob2),
 					null, opis, p);
 		}
 			if (!sesija.addUmetnici(pi))
@@ -346,13 +369,20 @@ public class RegistracijaIzvodjaca extends JDialog {
 	
 	private void registrujGrupu(String umetnickoIme, Zanr zanr, int brojClanova, String dof, String dor) throws ParseException
 	{
+		SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyyy.");
+		String dof2 = sdf2.format(sdf1.parse(dof));
 		Grupa g = null;
 		if (!dor.isEmpty()) {
-			g = new Grupa(umetnickoIme, zanr, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy").parse(dof), 
-					new SimpleDateFormat("dd.MM.yyyy").parse(dor));
+			
+			String dor2 = sdf2.format(sdf1.parse(dor));
+			g = new Grupa(false,umetnickoIme, zanr, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy.").parse(dof2), 
+					new SimpleDateFormat("dd.MM.yyyy.").parse(dor2));
+
 		}
 		else {
-			g = new Grupa(umetnickoIme, zanr, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy").parse(dof), 
+
+			g = new Grupa(false, umetnickoIme, zanr, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy.").parse(dof2),
 					null);
 		}
 		if (!sesija.addGrupe(g))
@@ -368,8 +398,8 @@ public class RegistracijaIzvodjaca extends JDialog {
 		{
 			return "Prezime je obavezno polje.";
 		}
-		if (dtDob.getJFormattedTextField().getText() == null) {
-			return "Morate odabrati datum.";
+		if (dtDob.getJFormattedTextField().getText().isEmpty()) {
+			return "Morate odabrati datum rodjenja.";
 		}
 		return "";
 	}
@@ -379,8 +409,8 @@ public class RegistracijaIzvodjaca extends JDialog {
 		{
 			return "Broj clanova mora biti veci od jedan.";
 		}
-		if (dtDof.getJFormattedTextField().getText() == null) {
-			return "Morate odabrati datum.";
+		if (dtDof.getJFormattedTextField().getText().isEmpty()) {
+			return "Morate odabrati datum formiranja.";
 		}
 		return "";
 	}

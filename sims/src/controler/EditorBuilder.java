@@ -40,8 +40,10 @@ public class EditorBuilder {
 		atributi.add(mapiranNaAtribut);
 	}
 
+	@SuppressWarnings("unchecked")
 	public JPanel napraviPanel(EditorPanel panel) {
 		panel.setRedovi(redovi);
+		@SuppressWarnings("rawtypes")
 		Class klasa = objekatZaIzmeniti.getClass();
 
 		Iterator<JTextField> iter1 = panel.getTekstFields().iterator();

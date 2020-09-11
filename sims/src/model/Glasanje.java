@@ -31,7 +31,7 @@ public class Glasanje {
 	}
 	
 	public static String Glasanje2String(Glasanje glasanje) {
-		return glasanje.getMuzickoDelo().getNaziv() + ";" + glasanje.getBrojGlasova() + System.lineSeparator();
+		return glasanje.getMuzickoDelo().getNaslov() + ";" + glasanje.getBrojGlasova() + System.lineSeparator();
 	}
 }
 

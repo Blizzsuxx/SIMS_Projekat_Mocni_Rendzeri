@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -228,7 +229,12 @@ public class UrednikHomepage extends Homepage {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+				// OVDJE VRATITI MUZICKI SADRZAJ ZANROVE KOJE IMA UREDNIK
+				TopListeProzor tlp = new TopListeProzor
+						(UrednikHomepage.this, "Kreiranje Top Liste", 1200, 500,
+								 UrednikHomepage.this.getSesija().getMuzickiSadrzajMenadzer().vratiAktivanMuzickiSadrzaj()
+								, koloneMuzickogSadrzaja);
+				tlp.setVisible(true);
 				
 			}
 	    	

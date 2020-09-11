@@ -41,7 +41,7 @@ public class MediaPlayer extends MojDialog {
     UtisakView komentari, recenzije;
     MuzickoDelo delo;
     
-    private JButton dugmeKomentar, dugmeRecenzija, dugmeIzbrisiRecenziju;
+    private JButton dugmeKomentar, dugmeRecenzija; //dugmeIzbrisiRecenziju;
     private Korisnik trenutniKorisnik;
     private JTextArea poljeKomentar, poljeRecenzija;
     

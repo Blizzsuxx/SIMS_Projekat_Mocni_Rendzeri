@@ -279,7 +279,20 @@ public class MuzickiSadrzajMenadzer {
 		return rezultat;
 	}
 	
-	
+	public List<MuzickiSadrzaj> vratiMuzickiSadrzajUrednika(List<Zanr> zanroviUrednika){ // vraca sadrzaj na osnovu zanrova urednika
+		List<MuzickiSadrzaj> temp = new ArrayList<>();
+		for (MuzickiSadrzaj ms: this.muzickiSadrzaj) {
+			if (ms.isStatus()) {
+				for (Zanr z: ms.getZanrovi()) {
+					if (zanroviUrednika.contains(z)) {
+						temp.add(ms);
+						break;
+					}
+				}
+			}
+		}
+		return temp;
+	}
 	public List<MuzickiSadrzaj> getMuzickiSadrzaj() {
 		return muzickiSadrzaj;
 	}

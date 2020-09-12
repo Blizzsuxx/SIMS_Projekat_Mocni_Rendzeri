@@ -40,6 +40,7 @@ public class CitacDatoteka {
 	private GlasanjeMenadzer glasanjeMenadzer;
 	
 	private MuzickiSadrzajMenadzer muzickiSadrzajMenadzer;
+	private ToplisteMenadzer toplisteMenadzer;
 	
 	public MuzickiSadrzajMenadzer getMuzickiSadrzajMenadzer() {
 		return muzickiSadrzajMenadzer;
@@ -127,6 +128,8 @@ public class CitacDatoteka {
 		muzickiSadrzajMenadzer = new MuzickiSadrzajMenadzer(izvodjaci, korisnici, zanrovi, 
 				"fajlovi"+System.getProperty("file.separator")+"muzickiSadrzaj.txt", 
 				"fajlovi"+System.getProperty("file.separator")+"albumDjela.txt");
+		toplisteMenadzer = new ToplisteMenadzer(korisnici, muzickiSadrzajMenadzer, 
+				"fajlovi"+System.getProperty("file.separator")+"topliste.txt");
 		
 		utisakmenadzer = new UtisakMenadzer(muzickiSadrzajMenadzer.getMuzickaDela(), korisnici, ucitaj("utisci.txt", ';'));
 		zakRecMenadzer = new ZakazanaRecenzijaMenadzer(korisnici,(ArrayList<Recenzija>)utisakmenadzer.getRecenzije(), ucitaj("zakazaneRecenzije.txt", ';'));
@@ -207,6 +210,7 @@ public class CitacDatoteka {
 		zanrovi.sacuvajZanroveUrednike(); //
 		muzickiSadrzajMenadzer.sacuvaj("fajlovi"+System.getProperty("file.separator")+"muzickiSadrzaj.txt"); //
 		muzickiSadrzajMenadzer.sacuvajAlbumeDjela("fajlovi"+System.getProperty("file.separator")+"albumDjela.txt");
+		toplisteMenadzer.upisi("fajlovi"+System.getProperty("file.separator")+"topliste.txt");
 	}
 
 
@@ -271,6 +275,15 @@ public void sacuvajPracenja() {
 			}
 		}
 	}
+
+public ToplisteMenadzer getToplisteMenadzer() {
+	return toplisteMenadzer;
+}
+
+public void setToplisteMenadzer(ToplisteMenadzer toplisteMenadzer) {
+	this.toplisteMenadzer = toplisteMenadzer;
+}
+	
 	
 
 }

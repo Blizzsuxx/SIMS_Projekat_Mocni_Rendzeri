@@ -23,6 +23,7 @@ import controler.KorisniciMenadzer;
 import controler.LoginMenadzer;
 import controler.MuzickiSadrzajMenadzer;
 import controler.RecenzijeZaIzmenuMenadzer;
+import controler.ToplisteMenadzer;
 import controler.UtisakMenadzer;
 import controler.ZakazanaRecenzijaMenadzer;
 import controler.ZanroviMenadzer;
@@ -41,6 +42,7 @@ public class Sesija {
    private ZanroviMenadzer zanroviMenadzer;
    
    private MuzickiSadrzajMenadzer muzickiSadrzajMenadzer;
+   private ToplisteMenadzer toplisteMenadzer;
    
    private ZakazanaRecenzijaMenadzer zakazanaRecenzijaMenadzer;
    
@@ -228,7 +230,7 @@ public class Sesija {
          return trenutnaSesija;
       } else {
          trenutnaSesija = new Sesija(korisnik, datoteke.getKorisnici(), datoteke.getIzvodjaci(), datoteke.getZanrovi(), datoteke.getMuzickiSadrzajMenadzer(),
-        		 datoteke.getMuzickiSadrzajMenadzer().getMuzickaDela()
+        		datoteke.getToplisteMenadzer(), datoteke.getMuzickiSadrzajMenadzer().getMuzickaDela()
         		 , datoteke.getGrupe(),
                datoteke.getIzvodjaci().getSolo(), datoteke.getRecenzije(), datoteke.getUtisakmenadzer(), datoteke.getZakRecMenadzer(), datoteke.getIzmena(), datoteke.getGlasanjeMenadzer(),menadzer);
          return trenutnaSesija;
@@ -236,7 +238,7 @@ public class Sesija {
    }
 
    private Sesija(Korisnik trenutniKorisnik, KorisniciMenadzer korisnici, IzvodjacMenadzer izvodjacMenadzer, ZanroviMenadzer zanroviMenadzer, MuzickiSadrzajMenadzer muzickiSadrzajMenadzer,
-		   Collection<MuzickoDelo> dela, Collection<Grupa> grupe, Collection<Pojedinacanizvodjac> umetnici, 
+		   ToplisteMenadzer toplisteMenadzer, Collection<MuzickoDelo> dela, Collection<Grupa> grupe, Collection<Pojedinacanizvodjac> umetnici, 
 		   Collection<Recenzija> recenzije, UtisakMenadzer utisakMenadzer,ZakazanaRecenzijaMenadzer zakazanaRecenzijaMenadzer,
          RecenzijeZaIzmenuMenadzer recenzijeZaIzmenuMenadzer, GlasanjeMenadzer glasanjeMenadzer, LoginMenadzer loginMenadzer) {
       super();
@@ -244,6 +246,7 @@ public class Sesija {
       this.setIzvodjacMenadzer(izvodjacMenadzer);
       this.setZanroviMenadzer(zanroviMenadzer);
       this.setMuzickiSadrzajMenadzer(muzickiSadrzajMenadzer);
+      this.setToplisteMenadzer(toplisteMenadzer);
       this.setUtisakMenadzer(utisakMenadzer);
       this.setZakazanaRecenzijaMenadzer(zakazanaRecenzijaMenadzer);
       this.setRecenzijeZaIzmenuMenadzer(recenzijeZaIzmenuMenadzer);
@@ -453,6 +456,22 @@ public MuzickiSadrzajMenadzer getMuzickiSadrzajMenadzer() {
 
 public void setMuzickiSadrzajMenadzer(MuzickiSadrzajMenadzer muzickiSadrzajMenadzer) {
 	this.muzickiSadrzajMenadzer = muzickiSadrzajMenadzer;
+}
+
+
+
+
+
+public ToplisteMenadzer getToplisteMenadzer() {
+	return toplisteMenadzer;
+}
+
+
+
+
+
+public void setToplisteMenadzer(ToplisteMenadzer toplisteMenadzer) {
+	this.toplisteMenadzer = toplisteMenadzer;
 }
 
 	

@@ -31,7 +31,7 @@ public class TopLista {
 
 	public String toFile() { // ovu funkciju bozivati kada muzickiSadrzaj ima size bar 1
 		StringBuilder sb = new StringBuilder();
-		sb.append(String.format("%s,%s,%s|",this.status, this.naziv, this.korisnik.getNalog().getKorisnickoIme()));
+		sb.append(String.format("%s;%s;%s;",this.status, this.naziv, this.korisnik.getNalog().getKorisnickoIme()));
 		for (MuzickiSadrzaj ms: this.muzickiSadrzaj)
 			sb.append(String.format("%s,", ms.getNaslov()));
 		sb.append("\n");

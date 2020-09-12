@@ -13,15 +13,15 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
-import org.jdesktop.swingx.JXTable;
-
 import model.MuzickiSadrzaj;
+import model.TipMuzickogSadrzaja;
 import model.Zanr;
 import net.miginfocom.swing.MigLayout;
 
@@ -39,36 +39,37 @@ public class TopListeProzor extends MojDialog implements ActionListener {
 	
 	private ImageIcon addI = new ImageIcon("slike/add.gif");
 	private JButton btnAdd = new JButton(addI);
-	private ComboZanr cz1;
-	private List<Zanr> izabraniZanrovi1;
-	private JCheckBox albumCB1, muzickoCB1;
-	private JButton btnSearch1 = new JButton(scaledS);
-	private JButton btnRefresh1 = new JButton(scaledR);
-	private JXTable table1;
+	private ComboZanr cz;
+	private List<Zanr> izabraniZanrovi;
+	private JCheckBox albumCB, muzickoCB;
+	private JButton btnSearch = new JButton(scaledS);
+	private JButton btnRefresh = new JButton(scaledR);
+	private JTable table1;
 	
 	private ImageIcon deleteI = new ImageIcon("slike/remove.gif");
 	private JButton btnDelete = new JButton(deleteI);
-	private ComboZanr cz2;
-	private List<Zanr> izabraniZanrovi2;
-	private JCheckBox albumCB2, muzickoCB2;
-	private JButton btnSearch2 = new JButton(scaledS);
-	private JButton btnRefresh2 = new JButton(scaledR);
 	private JTable table2;
 	
 	private String[] imenaKolona;
 	private List<MuzickiSadrzaj> muzickiSadrzaj;
 	private List<Zanr> zanrovi;
+	private JFrame parent;
+	
+	private List<MuzickiSadrzaj> trenutniSadrzaj;
 	
 	public TopListeProzor(JFrame parent, String naziv, int dim1, int dim2,
 			List<MuzickiSadrzaj> muzickiSadrzaj, String[] imenaKolona) {
 		super(parent, naziv, dim1, dim2);
 		
+		this.parent = parent;
 		this.imenaKolona = imenaKolona;
 		this.muzickiSadrzaj = muzickiSadrzaj;
 		this.zanrovi = ((Homepage)parent).getSesija().getZanroviMenadzer().vratiAktivneZanrove();
+		this.izabraniZanrovi = new ArrayList<>();
+		
+		this.trenutniSadrzaj = new ArrayList<>();
 		
 		this.setLayout(new BorderLayout());
-		
 		
 		this.initGUI();
 		this.actionGUI();
@@ -88,16 +89,16 @@ public class TopListeProzor extends MojDialog implements ActionListener {
 		base2 = new JPanel(new BorderLayout());
 		JPanel dugmici1 = new JPanel(new MigLayout("wrap 6", "[]10[]10[]10[]10[]10[]", "[]"));
 		dugmici1.add(btnAdd);
-		cz1 = new ComboZanr(); // treba napuniti kombo boxove
-		cz1.kreirajSadrzaj(zanrovi);
-		dugmici1.add(cz1);
-		albumCB1 = new JCheckBox("Album"); muzickoCB1 = new JCheckBox("Muzicko Delo");
-		dugmici1.add(albumCB1);
-		dugmici1.add(muzickoCB1);
-		dugmici1.add(btnSearch1);
-		dugmici1.add(btnRefresh1);
+		cz = new ComboZanr(); // treba napuniti kombo boxove
+		cz.kreirajSadrzaj(zanrovi);
+		dugmici1.add(cz);
+		albumCB = new JCheckBox("Album"); muzickoCB = new JCheckBox("Muzicko Delo");
+		dugmici1.add(albumCB);
+		dugmici1.add(muzickoCB);
+		dugmici1.add(btnSearch);
+		dugmici1.add(btnRefresh);
 		base2.add(dugmici1, BorderLayout.NORTH);
-		table1 = new JXTable(new MuzickiSadrzajModel(imenaKolona, muzickiSadrzaj, null));
+		table1 = new JTable(new MuzickiSadrzajModel(imenaKolona, muzickiSadrzaj, null));
 		table1.getTableHeader().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		table1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table1.getTableHeader().setReorderingAllowed(false);
@@ -106,18 +107,10 @@ public class TopListeProzor extends MojDialog implements ActionListener {
 		this.add(base2, BorderLayout.WEST);
 		
 		base3 = new JPanel(new BorderLayout());
-		JPanel dugmici2 = new JPanel(new MigLayout("wrap 6", "[]10[]10[]10[]10[]10[]", "[]"));
+		JPanel dugmici2 = new JPanel(new MigLayout("wrap 1", "30[]", "[]"));
 		dugmici2.add(btnDelete);
-		cz2 = new ComboZanr(); // treba napuniti kombo boxove
-		cz2.kreirajSadrzaj(zanrovi);
-		dugmici2.add(cz2);
-		albumCB2 = new JCheckBox("Album"); muzickoCB2 = new JCheckBox("Muzicko Delo");
-		dugmici2.add(albumCB2);
-		dugmici2.add(muzickoCB2);
-		dugmici2.add(btnSearch2);
-		dugmici2.add(btnRefresh2);
 		base3.add(dugmici2, BorderLayout.NORTH); // na ovo se vratiti 
-		table2 = new JTable(new MuzickiSadrzajModel(imenaKolona, new ArrayList<>(), null));
+		table2 = new JTable(new MuzickiSadrzajModel(imenaKolona, trenutniSadrzaj, null));
 		table2.getTableHeader().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		table2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table2.getTableHeader().setReorderingAllowed(false);
@@ -132,7 +125,90 @@ public class TopListeProzor extends MojDialog implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+				if (!trenutniSadrzaj.isEmpty() && !nazivTf.getText().isEmpty()) {
+					String naziv = nazivTf.getText();
+					
+					TopListeProzor.this.dispose();
+				}
+				
+			}
+			
+		});
+		
+		btnAdd.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int rIndex = table1.getSelectedRow();
+				if (rIndex < 0) {
+					JOptionPane.showMessageDialog(TopListeProzor.this, "Morate selektovati sadrzaj.",
+							 "Info", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					String nazivSadrzaja = table1.getModel().getValueAt(rIndex, 0).toString();
+					MuzickiSadrzaj ms = ((Homepage)parent).getSesija().
+							getMuzickiSadrzajMenadzer().vratiNaOsnovuNazive(nazivSadrzaja);
+					if (!trenutniSadrzaj.contains(ms)) {
+						trenutniSadrzaj.add(ms);
+						TopListeProzor.this.refreshData2();
+					}
+				}
+				
+			}
+			
+		});
+		
+		btnDelete.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int rIndex = table2.getSelectedRow();
+				if (rIndex < 0) {
+					JOptionPane.showMessageDialog(TopListeProzor.this, "Morate selektovati sadrzaj.",
+							 "Info", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					String nazivSadrzaja = table2.getModel().getValueAt(rIndex, 0).toString();
+					MuzickiSadrzaj ms = ((Homepage)parent).getSesija().
+							getMuzickiSadrzajMenadzer().vratiNaOsnovuNazive(nazivSadrzaja);
+					trenutniSadrzaj.remove(ms);
+					TopListeProzor.this.refreshData2();
+				}
+				
+			}
+		});
+		
+		btnSearch.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				izabraniZanrovi.clear();
+				cz.vratiSelektovaneZanrove(izabraniZanrovi);
+				if (!izabraniZanrovi.isEmpty()) {
+					TipMuzickogSadrzaja indikator = null;
+					if (muzickoCB.isSelected() && !albumCB.isSelected())
+						indikator = TipMuzickogSadrzaja.MUZICKO_DELO;
+					else if (!muzickoCB.isSelected() && albumCB.isSelected())
+						indikator = TipMuzickogSadrzaja.ALBUM;
+					((Homepage)parent).getSesija().getMuzickiSadrzajMenadzer().
+					pretrageMuzickogSadrzajaNaOsnovuZanrova(muzickiSadrzaj, izabraniZanrovi, indikator);
+					TopListeProzor.this.refreshData1();
+				}
+				
+			}
+			
+		});
+		
+		btnRefresh.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(!((Homepage)parent).getSesija().getMuzickiSadrzajMenadzer().vratiAktivanMuzickiSadrzaj().isEmpty()){
+					TopListeProzor.this.muzickiSadrzaj.clear();
+					for (MuzickiSadrzaj ms: ((Homepage)parent).getSesija().
+							getMuzickiSadrzajMenadzer().vratiAktivanMuzickiSadrzaj()) {
+						TopListeProzor.this.muzickiSadrzaj.add(ms);
+					}
+					TopListeProzor.this.refreshData1();
+				}
 				
 			}
 			
@@ -144,5 +220,14 @@ public class TopListeProzor extends MojDialog implements ActionListener {
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	private void refreshData1() {
+		MuzickiSadrzajModel km = (MuzickiSadrzajModel)table1.getModel();
+		km.fireTableDataChanged();
+	}
+	
+	private void refreshData2() {
+		MuzickiSadrzajModel km = (MuzickiSadrzajModel)table2.getModel();
+		km.fireTableDataChanged();
+	}
 }

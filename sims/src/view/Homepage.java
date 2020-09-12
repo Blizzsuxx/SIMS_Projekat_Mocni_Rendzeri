@@ -1,15 +1,25 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URL;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.text.html.HTMLDocument;
 
 import model.Sesija;
 import net.miginfocom.swing.MigLayout;
@@ -92,6 +102,16 @@ public abstract class Homepage extends JFrame {
 		});
 
 		this.setJMenuBar(menubar);
+		JPanel panel = new JPanel(new MigLayout());
+		ImageIcon reklamaPrva = new ImageIcon("slike/reklama.gif");
+		ImageIcon obradjenaReklamaPrva = new ImageIcon(reklamaPrva.getImage().getScaledInstance(528, 100, Image.SCALE_DEFAULT));
+		ImageIcon reklamaDruga = new ImageIcon("slike/reklama2.gif");
+		ImageIcon obradjenaReklamaDruga = new ImageIcon(reklamaDruga.getImage().getScaledInstance(528, 100, Image.SCALE_DEFAULT));
+		JLabel labelaPrva = new JLabel(obradjenaReklamaPrva);
+		JLabel labelaDruga = new JLabel(obradjenaReklamaDruga);
+		panel.add(labelaPrva, "wrap");
+		panel.add(labelaDruga);
+		 this.add(panel, "south");
 	}
 
 

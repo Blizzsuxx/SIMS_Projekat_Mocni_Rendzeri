@@ -72,4 +72,22 @@ public class ToplisteMenadzer {
 		}
 	}
 	
+	public boolean kreirajTopListu(String nazivListe, String nazivKorisnika, List<MuzickiSadrzaj> lista) {
+		for (TopLista tp: this.topListe) 
+			if (tp.getKorisnik().getNalog().getKorisnickoIme().equals(nazivKorisnika) && 
+					tp.getNaziv().equals(nazivListe))
+				return false;
+		Korisnik k = this.korisniciMenadzer.trazi(nazivKorisnika);
+		TopLista tp = new TopLista(nazivListe, true, k, lista);
+		this.topListe.add(tp);
+		return true;
+	}
+	
+	public List<TopLista> topListeKorisnika(String korisnickoIme){
+		List<TopLista> temp = new ArrayList<>();
+		for (TopLista tp: this.topListe)
+			if (tp.isStatus() && tp.getKorisnik().getNalog().getKorisnickoIme().equals(korisnickoIme))
+				temp.add(tp);
+		return temp;
+	}
 }

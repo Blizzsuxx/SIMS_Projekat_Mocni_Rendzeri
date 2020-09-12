@@ -56,9 +56,10 @@ public class TopListeProzor extends MojDialog implements ActionListener {
 	private JFrame parent;
 	
 	private List<MuzickiSadrzaj> trenutniSadrzaj;
+	private String nazivTrenutnogKorisnika;
 	
 	public TopListeProzor(JFrame parent, String naziv, int dim1, int dim2,
-			List<MuzickiSadrzaj> muzickiSadrzaj, String[] imenaKolona) {
+			List<MuzickiSadrzaj> muzickiSadrzaj, String[] imenaKolona, String nazivTrenutnogKorisnika) {
 		super(parent, naziv, dim1, dim2);
 		
 		this.parent = parent;
@@ -68,6 +69,7 @@ public class TopListeProzor extends MojDialog implements ActionListener {
 		this.izabraniZanrovi = new ArrayList<>();
 		
 		this.trenutniSadrzaj = new ArrayList<>();
+		this.nazivTrenutnogKorisnika = nazivTrenutnogKorisnika;
 		
 		this.setLayout(new BorderLayout());
 		
@@ -127,8 +129,12 @@ public class TopListeProzor extends MojDialog implements ActionListener {
 			public void actionPerformed(ActionEvent arg0) {
 				if (!trenutniSadrzaj.isEmpty() && !nazivTf.getText().isEmpty()) {
 					String naziv = nazivTf.getText();
-					
-					TopListeProzor.this.dispose();
+					if (((Homepage)parent).getSesija().getToplisteMenadzer().
+							kreirajTopListu(naziv, nazivTrenutnogKorisnika, trenutniSadrzaj)) {
+						TopListeProzor.this.dispose();
+					} else {
+						  JOptionPane.showMessageDialog(TopListeProzor.this,"Doslo do greske.");  
+					}
 				}
 				
 			}

@@ -33,6 +33,8 @@ public abstract class Homepage extends JFrame {
 	 protected String[] koloneMuzickihDela = {"Naslov", "Opis", "Datum Izdavanja", "Izvodjac", "Urednik", 
 			 "P.O. Korisnika", "P.O. Urednika"};
 	 
+	 protected String[] koloneTopListi = {"Naslov", "Korisnicko Ime", "Broj Muzickog Sadrzaja", "Status"};
+	 
 	public Homepage(Sesija sesija) {
 		this.getContentPane().setLayout(new MigLayout("fillx"));
 		this.sesija = sesija;

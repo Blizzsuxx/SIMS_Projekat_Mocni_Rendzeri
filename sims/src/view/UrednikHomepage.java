@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -13,8 +13,11 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import controler.Constants;
+import model.MuzickiSadrzaj;
 import model.Sesija;
+import model.TopLista;
 import model.Uloga;
+import model.Urednik;
 
 public class UrednikHomepage extends Homepage {
 	 private static final long serialVersionUID = 1L;
@@ -229,11 +232,14 @@ public class UrednikHomepage extends Homepage {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// OVDJE VRATITI MUZICKI SADRZAJ ZANROVE KOJE IMA UREDNIK
+				String trenutniUser = Sesija.getTrenutniKorisnik().getNalog().getKorisnickoIme();
+				Urednik u = (Urednik) UrednikHomepage.this.getSesija().getKorisnici().trazi(trenutniUser);
+				List<MuzickiSadrzaj> temp = UrednikHomepage.this.getSesija().getMuzickiSadrzajMenadzer().
+						vratiMuzickiSadrzajUrednika(u.getZanrovi());
 				TopListeProzor tlp = new TopListeProzor
 						(UrednikHomepage.this, "Kreiranje Top Liste", 1200, 500,
-								 UrednikHomepage.this.getSesija().getMuzickiSadrzajMenadzer().vratiAktivanMuzickiSadrzaj()
-								, koloneMuzickogSadrzaja);
+								temp
+								, koloneMuzickogSadrzaja, trenutniUser);
 				tlp.setVisible(true);
 				
 			}
@@ -244,8 +250,10 @@ public class UrednikHomepage extends Homepage {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				String trenutniUser = Sesija.getTrenutniKorisnik().getNalog().getKorisnickoIme();
+				List<TopLista> liste = UrednikHomepage.this.getSesija().getToplisteMenadzer().topListeKorisnika(trenutniUser);
+				TopListaProzor tlp = new TopListaProzor(UrednikHomepage.this, "Top liste", 700, 300, liste, koloneTopListi);
+				tlp.setVisible(true);
 			}
 	    	
 	    });

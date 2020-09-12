@@ -13,6 +13,7 @@ import java.util.Properties;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -30,10 +31,12 @@ import org.jdatepicker.impl.UtilDateModel;
 import org.jdesktop.swingx.JXTable;
 
 import controler.IzvestajViseUrednikaMenadzer;
+import model.Korisnik;
 import model.PodaciUrednikaZaIzvestaj;
 import model.Sesija;
 import model.Urednik;
 import net.miginfocom.swing.MigLayout;
+
 
 
 public class IzvestajViseUrednika extends JFrame {
@@ -49,6 +52,7 @@ public class IzvestajViseUrednika extends JFrame {
 	private UtilDateModel model1, model2;
 	private Sesija s;
 	private IzvestajViseUrednikaMenadzer men;
+	private JButton btnPregledJednog;
 	
 	public IzvestajViseUrednika(Sesija s) {
 		this.s=s;
@@ -60,7 +64,7 @@ public class IzvestajViseUrednika extends JFrame {
 		initActions();
 	}
 	public void  initGui() {
-	MigLayout mig =  new MigLayout("wrap 2", "[]10[]", "[]10[]10[]10[]"); //dodati datume
+	MigLayout mig =  new MigLayout("wrap 2", "[]10[]", "[]10[]10[]10[]10[]"); //dodati datume
 	setLayout(mig);
 	
 	table = new JXTable(new UrednikModel(this.men.getPodaci()));
@@ -127,9 +131,36 @@ public class IzvestajViseUrednika extends JFrame {
 	btnOk=new JButton();
 	btnOk.setText("Filtriraj");
 	add(btnOk);
+	btnPregledaj= new JButton("Pogledaj Jednog");
+	add(btnPregledaj);
 	
 	}
+	
 	private void initActions() {
+		btnPregledJednog.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int i=IzvestajViseUrednika.this.table.getSelectedRow();
+			
+				if (i<0) {
+					JOptionPane.showMessageDialog(IzvestajViseUrednika.this, "Morate selektovati bar jedan red", "Info", JOptionPane.INFORMATION_MESSAGE);
+				}
+				else {
+				String ime=(String) IzvestajViseUrednika.this.table.getValueAt(i, 0);
+				String[] imePrezime=ime.split(" ");
+				for(Urednik u: IzvestajViseUrednika.this.urednici) {
+					if(u.getIme().equals(imePrezime[0]) && ((Korisnik)u).getPrezime().equals(imePrezime[1])) {
+						IzvestajUrednika iz=new IzvestajUrednika(IzvestajViseUrednika.this.s, u);
+						iz.setVisible(true);
+						break;
+					}
+				}
+				
+			}}
+			
+				
+		});
 		btnBack.addActionListener(new ActionListener() {
 			
 			@Override

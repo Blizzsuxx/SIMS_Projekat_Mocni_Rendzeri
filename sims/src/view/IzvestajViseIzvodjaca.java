@@ -48,6 +48,7 @@ public class IzvestajViseIzvodjaca extends JFrame{
 	private JDatePickerImpl DatePicker1;
 	private JDatePickerImpl DatePicker2;
 	private UtilDateModel model1, model2;
+	private JButton btnPogledajJedan;
 	
 	
 	
@@ -63,7 +64,7 @@ public class IzvestajViseIzvodjaca extends JFrame{
 	}
 
 	private void initGui() {
-		MigLayout mig =  new MigLayout("wrap 2", "[]10[]", "[]10[]10[]10[]10[]"); //dodati datume, odabir zanra
+		MigLayout mig =  new MigLayout("wrap 2", "[]10[]", "[]10[]10[]10[]10[]10[]"); //dodati datume, odabir zanra
 		setLayout(mig);
 		
 		
@@ -134,8 +135,23 @@ public class IzvestajViseIzvodjaca extends JFrame{
 		add(cbZanr);
 		add(btnBack);
 		add(btnOk);//dugme za filtriranje
+		btnPogledajJedan=new JButton("Pogledaj jedan");
+		add(btnPogledajJedan);
 	}
 	private void initActions() {
+		btnPogledajJedan.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					IzvestajIzvodjaca iz=new IzvestajIzvodjaca(IzvestajViseIzvodjaca.this.sesija, "Izvestaj izvodjaca", 615, 455);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					System.out.println("Greska kod ucitavanja izvestaja za jednog izvodjaca");
+				}
+				
+			}
+		});
 		btnBack.addActionListener(new ActionListener() {
 			
 			@Override

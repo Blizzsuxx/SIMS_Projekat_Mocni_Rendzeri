@@ -13,6 +13,7 @@ import controler.LoginMenadzer;
 import model.IzvestajSvihZanrova;
 import model.Recenzija;
 import model.Sesija;
+import model.Urednik;
 import view.IzvestajRecenzije;
 import view.IzvestajUrednika;
 import view.IzvestajViseIzvodjaca;
@@ -37,13 +38,13 @@ public class Main {
 		datoteke.inicijalizuj();
 		
 		
-		//LoginMenadzer login = new LoginMenadzer(datoteke);
-		//login.uloguj();
-		Sesija s=Sesija.namestiSesiju(datoteke.getKorisnici().trazi("pera1"), datoteke,null);
+		LoginMenadzer login = new LoginMenadzer(datoteke);
+		login.uloguj();
+		//Sesija s=Sesija.namestiSesiju(datoteke.getKorisnici().trazi("pera1"), datoteke,null);
 		
-		IzvestajZanra iz=new IzvestajZanra(s, s.getZanroviMenadzer().getSviZanrovi().get(0));
+		//IzvestajZanra iz=new IzvestajZanra(s, s.getZanroviMenadzer().getSviZanrovi().get(0));
 		
-		iz.setVisible(true);
+		//iz.setVisible(true);
 	}
 
 	private static void initUI() {

@@ -6,10 +6,8 @@ import java.util.Date;
 import java.util.List;
 
 import controler.Constants;
-import view.Slikovit;
 
-
-public class MuzickoDelo extends MuzickiSadrzaj implements Slikovit {
+public class MuzickoDelo extends MuzickiSadrzaj {
 	private float prosecnaOcenaKorisnika;
 	private float prosecnaOcenaUrednika;
 	

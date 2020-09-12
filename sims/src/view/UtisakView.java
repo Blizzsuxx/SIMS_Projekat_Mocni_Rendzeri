@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JPopupMenu;
 
 import model.Utisak;
 import net.miginfocom.layout.CC;
@@ -21,7 +22,12 @@ public class UtisakView extends JPanel{
     
     private int brojUtisaka=0;
 
+
     public void addKomentar(Utisak komentar){
+        addKomentar(komentar, null);
+    }
+
+    public void addKomentar(Utisak komentar, JPopupMenu meni){
         JLabel username = new JLabel(komentar.getPisac().getNalog().getKorisnickoIme());
         JTextArea sadrzaj = new JTextArea(komentar.getText());
         sadrzaj.setEditable(false);
@@ -38,6 +44,12 @@ public class UtisakView extends JPanel{
         panel.add(username, BorderLayout.NORTH);
         panel.add(skrol, BorderLayout.CENTER);
         this.add(panel, componentConstraints);
+
+        if(meni != null){
+            sadrzaj.add(meni);
+            sadrzaj.setComponentPopupMenu(meni);
+        }
+
         sadrzaj.setSize(panel.getSize());
         sadrzaj.setPreferredSize(panel.getPreferredSize());
         brojUtisaka++;

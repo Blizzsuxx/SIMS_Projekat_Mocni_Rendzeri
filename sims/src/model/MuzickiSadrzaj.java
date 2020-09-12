@@ -6,8 +6,9 @@ import java.util.Date;
 import java.util.List;
 
 import controler.Constants;
+import view.Slikovit;
 
-public abstract class MuzickiSadrzaj {
+public abstract class MuzickiSadrzaj implements Slikovit {
 	protected String naslov;
 	protected String opis;
 	protected Date datumIzdavanja;

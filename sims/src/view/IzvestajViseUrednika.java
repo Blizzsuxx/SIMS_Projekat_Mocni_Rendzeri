@@ -137,7 +137,7 @@ public class IzvestajViseUrednika extends JFrame {
 	}
 	
 	private void initActions() {
-		btnPregledJednog.addActionListener(new ActionListener() {
+		btnPregledaj.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -180,7 +180,8 @@ public class IzvestajViseUrednika extends JFrame {
 				java.util.Date dan=model1.getValue(); 
 				java.util.Date dan1=model2.getValue();
 				 men=new IzvestajViseUrednikaMenadzer(dan, dan1, (ArrayList<Urednik>)s.getUrednici());
-			   IzvestajViseUrednika.this.table=new JXTable(new UrednikModel(men.getPodaci()));
+				 ((UrednikModel)table.getModel()).setIzvestaj(men.getPodaci());
+			   //IzvestajViseUrednika.this.table=new JXTable(new UrednikModel(men.getPodaci()));
 				 //System.out.println(men.getPodaci().get(0).getBrojRecenzija());
 				 //System.out.println( table.getModel().getValueAt(0, 1));
 				refreshData();

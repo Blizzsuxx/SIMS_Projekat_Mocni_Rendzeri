@@ -6,9 +6,8 @@ import java.util.Date;
 import java.util.List;
 
 import controler.Constants;
-import view.Slikovit;
 
-public class Album extends MuzickiSadrzaj implements Slikovit {
+public class Album extends MuzickiSadrzaj {
 	private List<MuzickoDelo> listaPesama;
 	private boolean odobreno;
 	

@@ -26,9 +26,16 @@ public class UrednikModel extends AbstractTableModel {
 	
 	public UrednikModel(ArrayList<PodaciUrednikaZaIzvestaj> izvestaj) {
 		super();
+		
 		this.izvestaj = izvestaj;
 		this.urednici=new ArrayList<Urednik>();
 	}
+
+
+	public void setIzvestaj(ArrayList<PodaciUrednikaZaIzvestaj> izvestaj) {
+		this.izvestaj = izvestaj;
+	}
+
 	@Override
 	public String getColumnName(int index) {
 	    return naslovi[index];
@@ -50,11 +57,11 @@ public class UrednikModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
+		
 		if(izvestaj.size()==0) {
 			
-		
     Urednik s=((ArrayList<Urednik>)urednici).get(rowIndex); 
-		
+	
 		switch (columnIndex) {
 		case 0:
 			return s.getIme()+" "+s.getPrezime();
@@ -69,6 +76,7 @@ public class UrednikModel extends AbstractTableModel {
 		}
 		return null;}
 		else {
+		
 			PodaciUrednikaZaIzvestaj p=izvestaj.get(rowIndex);
 			switch(columnIndex) {
 			case 0:

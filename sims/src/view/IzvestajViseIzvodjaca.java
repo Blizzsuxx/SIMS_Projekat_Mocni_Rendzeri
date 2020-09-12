@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Properties;
 
 import javax.swing.JButton;
@@ -151,17 +152,11 @@ public class IzvestajViseIzvodjaca extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int d1= model1.getDay();
-				int month=model1.getMonth();
-				int year=model1.getYear();
-				int d2= model2.getDay();
-				int month2=model2.getMonth();
-				int year2=model2.getYear();
 				
-				LocalDate dan=convertToLocalDateViaInstant(d1, month, year);
-				LocalDate dan1=convertToLocalDateViaInstant(d2, month2, year2);
+				Date dan=model1.getValue(); 
+				Date dan1=model2.getValue();
 				String imeZanra=(String) cbZanr.getSelectedItem(); 
-				//IzvestajViseIzvodjaca.this.men.izlistajPoDatumimaIZanru(dan, dan1, imeZanra);
+				IzvestajViseIzvodjaca.this.men.izlistajPoDatumimaIZanru(dan, dan1, imeZanra);
 				//table1.new JXTable(new SinglIzvodjaciModel(men.getIzvodjaci()));
 				refreshData(); 
 				
@@ -171,10 +166,7 @@ public class IzvestajViseIzvodjaca extends JFrame{
 		});
 		
 	}
-	public LocalDate convertToLocalDateViaInstant(int d, int m, int y) {
-		LocalDate dan=LocalDate.of(y, m+1, d);
-		return dan;
-	}
+	
 	public void refreshData() {
 		
 		 

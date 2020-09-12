@@ -60,8 +60,8 @@ public class IzvestajSvihIzvodjacaMenadzer {
 		nov.setOcenaUrednika(ocenaUr/muzickaDela.size());
 		
 	}
-/*
-	public void izlistajPoDatumimaIZanru(LocalDate dan, LocalDate dan1, String imeZanra) {
+
+	public void izlistajPoDatumimaIZanru(Date dan, Date dan1, String imeZanra) {
 		for(IzvestajJednogIzvodjaca iz:this.izvodjaci) {
 			iz.setBrojDela(0);
 			iz.setBrojKomentara(0);
@@ -72,19 +72,24 @@ public class IzvestajSvihIzvodjacaMenadzer {
 			
 		}
 		
-	}*/
-/*
-	private void proveriPoDatumima(ArrayList<MuzickoDelo> muzickaDela, LocalDate dan, LocalDate dan1,
+	}
+
+	private void proveriPoDatumima(ArrayList<MuzickoDelo> muzickaDela, Date dan, Date dan1,
 			String imeZanra, IzvestajJednogIzvodjaca iz) {
 		double ocenaKo=0;
 		double ocenaUr=0; 
 		int brD=0;
-		@SuppressWarnings("deprecation")
-		Date danPocetka=new Date(dan.getYear(), dan.getMonthValue(), dan.getDayOfMonth());
-		@SuppressWarnings("deprecation")
-		Date dankraja=new Date(dan1.getYear(), dan1.getMonthValue(), dan1.getDayOfMonth());
+		//@SuppressWarnings("deprecation")
+		//Date danPocetka=new Date(dan.getYear(), dan.getMonthValue(), dan.getDayOfMonth());
+		//@SuppressWarnings("deprecation")
+		//Date dankraja=new Date(dan1.getYear(), dan1.getMonthValue(), dan1.getDayOfMonth());
+		if(dan.after(dan1)) {
+			Date d=dan;
+			dan=dan1;
+			dan1=d;
+		}
 		for(MuzickoDelo m: muzickaDela) {
-			if(m.getDatumIzdavanja().after(danPocetka) && m.getDatumIzdavanja().before(dankraja)) {
+			if(m.getDatumIzadavanja().after(dan) && m.getDatumIzadavanja().before(dan1)) {
 				for(Zanr z:m.getZanrovi()) {
 					if(z.getNazivZanra().equals(imeZanra)) {
 						iz.setBrojDela(iz.getBrojDela()+1);
@@ -107,6 +112,6 @@ public class IzvestajSvihIzvodjacaMenadzer {
 		iz.setOcenaUrednika(ocenaUr/brD);
 		iz.setBrojDela(brD);
 		
-	}*/
+	}
 
 }

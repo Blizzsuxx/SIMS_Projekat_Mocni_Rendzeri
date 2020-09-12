@@ -1,26 +1,27 @@
 package model;
 
-import java.sql.Date;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class PodaciUrednikaZaIzvestaj {
 	
-	private LocalDate danPocetka;
-	private LocalDate danKraja;
+	private Date danPocetka;
+	private Date danKraja;
 	private String Ime;
 	private int brojRecenzija, brojZadatihRecenzija, brojZaIzmenu;
 
-	public LocalDate getDanPocetka() {
+	public Date getDanPocetka() {
 		return danPocetka;
 	}
-	public void setDanPocetka(LocalDate danPocetka) {
+	public void setDanPocetka(Date danPocetka) {
 		this.danPocetka = danPocetka;
 	}
-	public LocalDate getDanKraja() {
+	public Date getDanKraja() {
 		return danKraja;
 	}
-	public void setDanKraja(LocalDate danKraja) {
+	public void setDanKraja(Date danKraja) {
 		this.danKraja = danKraja;
 	}
 	public String getIme() {
@@ -47,7 +48,7 @@ public class PodaciUrednikaZaIzvestaj {
 	public void setBrojZaIzmenu(int brojZaIzmenu) {
 		this.brojZaIzmenu = brojZaIzmenu;
 	}
-	public PodaciUrednikaZaIzvestaj(LocalDate danPocetka, LocalDate danKraja, String ime, int brojRecenzija,
+	public PodaciUrednikaZaIzvestaj(Date danPocetka, Date danKraja, String ime, int brojRecenzija,
 			int brojZadatihRecenzija, int brojZaIzmenu) {
 		super();
 		this.danPocetka = danPocetka;
@@ -61,25 +62,28 @@ public class PodaciUrednikaZaIzvestaj {
 		super();
 	}
 	@SuppressWarnings("deprecation")
-	public PodaciUrednikaZaIzvestaj(LocalDate danPocetka, LocalDate danKraja, Urednik u) {
+	public PodaciUrednikaZaIzvestaj(java.util.Date danPocetka2, java.util.Date danKraja2, Urednik u) {
 		super();
-		this.danPocetka = danPocetka;
-		this.danKraja = danKraja;
-		Date d=new Date(danPocetka.getYear(),danPocetka.getMonthValue(), danPocetka.getDayOfMonth());
-		Date d1=new Date(danKraja.getYear(), danKraja.getMonthValue(), danKraja.getDayOfMonth());
+		this.danPocetka = danPocetka2;
+		this.danKraja =danKraja2;
 		this.Ime=u.getIme()+" "+u.getPrezime();
 		this.brojRecenzija = 0;
 		this.brojZadatihRecenzija = 0;
 		this.brojZaIzmenu = 0;
+		if(danPocetka2==null) {
+			brojRecenzija=u.getIstorijaRecenzija().size();
+			brojZadatihRecenzija=u.getZakazaneRecenzije().size();
+			brojZaIzmenu=u.getRecezijaZaIzmenu().size();
+		}else {
 		ArrayList<Recenzija> rec=(ArrayList<Recenzija>) u.getIstorijaRecenzija();
-		for(int i=0; i<u.getIstorijaRecenzija().size(); i++) {
-			if(rec.get(i).getDatumUpisa().after(d) && rec.get(i).getDatumUpisa().before(d1)) {
+		for(int i=0; i<u.getIstorijaRecenzija().size(); i++) {		
+			if(rec.get(i).getDatumUpisa().after(danPocetka2) && rec.get(i).getDatumUpisa().before(danKraja2)) {
 				brojRecenzija++;
 			}
 		}
 		ArrayList<ZakazanaRecenzija> zRec=(ArrayList<ZakazanaRecenzija>) u.getZakazaneRecenzije();
 		for(int i=0; i<zRec.size(); i++) {
-			if(zRec.get(i).getDatumZakazivanja().after(d) && zRec.get(i).isUradeno()) {
+			if(zRec.get(i).getDatumZakazivanja().after(danPocetka2) && zRec.get(i).isUradeno()) {
 				brojZadatihRecenzija++;
 			}
 		}
@@ -90,7 +94,7 @@ public class PodaciUrednikaZaIzvestaj {
 			}
 		}
 	}
-	
+	}
 	
 
 }

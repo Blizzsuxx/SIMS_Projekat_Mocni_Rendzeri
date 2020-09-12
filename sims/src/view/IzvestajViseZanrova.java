@@ -41,7 +41,7 @@ public class IzvestajViseZanrova extends JFrame {
 		this.sesija=s;//potrebna da kazem lista zanrova sa nekim podacima kao, broj dela, prosecna ocena zanra preko dela, nesto tako?
 		s.namestiIzvestaj();
 	    lista=s.getIzvestajSvihZanrova().getSviZanrovi();
-		setSize(700, 700);
+		setSize(500, 500);
 		setResizable(false);
 		initGui();
 		initActions();

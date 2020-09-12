@@ -283,7 +283,7 @@ public void izvrsi() {
 
 
 public IzvestajSvihZanrovaMenadzer namestiIzvestaj() {
-	   this.izvestajSvihZanrova=new IzvestajSvihZanrovaMenadzer(this.getMuzickiSadrzajMenadzer().getMuzickaDela(), this.utisakMenadzer.getRecenzije(), sviZanrovi);
+	   this.izvestajSvihZanrova=new IzvestajSvihZanrovaMenadzer(this.getMuzickiSadrzajMenadzer().getMuzickaDela(), this.utisakMenadzer.getRecenzije(),this.zanroviMenadzer.getSviZanrovi());
 	   
 	return izvestajSvihZanrova;
 	   

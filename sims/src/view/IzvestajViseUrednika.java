@@ -1,9 +1,10 @@
-package view;
+ package view;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,6 +30,7 @@ import org.jdatepicker.impl.UtilDateModel;
 import org.jdesktop.swingx.JXTable;
 
 import controler.IzvestajViseUrednikaMenadzer;
+import model.PodaciUrednikaZaIzvestaj;
 import model.Sesija;
 import model.Urednik;
 import net.miginfocom.swing.MigLayout;
@@ -46,10 +48,12 @@ public class IzvestajViseUrednika extends JFrame {
 	private JDatePickerImpl DatePicker2, DatePicker1;
 	private UtilDateModel model1, model2;
 	private Sesija s;
+	private IzvestajViseUrednikaMenadzer men;
 	
 	public IzvestajViseUrednika(Sesija s) {
 		this.s=s;
 		this.urednici=s.getUrednici();
+		this.men=new IzvestajViseUrednikaMenadzer(null, null, (ArrayList<Urednik>)this.urednici);
 		initGui();
 		setSize(700, 700);
 		setResizable(false);
@@ -59,7 +63,7 @@ public class IzvestajViseUrednika extends JFrame {
 	MigLayout mig =  new MigLayout("wrap 2", "[]10[]", "[]10[]10[]10[]"); //dodati datume
 	setLayout(mig);
 	
-	table = new JXTable(new UrednikModel(this.urednici));
+	table = new JXTable(new UrednikModel(this.men.getPodaci()));
 	table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	table.getTableHeader().setReorderingAllowed(false);
 	JScrollPane sp = new JScrollPane(table);
@@ -142,30 +146,23 @@ public class IzvestajViseUrednika extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int d1= model1.getDay();
-				int month=model1.getMonth();
-				int year=model1.getYear();
-				int d2= model2.getDay();
-				int month2=model2.getMonth();
-				int year2=model2.getYear();
-				
-				LocalDate dan=convertToLocalDateViaInstant(d1, month, year); //uzima datume i pretrazuje koliko je recenzija svaki imao u odredenom preiodu, i ostalih stvari, i ocena u tom periodu?
-				//TODO mozda ne radi??? i proveri da li moze ovako ili mora preko sesije??
-				LocalDate dan1=convertToLocalDateViaInstant(d2, month2, year2);
-				IzvestajViseUrednikaMenadzer men=new IzvestajViseUrednikaMenadzer(dan, dan1, (ArrayList<Urednik>)s.getUrednici());
-				table=new JXTable(new UrednikModel(men.getPodaci()));
+				java.util.Date dan=model1.getValue(); 
+				java.util.Date dan1=model2.getValue();
+				 men=new IzvestajViseUrednikaMenadzer(dan, dan1, (ArrayList<Urednik>)s.getUrednici());
+			   IzvestajViseUrednika.this.table=new JXTable(new UrednikModel(men.getPodaci()));
+				 //System.out.println(men.getPodaci().get(0).getBrojRecenzija());
+				 //System.out.println( table.getModel().getValueAt(0, 1));
 				refreshData();
 				
 			}
 		});
 	}
-	public LocalDate convertToLocalDateViaInstant(int d, int m, int y) {
-		LocalDate dan=LocalDate.of(y, m+1, d);
-		return dan;
-	}
+	
+	
 	public void refreshData() {
-		
 		 UrednikModel sm=(UrednikModel) table.getModel();
+		//System.out.println( sm.getValueAt(0, 1));
+		 //ispise da je promenjen, ali ne namesti tabelu???
 			sm.fireTableDataChanged();
 			
 	}

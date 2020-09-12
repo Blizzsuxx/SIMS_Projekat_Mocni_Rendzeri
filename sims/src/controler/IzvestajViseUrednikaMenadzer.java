@@ -2,6 +2,7 @@ package controler;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
 import model.PodaciUrednikaZaIzvestaj;
 import model.Urednik;
@@ -26,7 +27,7 @@ public class IzvestajViseUrednikaMenadzer {
 		super();
 	}
 	
-	public IzvestajViseUrednikaMenadzer(LocalDate danPocetka, LocalDate danKraja, ArrayList<Urednik> sviUrednici) {
+	public IzvestajViseUrednikaMenadzer(Date danPocetka, Date danKraja, ArrayList<Urednik> sviUrednici) {
 		podaci=new ArrayList<PodaciUrednikaZaIzvestaj>();
 		for(Urednik u: sviUrednici) {
 			PodaciUrednikaZaIzvestaj i=new PodaciUrednikaZaIzvestaj(danPocetka, danKraja, u);

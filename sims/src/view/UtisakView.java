@@ -2,7 +2,6 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.PopupMenu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -11,9 +10,9 @@ import java.awt.event.KeyListener;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JPopupMenu;
 
 import model.Sesija;
 import model.Utisak;
@@ -67,18 +66,30 @@ public class UtisakView extends JPanel{
         	recenzijaMeni.add(izmeniItem);
         	recenzijaMeni.add(izbrisiItem);
         	sadrzaj.setComponentPopupMenu(recenzijaMeni);
-        	setListeners(izmeniItem, izbrisiItem, sadrzaj, komentar);
+        	setListeners(izmeniItem, izbrisiItem, sadrzaj, komentar, panel);
         }
         
     }
 
-    private void setListeners(JMenuItem izmeniItem, JMenuItem izbrisiItem, JTextArea sadrzaj, Utisak kom) {
+    private void setListeners(JMenuItem izmeniItem, JMenuItem izbrisiItem, JTextArea sadrzaj, Utisak kom, JPanel panel) {
   
 		izmeniItem.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				sadrzaj.setEditable(true);
+			}
+		});
+		
+		izbrisiItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				brojUtisaka--;
+				UtisakView.this.remove(panel);
+				UtisakView.this.setVisible(false);
+				UtisakView.this.setVisible(true);
+				kom.getDelo().getUtisci().remove(kom);
 			}
 		});
 		
@@ -96,16 +107,21 @@ public class UtisakView extends JPanel{
 			
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_ENTER)
+				if((e.getKeyCode() == KeyEvent.VK_ENTER) && e.isShiftDown())
 				{
-					e.consume();
-					sadrzaj.setEditable(false);
-					kom.setText(sadrzaj.getText());
+					sadrzaj.append(" \n");
 				}
+				
 				else if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
 				{
 					sadrzaj.setText(kom.getText());
 					sadrzaj.setEditable(false);
+				}
+				else if(e.getKeyCode() == KeyEvent.VK_ENTER)
+				{
+					e.consume();
+					sadrzaj.setEditable(false);
+					kom.setText(sadrzaj.getText());
 				}
 			}
 		});

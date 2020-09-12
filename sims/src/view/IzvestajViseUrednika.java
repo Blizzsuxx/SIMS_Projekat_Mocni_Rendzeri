@@ -181,9 +181,7 @@ public class IzvestajViseUrednika extends JFrame {
 				java.util.Date dan1=model2.getValue();
 				 men=new IzvestajViseUrednikaMenadzer(dan, dan1, (ArrayList<Urednik>)s.getUrednici());
 				 ((UrednikModel)table.getModel()).setIzvestaj(men.getPodaci());
-			   //IzvestajViseUrednika.this.table=new JXTable(new UrednikModel(men.getPodaci()));
-				 //System.out.println(men.getPodaci().get(0).getBrojRecenzija());
-				 //System.out.println( table.getModel().getValueAt(0, 1));
+			  
 				refreshData();
 				
 			}
@@ -193,8 +191,6 @@ public class IzvestajViseUrednika extends JFrame {
 	
 	public void refreshData() {
 		 UrednikModel sm=(UrednikModel) table.getModel();
-		//System.out.println( sm.getValueAt(0, 1));
-		 //ispise da je promenjen, ali ne namesti tabelu???
 			sm.fireTableDataChanged();
 			
 	}

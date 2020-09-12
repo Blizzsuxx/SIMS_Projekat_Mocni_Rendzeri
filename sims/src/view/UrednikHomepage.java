@@ -237,9 +237,9 @@ public class UrednikHomepage extends Homepage {
 				List<MuzickiSadrzaj> temp = UrednikHomepage.this.getSesija().getMuzickiSadrzajMenadzer().
 						vratiMuzickiSadrzajUrednika(u.getZanrovi());
 				TopListeProzor tlp = new TopListeProzor
-						(UrednikHomepage.this, "Kreiranje Top Liste", 1200, 500,
+						((Homepage)UrednikHomepage.this, "Kreiranje Top Liste", 1200, 500,
 								temp
-								, koloneMuzickogSadrzaja, trenutniUser);
+								, koloneMuzickogSadrzaja, trenutniUser, null, null);
 				tlp.setVisible(true);
 				
 			}

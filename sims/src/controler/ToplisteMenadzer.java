@@ -72,7 +72,7 @@ public class ToplisteMenadzer {
 		}
 	}
 	
-	public boolean kreirajTopListu(String nazivListe, String nazivKorisnika, List<MuzickiSadrzaj> lista) {
+	public boolean kreirajTopListu(String nazivListe, String nazivKorisnika, List<MuzickiSadrzaj> lista, List<TopLista> topListeKorisnika) {
 		for (TopLista tp: this.topListe) 
 			if (tp.getKorisnik().getNalog().getKorisnickoIme().equals(nazivKorisnika) && 
 					tp.getNaziv().equals(nazivListe))
@@ -80,6 +80,8 @@ public class ToplisteMenadzer {
 		Korisnik k = this.korisniciMenadzer.trazi(nazivKorisnika);
 		TopLista tp = new TopLista(nazivListe, true, k, lista);
 		this.topListe.add(tp);
+		if(topListeKorisnika != null)
+			topListeKorisnika.add(tp);
 		return true;
 	}
 	
@@ -90,4 +92,44 @@ public class ToplisteMenadzer {
 				temp.add(tp);
 		return temp;
 	}
+
+	public TopLista vratiTopListu(String nazivTopListe, String nazivKorisnika) {
+		for (TopLista tp: this.topListe)
+			if (tp.getKorisnik().getNalog().getKorisnickoIme().equals(nazivKorisnika) && tp.getNaziv().equals(nazivTopListe))
+				return tp;
+		return null;
+	}
+	
+	public TopLista vratiTopListuNaOsnovuImena(String nazivTopListe) {
+		for (TopLista tp: this.topListe)
+			if (tp.getNaziv().equals(nazivTopListe))
+				return tp;
+		return null;
+	}
+	
+	public List<TopLista> getTopListe() {
+		return topListe;
+	}
+
+	public void setTopListe(List<TopLista> topListe) {
+		this.topListe = topListe;
+	}
+
+	public KorisniciMenadzer getKorisniciMenadzer() {
+		return korisniciMenadzer;
+	}
+
+	public void setKorisniciMenadzer(KorisniciMenadzer korisniciMenadzer) {
+		this.korisniciMenadzer = korisniciMenadzer;
+	}
+
+	public MuzickiSadrzajMenadzer getMuzickiSadrzajMenadzer() {
+		return muzickiSadrzajMenadzer;
+	}
+
+	public void setMuzickiSadrzajMenadzer(MuzickiSadrzajMenadzer muzickiSadrzajMenadzer) {
+		this.muzickiSadrzajMenadzer = muzickiSadrzajMenadzer;
+	}
+	
+	
 }

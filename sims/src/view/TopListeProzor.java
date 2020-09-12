@@ -22,6 +22,7 @@ import javax.swing.ListSelectionModel;
 
 import model.MuzickiSadrzaj;
 import model.TipMuzickogSadrzaja;
+import model.TopLista;
 import model.Zanr;
 import net.miginfocom.swing.MigLayout;
 
@@ -30,7 +31,7 @@ public class TopListeProzor extends MojDialog implements ActionListener {
 
 	private JPanel base, base2, base3;
 	private JTextField nazivTf;
-	private JButton kreiraj;
+	private JButton kreiraj = new JButton("Kreiraj");
 	
 	private ImageIcon searchI = new ImageIcon("slike/search.jpg");
 	private ImageIcon scaledS = new ImageIcon(searchI.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
@@ -57,9 +58,12 @@ public class TopListeProzor extends MojDialog implements ActionListener {
 	
 	private List<MuzickiSadrzaj> trenutniSadrzaj;
 	private String nazivTrenutnogKorisnika;
+	private TopLista tp;
+	private List<TopLista> toplistaKorisnika;
 	
 	public TopListeProzor(JFrame parent, String naziv, int dim1, int dim2,
-			List<MuzickiSadrzaj> muzickiSadrzaj, String[] imenaKolona, String nazivTrenutnogKorisnika) {
+			List<MuzickiSadrzaj> muzickiSadrzaj, String[] imenaKolona, String nazivTrenutnogKorisnika, TopLista tp, 
+			List<TopLista> toplistaKorisnika) {
 		super(parent, naziv, dim1, dim2);
 		
 		this.parent = parent;
@@ -68,8 +72,15 @@ public class TopListeProzor extends MojDialog implements ActionListener {
 		this.zanrovi = ((Homepage)parent).getSesija().getZanroviMenadzer().vratiAktivneZanrove();
 		this.izabraniZanrovi = new ArrayList<>();
 		
-		this.trenutniSadrzaj = new ArrayList<>();
 		this.nazivTrenutnogKorisnika = nazivTrenutnogKorisnika;
+		this.tp = tp;
+		if (this.tp == null) {
+			this.trenutniSadrzaj = new ArrayList<>();
+		} else {
+			this.trenutniSadrzaj = tp.getMuzickiSadrzaj();
+			kreiraj.setEnabled(false);
+		}
+		this.toplistaKorisnika = toplistaKorisnika;
 		
 		this.setLayout(new BorderLayout());
 		
@@ -84,7 +95,6 @@ public class TopListeProzor extends MojDialog implements ActionListener {
 		base.add(nazivLb);
 		nazivTf = new JTextField(10);
 		base.add(nazivTf);
-		kreiraj = new JButton("Kreiraj");
 		base.add(kreiraj);
 		this.add(base, BorderLayout.NORTH);
 		
@@ -130,7 +140,7 @@ public class TopListeProzor extends MojDialog implements ActionListener {
 				if (!trenutniSadrzaj.isEmpty() && !nazivTf.getText().isEmpty()) {
 					String naziv = nazivTf.getText();
 					if (((Homepage)parent).getSesija().getToplisteMenadzer().
-							kreirajTopListu(naziv, nazivTrenutnogKorisnika, trenutniSadrzaj)) {
+							kreirajTopListu(naziv, nazivTrenutnogKorisnika, trenutniSadrzaj, toplistaKorisnika)) {
 						TopListeProzor.this.dispose();
 					} else {
 						  JOptionPane.showMessageDialog(TopListeProzor.this,"Doslo do greske.");  
@@ -172,11 +182,13 @@ public class TopListeProzor extends MojDialog implements ActionListener {
 					JOptionPane.showMessageDialog(TopListeProzor.this, "Morate selektovati sadrzaj.",
 							 "Info", JOptionPane.INFORMATION_MESSAGE);
 				} else {
-					String nazivSadrzaja = table2.getModel().getValueAt(rIndex, 0).toString();
-					MuzickiSadrzaj ms = ((Homepage)parent).getSesija().
+					if (trenutniSadrzaj.size() > 1) {
+						String nazivSadrzaja = table2.getModel().getValueAt(rIndex, 0).toString();
+						MuzickiSadrzaj ms = ((Homepage)parent).getSesija().
 							getMuzickiSadrzajMenadzer().vratiNaOsnovuNazive(nazivSadrzaja);
-					trenutniSadrzaj.remove(ms);
-					TopListeProzor.this.refreshData2();
+						trenutniSadrzaj.remove(ms);
+						TopListeProzor.this.refreshData2();
+					}
 				}
 				
 			}

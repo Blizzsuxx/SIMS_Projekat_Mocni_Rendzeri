@@ -3,6 +3,10 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.PopupMenu;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -23,21 +27,13 @@ public class UtisakView extends JPanel{
      */
     private static final long serialVersionUID = 1L;
     
-    private int brojUtisaka=0;
+    private int brojUtisaka=0;//Dodaj izmenjenu recenziju u utiske
 
     public void addKomentar(Utisak komentar){
     	komentar.getDelo().getUtisci().add(komentar);
         JLabel username = new JLabel(komentar.getPisac().getNalog().getKorisnickoIme());
         JTextArea sadrzaj = new JTextArea(komentar.getText());
-        if(komentar.getPisac().equals(Sesija.getTrenutniKorisnik()))
-        {
-        	JPopupMenu recenzijaMeni = new JPopupMenu();
-        	JMenuItem izmeniItem = new JMenuItem("Izmeni");
-        	JMenuItem izbrisiItem = new JMenuItem("Izbrisi");
-        	recenzijaMeni.add(izmeniItem);
-        	recenzijaMeni.add(izbrisiItem);
-        	sadrzaj.setComponentPopupMenu(recenzijaMeni);
-        }
+        
         sadrzaj.setEditable(false);
         JScrollPane skrol = new JScrollPane(sadrzaj);
         skrol.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -62,9 +58,61 @@ public class UtisakView extends JPanel{
         } catch(Exception e) {
 
         }
+        
+        if(komentar.getPisac().equals(Sesija.getTrenutniKorisnik()))
+        {
+        	JPopupMenu recenzijaMeni = new JPopupMenu();
+        	JMenuItem izmeniItem = new JMenuItem("Izmeni");
+        	JMenuItem izbrisiItem = new JMenuItem("Izbrisi");
+        	recenzijaMeni.add(izmeniItem);
+        	recenzijaMeni.add(izbrisiItem);
+        	sadrzaj.setComponentPopupMenu(recenzijaMeni);
+        	setListeners(izmeniItem, izbrisiItem, sadrzaj, komentar);
+        }
+        
     }
 
-    private int adjust(int number){
+    private void setListeners(JMenuItem izmeniItem, JMenuItem izbrisiItem, JTextArea sadrzaj, Utisak kom) {
+  
+		izmeniItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sadrzaj.setEditable(true);
+			}
+		});
+		
+		sadrzaj.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER)
+				{
+					e.consume();
+					sadrzaj.setEditable(false);
+					kom.setText(sadrzaj.getText());
+				} 
+				else if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+				{
+					sadrzaj.setText(kom.getText());
+					sadrzaj.setEditable(false);
+				}
+			}
+		});
+		
+	}
+
+	private int adjust(int number){
         return (number/(brojUtisaka-1)) * brojUtisaka;
     }
 

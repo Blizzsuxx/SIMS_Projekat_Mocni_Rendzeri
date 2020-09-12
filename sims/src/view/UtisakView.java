@@ -101,7 +101,7 @@ public class UtisakView extends JPanel{
 					e.consume();
 					sadrzaj.setEditable(false);
 					kom.setText(sadrzaj.getText());
-				} 
+				}
 				else if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
 				{
 					sadrzaj.setText(kom.getText());

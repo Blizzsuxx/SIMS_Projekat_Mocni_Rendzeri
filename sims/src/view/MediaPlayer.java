@@ -29,6 +29,7 @@ import model.MuzickoDelo;
 import model.Recenzija;
 import model.Sesija;
 import model.Urednik;
+import model.Utisak;
 import net.miginfocom.swing.MigLayout;
 
 public class MediaPlayer extends MojDialog {
@@ -252,6 +253,15 @@ public class MediaPlayer extends MojDialog {
     
     private void recension()
     {
+    	for (Utisak utisak : delo.getUtisci()) 
+    	{
+			if(utisak.getPisac().equals(trenutniKorisnik))
+			{
+				JOptionPane.showMessageDialog(MediaPlayer.this, "Vec imate recenziju za ovo muzicko delo", "Recenzija", JOptionPane.INFORMATION_MESSAGE);
+				poljeRecenzija.setText("");
+				return;
+			}
+		}
     	if(poljeRecenzija.getText().equals(""))
     		return;
     	Komentar rec = new Komentar(poljeRecenzija.getText(), new Date(), true, delo, (FrontEndKorisnik)trenutniKorisnik);

@@ -14,7 +14,21 @@ import view.Slikovit;
 
 /** @pdOid 821f1adf-c3a0-4478-9680-7e8b2f65437c */
 public abstract class Korisnik implements Slikovit {
-   /** @pdOid 5b9ed12b-0833-4281-ba9d-e989c84e9fbd */
+   @Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		if(!(obj instanceof Korisnik))
+		{
+			return false;
+		}
+		else if(((Korisnik)obj).getNalog().getKorisnickoIme().equals(this.getNalog().getKorisnickoIme()))
+		{
+			return true;
+		}
+		return false;
+	}
+
+/** @pdOid 5b9ed12b-0833-4281-ba9d-e989c84e9fbd */
    private String ime;
    /** @pdOid d2e5ef38-cdba-4f7a-b70f-76396bcb5fd7 */
    private String prezime;

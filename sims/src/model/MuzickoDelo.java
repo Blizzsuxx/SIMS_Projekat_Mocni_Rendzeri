@@ -19,7 +19,7 @@ public class MuzickoDelo extends MuzickiSadrzaj {
 		super();
 		this.naslov = naslov;
 		this.opis = opis;
-
+		this.utisci = new ArrayList<Utisak>();
 	}
 	
 	public MuzickoDelo(String naslov, String opis, Date datumIzadavanja, Izvodjac izvodjac, Urednik urednik,

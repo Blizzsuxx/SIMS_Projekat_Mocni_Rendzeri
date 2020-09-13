@@ -24,7 +24,7 @@ import javax.swing.text.html.HTMLDocument;
 import model.Sesija;
 import net.miginfocom.swing.MigLayout;
 
-public abstract class Homepage extends JFrame {
+public abstract class Homepage extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private Sesija sesija;
 	protected JMenu menu;
@@ -44,6 +44,9 @@ public abstract class Homepage extends JFrame {
 			 "P.O. Korisnika", "P.O. Urednika"};
 	 
 	 protected String[] koloneTopListi = {"Naslov", "Korisnicko Ime", "Broj Muzickog Sadrzaja", "Status"};
+	 
+	 protected JPanel panelReklama = new JPanel(new MigLayout());
+	 protected ImageIcon reklamaPrva, obradjenaReklamaPrva, reklamaDruga, obradjenaReklamaDruga;
 	 
 	public Homepage(Sesija sesija) {
 		this.getContentPane().setLayout(new MigLayout("fillx"));
@@ -102,16 +105,16 @@ public abstract class Homepage extends JFrame {
 		});
 
 		this.setJMenuBar(menubar);
-		JPanel panel = new JPanel(new MigLayout());
-		ImageIcon reklamaPrva = new ImageIcon("slike/reklama.gif");
-		ImageIcon obradjenaReklamaPrva = new ImageIcon(reklamaPrva.getImage().getScaledInstance(528, 100, Image.SCALE_DEFAULT));
-		ImageIcon reklamaDruga = new ImageIcon("slike/reklama2.gif");
-		ImageIcon obradjenaReklamaDruga = new ImageIcon(reklamaDruga.getImage().getScaledInstance(528, 100, Image.SCALE_DEFAULT));
+		
+		reklamaPrva = new ImageIcon(this.sesija.getReklameMenadzer().getPutanjaPrveReklame());
+		obradjenaReklamaPrva = new ImageIcon(reklamaPrva.getImage().getScaledInstance(528, 100, Image.SCALE_DEFAULT));
+		reklamaDruga = new ImageIcon(this.sesija.getReklameMenadzer().getPutanjaDrugeReklame());
+		obradjenaReklamaDruga = new ImageIcon(reklamaDruga.getImage().getScaledInstance(528, 100, Image.SCALE_DEFAULT));
 		JLabel labelaPrva = new JLabel(obradjenaReklamaPrva);
 		JLabel labelaDruga = new JLabel(obradjenaReklamaDruga);
-		panel.add(labelaPrva, "wrap");
-		panel.add(labelaDruga);
-		 this.add(panel, "south");
+		panelReklama.add(labelaPrva, "wrap");
+		panelReklama.add(labelaDruga);
+		 this.add(panelReklama, "south");
 	}
 
 

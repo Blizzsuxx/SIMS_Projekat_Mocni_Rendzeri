@@ -46,7 +46,7 @@ public class Grupa extends Izvodjac {
 	public void setDatumRaspada(Date datumRaspada) {
 		this.datumRaspada = datumRaspada;
 	}
-	public Grupa(String umetnickoIme, Zanr zanr, boolean status, KorisnikAplikacije[] prati, int brojClanova, Date datumOsnivanja,
+	public Grupa(String umetnickoIme, ArrayList<Zanr>  zanr, boolean status, KorisnikAplikacije[] prati, int brojClanova, Date datumOsnivanja,
 			Date datumRaspada) {
 		super(umetnickoIme, zanr, status, prati);
 		this.brojClanova = brojClanova;
@@ -54,13 +54,13 @@ public class Grupa extends Izvodjac {
 		this.datumRaspada = datumRaspada;
 		this.clanovi=new ArrayList<>();
 	}
-	public Grupa(String umetnickoIme, Zanr zanr, boolean status, KorisnikAplikacije[] prati) {
+	public Grupa(String umetnickoIme, ArrayList<Zanr>  zanr, boolean status, KorisnikAplikacije[] prati) {
 		super(umetnickoIme, zanr, status, prati);
 		this.clanovi=new ArrayList<>();
 	}
 	
 	
-	public Grupa(boolean odobrenost, String umetnickoIme, Zanr zanr, boolean status,  int brojClanova, Date datumOsnivanja,
+	public Grupa(boolean odobrenost, String umetnickoIme, ArrayList<Zanr>  zanr, boolean status,  int brojClanova, Date datumOsnivanja,
 			Date datumRaspada) {
 		super(umetnickoIme, zanr, status, odobrenost);
 		this.brojClanova = brojClanova;
@@ -86,7 +86,7 @@ public class Grupa extends Izvodjac {
 		String ad="";
 		ad+=this.isOdobrenost()+";";
 		ad+=this.getUmetnickoIme()+";";
-		ad+=this.getZanr().getNazivZanra()+";";
+		ad+= Izvodjac.getNaizvZanrova(this.getZanr())+";";
 		ad+=this.isStatus()+";";
 		ad+=this.getBrojClanova()+";";
 		DateFormat df = Constants.NATASIN_FORMAT_ZA_DATUM;
@@ -100,13 +100,14 @@ public class Grupa extends Izvodjac {
 		return ad;
 	}
 	
+
 	public static String Grupa2String(Grupa g) {
 		String pattern = "dd.MM.yyyy.";
 		String datumRaspada = "/";
 		DateFormat df = new SimpleDateFormat(pattern);
 		if (g.getDatumRaspada() != null)
 			datumRaspada = df.format(g.getDatumRaspada());
-		return g.isOdobrenost()+";"+g.getUmetnickoIme() + ";" + g.getZanr().getNazivZanra() + ";" + g.isStatus() + ";" + g.getBrojClanova() + ";" +
+		return g.isOdobrenost()+";"+g.getUmetnickoIme() + ";" + Izvodjac.getNaizvZanrova(g.getZanr()) + ";" + g.isStatus() + ";" + g.getBrojClanova() + ";" +
 				 df.format(g.getDatumOsnivanja()) + ";" + datumRaspada + System.lineSeparator();
 	}
 	

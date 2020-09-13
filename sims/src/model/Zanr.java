@@ -40,5 +40,17 @@ public String toFileString() {
 	return ad;
 }
 
+@Override
+public String toString() {
+	// TODO Auto-generated method stub
+	return this.getNazivZanra();
+}
+
+@Override
+public boolean equals(Object obj) {
+	// TODO Auto-generated method stub
+	return obj.toString().equals(this.toString());
+}
+
    
 }

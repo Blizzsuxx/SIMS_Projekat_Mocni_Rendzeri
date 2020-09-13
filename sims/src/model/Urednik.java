@@ -13,7 +13,7 @@ import java.util.List;
 import controler.Constants;
 
 /** @pdOid d7b7dd3e-6a5f-4c47-ad28-32c0171650d0 */
-public class Urednik extends FrontEndKorisnik {
+public class Urednik extends FrontEndKorisnik implements DeljivPoZanrovima{
    /** @pdRoleInfo migr=no name=Recenzija assc=association9 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
    public java.util.Collection<Recenzija> istorijaRecenzija;
    /** @pdRoleInfo migr=no name=ZakazanaRecenzija assc=association10 coll=java.util.Collection impl=java.util.HashSet mult=0..* */

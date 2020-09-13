@@ -5,17 +5,18 @@
  ***********************************************************************/
 package model;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import view.Slikovit;
 
 /** @pdOid 20a31e0c-cbdd-4a1e-956e-0c8ed03fce3d */
-public abstract class Izvodjac implements Slikovit {
+public abstract class Izvodjac implements Slikovit, DeljivPoZanrovima {
 	/** @pdOid 515ac754-9ea8-45bb-bc6e-0b899ea103d8 */
 	private String umetnickoIme;
 	/** @pdOid a5f2bea1-d21a-43c6-99b6-58d368935d68 */
 	private boolean status;
 
-	private Zanr zanr;
+	private ArrayList<Zanr> zanrovi;
 	
 	// indikator da li je izvodjac odobren od strane admina
 	private boolean odobrenost;
@@ -74,18 +75,18 @@ public abstract class Izvodjac implements Slikovit {
 		this.prati = prati;
 	}
 	
-	public Zanr getZanr() {
-		return this.zanr;
+	public ArrayList<Zanr>  getZanr() {
+		return this.zanrovi;
 	}
 	
-	public void setZanr(Zanr z) {
-		this.zanr = z;
+	public void setZanr(ArrayList<Zanr>  z) {
+		this.zanrovi = z;
 	}
 	
-	public Izvodjac(String umetnickoIme, Zanr zanr, boolean status, KorisnikAplikacije[] prati) {
+	public Izvodjac(String umetnickoIme, ArrayList<Zanr>  zanr, boolean status, KorisnikAplikacije[] prati) {
 		super();
 		this.umetnickoIme = umetnickoIme;
-		this.zanr = zanr;
+		this.zanrovi = zanr;
 		this.status = status;
 		if (prati != null)
 	   	{
@@ -95,10 +96,10 @@ public abstract class Izvodjac implements Slikovit {
 		this.izdatiAlbumi = new ArrayList<Album>();
 	}
 	
-	public Izvodjac(String umetnickoIme, Zanr zanr, boolean status, KorisnikAplikacije[] prati, boolean odobrenost) {
+	public Izvodjac(String umetnickoIme, ArrayList<Zanr>  zanr, boolean status, KorisnikAplikacije[] prati, boolean odobrenost) {
 		super();
 		this.umetnickoIme = umetnickoIme;
-		this.zanr = zanr;
+		this.zanrovi = zanr;
 		this.status = status;
 		if (prati != null)
 	   	{
@@ -116,17 +117,17 @@ public abstract class Izvodjac implements Slikovit {
 		this.izdatiAlbumi = new ArrayList<Album>();
 	}
 	
-	public Izvodjac(String umetnickoIme2, Zanr zanr, boolean status2) {
+	public Izvodjac(String umetnickoIme2, ArrayList<Zanr>  zanr, boolean status2) {
 		this.umetnickoIme = umetnickoIme2;
-		this.zanr = zanr;
+		this.zanrovi = zanr;
 		this.status = status2;
 		this.muzickaDela = new ArrayList<MuzickoDelo>();
 		this.izdatiAlbumi = new ArrayList<Album>();
 	}
 	
-	public Izvodjac(String umetnickoIme2, Zanr zanr, boolean status2, boolean odobrenost) {
+	public Izvodjac(String umetnickoIme2, ArrayList<Zanr>  zanr, boolean status2, boolean odobrenost) {
 		this.umetnickoIme = umetnickoIme2;
-		this.zanr = zanr;
+		this.zanrovi = zanr;
 		this.status = status2;
 		this.odobrenost = odobrenost;
 		this.muzickaDela = new ArrayList<MuzickoDelo>();
@@ -173,5 +174,19 @@ public abstract class Izvodjac implements Slikovit {
 		this.odobrenost = odobrenost;
 	}
 
-	
+
+
+	public static String getNaizvZanrova(ArrayList<Zanr> zanr) {
+		String ime = "";
+		for(Zanr jedanZanr : zanr){
+			ime += jedanZanr.getNazivZanra() + ",";
+		}
+		return ime.substring(0, ime.length()-1);
+	}
+
+	@Override
+	public Collection<Zanr> getZanrovi() {
+		// TODO Auto-generated method stub
+		return this.zanrovi;
+	}
 }

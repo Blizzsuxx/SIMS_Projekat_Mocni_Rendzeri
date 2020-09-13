@@ -8,7 +8,7 @@ import java.util.List;
 import controler.Constants;
 import view.Slikovit;
 
-public abstract class MuzickiSadrzaj implements Slikovit {
+public abstract class MuzickiSadrzaj implements Slikovit, DeljivPoZanrovima {
 	protected String naslov;
 	protected String opis;
 	protected Date datumIzdavanja;
@@ -92,13 +92,17 @@ public abstract class MuzickiSadrzaj implements Slikovit {
 		this.status = status;
 	}
 
+	@Override
 	public List<Zanr> getZanrovi() {
 		return zanrovi;
 	}
-
+	
 	public void setZanrovi(List<Zanr> zanrovi) {
 		this.zanrovi = zanrovi;
 	}
+
+
+	
 	
 	
 }

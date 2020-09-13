@@ -189,11 +189,11 @@ public List<Korisnik> vratiSveAktivneKorisnike() {
 	   
 	   return lista;
 }
-public Collection<? extends Slikovit> traziZaSearch(String textZaSearch) {
-	ArrayList<Slikovit> rezultat = new ArrayList<>();
+public Collection<Urednik> traziZaSearch(String textZaSearch) {
+	Collection<Urednik> rezultat = new ArrayList<>();
 	for(Korisnik a : this.vratiUrednike()) {
 		if(a.Ime().contains(textZaSearch)) {
-			rezultat.add(a);
+			rezultat.add((Urednik) a);
 		}
 	}
 	return rezultat;

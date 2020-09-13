@@ -8,12 +8,17 @@ import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import org.jdatepicker.impl.*;
+import org.jdesktop.swingx.JXList;
 
+import controler.Constants;
 import controler.ZanroviMenadzer;
 import model.Grupa;
 import model.Pojedinacanizvodjac;
@@ -46,7 +51,7 @@ public class RegistracijaIzvodjaca extends JDialog {
 	private JTextField txtIme;
 	private JTextField txtPrezime;
 	@SuppressWarnings("rawtypes")
-	private JComboBox cmbZanr;
+	private JXList cmbZanr;
 	private JPanel pnlGrupa;
 	private JDatePickerImpl dtDob;
 	private JDatePickerImpl dtDod;
@@ -266,15 +271,10 @@ public class RegistracijaIzvodjaca extends JDialog {
 		lblZanr.setBounds(20, 394, 48, 14);
 		getContentPane().add(lblZanr);
 		
-		cmbZanr = new JComboBox();
+		cmbZanr =  new JXList( sesija.getZanroviMenadzer().getSviZanrovi().toArray());
 		cmbZanr.setBounds(20, 409, 184, 22);
 		getContentPane().add(cmbZanr);
-		ZanroviMenadzer zm = sesija.getZanroviMenadzer();
-		for (Zanr z : zm.getSviZanrovi())
-		{
-			if (z.isStatus())
-				cmbZanr.addItem(z.getNazivZanra());
-		}
+
 		
 		addComponentListener(new ComponentAdapter() {
 			@Override
@@ -292,6 +292,8 @@ public class RegistracijaIzvodjaca extends JDialog {
 			JOptionPane.showMessageDialog(null, "Umetnicko ime je obavezno polje.");
 			return;
 		}
+		List<Zanr> zanr =  Arrays.asList((Zanr[]) cmbZanr.getSelectedValues());
+		ArrayList<Zanr> zanrovi = new ArrayList<Zanr>(zanr);
 		String msg;
 		if (rbPojedinacniIzvodjac.isSelected())
 		{
@@ -302,13 +304,13 @@ public class RegistracijaIzvodjaca extends JDialog {
 					return;
 				}
 				if (!dtDod.getJFormattedTextField().getText().isEmpty()) {
-					registrujIzvodjaca(txtUmetnickoIme.getText(), new Zanr((String)cmbZanr.getSelectedItem(), true), txtIme.getText(), txtPrezime.getText(), 
+					registrujIzvodjaca(txtUmetnickoIme.getText(), zanrovi, txtIme.getText(), txtPrezime.getText(), 
 							dtDob.getJFormattedTextField().getText(), 
 							dtDod.getJFormattedTextField().getText(), 
 							rbMuski.isSelected() ? Pol.muski.name() : Pol.zenski.name(), txtOpis.getText());
 				}
 				else {
-					registrujIzvodjaca(txtUmetnickoIme.getText(), new Zanr((String)cmbZanr.getSelectedItem(), true), txtIme.getText(), txtPrezime.getText(), 
+					registrujIzvodjaca(txtUmetnickoIme.getText(),zanrovi, txtIme.getText(), txtPrezime.getText(), 
 							dtDob.getJFormattedTextField().getText(), null, 
 							rbMuski.isSelected() ? Pol.muski.name() : Pol.zenski.name(), txtOpis.getText());
 				}
@@ -328,12 +330,12 @@ public class RegistracijaIzvodjaca extends JDialog {
 				}
 					
 				if (!dtDor.getJFormattedTextField().getText().isEmpty()) {
-					registrujGrupu(txtUmetnickoIme.getText(), new Zanr((String)cmbZanr.getSelectedItem(),true), 
+					registrujGrupu(txtUmetnickoIme.getText(), zanrovi, 
 							((Integer)spnBrojClanova.getValue()), dtDof.getJFormattedTextField().getText(), 
 							dtDor.getJFormattedTextField().getText());
 				}
 				else {
-					registrujGrupu(txtUmetnickoIme.getText(), new Zanr((String)cmbZanr.getSelectedItem(),true), 
+					registrujGrupu(txtUmetnickoIme.getText(), zanrovi, 
 							((Integer)spnBrojClanova.getValue()), dtDof.getJFormattedTextField().getText(), 
 							null);
 				}
@@ -344,7 +346,7 @@ public class RegistracijaIzvodjaca extends JDialog {
 		}
 	}
 	
-	private void registrujIzvodjaca(String umetnickoIme, Zanr zanr, String ime, String prezime, String dob, String dod, String pol, String opis) throws ParseException
+	private void registrujIzvodjaca(String umetnickoIme, ArrayList<Zanr> zanr, String ime, String prezime, String dob, String dod, String pol, String opis) throws ParseException
 	{ 
 		SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
 		SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyyy.");
@@ -354,20 +356,20 @@ public class RegistracijaIzvodjaca extends JDialog {
 		if (!dod.isEmpty()) { 
 			
 			String dod2 = sdf2.format(sdf1.parse(dod));
-			pi = new Pojedinacanizvodjac(false, umetnickoIme, zanr, true, ime, prezime, new SimpleDateFormat("dd.MM.yyyy.").parse(dob2),
-					new SimpleDateFormat("dd.MM.yyyy.").parse(dod2), opis, p);
+			pi = new Pojedinacanizvodjac(false, umetnickoIme, zanr, true, ime, prezime, Constants.NATASIN_FORMAT_ZA_DATUM.parse(dob2),
+			Constants.NATASIN_FORMAT_ZA_DATUM.parse(dod2), opis, p);
 		}
 		else {
 
 
-			pi = new Pojedinacanizvodjac(false, umetnickoIme, zanr, true, ime, prezime, new SimpleDateFormat("dd.MM.yyyy.").parse(dob2),
+			pi = new Pojedinacanizvodjac(false, umetnickoIme, zanr, true, ime, prezime, Constants.NATASIN_FORMAT_ZA_DATUM.parse(dob2),
 					null, opis, p);
 		}
 			if (!sesija.addUmetnici(pi))
 				JOptionPane.showMessageDialog(null, "Izvodjac vec postoji.");
 	}
 	
-	private void registrujGrupu(String umetnickoIme, Zanr zanr, int brojClanova, String dof, String dor) throws ParseException
+	private void registrujGrupu(String umetnickoIme, ArrayList<Zanr> zanr, int brojClanova, String dof, String dor) throws ParseException
 	{
 		SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
 		SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyyy.");
@@ -376,13 +378,13 @@ public class RegistracijaIzvodjaca extends JDialog {
 		if (!dor.isEmpty()) {
 			
 			String dor2 = sdf2.format(sdf1.parse(dor));
-			g = new Grupa(false,umetnickoIme, zanr, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy.").parse(dof2), 
-					new SimpleDateFormat("dd.MM.yyyy.").parse(dor2));
+			g = new Grupa(false,umetnickoIme, zanr, true,  brojClanova, Constants.NATASIN_FORMAT_ZA_DATUM.parse(dof2), 
+			Constants.NATASIN_FORMAT_ZA_DATUM.parse(dor2));
 
 		}
 		else {
 
-			g = new Grupa(false, umetnickoIme, zanr, true,  brojClanova, new SimpleDateFormat("dd.MM.yyyy.").parse(dof2),
+			g = new Grupa(false, umetnickoIme, zanr, true,  brojClanova, Constants.NATASIN_FORMAT_ZA_DATUM.parse(dof2),
 					null);
 		}
 		if (!sesija.addGrupe(g))

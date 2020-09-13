@@ -260,8 +260,8 @@ public class MuzickiSadrzajMenadzer {
 		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
 	}
 
-	public ArrayList<Slikovit> trazi(String substring) {
-		ArrayList<Slikovit> delaKojaSadzeString = new ArrayList<>();
+	public Collection<MuzickiSadrzaj> traziMuzickaDela(String substring) {
+		Collection<MuzickiSadrzaj> delaKojaSadzeString = new ArrayList<>();
 		for(MuzickoDelo delo : this.muzickaDela) {
 			if(delo.Ime().contains(substring)) delaKojaSadzeString.add(delo);
 		}
@@ -269,8 +269,8 @@ public class MuzickiSadrzajMenadzer {
 	}
 	
 
-	public Collection<? extends Slikovit> trazi(String textZaSearch, String dummy) { // da se razliku od gornje funkcije
-		ArrayList<Slikovit> rezultat = new ArrayList<>();
+	public Collection<Album> traziAlbume(String textZaSearch) { // da se razliku od gornje funkcije
+		Collection<Album> rezultat = new ArrayList<>();
 		for(Album a : this.albumi) {
 			if(a.Ime().contains(textZaSearch)) {
 				rezultat.add(a);

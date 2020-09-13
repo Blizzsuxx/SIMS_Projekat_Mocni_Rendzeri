@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
@@ -14,7 +16,15 @@ import javax.swing.JPopupMenu;
 import org.jdesktop.swingx.JXSearchField;
 import org.jdesktop.swingx.search.RecentSearches;
 
+import controler.ZanroviMenadzer;
+import model.Album;
+import model.DeljivPoZanrovima;
+import model.Grupa;
+import model.Izvodjac;
+import model.MuzickiSadrzaj;
 import model.Sesija;
+import model.Urednik;
+import model.Zanr;
 
 public class SearchField extends JXSearchField {
 
@@ -29,12 +39,14 @@ public class SearchField extends JXSearchField {
 	private JCheckBoxMenuItem albumi;
 	private JCheckBoxMenuItem izvodjaci;
 	private JCheckBoxMenuItem korisnici;
+	private Collection<JCheckBoxMenuItem> zanrovi;
 
 	public SearchField(Sesija sesija, JFrame owner) {
 		super();
 		
 		this.owner = owner;
 		this.sesija = sesija;
+		this.zanrovi = new ArrayList<>();
 		
 		String korisnickoIme = null;
 		if(Sesija.getTrenutniKorisnik() != null) { // promjene
@@ -75,6 +87,17 @@ public class SearchField extends JXSearchField {
 		selectSearchCriterium.add(muzikaSegment);
 		selectSearchCriterium.add(izvodjaciSegment);
 		selectSearchCriterium.add(korisnici);
+
+
+		JMenu zanrMenu = new JMenu("zanrovi");
+		for(Zanr z : sesija.getZanroviMenadzer().getZanrovi()){
+			JCheckBoxMenuItem zanrMenuItem = new JCheckBoxMenuItem(z.getNazivZanra());
+			zanrovi.add(zanrMenuItem);
+			zanrMenuItem.setSelected(true);
+			zanrMenu.add(zanrMenuItem);
+		}
+		selectSearchCriterium.add(zanrMenu);
+
 		
 		this.albumi = albumi;
 		this.korisnici = korisnici;
@@ -115,27 +138,60 @@ public class SearchField extends JXSearchField {
 		
 		
 	}
+
+
+
+
 	
 	
 	
 	private void searchTriggered(String textZaSearch) {
-		ArrayList<Slikovit> rezultati = new ArrayList<>();
+		LinkedList<Slikovit> rezultati = new LinkedList<Slikovit>();
+
+
+
+		ArrayList<String> selektovaniZanrovi = new ArrayList<>();
+		for(JCheckBoxMenuItem selektovaniZanr : zanrovi){
+			if(selektovaniZanr.isSelected()){
+				selektovaniZanrovi.add(selektovaniZanr.getText());
+			}
+		}
+
+		ZanroviMenadzer menadzerZanrova = sesija.getZanroviMenadzer();
 		
 		if(this.muzickaDela.isSelected()) {
-			rezultati.addAll(sesija.getMuzickiSadrzajMenadzer().trazi(textZaSearch));
+			Collection<MuzickiSadrzaj> dela = sesija.getMuzickiSadrzajMenadzer().traziMuzickaDela(textZaSearch);
+
+			
+
+			menadzerZanrova.filter( (Collection<DeljivPoZanrovima>)  (Collection<?>) dela, selektovaniZanrovi, rezultati);
+			//rezultati.addAll(sesija.getMuzickiSadrzajMenadzer().trazi(textZaSearch));
 		}
 		if(this.grupe.isSelected()) {
-			rezultati.addAll(sesija.getIzvodjacMenadzer().traziGrupe(textZaSearch));
+
+			Collection<Grupa> grupe = sesija.getIzvodjacMenadzer().traziGrupe(textZaSearch);
+
+			menadzerZanrova.filter((Collection<DeljivPoZanrovima>)  (Collection<?>)grupe, selektovaniZanrovi, rezultati);
+			//rezultati.addAll(sesija.getIzvodjacMenadzer().traziGrupe(textZaSearch));
 		}
 		if(this.izvodjaci.isSelected()) {
-			rezultati.addAll(sesija.getIzvodjacMenadzer().traziSoloIzvodjace(textZaSearch));
+			Collection<Izvodjac> izvodjaci = sesija.getIzvodjacMenadzer().traziSoloIzvodjace(textZaSearch);
+
+			menadzerZanrova.filter((Collection<DeljivPoZanrovima>)  (Collection<?>)izvodjaci, selektovaniZanrovi, rezultati);
 		}
 		if(this.albumi.isSelected()) {
-			rezultati.addAll(sesija.getMuzickiSadrzajMenadzer().trazi(textZaSearch,""));
+			Collection<Album> albumi = sesija.getMuzickiSadrzajMenadzer().traziAlbume(textZaSearch);
+
+			menadzerZanrova.filter((Collection<DeljivPoZanrovima>)  (Collection<?>)albumi, selektovaniZanrovi, rezultati);
 		}
 		if(this.korisnici.isSelected()) {
-			rezultati.addAll(sesija.getKorisnici().traziZaSearch(textZaSearch));
+			Collection<Urednik> urednici = sesija.getKorisnici().traziZaSearch(textZaSearch);
+
+			menadzerZanrova.filter((Collection<DeljivPoZanrovima>)  (Collection<?>)urednici, selektovaniZanrovi, rezultati);
 		}
+		
+
+
 		
 		
 		SearchResults rezultatiPanel = new SearchResults(rezultati);
@@ -144,5 +200,8 @@ public class SearchField extends JXSearchField {
 		dialog.setVisible(true);
 		
 	}
+
+
+
 
 }

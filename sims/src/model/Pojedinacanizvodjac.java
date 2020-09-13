@@ -70,7 +70,7 @@ public class Pojedinacanizvodjac extends Izvodjac {
 	public void setPol(Pol pol) {
 		this.pol = pol;
 	}
-	public Pojedinacanizvodjac(boolean odobrenost, String umetnickoIme, Zanr zanr, boolean status, KorisnikAplikacije[] prati, String ime, String prezime,
+	public Pojedinacanizvodjac(boolean odobrenost, String umetnickoIme, ArrayList<Zanr> zanr, boolean status, KorisnikAplikacije[] prati, String ime, String prezime,
 			Date datumRodjenja, Date datumSmrti, String opis, Pol pol) {
 		super(umetnickoIme, zanr, status, prati, odobrenost);
 		this.ime = ime;
@@ -81,11 +81,11 @@ public class Pojedinacanizvodjac extends Izvodjac {
 		this.pol = pol;
 		this.clanstvaUGrupama=new ArrayList<Clan>();
 	}
-	public Pojedinacanizvodjac(String umetnickoIme, Zanr zanr, boolean status, KorisnikAplikacije[] prati) {
+	public Pojedinacanizvodjac(String umetnickoIme, ArrayList<Zanr> zanr, boolean status, KorisnikAplikacije[] prati) {
 		super(umetnickoIme, zanr, status, prati);
 	}
 	
-	public Pojedinacanizvodjac(boolean odobrenost,String umetnickoIme, Zanr zanr, boolean status, String ime, String prezime,
+	public Pojedinacanizvodjac(boolean odobrenost,String umetnickoIme, ArrayList<Zanr> zanr, boolean status, String ime, String prezime,
 			Date datumRodjenja, Date datumSmrti, String opis, Pol pol) {
 		super(umetnickoIme, zanr, status, odobrenost);
 		this.ime = ime;
@@ -115,7 +115,7 @@ public class Pojedinacanizvodjac extends Izvodjac {
 		String ad="";
 		ad+=this.isOdobrenost()+";";
 		ad+=this.getUmetnickoIme()+";";
-		ad+=this.getZanr().getNazivZanra()+";";
+		ad+=Izvodjac.getNaizvZanrova(this.getZanr())+";";
 		ad+=this.isStatus()+";";
 		ad+=this.getIme()+";"+this.getPrezime()+";";
 		ad+=this.getDatumRodjenja().getDay()+"."+this.getDatumRodjenja().getMonth()+"."+this.getDatumRodjenja().getYear()+".;";//
@@ -136,7 +136,7 @@ public class Pojedinacanizvodjac extends Izvodjac {
 		String datumSmrti = "/";
 		if (pi.getDatumSmrti() != null)
 			datumSmrti = df.format(pi.getDatumSmrti());
-		return pi.isOdobrenost()+";"+pi.getUmetnickoIme() + ";"  + pi.getZanr().getNazivZanra() + ";" + pi.isStatus() + ";" + pi.getIme() + ";" +
+		return pi.isOdobrenost()+";"+pi.getUmetnickoIme() + ";"  + Izvodjac.getNaizvZanrova(pi.getZanr()) + ";" + pi.isStatus() + ";" + pi.getIme() + ";" +
 				pi.getPrezime() + ";" + df.format(pi.getDatumRodjenja()) + ";" + datumSmrti +
 				";" + pi.getOpis() + ";" + pi.getPol() + System.lineSeparator();
 	}

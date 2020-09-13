@@ -102,7 +102,7 @@ public class IzvodjacMenadzer {
 				if(linije[9].trim().equals(Pol.muski.name())) {p = Pol.muski;}
 				
 				Pojedinacanizvodjac a = new Pojedinacanizvodjac(Boolean.parseBoolean(linije[0].trim()),
-						linije[1].trim(), zm.trazi(linije[2].trim()),
+						linije[1].trim(), zm.trazi(linije[2].split(",")),
 						Boolean.parseBoolean(linije[3]), linije[4].trim(), linije[5].trim(), rodjenje, smrt, linije[8].trim(), p);
 				svi.add(a);
 				solo.add(a);
@@ -126,7 +126,7 @@ public class IzvodjacMenadzer {
 					}
 				}
 				Integer br1 = Integer.parseInt(linije[4].trim());
-				Grupa a = new Grupa(Boolean.parseBoolean(linije[0].trim()), linije[1].trim(), zm.trazi(linije[2].trim()), Boolean.parseBoolean(linije[3]), br1, rodjenje, smrt );
+				Grupa a = new Grupa(Boolean.parseBoolean(linije[0].trim()), linije[1].trim(), zm.trazi(linije[2].trim().split(",")), Boolean.parseBoolean(linije[3]), br1, rodjenje, smrt );
 				svi.add(a);
 				this.getGrupe().add(a);
 				
@@ -185,7 +185,7 @@ public class IzvodjacMenadzer {
 		ArrayList<Object[]> data = new ArrayList<Object[]>();
 		for (Pojedinacanizvodjac pi : solo) {
 			if (pi.isOdobrenost())
-				data.add(new Object[] {pi.getUmetnickoIme(), pi.getZanr().getNazivZanra(), pi.getIme(), pi.getPrezime(), pi.getDatumRodjenja()});
+				data.add(new Object[] {pi.getUmetnickoIme(), Izvodjac.getNaizvZanrova(pi.getZanr()), pi.getIme(), pi.getPrezime(), pi.getDatumRodjenja()});
 		}
 		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
 	}
@@ -198,14 +198,14 @@ public class IzvodjacMenadzer {
 		ArrayList<Object[]> data = new ArrayList<Object[]>();
 		for (Grupa g : grupe) {
 			if (g.isOdobrenost())
-				data.add(new Object[] {g.getUmetnickoIme(), g.getZanr().getNazivZanra(), g.getBrojClanova(), g.getDatumOsnivanja(), g.getDatumRaspada()});
+				data.add(new Object[] {g.getUmetnickoIme(), Izvodjac.getNaizvZanrova(g.getZanr()), g.getBrojClanova(), g.getDatumOsnivanja(), g.getDatumRaspada()});
 		}
 		return new TableModelWrapper(columns, columnTypes, editableColumns, columnWidths, data);
 	}
 
-	public Collection<? extends Slikovit> traziGrupe(String textZaSearch) {
+	public Collection<Grupa> traziGrupe(String textZaSearch) {
 		// TODO Auto-generated method stub
-		ArrayList<Slikovit> rezultat = new ArrayList<>();
+		ArrayList<Grupa> rezultat = new ArrayList<>();
 		for(Grupa g : grupe) {
 			if(g.Ime().contains(textZaSearch)) {
 				rezultat.add(g);
@@ -214,8 +214,8 @@ public class IzvodjacMenadzer {
 		return rezultat;
 	}
 
-	public Collection<? extends Slikovit> traziSoloIzvodjace(String textZaSearch) {
-		ArrayList<Slikovit> rezultat = new ArrayList<>();
+	public Collection<Izvodjac> traziSoloIzvodjace(String textZaSearch) {
+		Collection<Izvodjac> rezultat = new ArrayList<>();
 		for(Pojedinacanizvodjac g : this.solo) {
 			if(g.Ime().contains(textZaSearch)) {
 				rezultat.add(g);

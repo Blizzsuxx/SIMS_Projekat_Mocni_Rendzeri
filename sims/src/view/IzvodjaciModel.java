@@ -29,7 +29,7 @@ public class IzvodjaciModel extends ApstraktniModel {
 			if (col == 0) {
 				temp = i.getUmetnickoIme();
 			} else if (col == 1) {
-				temp = i.getZanr().getNazivZanra();
+				temp = Izvodjac.getNaizvZanrova(i.getZanr());
 			} else if (col == 2) {
 				temp = i.getIzdatiAlbumi().size();
 			} else if (col == 3) {

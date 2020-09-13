@@ -7,11 +7,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import model.DeljivPoZanrovima;
 import model.Korisnik;
 import model.Urednik;
 import model.Zanr;
+import view.Slikovit;
 import view.TableModelWrapper;
 
 public class ZanroviMenadzer { //ovu klasu ili treba da ima sesija ili da bude prosledjena instanca klase IzvestajViseIzvodjaca
@@ -102,12 +105,28 @@ public class ZanroviMenadzer { //ovu klasu ili treba da ima sesija ili da bude p
 	}
 	
 	public Zanr trazi(String trim) { // vraca sve i aktivne i neaktivne
+		
 		for(Zanr z:sviZanrovi) {
 			if(trim.equals(z.getNazivZanra())) {
 				return z;
 			}
 		}
 			return null;
+	}
+
+	public ArrayList<Zanr> trazi(String[] zanrovi){
+
+		ArrayList<Zanr> zanroviList = new ArrayList<>();
+
+		for(String zanr : zanrovi){
+			Zanr nadjenZanr = trazi(zanr);
+			if(nadjenZanr != null){
+				zanroviList.add(nadjenZanr);
+			}
+		}
+
+		return zanroviList;
+
 	}
 	
 	// pomocne funkcije
@@ -178,6 +197,30 @@ public class ZanroviMenadzer { //ovu klasu ili treba da ima sesija ili da bude p
 				if (zanrovi.contains(z)) {
 					urednici.add(k);
 					break;
+				}
+			}
+		}
+	}
+
+
+	public void filter(Collection<DeljivPoZanrovima> dela, Collection<String> selektovaniZanrovi,
+	Collection<Slikovit> rezultati){
+		if( selektovaniZanrovi == null || selektovaniZanrovi.size() == 0 || selektovaniZanrovi.size() == this.sviZanrovi.size()){
+			rezultati.addAll((Collection<? extends Slikovit>) dela);
+			return;
+		}
+		for(DeljivPoZanrovima delo : dela){
+			dodaj(delo, selektovaniZanrovi, rezultati);
+		}
+
+	}
+
+	private void dodaj(DeljivPoZanrovima delo, Collection<String> selektovaniZanrovi, Collection<Slikovit> rezultati){
+		for(Zanr zanr: delo.getZanrovi()){
+			for(String selektovanZanr : selektovaniZanrovi){
+				if(zanr.getNazivZanra().equals(selektovanZanr)){
+					rezultati.add((Slikovit) delo);
+					return;
 				}
 			}
 		}

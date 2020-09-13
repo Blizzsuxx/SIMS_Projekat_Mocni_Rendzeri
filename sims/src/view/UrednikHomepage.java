@@ -26,7 +26,7 @@ public class UrednikHomepage extends Homepage {
 	 private static final long serialVersionUID = 1L;
 
 	 private JMenu recenzijeMenu, korisniciMenu, listeMenu, glasanjeMenu, muzickaSadrzajMenu;
-	 private JMenuItem recenzijeItem2, recenzijeItem3,
+	 private JMenuItem recenzijeItem2, recenzijeItem3, recenzijeItem4,
 	 korisniciItem1, korisniciItem2, korisniciItem3, korisniciItem4, korisniciItem5, korisniciItem6,
 	 korisniciItem7, listeItem1, listeItem2, glasanjeItem1, muzickiSadrzajItem1, muzickiSadrzajItem2;
 	 
@@ -56,6 +56,8 @@ public class UrednikHomepage extends Homepage {
 		recenzijeMenu.add(recenzijeItem2);
 		recenzijeItem3 = new JMenuItem("Zakazane recenzije");
 		recenzijeMenu.add(recenzijeItem3);
+		recenzijeItem4 = new JMenuItem("Dodeljene recenzije");
+		recenzijeMenu.add(recenzijeItem4);
 		menubar.add(recenzijeMenu);
 		    	
 		korisniciMenu = new JMenu("Korisnici");
@@ -104,8 +106,8 @@ public class UrednikHomepage extends Homepage {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-					MojDialog recenzije = new MojDialog(UrednikHomepage.this, "Izvrsene Recenzije");
-					//Search-u se prosledjuju dela za koje je neko napisao recenziju
+					MojDialog recenzije = new MojDialog(UrednikHomepage.this, "Moje Recenzije");
+					//Search-u se prosledjuju dela za koje je trenutni korisnik - urednik napisao recenziju
 					//Ovde koriscena hardkodovana konstanta Dela
 					SearchResults mojeRecenzije = new SearchResults(Constants.DELA);
 					recenzije.setContentPane(mojeRecenzije);
@@ -118,8 +120,8 @@ public class UrednikHomepage extends Homepage {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				MojDialog recenzije = new MojDialog(UrednikHomepage.this, "Moje Recenzije");
-				//Search-u se prosledjujju dela za koje je trenutni korisnik urednik napisao recenziju
+				MojDialog recenzije = new MojDialog(UrednikHomepage.this, "Zakazane Recenzije");
+				//Search-u se prosledjuju dela za koje je recenzija zakazana
 				//Koriscena hardkodovana konstanta Dela2
 				SearchResults mojeRecenzije = new SearchResults(Constants.DELA2);
 				recenzije.setContentPane(mojeRecenzije);
@@ -127,6 +129,19 @@ public class UrednikHomepage extends Homepage {
 			}
 	    	
 	    });
+		
+		recenzijeItem4.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MojDialog recenzije = new MojDialog(UrednikHomepage.this, "Dodeljene recenzije Recenzije");
+				//Search-u se prosledjuju dela za koje je trenutni korisnik urednik treba da napise recenzije
+				//Koriscena hardkodovana konstanta Dela3
+				SearchResults mojeRecenzije = new SearchResults(Constants.DELA3);
+				recenzije.setContentPane(mojeRecenzije);
+				recenzije.setVisible(true);
+			}
+		});
 	    
 	    
 	    korisniciItem1.addActionListener(new ActionListener() {

@@ -51,12 +51,8 @@ public class UtisakView extends JPanel{
         sadrzaj.setSize(panel.getSize());
         sadrzaj.setPreferredSize(panel.getPreferredSize());
         brojUtisaka++;
-        try{
-            this.setPreferredSize(new Dimension(adjust(this.getWidth()), adjust(this.getHeight())));
-            this.setSize(adjust(this.getWidth()), adjust(this.getHeight()));
-        } catch(Exception e) {
-
-        }
+        podesiRecenzije();
+        
         
         if(komentar.getPisac().equals(Sesija.getTrenutniKorisnik()))
         {
@@ -88,6 +84,7 @@ public class UtisakView extends JPanel{
 				brojUtisaka--;
 				UtisakView.this.remove(panel);
 				UtisakView.this.setVisible(false);
+				podesiRecenzije();
 				UtisakView.this.setVisible(true);
 				kom.getDelo().getUtisci().remove(kom);
 			}
@@ -137,6 +134,19 @@ public class UtisakView extends JPanel{
     public UtisakView() {
         super(new MigLayout("fillx"));
 
+    }
+    
+    private void podesiRecenzije()
+    {
+    	try
+    	{
+            this.setPreferredSize(new Dimension(adjust(this.getWidth()), adjust(this.getHeight())));
+            this.setSize(adjust(this.getWidth()), adjust(this.getHeight()));
+        } 
+    	catch(Exception e) 
+    	{
+
+        }
     }
     
 }

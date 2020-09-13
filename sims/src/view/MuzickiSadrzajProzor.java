@@ -19,6 +19,7 @@ import javax.swing.ListSelectionModel;
 
 import org.jdesktop.swingx.JXTable;
 
+import model.Album;
 import model.MuzickiSadrzaj;
 import model.MuzickoDelo;
 import model.TipMuzickogSadrzaja;
@@ -165,6 +166,9 @@ private static final long serialVersionUID = 1L;
 			if (ms instanceof MuzickoDelo) {
 				MediaPlayer player = new MediaPlayer(null, (MuzickoDelo)ms);
 		        player.setVisible(true);
+			} else {
+				AlbumInfo ai = new AlbumInfo(null,((Album)ms).getNaslov(), 100, 100, (Album)ms);
+				ai.setVisible(true);
 			}
 		}
 		

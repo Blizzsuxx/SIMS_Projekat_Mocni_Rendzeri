@@ -26,7 +26,7 @@ public class UtisakView extends JPanel{
      */
     private static final long serialVersionUID = 1L;
     
-    private int brojUtisaka=0;//Dodaj izmenjenu recenziju u utiske
+    private int brojUtisaka=1;//Dodaj izmenjenu recenziju u utiske
 
     public void addKomentar(Utisak komentar){
     	komentar.getDelo().getUtisci().add(komentar);
@@ -84,7 +84,7 @@ public class UtisakView extends JPanel{
 				brojUtisaka--;
 				UtisakView.this.remove(panel);
 				UtisakView.this.setVisible(false);
-				podesiRecenzije();
+				invpodesiRecenzije();
 				UtisakView.this.setVisible(true);
 				kom.getDelo().getUtisci().remove(kom);
 			}
@@ -127,7 +127,11 @@ public class UtisakView extends JPanel{
 
 	private int adjust(int number){
         return (number/(brojUtisaka-1)) * brojUtisaka;
-    }
+	}
+	
+	private int invadjust(int number){
+        return (number/(brojUtisaka)) * (brojUtisaka-1);
+	}
 
     
 
@@ -142,6 +146,19 @@ public class UtisakView extends JPanel{
     	{
             this.setPreferredSize(new Dimension(adjust(this.getWidth()), adjust(this.getHeight())));
             this.setSize(adjust(this.getWidth()), adjust(this.getHeight()));
+        } 
+    	catch(Exception e) 
+    	{
+
+        }
+	}
+	
+	private void invpodesiRecenzije()
+    {
+    	try
+    	{
+            this.setPreferredSize(new Dimension(invadjust(this.getWidth()), invadjust(this.getHeight())));
+            this.setSize(invadjust(this.getWidth()), invadjust(this.getHeight()));
         } 
     	catch(Exception e) 
     	{

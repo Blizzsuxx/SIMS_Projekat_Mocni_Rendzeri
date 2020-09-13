@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,24 +26,23 @@ import model.Sesija;
 import model.Urednik;
 import net.miginfocom.swing.MigLayout;
 
-public class IzvestajUrednika extends JFrame { // izvestaj o odabranom uredniku
-	/**
-	 *
-	 */
+public class IzvestajUrednika extends MojDialog { // izvestaj o odabranom uredniku
 	private static final long serialVersionUID = 1L;
 	private Sesija sesija;
 	private Urednik urednik;
 	private JButton btnBack;
 	private JXTable table;
+	private String title;
 	private JTextField tfImeUrednika, tfUkupno, tfZadate, tfZaIzmenu;
 
-	public IzvestajUrednika(Sesija s, Urednik u) {
+	public IzvestajUrednika(Sesija s, Urednik u, String title, int dim1, int dim2) {
+		super(title, dim1, dim2);
+		this.title = title;
 		this.setSesija(s);
 		this.urednik = u;
-		setSize(400, 400);
+		setTitle(title);
 		setResizable(false);
 		initGui();
-		initActions();
 	}
 
 	/**
@@ -81,31 +81,31 @@ public class IzvestajUrednika extends JFrame { // izvestaj o odabranom uredniku
 		tfImeUrednika = new JTextField(20);
 		add(tfImeUrednika);
 		tfImeUrednika.setText(urednik.getIme()+" "+urednik.getPrezime());
+		tfImeUrednika.setEditable(false);
 		
 		add(new JLabel("Ukupan broj recenzija"));
 		tfUkupno = new JTextField(20);
 		add(tfUkupno);
 		tfUkupno.setText(urednik.getIstorijaRecenzija().size()+"");
+		tfUkupno.setEditable(false);
 		
 		add(new JLabel("Broj zadatih recenzija"));
 		tfZadate = new JTextField(20);
 		add(tfZadate);
 		tfZadate.setText(urednik.getZakazaneRecenzije().size()+"");
+		tfZadate.setEditable(false);
 		
 		add(new JLabel("Broj recenzija za izmenu"));
-		tfZadate = new JTextField(20);
-		add(tfZadate);
-		tfZadate.setText(urednik.getZakazaneRecenzije().size()+"");
-		btnBack=new JButton("Nazad");
-		add(btnBack);
-		
+		tfZaIzmenu = new JTextField(20);
+		add(tfZaIzmenu);
+		tfZaIzmenu.setText(urednik.getRecezijaZaIzmenu().size()+"");
+		tfZaIzmenu.setEditable(false);
 		
 		table = new JXTable(new RecenzijeOdUrednikaModel(this.urednik.getIstorijaRecenzija()));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getTableHeader().setReorderingAllowed(false);
 		JScrollPane sp = new JScrollPane(table);
-		//this.
-		add(sp);//, BorderLayout.CENTER);
+		add(sp);
 		
 		TableRowSorter<TableModel> tableSorter=new TableRowSorter<TableModel>();
 		tableSorter.setModel(table.getModel());
@@ -146,17 +146,4 @@ public class IzvestajUrednika extends JFrame { // izvestaj o odabranom uredniku
 		
 		
 	}
-	private void initActions() {
-		btnBack.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//parent.setVisible(true);
-				IzvestajUrednika.this.dispose();
-				
-			}
-
-			
-		});}
-
 }

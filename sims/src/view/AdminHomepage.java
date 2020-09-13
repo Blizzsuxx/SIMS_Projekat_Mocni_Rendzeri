@@ -24,7 +24,7 @@ public class AdminHomepage extends Homepage implements ActionListener{
 	private JMenuItem korisniciItem1, korisniciItem2, korisniciItem3, korisniciItem4, korisniciItem5,
 	izvodjaciItem1, izvodjaciItem2, izvodjaciItem3, muzickiSadrzajItem1, muzickiSadrzajItem2,
 	muzickiSadrzajItem3, muzickiSadrzajItem4, muzickiSadrzajItem5,
-	zanroviItem1, recenzijeItem1, recenzijeItem2, recenzijeItem3, glasanjeItem1, izvestajiItem1, reklameItem;
+	zanroviItem1, recenzijeItem1, recenzijeItem2, recenzijeItem3, glasanjeItem1, izvestajiItem1, izvestajiItem2, izvestajiItem3, reklameItem;
 	
 	public AdminHomepage(Sesija sesija) {
 		super(sesija);
@@ -109,6 +109,10 @@ public class AdminHomepage extends Homepage implements ActionListener{
 		izvestajiMenu = new JMenu("Izvestaji");
 		izvestajiItem1 = new JMenuItem("Izvestaj izvodjaca");
 		izvestajiMenu.add(izvestajiItem1);
+		izvestajiItem2 = new JMenuItem("Izvestaj urednika");
+		izvestajiMenu.add(izvestajiItem2);
+		izvestajiItem3 = new JMenuItem("Izvestaj zanrova");
+		izvestajiMenu.add(izvestajiItem3);
 		menubar.add(izvestajiMenu);
 		
 	}
@@ -357,15 +361,29 @@ public class AdminHomepage extends Homepage implements ActionListener{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-					try {
-						new IzvestajIzvodjaca(AdminHomepage.this.getSesija(), "Izvestaj izvodjaca", 615, 455);
-					} 
-					catch (Exception e1) {
-						e1.printStackTrace();
-					}
+				IzvestajViseIzvodjaca ivi = new IzvestajViseIzvodjaca(AdminHomepage.this.getSesija(), "Izvestaj izvodjaca", 547, 447);
+				ivi.setVisible(true);
 				
 			}
 			
+		});
+		
+		izvestajiItem2.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					IzvestajViseUrednika ivu = new IzvestajViseUrednika(AdminHomepage.this.getSesija(), "Izvestaj urednika", 524, 416);
+					ivu.setVisible(true);
+			}
+		});
+		
+		izvestajiItem3.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					IzvestajViseZanrova ivz = new IzvestajViseZanrova(AdminHomepage.this.getSesija(), "Izvestaj zanrova", 300, 500);
+					ivz.setVisible(true);
+			}
 		});
 	}
 

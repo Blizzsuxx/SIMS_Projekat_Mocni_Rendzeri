@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import model.Album;
 import model.MuzickoDelo;
 import net.miginfocom.swing.MigLayout;
 
@@ -40,6 +41,8 @@ public class SearchResults extends JScrollPane {
 				opis.setEditable(false);
 				deoSaOpisom.add(opis, BorderLayout.CENTER);
 				slika.add(deoSaOpisom);
+			} else if (sadrzaj instanceof Album) {
+				slika = new ImageLabel(sadrzaj, true);
 			} else {
 				slika = new ImageLabel(sadrzaj);
 			}

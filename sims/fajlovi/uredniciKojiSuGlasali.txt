@@ -1,2 +1,1 @@
 Pera;Peric;pera@gmail.com;muski;13.09.1999.;pPeric;pPeric;13.07.2013.;true
-miki;jevremeovic;miki@gmail.com;muski;03.04.2000.;sifra2;miki1;06.09.2010.;true

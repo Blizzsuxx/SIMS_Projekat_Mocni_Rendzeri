@@ -158,12 +158,11 @@ public class TopListaProzor extends MojDialog implements ActionListener {
 			JOptionPane.showMessageDialog(TopListaProzor.this, "Morate selektovati neku top listu.",
 					 "Info", JOptionPane.INFORMATION_MESSAGE);
 		} else {
-			System.out.println("NSSD");
 			String nazivListe = table.getModel().getValueAt(rIndex, 0).toString();
 			String nazivKorisnika = Sesija.getTrenutniKorisnik().getNalog().getKorisnickoIme();
 			TopLista tp = ((Homepage)parent).getSesija().getToplisteMenadzer().vratiTopListu(nazivListe, nazivKorisnika);
+			MojDialog md = new MojDialog("Sadrzaj Top Liste", 1000, 1000);
 			@SuppressWarnings("unchecked")
-			MojDialog md = new MojDialog("Nesto", 1000, 1000);
 			SearchResults sr = new SearchResults( (List<Slikovit>)(List<?>)tp.getMuzickiSadrzaj());
 			md.setContentPane(sr);
 			md.pack();

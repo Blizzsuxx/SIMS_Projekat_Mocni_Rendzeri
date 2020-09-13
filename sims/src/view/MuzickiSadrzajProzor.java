@@ -11,6 +11,8 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
@@ -18,6 +20,7 @@ import javax.swing.ListSelectionModel;
 import org.jdesktop.swingx.JXTable;
 
 import model.MuzickiSadrzaj;
+import model.MuzickoDelo;
 import model.TipMuzickogSadrzaja;
 import model.Zanr;
 import net.miginfocom.swing.MigLayout;
@@ -36,6 +39,7 @@ private static final long serialVersionUID = 1L;
 	private ComboZanr cz;
 	private List<Zanr> izabraniZanrovi;
 	private TablePopupMenu popupMenu = new TablePopupMenu();
+	private JMenuItem infoItem = new JMenuItem("Pregled");
 	private List<MuzickiSadrzaj> temp = new ArrayList<>(); // potrebna dodatna kolekcija zbog refresh i search-a
 	
 	private ImageIcon searchI = new ImageIcon("slike/search.jpg");
@@ -44,6 +48,9 @@ private static final long serialVersionUID = 1L;
 	private ImageIcon refreshI = new ImageIcon("slike/refresh.jpg");
 	private ImageIcon scaledR = new ImageIcon(refreshI.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
 	private JButton btnRefresh = new JButton(scaledR);
+	private ImageIcon slikovitoI = new ImageIcon("slike/slikovito.png");
+	private ImageIcon scaledSl = new ImageIcon(slikovitoI.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
+	private JButton btnSlikovito = new JButton(scaledSl);
 	
 	public MuzickiSadrzajProzor(JFrame parent, String ime, int dim1, int dim2,
 			List<MuzickiSadrzaj> muzickiSadrzaj, String[] imenaKolona, TipMuzickogSadrzaja indikator) {
@@ -79,14 +86,21 @@ private static final long serialVersionUID = 1L;
 		base.add(cz);
 		base.add(btnSearch);
 		base.add(btnRefresh);
+		base.add(btnSlikovito);
 		
-		if (parent instanceof UrednikHomepage) {
-			table.setComponentPopupMenu(popupMenu);
-			table.addMouseListener(new TableMouseListener(table));
-		}
+		
+		table.setComponentPopupMenu(popupMenu);
+		table.addMouseListener(new TableMouseListener(table));
+		popupMenu.menuItemAdd.setVisible(false);
+		popupMenu.menuItemEdit.setVisible(false);
+		popupMenu.menuItemDelete.setVisible(false);
+		
+		popupMenu.add(infoItem);
 	}
 	
 	private void actionGUI() {
+		infoItem.addActionListener(this);
+		
 		btnSearch.addActionListener(new ActionListener() {
 
 			@Override
@@ -117,6 +131,21 @@ private static final long serialVersionUID = 1L;
 			}
 			
 		});
+		
+		btnSlikovito.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				MojDialog md = new MojDialog("Slikoviti Prikaz Sadrzaja", 500, 400);
+				@SuppressWarnings("unchecked")
+				SearchResults sr = new SearchResults( (List<Slikovit>)(List<?>)muzickiSadrzaj);
+				JScrollPane sp = new JScrollPane(sr);
+				md.setContentPane(sp);
+				
+				md.setVisible(true);
+			}
+			
+		});
 	}
 	
 	private void refreshData() {
@@ -126,7 +155,18 @@ private static final long serialVersionUID = 1L;
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		int rIndex = table.getSelectedRow();
+		if (rIndex < 0) {
+			JOptionPane.showMessageDialog(MuzickiSadrzajProzor.this, "Morate selektovati muzicki sadrzaj.",
+					 "Info", JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			String naziv = table.getModel().getValueAt(rIndex, 0).toString();
+			MuzickiSadrzaj ms = ((Homepage)parent).getSesija().getMuzickiSadrzajMenadzer().vratiNaOsnovuNazive(naziv);
+			if (ms instanceof MuzickoDelo) {
+				MediaPlayer player = new MediaPlayer(null, (MuzickoDelo)ms);
+		        player.setVisible(true);
+			}
+		}
 		
 	}
 }

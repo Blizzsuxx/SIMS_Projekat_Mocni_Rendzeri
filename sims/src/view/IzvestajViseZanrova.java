@@ -7,11 +7,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
@@ -24,43 +22,29 @@ import org.jdesktop.swingx.JXTable;
 
 import model.IzvestajSvihZanrova;
 import model.Sesija;
+import model.Zanr;
 import net.miginfocom.swing.MigLayout;
 
-public class IzvestajViseZanrova extends JFrame {
-	
-	/**
-	 *
-	 */
+public class IzvestajViseZanrova extends MojDialog {
 	private static final long serialVersionUID = 1L;
 	private JXTable table;
 	@SuppressWarnings("unused")
 	private Sesija sesija;
-	private JButton btnBack;
 	ArrayList<IzvestajSvihZanrova> lista;
-	public IzvestajViseZanrova(Sesija s) {
-		this.sesija=s;//potrebna da kazem lista zanrova sa nekim podacima kao, broj dela, prosecna ocena zanra preko dela, nesto tako?
+	private String title;
+	private JButton btnPogledajJednog;
+	
+	public IzvestajViseZanrova(Sesija s, String title, int dim1, int dim2) {
+		super(title, dim1, dim2);
+		this.sesija = s;//potrebna da kazem lista zanrova sa nekim podacima kao, broj dela, prosecna ocena zanra preko dela, nesto tako?
+		this.title = title;
 		s.namestiIzvestaj();
-	    lista=s.getIzvestajSvihZanrova().getSviZanrovi();
-		setSize(500, 500);
+	    lista = s.getIzvestajSvihZanrova().getSviZanrovi();
+		setTitle(title);
 		setResizable(false);
-		initGui();
-		initActions();
-		
+		initGui();	
 	}
-	private void initActions() {
-        btnBack.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//parent.setVisible(true);
-				IzvestajViseZanrova.this.dispose();
-				
-			}
-
-			
-		});
-		
-	}
+	
 	private void initGui() {
 		MigLayout mig =  new MigLayout("wrap 2", "[]10[]", "[]"); 
 		setLayout(mig);
@@ -69,7 +53,6 @@ public class IzvestajViseZanrova extends JFrame {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getTableHeader().setReorderingAllowed(false);
 		JScrollPane sp = new JScrollPane(table);
-		//this.
 		add(sp);
 		
 		TableRowSorter<TableModel> tableSorter=new TableRowSorter<TableModel>();
@@ -101,7 +84,8 @@ public class IzvestajViseZanrova extends JFrame {
 				String sSerch=tfSerch.getText().trim();
 				if (sSerch.isEmpty()) {
 					tableSorter.setRowFilter(null);
-				}else {
+				}
+				else {
 					tableSorter.setRowFilter(RowFilter.regexFilter("(?i)"+sSerch));
 				}
 				
@@ -109,8 +93,30 @@ public class IzvestajViseZanrova extends JFrame {
 			
 		});
 		
-		btnBack =new JButton("Nazad");
-		add(btnBack);
+		btnPogledajJednog = new JButton("Pogledaj jedan zanr");
+		getContentPane().add(btnPogledajJednog, "cell 0 2");
+		
+		btnPogledajJednog.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if (!table.getSelectionModel().isSelectionEmpty()) {
+						Zanr zanr = null;
+						for (Zanr z : sesija.getZanroviMenadzer().getSviZanrovi()) {
+							if (z.getNazivZanra().equals((String)table.getValueAt(table.getSelectedRow(), 0))) {
+								zanr = z;
+								break;
+							}
+						}
+						if (zanr != null)
+							new IzvestajZanra(IzvestajViseZanrova.this.sesija, zanr.getNazivZanra(), zanr, 300, 300);
+					}
+				} 
+				catch (Exception e1) {
+					System.out.println("Greska kod ucitavanja izvestaja za jednog zanra");
+				}
+			}
+		});
 	}
-
 }

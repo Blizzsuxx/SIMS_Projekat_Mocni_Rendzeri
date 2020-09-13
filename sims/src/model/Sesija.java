@@ -222,6 +222,23 @@ public class Sesija {
 		   }
 	   }
    }
+   
+   public void setZakazaneIIzemeneUrednike() {
+	   for (ZakazanaRecenzija zr : zakazanaRecenzijaMenadzer.getSve()) {
+		   for (Urednik u : getUrednici()) {
+			   if (zr.getUrednik().getNalog().getKorisnickoIme().equals(u.getNalog().getKorisnickoIme())) {
+				   u.getZakazaneRecenzije().add(zr);
+			   }
+		   }
+	   }
+	   for (RecezijaZaIzmenu rzi : recenzijeZaIzmenuMenadzer.getSveizmene()) {
+		   for (Urednik u : getUrednici()) {
+			   if (rzi.getRecenzija().getUrednik().getNalog().getKorisnickoIme().equals(u.getNalog().getKorisnickoIme())) {
+				   u.getRecezijaZaIzmenu().add(rzi);
+			   }
+		   }
+	   }
+   }
 
    public static Sesija namestiSesiju(Korisnik korisnik, CitacDatoteka datoteke, LoginMenadzer menadzer) {
       // TODO Auto-generated method stub
@@ -257,6 +274,7 @@ public class Sesija {
       setMuzickaDelaIzvodjaci();
       setIzdateAlbume();
       setRecenzijeZaMuzickoDelo();
+      setZakazaneIIzemeneUrednike();
       this.setReklameMenadzer(reklameMenadzer);
 	this.loginMenadzer = loginMenadzer;
 }

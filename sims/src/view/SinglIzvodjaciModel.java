@@ -1,5 +1,6 @@
 package view;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
@@ -14,6 +15,7 @@ public class SinglIzvodjaciModel extends AbstractTableModel { //srediti
 	String[] naslovi = { "Izvodjac", "Broj dela", "Broj recenzija", "Broj komentara", "Ocena urednika",
 			"Ocena korisnika" };
 	ArrayList<IzvestajJednogIzvodjaca> sviIzv;
+	private static DecimalFormat df = new DecimalFormat("0.00");
 	
 	
 	public SinglIzvodjaciModel(ArrayList<IzvestajJednogIzvodjaca> umetnici) {
@@ -48,9 +50,9 @@ public class SinglIzvodjaciModel extends AbstractTableModel { //srediti
 		case 3:
 			return i.getBrojKomentara();
 		case 4:
-			return i.getOcenaUrednika();
+			return df.format(i.getOcenaUrednika());
 		case 5:
-			return i.getOcenaKorisnika();
+			return df.format(i.getOcenaKorisnika());
 			default:
 				break;
 		}

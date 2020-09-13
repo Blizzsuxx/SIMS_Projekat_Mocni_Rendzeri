@@ -2,20 +2,14 @@ package view;
 
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneLayout;
 
-import org.jdesktop.swingx.JXTable;
-
-import controler.IzvodjacMenadzer;
 import controler.MuzickiSadrzajMenadzer;
 import model.IzvestajJednogIzvodjaca;
 import model.Izvodjac;
@@ -24,7 +18,6 @@ import model.Sesija;
 public class IzvestajIzvodjaca extends MojDialog {
 	private static final long serialVersionUID = 1L;
 	private Sesija sesija;
-	private JXTable table;
 	private IzvestajJednogIzvodjaca jedan;
 	private String title;
 	private JTextField txtUmetnickoIme;
@@ -34,23 +27,14 @@ public class IzvestajIzvodjaca extends MojDialog {
 	private JTextField txtOcenaKorisnika;
 	private JTextField txtOcenaUrednika;
 	private JTable muzickaDela;
-	@SuppressWarnings("rawtypes")
-	private JComboBox cmbIzvodjac;
 	private static DecimalFormat df = new DecimalFormat("0.00");
 
-	@SuppressWarnings("rawtypes")
-	public IzvestajIzvodjaca(Sesija sesija, String title, int dim1, int dim2) throws Exception {
+	public IzvestajIzvodjaca(Sesija sesija, String title, Izvodjac i, int dim1, int dim2) throws Exception {
 		super(title, dim1, dim2);
 		this.sesija = sesija;
 		this.title = title;
 		
-		cmbIzvodjac = new JComboBox();
-		cmbIzvodjac.setBounds(417, 387, 174, 22);
-		getContentPane().add(cmbIzvodjac);
-		ucitajIzvodjace();
-		cmbIzvodjac.setSelectedIndex(0);
-		
-		Izvodjac izvodjac = sesija.getIzvodjac((String)cmbIzvodjac.getSelectedItem());
+		Izvodjac izvodjac = sesija.getIzvodjac(i.getUmetnickoIme());
 		this.jedan = sesija.namestiJedanizvestaj(izvodjac);
 		setResizable(false);
 		getContentPane().setLayout(null);
@@ -121,22 +105,6 @@ public class IzvestajIzvodjaca extends MojDialog {
 		getContentPane().add(txtOcenaUrednika);
 		txtOcenaUrednika.setText(df.format(jedan.getOcenaUrednika()) + "");
 		
-		cmbIzvodjac.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					ucitajPesme((String)cmbIzvodjac.getSelectedItem());
-					refresh();
-				} 
-				catch (Exception e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		
-		JLabel lblIzvodjac = new JLabel("Izvodjac");
-		lblIzvodjac.setBounds(417, 367, 48, 14);
-		getContentPane().add(lblIzvodjac);
-		
 		muzickaDela = new JTable();
 		muzickaDela.setBorder(null);
 		muzickaDela.getTableHeader().setReorderingAllowed(false);
@@ -154,17 +122,8 @@ public class IzvestajIzvodjaca extends MojDialog {
 		lblMuzickaDela.setBounds(220, 91, 91, 14);
 		getContentPane().add(lblMuzickaDela);
 		
-		ucitajPesme((String)cmbIzvodjac.getSelectedItem());
+		ucitajPesme(izvodjac.getUmetnickoIme());
 		setVisible(true);
-	}
-	
-	@SuppressWarnings("unchecked")
-	private void ucitajIzvodjace() {
-		IzvodjacMenadzer im = sesija.getIzvodjacMenadzer();
-		for (Izvodjac i : im.getSvi()) {
-			if (i.isOdobrenost())
-				cmbIzvodjac.addItem(i.getUmetnickoIme());
-		}
 	}
 	
 	private void ucitajPesme(String umetnickoIme) throws Exception {
@@ -172,16 +131,5 @@ public class IzvestajIzvodjaca extends MojDialog {
 		Izvodjac i = sesija.getIzvodjac(umetnickoIme);
 		TableModelWrapper tmw = mdm.getTabelaMuzickihDela(i);
 		muzickaDela.setModel(tmw);
-	}
-	
-	private void refresh() {
-		Izvodjac izvodjac = sesija.getIzvodjac((String)cmbIzvodjac.getSelectedItem());
-		this.jedan = sesija.namestiJedanizvestaj(izvodjac);
-		txtUmetnickoIme.setText(izvodjac.getUmetnickoIme());
-		txtBrojDela.setText(jedan.getBrojDela() + "");
-		txtBrojRecenzija.setText(jedan.getBrojRecenzija() + "");
-		txtBrojKomentara.setText(jedan.getBrojKomentara() + "");
-		txtOcenaKorisnika.setText(df.format(jedan.getOcenaKorisnika()) + "");
-		txtOcenaUrednika.setText(df.format(jedan.getOcenaUrednika()) + "");
 	}
 }

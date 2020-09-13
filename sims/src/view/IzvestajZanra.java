@@ -4,9 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import org.jdesktop.swingx.JXTable;
@@ -16,7 +14,7 @@ import model.Sesija;
 import model.Zanr;
 import net.miginfocom.swing.MigLayout;
 
-public class IzvestajZanra extends JFrame {
+public class IzvestajZanra extends MojDialog {
 
 	/**
 	 *
@@ -26,14 +24,16 @@ public class IzvestajZanra extends JFrame {
 	private Zanr zanr;
 	private JButton btnBack;
 	private JXTable table;
+	private String title;
 	private JTextField tfUkupnoKom, tfUkupno, tfProsecnaOcena;
 	private IzvestajSvihZanrova jedanZanr;
 
-	public IzvestajZanra(Sesija s, Zanr z) {
+	public IzvestajZanra(Sesija s, String title, Zanr z, int dim1, int dim2) {
+		super(title, dim1, dim2);
 		this.setSesija(s);
 		this.setZanr(z);
 		this.jedanZanr = s.pronadjiPodatkejednogZanra(z.getNazivZanra());
-		setSize(400, 400);
+		setTitle(title);
 		setResizable(false);
 		initGui();
 		initActions();
@@ -89,29 +89,31 @@ public class IzvestajZanra extends JFrame {
 		tfUkupno = new JTextField(10);
 		add(tfUkupno);
 		tfUkupno.setText(jedanZanr.getBrojRecenzija()+"");
+		tfUkupno.setEditable(false);
 		
 		add(new JLabel("Ukupno komentara: "));
 		tfUkupnoKom = new JTextField(10);
 		add(tfUkupnoKom);
 		tfUkupnoKom.setText(jedanZanr.getBrojKOmentara()+"");
+		tfUkupnoKom.setEditable(false);
 		
 		add(new JLabel("Broj dela zanra: "));
 		tfProsecnaOcena = new JTextField(10);
 		add(tfProsecnaOcena);
 		tfProsecnaOcena.setText(jedanZanr.getBrojMuzdela()+" ");
+		tfProsecnaOcena.setEditable(false);
 		add(btnBack);
 		
+		setVisible(true);
+		
 	}
+	
 	private void initActions() {
 		btnBack.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//parent.setVisible(true);
 				IzvestajZanra.this.dispose();
-				
 			}
-
-			
 		});}
 }

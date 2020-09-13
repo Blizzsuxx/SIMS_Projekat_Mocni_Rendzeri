@@ -1,23 +1,22 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
+import javax.swing.ScrollPaneLayout;
+import javax.swing.SpringLayout;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.TableModel;
@@ -26,83 +25,104 @@ import javax.swing.table.TableRowSorter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
-import org.jdesktop.swingx.JXTable;
 
 import controler.IzvestajSvihIzvodjacaMenadzer;
-import controler.ZanroviMenadzer;
+import model.Izvodjac;
 import model.Sesija;
-import model.Zanr;
-import net.miginfocom.swing.MigLayout;
 
-public class IzvestajViseIzvodjaca extends JFrame{
-	/**
-	 *
-	 */
+public class IzvestajViseIzvodjaca extends MojDialog{
 	private static final long serialVersionUID = 1L;
-	@SuppressWarnings("unused")
 	private Sesija sesija;
 	private IzvestajSvihIzvodjacaMenadzer men;
-	private JButton btnBack, btnOk;
-	private JXTable  table1;
-	private JComboBox<Zanr> cbZanr;
-	private JDatePickerImpl DatePicker1;
-	private JDatePickerImpl DatePicker2;
-	private UtilDateModel model1, model2;
-	private JButton btnPogledajJedan;
-	
-	
-	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public IzvestajViseIzvodjaca(Sesija s, ZanroviMenadzer zm) {
-		this.sesija=s;
-		this.men=s.namestiIzvestajIzvodjaca();
-		cbZanr = new JComboBox(zm.izlistajSveZanrove()); //ili zm da bude u sesiji i samo iz toga da se izvadi, u sustini je isto, samo je bitno da ostanemo svi pri istoj logici
-		setSize(700, 700);
-		setResizable(false);
-		initGui();
-		initActions();
-	}
+	private String title;
+	private JTable izvodjaci;
+	private JDatePickerImpl dtD1;
+	private SpringLayout sl_dtD1;
+	private JDatePickerImpl dtD2;
+	private SpringLayout sl_dtD2;
+	private JTextField txtPretraga;
+	private JButton btnPogledajJednog;
+	@SuppressWarnings("rawtypes")
+	private JComboBox cmbZanr;
 
-	private void initGui() {
-		MigLayout mig =  new MigLayout("wrap 2", "[]10[]", "[]10[]10[]10[]10[]10[]"); //dodati datume, odabir zanra
-		setLayout(mig);
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public IzvestajViseIzvodjaca(Sesija s, String title, int dim1, int dim2) {
+		super(title, dim1, dim2);
+		this.title = title;
+		this.sesija=s;
+		this.men = s.namestiIzvestajIzvodjaca();
+		cmbZanr = new JComboBox(sesija.getZanroviMenadzer().izlistajSveZanrove());
+		cmbZanr.setSelectedIndex(0);
+		setTitle(title);
+		setResizable(false);
+		getContentPane().setLayout(null);
+		
+		izvodjaci = new JTable(new SinglIzvodjaciModel(men.getIzvodjaci()));
+		izvodjaci.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		izvodjaci.setBorder(null);
+		izvodjaci.getTableHeader().setReorderingAllowed(false);
+		izvodjaci.getTableHeader().setResizingAllowed(false);
+		izvodjaci.setAutoCreateRowSorter(true);
+		
+		JScrollPane scrollPaneGrid = new JScrollPane(izvodjaci);
+		scrollPaneGrid.setViewportBorder(null);
+		scrollPaneGrid.setBounds(10, 11, 514, 213);
+		scrollPaneGrid.setLayout(new ScrollPaneLayout());
+		getContentPane().add(scrollPaneGrid, BorderLayout.CENTER);
+		izvodjaci.setFillsViewportHeight(true);
 		
 		
+		btnPogledajJednog = new JButton("Pogledaj jedan");
+		btnPogledajJednog.setBounds(410, 235, 114, 23);
+		getContentPane().add(btnPogledajJednog);
 		
-		Properties p=new Properties();
-		p.put("text.today", "Today");
-		p.put("text.month", "Month");
-		p.put("text.year", "Year");
+		UtilDateModel model = new UtilDateModel();
+		Properties p = new Properties();
+		p.put("text.today", "Danas");
+		p.put("text.month", "Mesec");
+		p.put("text.year", "Godina");
+		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+		dtD1 = new JDatePickerImpl(datePanel, new DataLabelFormatter());
+		sl_dtD1 = new SpringLayout();
+		sl_dtD1.putConstraint(SpringLayout.NORTH, dtD1.getJFormattedTextField(), 0, SpringLayout.NORTH, dtD1);
+		sl_dtD1.putConstraint(SpringLayout.WEST, dtD1.getJFormattedTextField(), 33, SpringLayout.WEST, dtD1);
+		sl_dtD1.putConstraint(SpringLayout.EAST, dtD1.getJFormattedTextField(), 211, SpringLayout.WEST, dtD1);
+		sl_dtD1 = (SpringLayout) dtD1.getLayout();
+		dtD1.setBounds(10, 235, 175, 25);
+		getContentPane().add(dtD1);
 		
-		model1=new UtilDateModel();
-		JDatePanelImpl datePanel1=new JDatePanelImpl(model1, p);
-		this.DatePicker1=new JDatePickerImpl(datePanel1, new DataLabelFormatter());
+		UtilDateModel model1 = new UtilDateModel();
+		JDatePanelImpl datePanel1 = new JDatePanelImpl(model1, p);
+		dtD2 = new JDatePickerImpl(datePanel1, new DataLabelFormatter());
+		sl_dtD2 = new SpringLayout();
+		sl_dtD2.putConstraint(SpringLayout.NORTH, dtD2.getJFormattedTextField(), 0, SpringLayout.NORTH, dtD2);
+		sl_dtD2.putConstraint(SpringLayout.WEST, dtD2.getJFormattedTextField(), 33, SpringLayout.WEST, dtD2);
+		sl_dtD2.putConstraint(SpringLayout.EAST, dtD2.getJFormattedTextField(), 211, SpringLayout.WEST, dtD2);
+		sl_dtD2 = (SpringLayout) dtD2.getLayout();
+		dtD2.setBounds(195, 235, 175, 25);
+		getContentPane().add(dtD2);
 		
-		model2=new UtilDateModel();
-		JDatePanelImpl datePanel2=new JDatePanelImpl(model2, p);
-		this.DatePicker2=new JDatePickerImpl(datePanel2, new DataLabelFormatter());
+		cmbZanr.setBounds(10, 271, 175, 22);
+		getContentPane().add(cmbZanr);
 		
-		//ovde dodu datumi 1
-		add(this.DatePicker1);
-		add(this.DatePicker2);
+		JButton btnFiltriraj = new JButton("Filtriraj");
+		btnFiltriraj.setBounds(437, 271, 89, 23);
+		getContentPane().add(btnFiltriraj);
 		
-		table1 = new JXTable(new SinglIzvodjaciModel(men.getIzvodjaci()));
-		table1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table1.getTableHeader().setReorderingAllowed(false);
-		JScrollPane sp1 = new JScrollPane(table1);
-		//this.
-		add(sp1);
+		JLabel lblPretraga = new JLabel("Pretraga");
+		lblPretraga.setBounds(10, 378, 57, 14);
+		getContentPane().add(lblPretraga);
 		
-		TableRowSorter<TableModel> tableSorter1=new TableRowSorter<TableModel>();
-		tableSorter1.setModel(table1.getModel());
-		table1.setRowSorter(tableSorter1);
+		txtPretraga = new JTextField();
+		txtPretraga.setBounds(77, 369, 447, 33);
+		getContentPane().add(txtPretraga);
+		txtPretraga.setColumns(10);
 		
-		JPanel pSerch1=new JPanel(new FlowLayout(FlowLayout.LEFT));
-        pSerch1.add(new JLabel("Pretraga:"));
-		JTextField tfSerch1=new JTextField(20);
-		pSerch1.add(tfSerch1);
-		add(pSerch1, BorderLayout.SOUTH);
-		tfSerch1.getDocument().addDocumentListener(new DocumentListener() {
+		TableRowSorter<TableModel> tableSorter = new TableRowSorter<TableModel>();
+		tableSorter.setModel(izvodjaci.getModel());
+		izvodjaci.setRowSorter(tableSorter);
+		
+		txtPretraga.getDocument().addDocumentListener(new DocumentListener() {
 
 			@Override
 			public void insertUpdate(DocumentEvent e) {
@@ -119,75 +139,66 @@ public class IzvestajViseIzvodjaca extends JFrame{
 			@Override
 			public void changedUpdate(DocumentEvent e) {
 				
-				String sSerch=tfSerch1.getText().trim();
+				String sSerch = txtPretraga.getText().trim();
 				if (sSerch.isEmpty()) {
-					tableSorter1.setRowFilter(null);
-				}else {
-					tableSorter1.setRowFilter(RowFilter.regexFilter("(?i)"+sSerch));
+					tableSorter.setRowFilter(null);
+				}
+				else {
+					tableSorter.setRowFilter(RowFilter.regexFilter("(?i)"+sSerch));
 				}
 				
 			}
 			
 		});
 		
-		btnBack= new JButton("Nazad");
-		btnOk =new JButton("Filtriraj");
-		add(cbZanr);
-		add(btnBack);
-		add(btnOk);//dugme za filtriranje
-		btnPogledajJedan=new JButton("Pogledaj jedan");
-		add(btnPogledajJedan);
-	}
-	private void initActions() {
-		btnPogledajJedan.addActionListener(new ActionListener() {
+		btnPogledajJednog.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					IzvestajIzvodjaca iz=new IzvestajIzvodjaca(IzvestajViseIzvodjaca.this.sesija, "Izvestaj izvodjaca", 615, 455);
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
+					if (!izvodjaci.getSelectionModel().isSelectionEmpty()) {
+						Izvodjac izvodjac = sesija.getIzvodjac((String)izvodjaci.getValueAt(izvodjaci.getSelectedRow(), 0));
+						new IzvestajIzvodjaca(IzvestajViseIzvodjaca.this.sesija, izvodjac.getUmetnickoIme(), izvodjac,  615, 455);
+					}
+				} 
+				catch (Exception e1) {
 					System.out.println("Greska kod ucitavanja izvestaja za jednog izvodjaca");
 				}
-				
 			}
 		});
-		btnBack.addActionListener(new ActionListener() {
+		
+		btnFiltriraj.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//parent.setVisible(true);
-				IzvestajViseIzvodjaca.this.dispose();
-				
-			}
-
-			
-		});
-	
-		btnOk.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				Date dan=model1.getValue(); 
-				Date dan1=model2.getValue();
-				String imeZanra=(String) cbZanr.getSelectedItem(); 
+				String msg = validiraj();
+				if (!msg.equals("")) {
+					JOptionPane.showMessageDialog(null, msg);
+					return;
+				}
+				Date dan = model.getValue(); 
+				Date dan1 = model1.getValue();
+				String imeZanra = (String)cmbZanr.getSelectedItem(); 
 				IzvestajViseIzvodjaca.this.men.izlistajPoDatumimaIZanru(dan, dan1, imeZanra);
-				//table1.new JXTable(new SinglIzvodjaciModel(men.getIzvodjaci()));
-				refreshData(); 
-				
-				
-				
+				refreshData();
 			}
 		});
 		
 	}
 	
 	public void refreshData() {
-		
-		 
-		SinglIzvodjaciModel si=(SinglIzvodjaciModel) table1.getModel();
-		si.fireTableDataChanged();
-			
+		SinglIzvodjaciModel si = (SinglIzvodjaciModel) izvodjaci.getModel();
+		si.fireTableDataChanged();	
 	}
+	
+	public String validiraj() {
+		if (dtD1.getJFormattedTextField().getText().isEmpty()) {
+			return "Morate odabrati prvi datum.";
+		}
+		if (dtD2.getJFormattedTextField().getText().isEmpty()) {
+			return "Morate odabrati drugi datum.";
+		}
+		return "";
+	}
+	
 }

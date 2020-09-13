@@ -1,11 +1,14 @@
 package view;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -14,14 +17,14 @@ import model.Sesija;
 import model.TipMuzickogSadrzaja;
 import model.Uloga;
 
-public class AdminHomepage extends Homepage {
+public class AdminHomepage extends Homepage implements ActionListener{
 	private static final long serialVersionUID = 1L;
 
 	private JMenu korisniciMenu, izvodjaciMenu, muzickiSadrzajMenu, zanroviMenu, recenzijeMenu, glasanjeMenu, izvestajiMenu;
 	private JMenuItem korisniciItem1, korisniciItem2, korisniciItem3, korisniciItem4, korisniciItem5,
 	izvodjaciItem1, izvodjaciItem2, izvodjaciItem3, muzickiSadrzajItem1, muzickiSadrzajItem2,
 	muzickiSadrzajItem3, muzickiSadrzajItem4, muzickiSadrzajItem5,
-	zanroviItem1, recenzijeItem1, recenzijeItem2, recenzijeItem3, glasanjeItem1, izvestajiItem1;
+	zanroviItem1, recenzijeItem1, recenzijeItem2, recenzijeItem3, glasanjeItem1, izvestajiItem1, reklameItem;
 	
 	public AdminHomepage(Sesija sesija) {
 		super(sesija);
@@ -44,6 +47,10 @@ public class AdminHomepage extends Homepage {
 	}
 
 	private void initGUI() {
+		reklameItem = new JMenuItem("Reklame");
+		menu.addSeparator();
+		menu.add(reklameItem);
+		
 		korisniciMenu = new JMenu("Korisnici");    	
 		korisniciItem1 = new JMenuItem("Korisnici");
 		korisniciMenu.add(korisniciItem1);
@@ -107,6 +114,8 @@ public class AdminHomepage extends Homepage {
 	}
 	
 	private void actionGUI() {
+		reklameItem.addActionListener(this);
+		
 		korisniciItem1.addActionListener(new ActionListener() {
 
 			@Override
@@ -358,5 +367,24 @@ public class AdminHomepage extends Homepage {
 			}
 			
 		});
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		ReklameProzor rp = new ReklameProzor("Reklame", 100, 100, AdminHomepage.this);
+		rp.setVisible(true);
+		
+		panelReklama.removeAll();
+		panelReklama.revalidate();
+		panelReklama.repaint();
+		
+		reklamaPrva = new ImageIcon(super.getSesija().getReklameMenadzer().getPutanjaPrveReklame());
+		obradjenaReklamaPrva = new ImageIcon(reklamaPrva.getImage().getScaledInstance(528, 100, Image.SCALE_DEFAULT));
+		reklamaDruga = new ImageIcon(super.getSesija().getReklameMenadzer().getPutanjaDrugeReklame());
+		obradjenaReklamaDruga = new ImageIcon(reklamaDruga.getImage().getScaledInstance(528, 100, Image.SCALE_DEFAULT));
+		JLabel labelaPrva = new JLabel(obradjenaReklamaPrva);
+		JLabel labelaDruga = new JLabel(obradjenaReklamaDruga);
+		panelReklama.add(labelaPrva, "wrap");
+		panelReklama.add(labelaDruga);
 	}
 }

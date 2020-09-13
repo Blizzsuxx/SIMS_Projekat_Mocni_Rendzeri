@@ -41,6 +41,7 @@ public class CitacDatoteka {
 	
 	private MuzickiSadrzajMenadzer muzickiSadrzajMenadzer;
 	private ToplisteMenadzer toplisteMenadzer;
+	private ReklameMenadzer reklameMenadzer;
 	
 	public MuzickiSadrzajMenadzer getMuzickiSadrzajMenadzer() {
 		return muzickiSadrzajMenadzer;
@@ -139,7 +140,7 @@ public class CitacDatoteka {
 		glasanjeMenadzer = new GlasanjeMenadzer(ucitajBuffered("glasovi.txt"), ucitajBuffered("uredniciKojiSuGlasali.txt"), 
 				(ArrayList<MuzickoDelo>) muzickiSadrzajMenadzer.getMuzickaDela(), korisnici);
 
-		
+		reklameMenadzer = new ReklameMenadzer("fajlovi"+System.getProperty("file.separator")+"reklame.txt");
 
 		Constants.MUZICKA_IKONA  = procitajSliku("fajlovi/muzika.png");
 		Constants.KORISNICKA_IKONA = procitajSliku("fajlovi/korisnik.png");
@@ -211,6 +212,8 @@ public class CitacDatoteka {
 		muzickiSadrzajMenadzer.sacuvaj("fajlovi"+System.getProperty("file.separator")+"muzickiSadrzaj.txt"); //
 		muzickiSadrzajMenadzer.sacuvajAlbumeDjela("fajlovi"+System.getProperty("file.separator")+"albumDjela.txt");
 		toplisteMenadzer.upisi("fajlovi"+System.getProperty("file.separator")+"topliste.txt");
+		
+		reklameMenadzer.sacuvaj();
 	}
 
 
@@ -282,6 +285,14 @@ public ToplisteMenadzer getToplisteMenadzer() {
 
 public void setToplisteMenadzer(ToplisteMenadzer toplisteMenadzer) {
 	this.toplisteMenadzer = toplisteMenadzer;
+}
+
+public ReklameMenadzer getReklameMenadzer() {
+	return reklameMenadzer;
+}
+
+public void setReklameMenadzer(ReklameMenadzer reklameMenadzer) {
+	this.reklameMenadzer = reklameMenadzer;
 }
 	
 	

@@ -23,6 +23,7 @@ import controler.KorisniciMenadzer;
 import controler.LoginMenadzer;
 import controler.MuzickiSadrzajMenadzer;
 import controler.RecenzijeZaIzmenuMenadzer;
+import controler.ReklameMenadzer;
 import controler.ToplisteMenadzer;
 import controler.UtisakMenadzer;
 import controler.ZakazanaRecenzijaMenadzer;
@@ -43,7 +44,7 @@ public class Sesija {
    
    private MuzickiSadrzajMenadzer muzickiSadrzajMenadzer;
    private ToplisteMenadzer toplisteMenadzer;
-   
+   private ReklameMenadzer reklameMenadzer;
    private ZakazanaRecenzijaMenadzer zakazanaRecenzijaMenadzer;
    
   
@@ -230,7 +231,7 @@ public class Sesija {
          return trenutnaSesija;
       } else {
          trenutnaSesija = new Sesija(korisnik, datoteke.getKorisnici(), datoteke.getIzvodjaci(), datoteke.getZanrovi(), datoteke.getMuzickiSadrzajMenadzer(),
-        		datoteke.getToplisteMenadzer(), datoteke.getMuzickiSadrzajMenadzer().getMuzickaDela()
+        		datoteke.getToplisteMenadzer(), datoteke.getReklameMenadzer(), datoteke.getMuzickiSadrzajMenadzer().getMuzickaDela()
         		 , datoteke.getGrupe(),
                datoteke.getIzvodjaci().getSolo(), datoteke.getRecenzije(), datoteke.getUtisakmenadzer(), datoteke.getZakRecMenadzer(), datoteke.getIzmena(), datoteke.getGlasanjeMenadzer(),menadzer);
          return trenutnaSesija;
@@ -238,7 +239,7 @@ public class Sesija {
    }
 
    private Sesija(Korisnik trenutniKorisnik, KorisniciMenadzer korisnici, IzvodjacMenadzer izvodjacMenadzer, ZanroviMenadzer zanroviMenadzer, MuzickiSadrzajMenadzer muzickiSadrzajMenadzer,
-		   ToplisteMenadzer toplisteMenadzer, Collection<MuzickoDelo> dela, Collection<Grupa> grupe, Collection<Pojedinacanizvodjac> umetnici, 
+		   ToplisteMenadzer toplisteMenadzer, ReklameMenadzer reklameMenadzer, Collection<MuzickoDelo> dela, Collection<Grupa> grupe, Collection<Pojedinacanizvodjac> umetnici, 
 		   Collection<Recenzija> recenzije, UtisakMenadzer utisakMenadzer,ZakazanaRecenzijaMenadzer zakazanaRecenzijaMenadzer,
          RecenzijeZaIzmenuMenadzer recenzijeZaIzmenuMenadzer, GlasanjeMenadzer glasanjeMenadzer, LoginMenadzer loginMenadzer) {
       super();
@@ -256,6 +257,7 @@ public class Sesija {
       setMuzickaDelaIzvodjaci();
       setIzdateAlbume();
       setRecenzijeZaMuzickoDelo();
+      this.setReklameMenadzer(reklameMenadzer);
 	this.loginMenadzer = loginMenadzer;
 }
 
@@ -472,6 +474,22 @@ public ToplisteMenadzer getToplisteMenadzer() {
 
 public void setToplisteMenadzer(ToplisteMenadzer toplisteMenadzer) {
 	this.toplisteMenadzer = toplisteMenadzer;
+}
+
+
+
+
+
+public ReklameMenadzer getReklameMenadzer() {
+	return reklameMenadzer;
+}
+
+
+
+
+
+public void setReklameMenadzer(ReklameMenadzer reklameMenadzer) {
+	this.reklameMenadzer = reklameMenadzer;
 }
 
 	

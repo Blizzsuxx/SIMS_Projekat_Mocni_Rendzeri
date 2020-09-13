@@ -136,7 +136,7 @@ public class TopListeProzor extends MojDialog implements ActionListener {
 		kreiraj.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0) { // provjera postojanja toplisti
 				if (!trenutniSadrzaj.isEmpty() && !nazivTf.getText().isEmpty()) {
 					String naziv = nazivTf.getText();
 					if (((Homepage)parent).getSesija().getToplisteMenadzer().

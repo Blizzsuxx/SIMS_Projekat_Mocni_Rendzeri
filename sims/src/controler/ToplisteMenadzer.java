@@ -12,6 +12,7 @@ import java.util.List;
 import model.Korisnik;
 import model.MuzickiSadrzaj;
 import model.TopLista;
+import model.Urednik;
 
 public class ToplisteMenadzer {
 	private List<TopLista> topListe;
@@ -105,6 +106,14 @@ public class ToplisteMenadzer {
 			if (tp.getNaziv().equals(nazivTopListe))
 				return tp;
 		return null;
+	}
+	
+	public List<TopLista> vratiTopListeUrednika() {
+		List<TopLista> temp = new ArrayList<>();
+		for (TopLista tp: this.topListe)
+			if (tp.isStatus() && tp.getKorisnik() instanceof Urednik)
+				temp.add(tp);
+		return temp;
 	}
 	
 	public List<TopLista> getTopListe() {

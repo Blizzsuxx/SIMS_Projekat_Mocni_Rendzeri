@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -43,6 +44,11 @@ public class TopListaProzor extends MojDialog implements ActionListener {
 		
 		this.setLayout(new BorderLayout());
 		
+		if (this.parent instanceof KorisnikAplikacijeHomepage && ime.equals("Top Liste Urednika")) {
+			popupMenu.menuItemAdd.setVisible(false);
+			popupMenu.menuItemEdit.setVisible(false);
+			popupMenu.menuItemDelete.setVisible(false);
+		}
 		this.initGUI();
 		this.actionGUI();
 	}
@@ -152,12 +158,16 @@ public class TopListaProzor extends MojDialog implements ActionListener {
 			JOptionPane.showMessageDialog(TopListaProzor.this, "Morate selektovati neku top listu.",
 					 "Info", JOptionPane.INFORMATION_MESSAGE);
 		} else {
+			System.out.println("NSSD");
 			String nazivListe = table.getModel().getValueAt(rIndex, 0).toString();
 			String nazivKorisnika = Sesija.getTrenutniKorisnik().getNalog().getKorisnickoIme();
 			TopLista tp = ((Homepage)parent).getSesija().getToplisteMenadzer().vratiTopListu(nazivListe, nazivKorisnika);
-			/* VRATITI SE NA OVAJ DIO
-			SearchResults sr = new SearchResults(tp.getMuzickiSadrzaj());
-			sr.setVisible(true);*/
+			@SuppressWarnings("unchecked")
+			MojDialog md = new MojDialog("Nesto", 1000, 1000);
+			SearchResults sr = new SearchResults( (List<Slikovit>)(List<?>)tp.getMuzickiSadrzaj());
+			md.setContentPane(sr);
+			md.pack();
+			md.setVisible(true);
 		}
 
 	}

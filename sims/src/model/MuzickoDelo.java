@@ -133,6 +133,16 @@ public class MuzickoDelo extends MuzickiSadrzaj {
 	public void setUtisci(List<Utisak> utisci) {
 		this.utisci = utisci;
 	}
+	
+	public List<Komentar> getKomentari(){
+		List<Komentar> komentari = new ArrayList<Komentar>();
+		for (Utisak u : utisci) {
+			if (u.getClass() == Komentar.class) {
+				komentari.add((Komentar)u);
+			}
+		}
+		return komentari;
+	}
 
 	
 }

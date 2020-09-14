@@ -155,7 +155,7 @@ public class IzvestajUrednika extends MojDialog { // izvestaj o odabranom uredni
 							}
 						}
 						if (recenzija != null)
-							new IzvestajRecenzije(IzvestajUrednika.this.sesija, recenzija, recenzija.getNaslov(),  615, 200);
+							new IzvestajRecenzije(IzvestajUrednika.this.sesija, recenzija, recenzija.getNaslov(), 661, 578);
 					}
 				} 
 				catch (Exception e1) {

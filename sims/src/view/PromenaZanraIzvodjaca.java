@@ -1,21 +1,19 @@
 package view;
 
-import javax.swing.JTable;
 
 import controler.IzvodjacMenadzer;
-import controler.ZanroviMenadzer;
 import model.Grupa;
 import model.Pojedinacanizvodjac;
 import model.Sesija;
 import model.Zanr;
 
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.ScrollPaneLayout;
 
 import java.awt.event.ActionListener;
@@ -27,11 +25,13 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
 import org.jdesktop.swingx.JXList;
+import org.jdesktop.swingx.JXTable;
+
 
 public class PromenaZanraIzvodjaca extends MojDialog {
 	private static final long serialVersionUID = 1L;
-	private JTable pojedninacniIzvodjaci;
-	private JTable grupe;
+	private JXTable pojedninacniIzvodjaci;
+	private JXTable grupe;
 	private String title;
 	private Sesija sesija;
 	private JXList cmbZanr;
@@ -45,11 +45,10 @@ public class PromenaZanraIzvodjaca extends MojDialog {
 		setTitle(title);
 		getContentPane().setLayout(null);
 		
-		pojedninacniIzvodjaci = new JTable();
+		pojedninacniIzvodjaci = new JXTable();
 		pojedninacniIzvodjaci.setBorder(null);
 		pojedninacniIzvodjaci.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		pojedninacniIzvodjaci.getTableHeader().setReorderingAllowed(false);
-		pojedninacniIzvodjaci.getTableHeader().setResizingAllowed(false);
 		pojedninacniIzvodjaci.setAutoCreateRowSorter(true);
 		
 		JScrollPane scrollPaneGrid = new JScrollPane(pojedninacniIzvodjaci);
@@ -59,16 +58,19 @@ public class PromenaZanraIzvodjaca extends MojDialog {
 		getContentPane().add(scrollPaneGrid, BorderLayout.CENTER);
 		pojedninacniIzvodjaci.setFillsViewportHeight(true);
 		
-		cmbZanr = new JXList( sesija.getZanroviMenadzer().getSviZanrovi().toArray());
-		cmbZanr.setBounds(312, 244, 273, 22);
+		cmbZanr = new JXList(sesija.getZanroviMenadzer().getSviZanrovi().toArray());
 		cmbZanr.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		cmbZanr.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		cmbZanr.setAutoCreateRowSorter(true);
-		getContentPane().add(cmbZanr);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(309, 238, 273, 29);
+		getContentPane().add(scrollPane);
+		scrollPane.setViewportView(cmbZanr);
 		
 		JLabel lblZanr = new JLabel("Zanr:");
 		lblZanr.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblZanr.setBounds(254, 248, 48, 14);
+		lblZanr.setBounds(237, 244, 48, 14);
 		getContentPane().add(lblZanr);
 		
 		JButton btnPromeni = new JButton("Promeni");
@@ -77,15 +79,14 @@ public class PromenaZanraIzvodjaca extends MojDialog {
 				promeniZanr();
 			}
 		});
-		btnPromeni.setBounds(595, 244, 89, 23);
+		btnPromeni.setBounds(595, 238, 89, 29);
 		getContentPane().add(btnPromeni);
 		
-		grupe = new JTable();
+		grupe = new JXTable();
 
 		grupe.setBorder(null);
 		grupe.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		grupe.getTableHeader().setReorderingAllowed(false);
-		grupe.getTableHeader().setResizingAllowed(false);
 		grupe.setAutoCreateRowSorter(true);
 		
 		JScrollPane scrollPaneGrid1 = new JScrollPane(grupe);
@@ -119,11 +120,17 @@ public class PromenaZanraIzvodjaca extends MojDialog {
 	}
 	
 	private void promeniZanr() {
+		if (cmbZanr.getSelectedIndices().length == 0) {
+			JOptionPane.showMessageDialog(null, "Morate odabrati bar jedan zanr");
+			return;
+		}
 		if (!pojedninacniIzvodjaci.getSelectionModel().isSelectionEmpty()) {
 			for (Pojedinacanizvodjac pi : sesija.getUmetnici()) {
 				if (pi.getUmetnickoIme().equals((String)pojedninacniIzvodjaci.getValueAt(pojedninacniIzvodjaci.getSelectedRow(), 0))) {
-					List<Zanr> zanr =  Arrays.asList((Zanr[]) cmbZanr.getSelectedValues());
-					ArrayList<Zanr> zanrovi = new ArrayList<Zanr>(zanr);
+					ArrayList<Zanr> zanrovi = new ArrayList<Zanr>();
+					for (int i = 0; i < cmbZanr.getSelectedValues().length; i++) {
+						zanrovi.add((Zanr)cmbZanr.getSelectedValues()[i]);
+					}
 					pi.setZanr(zanrovi);
 					sesija.getIzvodjacMenadzer().setSolo(sesija.getUmetnici());
 					break;
@@ -133,8 +140,10 @@ public class PromenaZanraIzvodjaca extends MojDialog {
 		if (!grupe.getSelectionModel().isSelectionEmpty()) {
 			for (Grupa g : sesija.getGrupe()) {
 				if (g.getUmetnickoIme().equals((String)grupe.getValueAt(grupe.getSelectedRow(), 0))) {
-					List<Zanr> zanr =  Arrays.asList((Zanr[]) cmbZanr.getSelectedValues());
-					ArrayList<Zanr> zanrovi = new ArrayList<Zanr>(zanr);
+					ArrayList<Zanr> zanrovi = new ArrayList<Zanr>();
+					for (int i = 0; i < cmbZanr.getSelectedValues().length; i++) {
+						zanrovi.add((Zanr)cmbZanr.getSelectedValues()[i]);
+					}
 					g.setZanr(zanrovi);
 					sesija.getIzvodjacMenadzer().setGrupe(sesija.getGrupe());
 					break;

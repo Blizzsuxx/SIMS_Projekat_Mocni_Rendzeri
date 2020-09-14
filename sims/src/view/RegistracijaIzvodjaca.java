@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -27,6 +28,7 @@ import model.Sesija;
 import model.Zanr;
 
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
@@ -264,16 +266,20 @@ public class RegistracijaIzvodjaca extends JDialog {
 				registruj();
 			}
 		});
-		btnRegistruj.setBounds(284, 409, 89, 23);
+		btnRegistruj.setBounds(284, 409, 89, 30);
 		getContentPane().add(btnRegistruj);
 		
 		JLabel lblZanr = new JLabel("Zanr:");
 		lblZanr.setBounds(20, 394, 48, 14);
 		getContentPane().add(lblZanr);
 		
-		cmbZanr =  new JXList( sesija.getZanroviMenadzer().getSviZanrovi().toArray());
+		cmbZanr =  new JXList(sesija.getZanroviMenadzer().getSviZanrovi().toArray());
 		cmbZanr.setBounds(20, 409, 184, 22);
-		getContentPane().add(cmbZanr);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(20, 409, 181, 30);
+		getContentPane().add(scrollPane);
+		scrollPane.setViewportView(cmbZanr);
 
 		
 		addComponentListener(new ComponentAdapter() {
@@ -292,8 +298,14 @@ public class RegistracijaIzvodjaca extends JDialog {
 			JOptionPane.showMessageDialog(null, "Umetnicko ime je obavezno polje.");
 			return;
 		}
-		List<Zanr> zanr =  Arrays.asList((Zanr[]) cmbZanr.getSelectedValues());
-		ArrayList<Zanr> zanrovi = new ArrayList<Zanr>(zanr);
+		if (cmbZanr.getSelectedIndices().length == 0) {
+			JOptionPane.showMessageDialog(null, "Morate odabrati bar jedan zanr");
+			return;
+		}
+		ArrayList<Zanr> zanrovi = new ArrayList<Zanr>();
+		for (int i = 0; i < cmbZanr.getSelectedValues().length; i++) {
+			zanrovi.add((Zanr)cmbZanr.getSelectedValues()[i]);
+		}
 		String msg;
 		if (rbPojedinacniIzvodjac.isSelected())
 		{
@@ -353,7 +365,7 @@ public class RegistracijaIzvodjaca extends JDialog {
 		String dob2 = sdf2.format(sdf1.parse(dob));
 		Pol p = Pol.valueOf(pol);
 		Pojedinacanizvodjac pi = null;
-		if (!dod.isEmpty()) { 
+		if (dod != null) { 
 			
 			String dod2 = sdf2.format(sdf1.parse(dod));
 			pi = new Pojedinacanizvodjac(false, umetnickoIme, zanr, true, ime, prezime, Constants.NATASIN_FORMAT_ZA_DATUM.parse(dob2),
@@ -375,7 +387,7 @@ public class RegistracijaIzvodjaca extends JDialog {
 		SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyyy.");
 		String dof2 = sdf2.format(sdf1.parse(dof));
 		Grupa g = null;
-		if (!dor.isEmpty()) {
+		if (dor != null) {
 			
 			String dor2 = sdf2.format(sdf1.parse(dor));
 			g = new Grupa(false,umetnickoIme, zanr, true,  brojClanova, Constants.NATASIN_FORMAT_ZA_DATUM.parse(dof2), 

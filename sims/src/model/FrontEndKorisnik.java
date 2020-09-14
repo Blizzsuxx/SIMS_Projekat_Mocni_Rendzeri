@@ -182,7 +182,7 @@ public abstract class FrontEndKorisnik extends Korisnik {
    }
    @Override
 	public String pratiociUpis() {
-	   String ad=this.getNalog().getKorisnickoIme()+"|";//zanrovi pratioci dela
+	   String ad=this.getNalog().getKorisnickoIme()+"#";//zanrovi pratioci dela
 	   int i=0;
 	   for(Zanr z:preferiraniZanrovi) {
 		   if(i!=0) {
@@ -191,14 +191,14 @@ public abstract class FrontEndKorisnik extends Korisnik {
 		   i++;
 		   ad+=z.getNazivZanra();
 	   }
-	   ad+="|";i=0;
+	   ad+="#";i=0;
 	   for(KorisnikAplikacije k:pratilac) {
 		   if(i!=0) {
 			   ad+=";";
 		   }
 		   ad+=k.getNalog().getKorisnickoIme();
 	   }
-	   ad+="|";i=0;
+	   ad+="#";i=0;
 	   for(MuzickoDelo d:istorija) {
 		   if(i!=0) {
 			   ad+=";";

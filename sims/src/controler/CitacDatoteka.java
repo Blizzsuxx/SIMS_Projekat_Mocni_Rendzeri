@@ -120,7 +120,7 @@ public class CitacDatoteka {
 	
 
 	public void inicijalizuj() throws ParseException, IOException {
-		// TODO Auto-generated method stub
+		
 
 		korisnici = new KorisniciMenadzer(ucitaj("korisnici.txt", ','));
 		zanrovi = new ZanroviMenadzer(ucitaj("zanrovi.txt", ','), korisnici);
@@ -141,7 +141,7 @@ public class CitacDatoteka {
 				(ArrayList<MuzickoDelo>) muzickiSadrzajMenadzer.getMuzickaDela(), korisnici);
 
 		reklameMenadzer = new ReklameMenadzer("fajlovi"+System.getProperty("file.separator")+"reklame.txt");
-
+		ucitajPratioce(korisnici, muzickiSadrzajMenadzer, zanrovi, izvodjaci);
 		Constants.MUZICKA_IKONA  = procitajSliku("fajlovi/muzika.png");
 		Constants.KORISNICKA_IKONA = procitajSliku("fajlovi/korisnik.png");
 		Constants.ALBUM_IKONA = procitajSliku("fajlovi/album.png");
@@ -212,7 +212,7 @@ public class CitacDatoteka {
 		muzickiSadrzajMenadzer.sacuvaj("fajlovi"+System.getProperty("file.separator")+"muzickiSadrzaj.txt"); //
 		muzickiSadrzajMenadzer.sacuvajAlbumeDjela("fajlovi"+System.getProperty("file.separator")+"albumDjela.txt");
 		toplisteMenadzer.upisi("fajlovi"+System.getProperty("file.separator")+"topliste.txt");
-		
+		sacuvajPracenja();
 		reklameMenadzer.sacuvaj();
 	}
 
@@ -225,30 +225,41 @@ public class CitacDatoteka {
 		return this.utisakmenadzer.getRecenzije();
 	}
 	public void ucitajPratioce(KorisniciMenadzer korisnici, MuzickiSadrzajMenadzer md,ZanroviMenadzer zanrovi,IzvodjacMenadzer izvodjaci) {
-		List<String[]> tekst=ucitaj("pracenje.txt",'|');
+		List<String[]> tekst=ucitaj("pracenje.txt",'#');
 		for(String[] linija:tekst) {
 			FrontEndKorisnik k=(FrontEndKorisnik)korisnici.trazi(linija[0].trim());
 			
 			String[] zanroviPracenje=linija[1].trim().split(";");
 			for(String ime:zanroviPracenje) {
-				k.getPreferiraniZanrovi().add(zanrovi.trazi(ime.trim()));
+				if(ime.equals("/")) {continue;}
+				else {
+				k.getPreferiraniZanrovi().add(zanrovi.trazi(ime.trim()));}
 			}
 			String[] pratioci=linija[2].trim().split(";");
 			for(String p:pratioci) {
-				k.getPratilac().add((KorisnikAplikacije)korisnici.trazi(p.trim()));
+				if(p.equals("/")) {continue;}
+				else {
+				k.getPratilac().add((KorisnikAplikacije)korisnici.trazi(p.trim()));}
 			}
 			String[] dela=linija[3].trim().split(";");
 			for(String d:dela) {
-				k.getIstorija().add((MuzickoDelo)md.vratiNaOsnovuNazive(d.trim()));
+				if(d.equals("/")) {
+					continue;
+				}else {
+				k.getIstorija().add((MuzickoDelo)md.vratiNaOsnovuNazive(d.trim()));}
 			}
 			if(linija.length>4) {
 			String[] pratilac=linija[4].trim().split(";");
 			for(String pr:pratilac) {
-				((KorisnikAplikacije)k).getPratite().add((FrontEndKorisnik)korisnici.trazi(pr.trim()));
+				if(pr.equals("/")) {continue;}
+				else {
+				((KorisnikAplikacije)k).getPratite().add((FrontEndKorisnik)korisnici.trazi(pr.trim()));}
 			}
 			String[] izv=linija[5].trim().split(";");
 			for(String i:izv) {
-				((KorisnikAplikacije)k).getOnajKogaPrati().add( izvodjaci.nadiPoUmetnickomImenu(i.trim()));
+				if(i.equals("/")) {continue;}
+				else {
+				((KorisnikAplikacije)k).getOnajKogaPrati().add( izvodjaci.nadiPoUmetnickomImenu(i.trim()));}
 			}
 			 
 			}

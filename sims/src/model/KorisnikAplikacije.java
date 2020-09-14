@@ -168,7 +168,7 @@ public KorisnikAplikacije(String ime, String prezime, String eMail, Pol pol, Dat
 		   }
 		   ad+=f.getNalog().getKorisnickoIme();i++;
 	   }
-	   ad+="|";
+	   ad+="#";
 	   i=0;
 	   for(Izvodjac f:onajKogaPrati) {
 		   if(i!=0) {

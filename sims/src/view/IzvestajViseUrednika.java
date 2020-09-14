@@ -175,6 +175,11 @@ public class IzvestajViseUrednika extends MojDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				String msg = validiraj();
+				if (!msg.equals("")) {
+					JOptionPane.showMessageDialog(null, msg);
+					return;
+				}
 				java.util.Date dan = model.getValue(); 
 				java.util.Date dan1 = model1.getValue();
 				men = new IzvestajViseUrednikaMenadzer(dan, dan1, (ArrayList<Urednik>)s.getUrednici());
@@ -189,6 +194,15 @@ public class IzvestajViseUrednika extends MojDialog {
 		 UrednikModel sm = (UrednikModel) tabelaUrednika.getModel();
 			sm.fireTableDataChanged();
 			
+	}
+	public String validiraj() {
+		if (dtD1.getJFormattedTextField().getText().isEmpty()) {
+			return "Morate odabrati prvi datum.";
+		}
+		if (dtD2.getJFormattedTextField().getText().isEmpty()) {
+			return "Morate odabrati drugi datum.";
+		}
+		return "";
 	}
 	
 }

@@ -162,7 +162,7 @@ public class IzvestajViseUrednika extends MojDialog {
 				String[] imePrezime = ime.split(" ");
 				for(Urednik u : IzvestajViseUrednika.this.urednici) {
 					if (u.getIme().equals(imePrezime[0]) && ((Korisnik)u).getPrezime().equals(imePrezime[1])) {
-						IzvestajUrednika iz = new IzvestajUrednika(IzvestajViseUrednika.this.s, u, u.getNalog().getKorisnickoIme(), 400, 400);
+						IzvestajUrednika iz = new IzvestajUrednika(IzvestajViseUrednika.this.s, u, u.getNalog().getKorisnickoIme(), 593, 395);
 						iz.setVisible(true);
 						break;
 					}

@@ -1,9 +1,5 @@
 package view;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -22,7 +18,6 @@ public class IzvestajZanra extends MojDialog {
 	private static final long serialVersionUID = 1L;
 	private Sesija sesija;
 	private Zanr zanr;
-	private JButton btnBack;
 	private JXTable table;
 	private String title;
 	private JTextField tfUkupnoKom, tfUkupno, tfProsecnaOcena;
@@ -36,7 +31,6 @@ public class IzvestajZanra extends MojDialog {
 		setTitle(title);
 		setResizable(false);
 		initGui();
-		initActions();
 	}
 
 	/**
@@ -84,7 +78,6 @@ public class IzvestajZanra extends MojDialog {
 	private void initGui() {
 		MigLayout mig =  new MigLayout("wrap 2", "[]10[]", "[]10[]10[]20[]");
 		setLayout(mig);
-		btnBack=new JButton("Nazad");
 		add(new JLabel("Ukupno recenzija zanra: "));
 		tfUkupno = new JTextField(10);
 		add(tfUkupno);
@@ -102,18 +95,8 @@ public class IzvestajZanra extends MojDialog {
 		add(tfProsecnaOcena);
 		tfProsecnaOcena.setText(jedanZanr.getBrojMuzdela()+" ");
 		tfProsecnaOcena.setEditable(false);
-		add(btnBack);
 		
 		setVisible(true);
 		
 	}
-	
-	private void initActions() {
-		btnBack.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				IzvestajZanra.this.dispose();
-			}
-		});}
 }

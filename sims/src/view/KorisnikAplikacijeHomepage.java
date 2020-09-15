@@ -1,6 +1,5 @@
 package view;
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -35,34 +34,36 @@ public class KorisnikAplikacijeHomepage extends Homepage {
 		pratite = new ArrayList<>();
 		preporucujemo = new ArrayList<>();
 
+		JPanel sadrzaj = new JPanel(new MigLayout());
+
 		JLabel trendingl = new JLabel("U trendu");
-		this.add(trendingl, "wrap, gaptop 20, align center");
-		initRow(trending, 10);
+		sadrzaj.add(trendingl, "wrap, gaptop 20, align center");
+		initRow(trending, 5, sadrzaj);
 
 		JLabel pratitel = new JLabel("Pratite");
-		this.add(pratitel, "wrap, gaptop 20, align center");
-		initRow(pratite, 5);
+		sadrzaj.add(pratitel, "wrap, gaptop 20, align center");
+		initRow(pratite, 5, sadrzaj);
 
 		JLabel preporucujemol = new JLabel("Preporucujemo");
-		this.add(preporucujemol, "wrap, gaptop 20, align center");
-		initRow(preporucujemo, 5);
+		sadrzaj.add(preporucujemol, "wrap, gaptop 20, align center");
+		initRow(preporucujemo, 5, sadrzaj);
+
+		JScrollPane content = new JScrollPane(sadrzaj);
+		this.add(content, "dock center, grow");
 		
 		this.initGUI();
 		this.actionGUI();
 	}
 
-	private void initRow(List<MuzickoDeloLabel> lista, int numberOfElements){
+	private void initRow(List<MuzickoDeloLabel> lista, int numberOfElements, JPanel sadrzaj){
 		
 
-		JPanel pane = new JPanel(new MigLayout());
 		for(int i = 0; i < numberOfElements; ++i){
 			MuzickoDeloLabel labela = new MuzickoDeloLabel(Constants.BARBIE_GIRL);
-			pane.add(labela, "gapleft 10");
+			sadrzaj.add(labela, "gapleft 10" + (i+1 == numberOfElements ? ", wrap" : ""));
 			lista.add(labela);
 		}
-		JScrollPane scroll = new JScrollPane(pane);
-		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-		this.add(scroll, "wrap");
+		
 	}
 
 	private void initGUI() {

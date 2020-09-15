@@ -2,8 +2,10 @@ package view;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -27,6 +29,7 @@ import model.Sesija;
 import model.Zanr;
 
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
@@ -50,8 +53,8 @@ public class RegistracijaIzvodjaca extends JDialog {
 	private JTextField txtUmetnickoIme;
 	private JTextField txtIme;
 	private JTextField txtPrezime;
-	@SuppressWarnings("rawtypes")
-	private JXList cmbZanr;
+	//@SuppressWarnings("rawtypes")
+	private ComboZanr cmbZanr;
 	private JPanel pnlGrupa;
 	private JDatePickerImpl dtDob;
 	private JDatePickerImpl dtDod;
@@ -69,7 +72,7 @@ public class RegistracijaIzvodjaca extends JDialog {
 	private JRadioButton rbMuski;
 	private JRadioButton rbtZenski;
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	//@SuppressWarnings({ "unchecked", "rawtypes" })
 	public RegistracijaIzvodjaca(Sesija sesija) throws Exception {
 		this.setSize(392, 492);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -271,8 +274,9 @@ public class RegistracijaIzvodjaca extends JDialog {
 		lblZanr.setBounds(20, 394, 48, 14);
 		getContentPane().add(lblZanr);
 		
-		cmbZanr =  new JXList( sesija.getZanroviMenadzer().getSviZanrovi().toArray());
-		cmbZanr.setBounds(20, 409, 184, 22);
+		cmbZanr =  new ComboZanr();
+		cmbZanr.setBounds(55, 385, 180, 30);
+		cmbZanr.kreirajSadrzaj(sesija.getZanroviMenadzer().getZanrovi());
 		getContentPane().add(cmbZanr);
 
 		
@@ -292,8 +296,7 @@ public class RegistracijaIzvodjaca extends JDialog {
 			JOptionPane.showMessageDialog(null, "Umetnicko ime je obavezno polje.");
 			return;
 		}
-		List<Zanr> zanr =  Arrays.asList((Zanr[]) cmbZanr.getSelectedValues());
-		ArrayList<Zanr> zanrovi = new ArrayList<Zanr>(zanr);
+		ArrayList<Zanr> zanrovi =  (ArrayList<Zanr>) cmbZanr.vratiSelektovaneZanrove();
 		String msg;
 		if (rbPojedinacniIzvodjac.isSelected())
 		{

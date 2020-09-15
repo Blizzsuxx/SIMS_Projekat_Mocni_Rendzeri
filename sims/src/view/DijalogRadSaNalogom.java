@@ -12,12 +12,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
-import org.jdesktop.swingx.JXCollapsiblePane;
 import org.jdesktop.swingx.JXImagePanel;
 
 import controler.Constants;
 import model.FrontEndKorisnik;
 import model.Korisnik;
+import model.KorisnikAplikacije;
+import model.Sesija;
+import model.Urednik;
 import net.miginfocom.swing.MigLayout;
 
 public class DijalogRadSaNalogom extends MojDialog {
@@ -30,23 +32,11 @@ public class DijalogRadSaNalogom extends MojDialog {
 	private JPasswordField poljeSifra;
 	private JButton izadjiBtn, potvrdiBtn;
 	private Korisnik korisnik;
+	private JLabel brojPratioca;
 
 	private boolean indikator;
 	
-	public DijalogRadSaNalogom(JFrame parent, String ime, int dimension1, int dimension2) {
-		super(parent, ime, dimension1, dimension2);
-		// TODO Auto-generated constructor stub
-	}
 
-	public DijalogRadSaNalogom(JFrame parent, String naziv) {
-		super(parent, naziv);
-		// TODO Auto-generated constructor stub
-	}
-
-	public DijalogRadSaNalogom(String ime, int dimension1, int dimension2) {
-		super(ime, dimension1, dimension2);
-		// TODO Auto-generated constructor stub
-	}
 	
 	public DijalogRadSaNalogom(JFrame parent, Korisnik korisnik, String naziv) {
 		super(parent, naziv);
@@ -65,7 +55,7 @@ public class DijalogRadSaNalogom extends MojDialog {
 
 	private void initGui() {
 		this.setSize(450, 600);
-		
+		this.brojPratioca = new JLabel();
 		this.setLayout(new MigLayout("fillx"));
 
 		ExpandingPanel userInfo = new ExpandingPanel("Korisnicke informacije");
@@ -93,6 +83,17 @@ public class DijalogRadSaNalogom extends MojDialog {
 		image.setImageLoader(skalirajSliku);
 		image.setImage(this.korisnik.defaultSlika().getScaledInstance(-1, 300, Image.SCALE_DEFAULT));
 		this.add(image, "span, alignx center, wrap");
+		
+		if( korisnik instanceof Urednik){
+			if(Sesija.getTrenutniKorisnik() instanceof KorisnikAplikacije && !Sesija.getTrenutniKorisnik().equals(this.korisnik)){
+				this.add(this.brojPratioca);
+				initFollowButton();
+			} else {
+				this.add(this.brojPratioca, "wrap");
+			}
+			refreshBrojPratioca();
+			
+		}
 		////////////////// kraj promena
 		
 		
@@ -122,7 +123,7 @@ public class DijalogRadSaNalogom extends MojDialog {
 		
 		userInfo.getContent().add(potvrdiBtn);
 
-		this.add(userInfo, "spanx, wrap");
+		this.add(userInfo, "growx, spanx, wrap");
 
 		if(korisnik instanceof FrontEndKorisnik){
 			FrontEndKorisnik k = (FrontEndKorisnik) this.korisnik;
@@ -130,12 +131,10 @@ public class DijalogRadSaNalogom extends MojDialog {
 			Collection<Slikovit> slike = (Collection<Slikovit>)  (Collection<?>) k.getIstorija();
 
 			slike = slike.size() == 0 ? Constants.DELA : slike; 
+			
 
-			JXCollapsiblePane p = new JXCollapsiblePane();
-			p.setContentPane(new SearchResults(slike));
-
-			istorija.setContent(p);
-			this.add(istorija, "growx, wrap");
+			istorija.setContent(new SearchResults(slike));
+			this.add(istorija, "growx, spanx, wrap");
 		}
 		this.add(izadjiBtn, "wrap");
 		if (indikator) { // ako gledamo korisnika cisto radi informacija
@@ -145,6 +144,28 @@ public class DijalogRadSaNalogom extends MojDialog {
 		}
 	}
 	
+	private void initFollowButton() {
+
+		JButton zaprati = new JButton("Zaprati");
+        zaprati.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                if(zaprati.getText().equals("Zapratio")) return;
+				zaprati.setText("Zapratio");
+				KorisnikAplikacije trenutniKorisnik = (KorisnikAplikacije) Sesija.getTrenutniKorisnik();
+				Urednik urednik = (Urednik) korisnik;
+                urednik.getPratilac().add(trenutniKorisnik);
+                trenutniKorisnik.addPratite(urednik);
+                refreshBrojPratioca();
+		}});
+		this.add(zaprati, "wrap");
+
+	}
+
+	private void refreshBrojPratioca() {
+		this.brojPratioca.setText("Pratioci: " + ((Urednik) korisnik).getPratilac().size());
+	}
+
 	void setListeners() {
 		izadjiBtn.addActionListener(new ActionListener() {
 			

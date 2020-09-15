@@ -56,7 +56,7 @@ public abstract class Korisnik implements Slikovit {
 		   nalog = new Nalog("password123", korisnickoIme, new Date(), true);
 		   
 	   } else {
-		   throw new RuntimeException();
+		   this.nalog.setKorisnickoIme(korisnickoIme);
 	   }
 	   }
    
@@ -76,22 +76,6 @@ public abstract class Korisnik implements Slikovit {
 	   nalog = null;
    }
 
-
-
-   /** @pdOid b5db7dcd-9237-4763-b6ad-4f21f00ab10c */
-   public void promeniSifru() {
-      // TODO: implement
-   }
-   
-   /** @pdOid 8a10c116-d1f6-4b12-ba00-78128209a21b */
-   public void promeniPodatke() {
-      // TODO: implement
-   }
-   
-   /** @pdOid e64ea0ca-f330-4fc5-870a-633e6a03731f */
-   public void odjaviSe() {
-      // TODO: implement
-   }
 
 
 	public String getIme() {
@@ -122,6 +106,7 @@ public abstract class Korisnik implements Slikovit {
 	public void seteMail(String eMail) {
 		this.eMail = eMail;
 	}
+	
 	
 	
 	public Pol getPol() {

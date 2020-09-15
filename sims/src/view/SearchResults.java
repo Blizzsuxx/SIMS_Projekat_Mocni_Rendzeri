@@ -9,7 +9,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import model.Album;
+import model.Izvodjac;
 import model.MuzickoDelo;
+import model.Urednik;
 import net.miginfocom.swing.MigLayout;
 
 public class SearchResults extends JScrollPane {
@@ -42,7 +44,25 @@ public class SearchResults extends JScrollPane {
 				deoSaOpisom.add(opis, BorderLayout.CENTER);
 				slika.add(deoSaOpisom);
 			} else if (sadrzaj instanceof Album) {
-				slika = new ImageLabel(sadrzaj, true);
+				slika = new ImageLabel(sadrzaj){
+					@Override
+					protected void clickedEvent() {
+						// TODO Auto-generated method stub
+						AlbumInfo ai =  new AlbumInfo(null, "Album", 100, 100, (Album)sadrzaj);
+		   				ai.setVisible(true);
+					}
+				};
+			} else if(sadrzaj instanceof Izvodjac){
+				slika = new IzvodjacLabel(sadrzaj);
+			} else if(sadrzaj instanceof Urednik){
+				slika = new ImageLabel(sadrzaj){
+					@Override
+					protected void clickedEvent() {
+						// TODO Auto-generated method stub
+						DijalogRadSaNalogom gledajUrednika = new DijalogRadSaNalogom(null, (Urednik) sadrzaj, sadrzaj.Ime(), true);
+						gledajUrednika.setVisible(true);
+					}
+				};
 			} else {
 				slika = new ImageLabel(sadrzaj);
 			}

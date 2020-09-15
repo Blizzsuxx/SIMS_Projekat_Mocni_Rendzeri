@@ -15,6 +15,9 @@ public class Clan {
    /** @pdOid 33ff4bd2-c6f0-4551-a448-297e62cc43bd */
    private Date datumPrikljucivanja;
    /** @pdOid 1e9b541c-bb08-41f3-8538-31041cc92a96 */
+   private Date datumNapustanja;
+   private Pojedinacanizvodjac izvodjac;
+   private Grupa grupa;
 
    public Clan() {
    }
@@ -44,9 +47,6 @@ public class Clan {
          ", datumNapustanja='" + getDatumNapustanja() + "'" +
          "}";
    }
-   private Date datumNapustanja;
-   private Pojedinacanizvodjac izvodjac;
-   private Grupa grupa;
    
 public Grupa getGrupa() {
 	return grupa;

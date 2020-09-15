@@ -4,8 +4,10 @@
  * Purpose: Defines the Class Izvodjac
  ***********************************************************************/
 package model;
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 
 import view.Slikovit;
 
@@ -21,7 +23,7 @@ public abstract class Izvodjac implements Slikovit, DeljivPoZanrovima {
 	// indikator da li je izvodjac odobren od strane admina
 	private boolean odobrenost;
 	/** @pdRoleInfo migr=no name=KorisnikAplikacije assc=association16 mult=0..* side=A */
-	private KorisnikAplikacije[] prati;
+	private LinkedList<KorisnikAplikacije> prati;
    
 	private ArrayList<MuzickoDelo> muzickaDela;
 	private ArrayList<Album> izdatiAlbumi;
@@ -67,11 +69,11 @@ public abstract class Izvodjac implements Slikovit, DeljivPoZanrovima {
 		this.status = status;
 	}
 	
-	public KorisnikAplikacije[] getPrati() {
+	public LinkedList<KorisnikAplikacije> getPrati() {
 		return prati;
 	}
 	
-	public void setPrati(KorisnikAplikacije[] prati) {
+	public void setPrati(LinkedList<KorisnikAplikacije> prati) {
 		this.prati = prati;
 	}
 	
@@ -83,27 +85,27 @@ public abstract class Izvodjac implements Slikovit, DeljivPoZanrovima {
 		this.zanrovi = z;
 	}
 	
-	public Izvodjac(String umetnickoIme, ArrayList<Zanr>  zanr, boolean status, KorisnikAplikacije[] prati) {
+	public Izvodjac(String umetnickoIme, ArrayList<Zanr>  zanr, boolean status, LinkedList<KorisnikAplikacije> prati) {
 		super();
 		this.umetnickoIme = umetnickoIme;
 		this.zanrovi = zanr;
 		this.status = status;
-		if (prati != null)
+		if (prati == null)
 	   	{
-	   		this.prati = prati;
+	   		this.prati = new LinkedList<>();
 	   	}
 		this.muzickaDela = new ArrayList<MuzickoDelo>();
 		this.izdatiAlbumi = new ArrayList<Album>();
 	}
 	
-	public Izvodjac(String umetnickoIme, ArrayList<Zanr>  zanr, boolean status, KorisnikAplikacije[] prati, boolean odobrenost) {
+	public Izvodjac(String umetnickoIme, ArrayList<Zanr>  zanr, boolean status, LinkedList<KorisnikAplikacije> prati, boolean odobrenost) {
 		super();
 		this.umetnickoIme = umetnickoIme;
 		this.zanrovi = zanr;
 		this.status = status;
-		if (prati != null)
+		if (prati == null)
 	   	{
-	   		this.prati = prati;
+	   		this.prati = new LinkedList<>();
 	   	}
 		this.odobrenost = odobrenost;
 		this.muzickaDela = new ArrayList<MuzickoDelo>();
@@ -115,6 +117,7 @@ public abstract class Izvodjac implements Slikovit, DeljivPoZanrovima {
 		super();
 		this.muzickaDela = new ArrayList<MuzickoDelo>();
 		this.izdatiAlbumi = new ArrayList<Album>();
+		this.prati = new LinkedList<>();
 	}
 	
 	public Izvodjac(String umetnickoIme2, ArrayList<Zanr>  zanr, boolean status2) {
@@ -132,6 +135,7 @@ public abstract class Izvodjac implements Slikovit, DeljivPoZanrovima {
 		this.odobrenost = odobrenost;
 		this.muzickaDela = new ArrayList<MuzickoDelo>();
 		this.izdatiAlbumi = new ArrayList<Album>();
+		this.prati = new LinkedList<>();
 	}
 	
 	protected abstract String[] getImenaDela();

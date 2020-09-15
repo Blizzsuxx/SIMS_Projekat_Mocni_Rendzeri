@@ -60,7 +60,7 @@ public class Sesija {
 
    private IzvestajSvihZanrovaMenadzer izvestajSvihZanrova;// ovo ne treba da bude inicijalizovano, inic se u
                                                            // izvestajima kod admina
-   private ArrayList<Zanr> sviZanrovi;// ali ovo mora biti inic !!! pre ovog gore
+
    private IzvestajSvihZanrova jedanZanr;
    private IzvestajSvihIzvodjacaMenadzer menIzvodjaca;// ovo ne treba biti inic, nego tek kad se pokrene izv
    private LoginMenadzer loginMenadzer;
@@ -76,16 +76,6 @@ public class Sesija {
    }
 
 
-
-  
-   
-   public ArrayList<Zanr> getZanrovi() {
-	   return this.sviZanrovi;
-   }
-   
-   public void setZanrovi(ArrayList<Zanr> zanrovi) {
-	   this.sviZanrovi = zanrovi;
-   }
 
    /**
     * @return the trenutniKorisnik

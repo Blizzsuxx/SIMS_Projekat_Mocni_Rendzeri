@@ -71,7 +71,6 @@ public class MediaPlayer extends MojDialog {
         }
 
         this.delo = delo;
-        this.setResizable(true);
         this.getContentPane().setLayout(new MigLayout());
         MP3Player mediaPlayer = getMediaPlayer(delo.getNaslov(), ".mp3");
         mediaPlayer.setPreferredSize(new Dimension(this.getWidth() , 20));
@@ -267,7 +266,8 @@ public class MediaPlayer extends MojDialog {
     	Komentar rec = new Komentar(poljeRecenzija.getText(), new Date(), true, delo, (FrontEndKorisnik)trenutniKorisnik);
     	recenzije.addKomentar(rec);
     	JOptionPane.showMessageDialog(MediaPlayer.this, "Uspesno ste dodali recenziju", "Recenzija", JOptionPane.INFORMATION_MESSAGE);
-    	poljeRecenzija.setText("");
+        poljeRecenzija.setText("");
+        ((FrontEndKorisnik)trenutniKorisnik).addIstorija(delo);
     }
 
         

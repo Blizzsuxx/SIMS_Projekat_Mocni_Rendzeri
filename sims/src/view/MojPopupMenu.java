@@ -28,16 +28,15 @@ public class MojPopupMenu extends JPopupMenu {
 	
 	private static boolean isMouseWithinComponent(Component c)
 	{
-	    Point mousePos = MouseInfo.getPointerInfo().getLocation();
+		Point mousePos = MouseInfo.getPointerInfo().getLocation();
+		c.setVisible(true);
 	    Rectangle bounds = c.getBounds();
-	    try {
-	    	bounds.setLocation(c.getLocationOnScreen());
-	    } catch(Exception e) {
-	    	c.setVisible(true);
-	    	bounds.setLocation(c.getLocationOnScreen());
-	    	c.setVisible(false);
-	    }
-	    return bounds.contains(mousePos);
+	    bounds.setLocation(c.getLocationOnScreen());
+		boolean contains = bounds.contains(mousePos);
+		if(!contains){
+			c.setVisible(false);
+		}
+	    return contains;
 	}
 	
 	

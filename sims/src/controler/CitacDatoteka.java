@@ -141,7 +141,7 @@ public class CitacDatoteka {
 				(ArrayList<MuzickoDelo>) muzickiSadrzajMenadzer.getMuzickaDela(), korisnici);
 
 		reklameMenadzer = new ReklameMenadzer("fajlovi"+System.getProperty("file.separator")+"reklame.txt");
-		ucitajPratioce(korisnici, muzickiSadrzajMenadzer, zanrovi, izvodjaci);
+		//ucitajPratioce(korisnici, muzickiSadrzajMenadzer, zanrovi, izvodjaci);
 		Constants.MUZICKA_IKONA  = procitajSliku("fajlovi/muzika.png");
 		Constants.KORISNICKA_IKONA = procitajSliku("fajlovi/korisnik.png");
 		Constants.ALBUM_IKONA = procitajSliku("fajlovi/album.png");

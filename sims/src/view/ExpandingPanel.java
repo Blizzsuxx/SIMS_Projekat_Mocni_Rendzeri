@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -129,6 +130,12 @@ public class ExpandingPanel extends JPanel {
         this.content = pane;
         this.expandingButton.addActionListener(content.getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION));
         this.content.setCollapsed(true);
+    }
+
+    public void setContent(Container newContent){
+        JXCollapsiblePane newCollapsableContent = new JXCollapsiblePane();
+        newCollapsableContent.setContentPane(newContent);
+        this.setContent(newCollapsableContent);
     }
 
     public BasicArrowButton getExpandingButton() {

@@ -34,7 +34,7 @@ public class PromenaZanraIzvodjaca extends MojDialog {
 	private JTable grupe;
 	private String title;
 	private Sesija sesija;
-	private JXList cmbZanr;
+	private ComboZanr cmbZanr;
 	
 	
 	public PromenaZanraIzvodjaca(Sesija sesija, String title, int dim1, int dim2) throws Exception {
@@ -59,11 +59,9 @@ public class PromenaZanraIzvodjaca extends MojDialog {
 		getContentPane().add(scrollPaneGrid, BorderLayout.CENTER);
 		pojedninacniIzvodjaci.setFillsViewportHeight(true);
 		
-		cmbZanr = new JXList( sesija.getZanroviMenadzer().getSviZanrovi().toArray());
+		cmbZanr = new ComboZanr();
 		cmbZanr.setBounds(312, 244, 273, 22);
-		cmbZanr.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		cmbZanr.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-		cmbZanr.setAutoCreateRowSorter(true);
+		cmbZanr.kreirajSadrzaj(sesija.getZanroviMenadzer().getZanrovi());
 		getContentPane().add(cmbZanr);
 		
 		JLabel lblZanr = new JLabel("Zanr:");
@@ -122,8 +120,8 @@ public class PromenaZanraIzvodjaca extends MojDialog {
 		if (!pojedninacniIzvodjaci.getSelectionModel().isSelectionEmpty()) {
 			for (Pojedinacanizvodjac pi : sesija.getUmetnici()) {
 				if (pi.getUmetnickoIme().equals((String)pojedninacniIzvodjaci.getValueAt(pojedninacniIzvodjaci.getSelectedRow(), 0))) {
-					List<Zanr> zanr =  Arrays.asList((Zanr[]) cmbZanr.getSelectedValues());
-					ArrayList<Zanr> zanrovi = new ArrayList<Zanr>(zanr);
+					
+					ArrayList<Zanr> zanrovi = (ArrayList<Zanr>) cmbZanr.vratiSelektovaneZanrove();
 					pi.setZanr(zanrovi);
 					sesija.getIzvodjacMenadzer().setSolo(sesija.getUmetnici());
 					break;
@@ -133,8 +131,7 @@ public class PromenaZanraIzvodjaca extends MojDialog {
 		if (!grupe.getSelectionModel().isSelectionEmpty()) {
 			for (Grupa g : sesija.getGrupe()) {
 				if (g.getUmetnickoIme().equals((String)grupe.getValueAt(grupe.getSelectedRow(), 0))) {
-					List<Zanr> zanr =  Arrays.asList((Zanr[]) cmbZanr.getSelectedValues());
-					ArrayList<Zanr> zanrovi = new ArrayList<Zanr>(zanr);
+					ArrayList<Zanr> zanrovi = (ArrayList<Zanr>) cmbZanr.vratiSelektovaneZanrove();
 					g.setZanr(zanrovi);
 					sesija.getIzvodjacMenadzer().setGrupe(sesija.getGrupe());
 					break;

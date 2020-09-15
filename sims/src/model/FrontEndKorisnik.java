@@ -49,8 +49,11 @@ public abstract class FrontEndKorisnik extends Korisnik {
    }
 
    public FrontEndKorisnik() {
-   }
+      this.istorija = new ArrayList<>();
+      this.pratilac = new ArrayList<>();
+      this.preferiraniZanrovi = new ArrayList<>();
 
+   }
    /**
     * @pdRoleInfo migr=no name=MuzickoDjelo assc=association32
     *             coll=java.util.Collection impl=java.util.HashSet mult=0..*

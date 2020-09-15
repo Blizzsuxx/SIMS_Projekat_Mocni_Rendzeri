@@ -34,6 +34,9 @@ public class ComboZanr extends JPanel implements ActionListener {
 	}
 
 	public void kreirajSadrzaj(List<Zanr> zanrovi) {
+		if(zanrovi == null){
+			return;
+		}
 		if (!zanrovi.isEmpty()) {
 			stanja.clear();
 			combo.removeAllItems();
@@ -51,5 +54,14 @@ public class ComboZanr extends JPanel implements ActionListener {
 		for (ComboZanrStanje czs: this.stanja)
 			if(czs.stanje)
 				zanrovi.add(czs.getZanr());
+	}
+
+	public List<Zanr> vratiSelektovaneZanrove() {
+		List<Zanr> zanrovi = new ArrayList<Zanr>();
+		for (ComboZanrStanje czs: this.stanja)
+			if(czs.stanje)
+				zanrovi.add(czs.getZanr());
+
+		return zanrovi;
 	}
 }

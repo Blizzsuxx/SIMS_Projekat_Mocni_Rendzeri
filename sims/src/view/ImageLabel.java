@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.event.MouseInputAdapter;
 
 import controler.CitacDatoteka;
-import model.Album;
 import net.miginfocom.swing.MigLayout;
 
 public class ImageLabel extends JPanel {
@@ -24,17 +23,12 @@ public class ImageLabel extends JPanel {
    private static final long serialVersionUID = 1L;
    private Slikovit delo;
    private boolean clickable = true;
-   private boolean indikator = false;
    
    public ImageLabel(Slikovit delo) {
        this(60, 60, delo);
 
    }
 
-   public ImageLabel(Slikovit delo, boolean indikator) {
-	   this(60, 60, delo);
-	   this.indikator = indikator;
-   }
    /**
     * @return the clickable
     */
@@ -130,10 +124,7 @@ public class ImageLabel extends JPanel {
 
 
     protected void clickedEvent() {
-	   if (indikator) {
-		   AlbumInfo ai =  new AlbumInfo(null, "Album", 100, 100, (Album)delo);
-		   ai.setVisible(true);
-	   }
+	   
    }
 
 void addTekst(String tekst){

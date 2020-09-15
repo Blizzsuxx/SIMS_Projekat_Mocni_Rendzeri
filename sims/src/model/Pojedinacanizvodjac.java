@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 
 import controler.Constants;
 
@@ -70,7 +71,7 @@ public class Pojedinacanizvodjac extends Izvodjac {
 	public void setPol(Pol pol) {
 		this.pol = pol;
 	}
-	public Pojedinacanizvodjac(boolean odobrenost, String umetnickoIme, ArrayList<Zanr> zanr, boolean status, KorisnikAplikacije[] prati, String ime, String prezime,
+	public Pojedinacanizvodjac(boolean odobrenost, String umetnickoIme, ArrayList<Zanr> zanr, boolean status, LinkedList<KorisnikAplikacije> prati, String ime, String prezime,
 			Date datumRodjenja, Date datumSmrti, String opis, Pol pol) {
 		super(umetnickoIme, zanr, status, prati, odobrenost);
 		this.ime = ime;
@@ -81,7 +82,7 @@ public class Pojedinacanizvodjac extends Izvodjac {
 		this.pol = pol;
 		this.clanstvaUGrupama=new ArrayList<Clan>();
 	}
-	public Pojedinacanizvodjac(String umetnickoIme, ArrayList<Zanr> zanr, boolean status, KorisnikAplikacije[] prati) {
+	public Pojedinacanizvodjac(String umetnickoIme, ArrayList<Zanr> zanr, boolean status, LinkedList<KorisnikAplikacije> prati) {
 		super(umetnickoIme, zanr, status, prati);
 	}
 	

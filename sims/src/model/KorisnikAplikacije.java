@@ -22,7 +22,8 @@ public class KorisnikAplikacije extends FrontEndKorisnik {
 	}
 
 public KorisnikAplikacije() {
-	// TODO Auto-generated constructor stub
+	pratite = new ArrayList<>();
+   onajKogaPrati = new ArrayList<>();
 }
 
 /** @pdRoleInfo migr=no name=FrontEndKorisnik assc=pracenjeKorisnika coll=java.util.Collection impl=java.util.HashSet mult=0..* */

@@ -124,12 +124,19 @@ public class LoginMenadzer {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		   protected void buttonTriggered() {
+		   protected void registruj() {
+			   try{
+					super.registruj();
+			   } catch (Exception e){
+					JOptionPane.showMessageDialog(this, e.getMessage());
+					return;
+			   }
 			   if(novKorisnik.getNalog() != null && !korisnici.provjeriKorisnickoIme(novKorisnik.getNalog().getKorisnickoIme())) {
 					korisnici.dodaj(novKorisnik);
 					this.dispose();
+					prozor.setVisible(true);
 				} else {
-					JOptionPane.showMessageDialog(this, "Molimo vas da popunite sva polja.");
+					JOptionPane.showMessageDialog(this, "Korisnik sa takvim korisnickim imenom vec postoji");
 				}
 		   }
 	   };

@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 
 import controler.Constants;
 
@@ -46,7 +47,7 @@ public class Grupa extends Izvodjac {
 	public void setDatumRaspada(Date datumRaspada) {
 		this.datumRaspada = datumRaspada;
 	}
-	public Grupa(String umetnickoIme, ArrayList<Zanr>  zanr, boolean status, KorisnikAplikacije[] prati, int brojClanova, Date datumOsnivanja,
+	public Grupa(String umetnickoIme, ArrayList<Zanr>  zanr, boolean status, LinkedList<KorisnikAplikacije> prati, int brojClanova, Date datumOsnivanja,
 			Date datumRaspada) {
 		super(umetnickoIme, zanr, status, prati);
 		this.brojClanova = brojClanova;
@@ -54,7 +55,7 @@ public class Grupa extends Izvodjac {
 		this.datumRaspada = datumRaspada;
 		this.clanovi=new ArrayList<>();
 	}
-	public Grupa(String umetnickoIme, ArrayList<Zanr>  zanr, boolean status, KorisnikAplikacije[] prati) {
+	public Grupa(String umetnickoIme, ArrayList<Zanr>  zanr, boolean status, LinkedList<KorisnikAplikacije> prati) {
 		super(umetnickoIme, zanr, status, prati);
 		this.clanovi=new ArrayList<>();
 	}

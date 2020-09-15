@@ -2,12 +2,24 @@ package view;
 
 import javax.swing.ImageIcon;
 
+import model.Grupa;
+import model.Pojedinacanizvodjac;
+
 public class IzvodjacLabel extends ImageLabel {
 
     @Override
     protected void clickedEvent() {
         // TODO Auto-generated method stub
-        super.clickedEvent();
+        IzvodjacView prikazIzvodjaca;
+        
+        if(this.getDelo() instanceof Pojedinacanizvodjac) prikazIzvodjaca = new PojedinacanIzvodjacView(null, (Pojedinacanizvodjac) this.getDelo());
+        else prikazIzvodjaca = new GrupaView(null, (Grupa) this.getDelo());
+
+        prikazIzvodjaca.setVisible(true);
+    }
+
+    public IzvodjacLabel(int sirina, int duzina, Slikovit delo) {
+        super(sirina, duzina, delo);
     }
 
     public IzvodjacLabel(ImageIcon ikona, Slikovit delo) {

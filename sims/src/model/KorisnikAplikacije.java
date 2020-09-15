@@ -163,19 +163,22 @@ public KorisnikAplikacije(String ime, String prezime, String eMail, Pol pol, Dat
 	public String pratiociUpis() {
 	   String ad=super.pratiociUpis();
 	   int i=0;
+	   ad+="/";
 	   for(FrontEndKorisnik f:pratite) {
 		   if(i!=0) {
 			   ad+=";";
 		   }
-		   ad+=f.getNalog().getKorisnickoIme();i++;
+		   if(f!=null) {
+		   ad+=f.getNalog().getKorisnickoIme();i++;}
 	   }
-	   ad+="#";
+	   ad+="/";
 	   i=0;
 	   for(Izvodjac f:onajKogaPrati) {
 		   if(i!=0) {
 			   ad+=";";
 		   }
-		   ad+=f.getUmetnickoIme();i++;
+		   if(f!=null) {
+		   ad+=f.getUmetnickoIme();i++;}
 	   }
 	   return ad;
  }

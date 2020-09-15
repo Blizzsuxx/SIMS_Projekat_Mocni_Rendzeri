@@ -1,49 +1,42 @@
 package view;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import org.jdatepicker.impl.*;
-import org.jdesktop.swingx.JXList;
-
-import controler.Constants;
-import controler.ZanroviMenadzer;
-import model.Grupa;
-import model.Pojedinacanizvodjac;
-import model.Pol;
-import model.Sesija;
-import model.Zanr;
-
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JPanel;
-import javax.swing.SpringLayout;
-import javax.swing.border.Border;
-import javax.swing.JTextArea;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.awt.event.ActionEvent;
-import javax.swing.JComboBox;
+import java.util.ArrayList;
+import java.util.Properties;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.SpringLayout;
+import javax.swing.border.Border;
+
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
+import controler.Constants;
+import model.Grupa;
+import model.Pojedinacanizvodjac;
+import model.Pol;
+import model.Sesija;
+import model.Zanr;
 
 public class RegistracijaIzvodjaca extends JDialog {
 	/**
@@ -267,7 +260,7 @@ public class RegistracijaIzvodjaca extends JDialog {
 				registruj();
 			}
 		});
-		btnRegistruj.setBounds(284, 409, 89, 23);
+		btnRegistruj.setBounds(284, 409, 89, 30);
 		getContentPane().add(btnRegistruj);
 		
 		JLabel lblZanr = new JLabel("Zanr:");
@@ -356,7 +349,7 @@ public class RegistracijaIzvodjaca extends JDialog {
 		String dob2 = sdf2.format(sdf1.parse(dob));
 		Pol p = Pol.valueOf(pol);
 		Pojedinacanizvodjac pi = null;
-		if (!dod.isEmpty()) { 
+		if (dod != null) { 
 			
 			String dod2 = sdf2.format(sdf1.parse(dod));
 			pi = new Pojedinacanizvodjac(false, umetnickoIme, zanr, true, ime, prezime, Constants.NATASIN_FORMAT_ZA_DATUM.parse(dob2),
@@ -378,7 +371,7 @@ public class RegistracijaIzvodjaca extends JDialog {
 		SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyyy.");
 		String dof2 = sdf2.format(sdf1.parse(dof));
 		Grupa g = null;
-		if (!dor.isEmpty()) {
+		if (dor != null) {
 			
 			String dor2 = sdf2.format(sdf1.parse(dor));
 			g = new Grupa(false,umetnickoIme, zanr, true,  brojClanova, Constants.NATASIN_FORMAT_ZA_DATUM.parse(dof2), 

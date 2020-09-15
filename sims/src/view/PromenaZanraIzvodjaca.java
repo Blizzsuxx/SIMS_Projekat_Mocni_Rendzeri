@@ -1,37 +1,32 @@
 package view;
 
-import javax.swing.JTable;
+
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneLayout;
+import javax.swing.SwingConstants;
+
+import org.jdesktop.swingx.JXTable;
 
 import controler.IzvodjacMenadzer;
-import controler.ZanroviMenadzer;
 import model.Grupa;
 import model.Pojedinacanizvodjac;
 import model.Sesija;
 import model.Zanr;
 
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JButton;
-import javax.swing.ListSelectionModel;
-import javax.swing.ScrollPaneLayout;
-
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import javax.swing.SwingConstants;
-
-import org.jdesktop.swingx.JXList;
 
 public class PromenaZanraIzvodjaca extends MojDialog {
 	private static final long serialVersionUID = 1L;
-	private JTable pojedninacniIzvodjaci;
-	private JTable grupe;
+	private JXTable pojedninacniIzvodjaci;
+	private JXTable grupe;
 	private String title;
 	private Sesija sesija;
 	private ComboZanr cmbZanr;
@@ -45,11 +40,10 @@ public class PromenaZanraIzvodjaca extends MojDialog {
 		setTitle(title);
 		getContentPane().setLayout(null);
 		
-		pojedninacniIzvodjaci = new JTable();
+		pojedninacniIzvodjaci = new JXTable();
 		pojedninacniIzvodjaci.setBorder(null);
 		pojedninacniIzvodjaci.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		pojedninacniIzvodjaci.getTableHeader().setReorderingAllowed(false);
-		pojedninacniIzvodjaci.getTableHeader().setResizingAllowed(false);
 		pojedninacniIzvodjaci.setAutoCreateRowSorter(true);
 		
 		JScrollPane scrollPaneGrid = new JScrollPane(pojedninacniIzvodjaci);
@@ -66,7 +60,7 @@ public class PromenaZanraIzvodjaca extends MojDialog {
 		
 		JLabel lblZanr = new JLabel("Zanr:");
 		lblZanr.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblZanr.setBounds(254, 248, 48, 14);
+		lblZanr.setBounds(237, 244, 48, 14);
 		getContentPane().add(lblZanr);
 		
 		JButton btnPromeni = new JButton("Promeni");
@@ -75,15 +69,14 @@ public class PromenaZanraIzvodjaca extends MojDialog {
 				promeniZanr();
 			}
 		});
-		btnPromeni.setBounds(595, 244, 89, 23);
+		btnPromeni.setBounds(595, 238, 89, 29);
 		getContentPane().add(btnPromeni);
 		
-		grupe = new JTable();
+		grupe = new JXTable();
 
 		grupe.setBorder(null);
 		grupe.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		grupe.getTableHeader().setReorderingAllowed(false);
-		grupe.getTableHeader().setResizingAllowed(false);
 		grupe.setAutoCreateRowSorter(true);
 		
 		JScrollPane scrollPaneGrid1 = new JScrollPane(grupe);
@@ -117,6 +110,10 @@ public class PromenaZanraIzvodjaca extends MojDialog {
 	}
 	
 	private void promeniZanr() {
+		if (cmbZanr.vratiSelektovaneZanrove().size() == 0) {
+			JOptionPane.showMessageDialog(null, "Morate odabrati bar jedan zanr");
+			return;
+		}
 		if (!pojedninacniIzvodjaci.getSelectionModel().isSelectionEmpty()) {
 			for (Pojedinacanizvodjac pi : sesija.getUmetnici()) {
 				if (pi.getUmetnickoIme().equals((String)pojedninacniIzvodjaci.getValueAt(pojedninacniIzvodjaci.getSelectedRow(), 0))) {

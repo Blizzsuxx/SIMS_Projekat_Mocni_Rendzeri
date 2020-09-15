@@ -198,5 +198,15 @@ public Collection<Urednik> traziZaSearch(String textZaSearch) {
 	}
 	return rezultat;
 }
+public Korisnik nadji(String imeK) {
+	for(Korisnik k:this.korisnici.values()) {
+		//System.out.println(k.getNalog().getKorisnickoIme()+" korisnicko ime");
+		//System.out.println(imeK+" trazeno");
+		if(k.getNalog().getKorisnickoIme().equals(imeK)) {
+			return k;
+		}
+	}
+	return null;
+}
 
 }

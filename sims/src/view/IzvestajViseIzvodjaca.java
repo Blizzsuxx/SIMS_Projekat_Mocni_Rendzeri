@@ -162,7 +162,8 @@ public class IzvestajViseIzvodjaca extends MojDialog{
 					}
 				} 
 				catch (Exception e1) {
-					System.out.println("Greska kod ucitavanja izvestaja za jednog izvodjaca");
+					JOptionPane.showMessageDialog(null, "Greska kod ucitavanja izvestaja za jednog izvodjaca, morate selektovati 1 red");
+					//System.out.println("Greska kod ucitavanja izvestaja za jednog izvodjaca");
 				}
 			}
 		});

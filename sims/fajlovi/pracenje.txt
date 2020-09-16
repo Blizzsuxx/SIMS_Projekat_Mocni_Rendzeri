@@ -1,7 +1,6 @@
 pPeric///
-miki1/Pop;Dance//
-Ssara/Pop;rock/nata1/It's my life/nata1/Bon Jovi
+miki1///
+Ssara/////
 nata1/////
 nina1/////
 milan1///
-rivate String title;

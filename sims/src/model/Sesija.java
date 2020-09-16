@@ -500,5 +500,20 @@ public void setReklameMenadzer(ReklameMenadzer reklameMenadzer) {
 	this.reklameMenadzer = reklameMenadzer;
 }
 
+
+
+public ArrayList<MuzickoDelo> filtrirajDela(Zanr z) {
+	ArrayList<MuzickoDelo> dela=new ArrayList<MuzickoDelo>();
+	for(MuzickoDelo d:this.muzickiSadrzajMenadzer.getMuzickaDela()) {
+		for(Zanr z1:d.getZanrovi()) {
+			if(z.getNazivZanra().equals(z1.getNazivZanra())) {
+				dela.add(d);
+				break;
+			}
+		}
+	}
+	return dela;
+}
+
 	
 }

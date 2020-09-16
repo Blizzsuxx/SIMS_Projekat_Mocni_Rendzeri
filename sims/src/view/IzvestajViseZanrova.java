@@ -110,10 +110,11 @@ public class IzvestajViseZanrova extends MojDialog {
 							}
 						}
 						if (zanr != null)
-							new IzvestajZanra(IzvestajViseZanrova.this.sesija, zanr.getNazivZanra(), zanr, 300, 300);
+							new IzvestajZanra(IzvestajViseZanrova.this.sesija, zanr.getNazivZanra(), zanr, 400, 400);
 					}
 				} 
 				catch (Exception e1) {
+					e1.printStackTrace();
 					System.out.println("Greska kod ucitavanja izvestaja za jednog zanra");
 				}
 			}

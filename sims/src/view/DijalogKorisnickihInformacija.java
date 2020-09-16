@@ -67,8 +67,8 @@ public class DijalogKorisnickihInformacija extends MojDialog {
 		this.add(datumRodjenja, "wrap");
 
 		this.addLabel("Pol: ");
-		muski = new JRadioButton();
-		zenski = new JRadioButton();
+		muski = new JRadioButton("Muski");
+		zenski = new JRadioButton("Zenski");
 		pol = new ButtonGroup();
 		pol.add(muski);
 		pol.add(zenski);

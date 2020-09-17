@@ -39,7 +39,7 @@ public abstract class FrontEndKorisnik extends Korisnik {
       this.istorija = new ArrayList<>();
       this.pratilac = new ArrayList<>();
       this.preferiraniZanrovi = new ArrayList<>();
-
+      this.utisci = new ArrayList<Utisak>();
    }
 
 
@@ -51,6 +51,7 @@ public abstract class FrontEndKorisnik extends Korisnik {
       this.istorija = muzickoDjelo;
       this.preferiraniZanrovi = preferiraniZanrovi;
       this.pratilac = pratilac;
+      this.utisci = new ArrayList<Utisak>();
    }
 
 
@@ -90,8 +91,8 @@ public abstract class FrontEndKorisnik extends Korisnik {
    }
    
    /** @pdOid ab3d2968-fc86-43fb-a9b3-2a1f1e7ad4fe */
-   public void komentarisi() {
-      // TODO: implement
+   public void komentarisi(Utisak utisak) {
+      this.utisci.add(utisak);
    }
    
    

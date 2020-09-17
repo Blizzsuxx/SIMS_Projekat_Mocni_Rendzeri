@@ -48,14 +48,6 @@ public KorisnikAplikacije(String ime, String prezime, String eMail, Pol pol, Dat
 	   this.onajKogaPrati = onajKogaPrati;
 
    }
-
-
-
-
-/** @pdOid 570b1cab-dcf3-4bfc-a491-be5540c78efd */
-   public void komentarisi() {
-      // TODO: implement
-   }
    
    /** @pdOid 979144ce-362b-4f8e-86d4-21c79429d6c5 */
    public void oceni() {

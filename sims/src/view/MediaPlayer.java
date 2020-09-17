@@ -245,6 +245,8 @@ public class MediaPlayer extends MojDialog {
     	{
     		Komentar kom = new Komentar(poljeKomentar.getText(), new Date(), true, delo, (FrontEndKorisnik)trenutniKorisnik);
     		komentari.addKomentar(kom);
+    		System.out.println(trenutniKorisnik);
+    		((KorisnikAplikacije)trenutniKorisnik).komentarisi(kom);
     		JOptionPane.showMessageDialog(MediaPlayer.this, "Uspesno ste dodali komentar", "Komentar", JOptionPane.INFORMATION_MESSAGE);
     		poljeKomentar.setText("");
     	}
@@ -263,8 +265,9 @@ public class MediaPlayer extends MojDialog {
 		}
     	if(poljeRecenzija.getText().equals(""))
     		return;
-    	Komentar rec = new Komentar(poljeRecenzija.getText(), new Date(), true, delo, (FrontEndKorisnik)trenutniKorisnik);
+    	Recenzija rec = new Recenzija(poljeRecenzija.getText(), new Date(), true, (FrontEndKorisnik)trenutniKorisnik, delo, "Naslov");
     	recenzije.addKomentar(rec);
+    	((Urednik)trenutniKorisnik).komentarisi(rec);
     	JOptionPane.showMessageDialog(MediaPlayer.this, "Uspesno ste dodali recenziju", "Recenzija", JOptionPane.INFORMATION_MESSAGE);
         poljeRecenzija.setText("");
         ((FrontEndKorisnik)trenutniKorisnik).addIstorija(delo);

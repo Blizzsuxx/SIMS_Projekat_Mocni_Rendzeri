@@ -143,6 +143,10 @@ public class MuzickoDelo extends MuzickiSadrzaj {
 		}
 		return komentari;
 	}
-
+	
+	public void dodajUtisak(Utisak utisak)
+	{
+		utisci.add(utisak);
+	}
 	
 }

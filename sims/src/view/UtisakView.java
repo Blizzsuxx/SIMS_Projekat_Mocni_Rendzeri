@@ -29,7 +29,7 @@ public class UtisakView extends JPanel{
     private int brojUtisaka=1;//Dodaj izmenjenu recenziju u utiske
 
     public void addKomentar(Utisak komentar){
-    	komentar.getDelo().getUtisci().add(komentar);
+    	komentar.getDelo().dodajUtisak(komentar);
         JLabel username = new JLabel(komentar.getPisac().getNalog().getKorisnickoIme());
         JTextArea sadrzaj = new JTextArea(komentar.getText());
         

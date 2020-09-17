@@ -9,6 +9,7 @@ import javax.swing.JTextArea;
 
 import model.Clan;
 import model.Pojedinacanizvodjac;
+import model.Slikovit;
 
 public class PojedinacanIzvodjacView extends IzvodjacView {
 

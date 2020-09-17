@@ -19,6 +19,7 @@ import model.FrontEndKorisnik;
 import model.Korisnik;
 import model.KorisnikAplikacije;
 import model.Sesija;
+import model.Slikovit;
 import model.Urednik;
 import net.miginfocom.swing.MigLayout;
 

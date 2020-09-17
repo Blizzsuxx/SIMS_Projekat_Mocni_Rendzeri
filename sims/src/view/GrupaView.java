@@ -8,6 +8,7 @@ import javax.swing.JScrollPane;
 
 import model.Clan;
 import model.Grupa;
+import model.Slikovit;
 
 public class GrupaView extends IzvodjacView {
 

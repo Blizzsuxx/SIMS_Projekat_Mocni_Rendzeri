@@ -13,7 +13,7 @@ import model.Grupa;
 import model.Izvodjac;
 import model.Pojedinacanizvodjac;
 import model.Pol;
-import view.Slikovit;
+import model.Slikovit;
 import view.TableModelWrapper;
 
 public class IzvodjacMenadzer {

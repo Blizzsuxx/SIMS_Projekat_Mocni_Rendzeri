@@ -17,10 +17,10 @@ import model.Album;
 import model.Izvodjac;
 import model.MuzickiSadrzaj;
 import model.MuzickoDelo;
+import model.Slikovit;
 import model.TipMuzickogSadrzaja;
 import model.Urednik;
 import model.Zanr;
-import view.Slikovit;
 import view.TableModelWrapper;
 
 public class MuzickiSadrzajMenadzer {

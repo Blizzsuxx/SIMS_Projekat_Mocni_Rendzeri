@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import view.Slikovit;
-
 /** @pdOid 20a31e0c-cbdd-4a1e-956e-0c8ed03fce3d */
 public abstract class Izvodjac implements Slikovit, DeljivPoZanrovima {
 	/** @pdOid 515ac754-9ea8-45bb-bc6e-0b899ea103d8 */

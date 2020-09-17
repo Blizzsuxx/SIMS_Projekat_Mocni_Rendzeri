@@ -11,6 +11,28 @@ import java.util.Date;
 
 /** @pdOid a9c9f365-ca2f-446b-9e3e-06fdc25de877 */
 public abstract class FrontEndKorisnik extends Korisnik {
+	
+	   /**
+	    * @pdRoleInfo migr=no name=MuzickoDjelo assc=association32
+	    *             coll=java.util.Collection impl=java.util.HashSet mult=0..*
+	    */
+	   private java.util.Collection<MuzickoDelo> istorija;
+	   /**
+	    * @pdRoleInfo migr=no name=Zanr assc=association36 coll=java.util.Collection
+	    *             impl=java.util.HashSet mult=0..*
+	    */
+	   private java.util.Collection<Zanr> preferiraniZanrovi;
+	   /**
+	    * @pdRoleInfo migr=no name=KorisnikAplikacije assc=pracenjeKorisnika mult=0..*
+	    *             side=A
+	    */
+	   private Collection<KorisnikAplikacije> pratilac;
+	   
+	   private Collection<Utisak> utisci;
+	
+	
+	
+	
    public FrontEndKorisnik(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, String sifra,
          String korisnickoIme, Date datum, boolean status) {
       super(ime, prezime, eMail, pol, datumRodjenja, sifra, korisnickoIme, datum, status);
@@ -53,21 +75,7 @@ public abstract class FrontEndKorisnik extends Korisnik {
       this.preferiraniZanrovi = new ArrayList<>();
 
    }
-   /**
-    * @pdRoleInfo migr=no name=MuzickoDjelo assc=association32
-    *             coll=java.util.Collection impl=java.util.HashSet mult=0..*
-    */
-   private java.util.Collection<MuzickoDelo> istorija;
-   /**
-    * @pdRoleInfo migr=no name=Zanr assc=association36 coll=java.util.Collection
-    *             impl=java.util.HashSet mult=0..*
-    */
-   private java.util.Collection<Zanr> preferiraniZanrovi;
-   /**
-    * @pdRoleInfo migr=no name=KorisnikAplikacije assc=pracenjeKorisnika mult=0..*
-    *             side=A
-    */
-   private Collection<KorisnikAplikacije> pratilac;
+
    
 
 /** @pdOid 2764179e-3960-4723-809e-5c4cf97d9e27 */
@@ -213,5 +221,19 @@ public abstract class FrontEndKorisnik extends Korisnik {
 	   }
 	   return ad;
    }
+
+
+
+
+public Collection<Utisak> getUtisci() {
+	return utisci;
+}
+
+
+
+
+public void setUtisci(Collection<Utisak> utisci) {
+	this.utisci = utisci;
+}
 
 }

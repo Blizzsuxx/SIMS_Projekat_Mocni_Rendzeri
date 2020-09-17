@@ -13,6 +13,14 @@ import controler.Constants;
 
 /** @pdOid d00188b7-a297-4fca-8ad3-4a5e996aa205 */
 public class KorisnikAplikacije extends FrontEndKorisnik {
+	
+	/** @pdRoleInfo migr=no name=FrontEndKorisnik assc=pracenjeKorisnika coll=java.util.Collection impl=java.util.HashSet mult=0..* */
+	   private java.util.Collection<FrontEndKorisnik> pratite;
+	   /** @pdRoleInfo migr=no name=Izvodjac assc=association16 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
+	   private java.util.Collection<Izvodjac> onajKogaPrati;
+	
+	
+	
    public KorisnikAplikacije(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, String sifra,
 			String korisnickoIme, Date datum, boolean status) {
       super(ime, prezime, eMail, pol, datumRodjenja, sifra, korisnickoIme, datum, status);
@@ -26,10 +34,7 @@ public KorisnikAplikacije() {
    onajKogaPrati = new ArrayList<>();
 }
 
-/** @pdRoleInfo migr=no name=FrontEndKorisnik assc=pracenjeKorisnika coll=java.util.Collection impl=java.util.HashSet mult=0..* */
-   private java.util.Collection<FrontEndKorisnik> pratite;
-   /** @pdRoleInfo migr=no name=Izvodjac assc=association16 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
-   private java.util.Collection<Izvodjac> onajKogaPrati;
+
    
 
 

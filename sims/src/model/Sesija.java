@@ -61,7 +61,7 @@ public class Sesija {
    private IzvestajSvihZanrovaMenadzer izvestajSvihZanrova;// ovo ne treba da bude inicijalizovano, inic se u
                                                            // izvestajima kod admina
 
-   private IzvestajSvihZanrova jedanZanr;
+   
    private IzvestajSvihIzvodjacaMenadzer menIzvodjaca;// ovo ne treba biti inic, nego tek kad se pokrene izv
    private LoginMenadzer loginMenadzer;
 
@@ -302,13 +302,13 @@ public IzvestajSvihZanrovaMenadzer namestiIzvestaj() {
 	   
    }
    public IzvestajSvihZanrova pronadjiPodatkejednogZanra(String naziv) {
-	   jedanZanr=new IzvestajSvihZanrova(naziv);
-	   pronadiDela(naziv);
+	   IzvestajSvihZanrova jedanZanr = new IzvestajSvihZanrova(naziv);
+	   pronadiDela(naziv, jedanZanr);
 	   return jedanZanr;
    }
 
 
-private void pronadiDela(String naziv) {
+private void pronadiDela(String naziv, IzvestajSvihZanrova jedanZanr) {
 	for(MuzickoDelo d:this.muzickiSadrzajMenadzer.getMuzickaDela()) {
 		for(Zanr z:d.getZanrovi()) {
 			if(z.getNazivZanra().equals(naziv)) {

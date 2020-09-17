@@ -18,6 +18,7 @@ import javax.swing.ListSelectionModel;
 
 import model.MuzickiSadrzaj;
 import model.Sesija;
+import model.Slikovit;
 import model.TopLista;
 import model.Urednik;
 import net.miginfocom.swing.MigLayout;

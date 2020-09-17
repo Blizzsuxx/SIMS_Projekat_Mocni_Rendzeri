@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import model.Album;
+import model.Slikovit;
 import model.Zanr;
 import net.miginfocom.swing.MigLayout;
 

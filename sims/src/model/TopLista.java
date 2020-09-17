@@ -6,7 +6,7 @@ import java.util.List;
 public class TopLista {
 	private String naziv;
 	private boolean status;
-	private Korisnik korisnik;
+	private FrontEndKorisnik korisnik;
 	private List<MuzickiSadrzaj> muzickiSadrzaj;
 	
 	public TopLista() {}
@@ -16,7 +16,7 @@ public class TopLista {
 		super();
 		this.naziv = naziv;
 		this.status = status;
-		this.korisnik = korisnik;
+		this.korisnik = (FrontEndKorisnik) korisnik;
 		this.muzickiSadrzaj = new ArrayList<>();
 	}
 
@@ -25,7 +25,7 @@ public class TopLista {
 		super();
 		this.naziv = naziv;
 		this.status = status;
-		this.korisnik = korisnik;
+		this.korisnik = (FrontEndKorisnik) korisnik;
 		this.muzickiSadrzaj = muzickiSadrzaj;
 	}
 
@@ -64,7 +64,7 @@ public class TopLista {
 
 
 	public void setKorisnik(Korisnik korisnik) {
-		this.korisnik = korisnik;
+		this.korisnik = (FrontEndKorisnik) korisnik;
 	}
 
 

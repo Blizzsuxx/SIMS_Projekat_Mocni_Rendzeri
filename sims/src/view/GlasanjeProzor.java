@@ -19,9 +19,11 @@ import java.awt.event.ActionEvent;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneLayout;
 
+import org.jdesktop.swingx.JXTable;
+
 public class GlasanjeProzor extends MojDialog {
 	private static final long serialVersionUID = 1L;
-	private JTable muzickaDela;
+	private JXTable muzickaDela;
 	private JButton btnPokreniNovoGlasanje;
 	private JButton btnZaustavi;
 	private JButton btnGlasaj;
@@ -36,7 +38,7 @@ public class GlasanjeProzor extends MojDialog {
 		getContentPane().setLayout(null);
 		setTitle(title);
 		
-		muzickaDela = new JTable();
+		muzickaDela = new JXTable();
 		muzickaDela.setBorder(null);
 		muzickaDela.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		muzickaDela.getTableHeader().setReorderingAllowed(false);

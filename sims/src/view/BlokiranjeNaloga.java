@@ -3,6 +3,8 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -12,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneLayout;
+import javax.swing.table.TableModel;
 
 import org.jdesktop.swingx.JXTable;
 
@@ -20,7 +23,7 @@ import model.Korisnik;
 import model.Sesija;
 
 
-public class BlokiranjeNaloga extends MojDialog implements ActionListener {
+public class BlokiranjeNaloga extends MojDialog {
 	private static final long serialVersionUID = 1L;
 	private JXTable nalozi;
 	private Sesija sesija;
@@ -49,57 +52,32 @@ public class BlokiranjeNaloga extends MojDialog implements ActionListener {
 		scrollPaneGrid.setLayout(new ScrollPaneLayout());
 		getContentPane().add(scrollPaneGrid, BorderLayout.CENTER);
 		nalozi.setFillsViewportHeight(true);
-		
-		btnNewButton = new JButton("Blokiraj");
-		btnNewButton.addActionListener(this);
-		btnNewButton.setBounds(10, 227, 89, 23);
-		getContentPane().add(btnNewButton);
-		
-		btnOdblokiraj = new JButton("Odblokiraj");
-		btnOdblokiraj.addActionListener(this);
-		btnOdblokiraj.setBounds(109, 227, 89, 23);
-		getContentPane().add(btnOdblokiraj);
+
 		
 		ucitajNaloge();
+		
+		
+		this.addWindowListener(new WindowAdapter() {
+			
+			@Override
+			public void windowClosed(WindowEvent e) {
+				// TODO Auto-generated method stub
+				TableModelWrapper model = (TableModelWrapper) nalozi.getModel();
+				for(Object[] red : model.getData()) {
+					sesija.getKorisnici().nadji( (String) red[0]).setStatus((boolean) red[red.length-1]);
+				}
+			}
+		});
+		
+		
 		setVisible(true);
 	}
 	
 	private void ucitajNaloge() throws Exception {
 		KorisniciMenadzer km = sesija.getKorisnici();
 		TableModelWrapper tmw = km.getTabelaKorisnika();
+		tmw.setColumnEditable(tmw.getColumnCount()-1, true);
 		nalozi.setModel(tmw);
 	}
-	
-	private void setujStatus(int selektovaniRed, boolean status) {
-		if (nalozi.getSelectionModel().isSelectionEmpty()) {
-			JOptionPane.showMessageDialog(null, "Morate odabrati nalog");
-			return;
-		}
-		nalozi.setValueAt(status, selektovaniRed, 4);
-		KorisniciMenadzer km = sesija.getKorisnici();
-		HashMap<String,Korisnik> korisnici = km.getKorisnici();
-		Iterator<Entry<String, Korisnik>> it = korisnici.entrySet().iterator();
-		while (it.hasNext()) {
-			@SuppressWarnings("rawtypes")
-			HashMap.Entry pair = (HashMap.Entry)it.next();
-			Korisnik k = (Korisnik)pair.getValue();
-			String korisnickoIme = (String)nalozi.getValueAt(selektovaniRed, 0);
-			if (korisnickoIme.equals((String)pair.getKey())) {
-				k.setStatus(status);
-				korisnici.replace((String)pair.getKey(), k);
-				break;
-			}
-	    }
-		sesija.getKorisnici().setKorisnici(korisnici);
-	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		int selektovaniRed = nalozi.getSelectedRow();
-		if (e.getSource() == btnNewButton)
-			setujStatus(selektovaniRed, false);
-		if (e.getSource() == btnOdblokiraj)
-			setujStatus(selektovaniRed, true);
-		
-	}
 }

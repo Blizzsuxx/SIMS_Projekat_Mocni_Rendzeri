@@ -4,10 +4,11 @@ import java.util.ArrayList;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
-public class TableModelWrapper implements TableModel
+public class TableModelWrapper extends AbstractTableModel
 {
 	private ArrayList<Object[]> data;
 	private String[] columnNames;

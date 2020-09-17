@@ -47,7 +47,7 @@ public class RegistarcijaAlbuma extends MojDialog {
 	private Sesija sesija;
 	private JButton btnDodajPesmu;
 	private String title;
-	private JTable zanrovi;
+	private ComboZanr cmbZanr;
 	private JTextField txtOpis;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -158,9 +158,10 @@ public class RegistarcijaAlbuma extends MojDialog {
 		btnDodajPesmu.setBounds(24, 444, 107, 23);
 		getContentPane().add(btnDodajPesmu);
 		
-		zanrovi = new JTable();
-		zanrovi.setBounds(544, 186, 107, 97);
-		getContentPane().add(zanrovi);
+		cmbZanr = new ComboZanr();
+		cmbZanr.setBounds(464, 186, 187, 97);
+		cmbZanr.kreirajSadrzaj(sesija.getZanroviMenadzer().getZanrovi());
+		getContentPane().add(cmbZanr);
 		
 		JLabel lblZanrovi = new JLabel("Zanrovi");
 		lblZanrovi.setBounds(544, 172, 54, 14);
@@ -184,10 +185,6 @@ public class RegistarcijaAlbuma extends MojDialog {
 				cmbIzvodjac.addItem(i.getUmetnickoIme());
 		}
 		
-		ZanroviMenadzer zm = (sesija.getZanroviMenadzer());
-		TableModelWrapper tmw = zm.getTabelaZanrova();
-		zanrovi.setModel(tmw);
-	
 		setVisible(true);
 	}
 	
@@ -222,19 +219,11 @@ public class RegistarcijaAlbuma extends MojDialog {
 		String txtRegistracije2 = sdf2.format(sdf1.parse(txtRegistracije));
 		Date danRegistracije = new SimpleDateFormat("dd.MM.yyyy.").parse(txtRegistracije2);
 		Izvodjac izvodjac = sesija.getIzvodjac((String)cmbIzvodjac.getSelectedItem());
-		ZanroviMenadzer zm = sesija.getZanroviMenadzer();
-		List<Zanr> listaZanrova = new ArrayList<Zanr>();
-		int[] redoviZanrovi = zanrovi.getSelectedRows();
-		for (int i = 0; i < redoviZanrovi.length; i++) {
-			for (Zanr z : zm.getSviZanrovi()) {
-				if (zanrovi.getValueAt(redoviZanrovi[i], 0).equals(z.getNazivZanra())) {
-					listaZanrova.add(z);
-				}
-			}
-		}
-		Album noviAlbum = new Album(naziv, opis, danRegistracije,  izvodjac, (Urednik)Sesija.getTrenutniKorisnik(), true, listaZanrova, dela, false); // NA OVO SE VRATITI
+		ArrayList<Zanr> zanrovi =  (ArrayList<Zanr>) cmbZanr.vratiSelektovaneZanrove();
+		Album noviAlbum = new Album(naziv, opis, danRegistracije,  izvodjac, (Urednik)Sesija.getTrenutniKorisnik(), true, zanrovi, dela, false); // NA OVO SE VRATITI
 		//Album noviAlbum = new Album(txtRegistracije2, txtRegistracije2, danRegistracije, izvodjac, urednik, rootPaneCheckingEnabled);
 		sesija.getMuzickiSadrzajMenadzer().getMuzickiSadrzaj().add(noviAlbum);
+		JOptionPane.showMessageDialog(null, "Album je registrovan.");
 	}
 	
 	private String validiraj() {
@@ -249,9 +238,6 @@ public class RegistarcijaAlbuma extends MojDialog {
 		}
 		if (pesme.getSelectionModel().isSelectionEmpty()) {
 			return "Morate odabrati pesmu.";
-		}
-		if (zanrovi.getSelectionModel().isSelectionEmpty()) {
-			return "Morate odabrati bar jedan zanr.";
 		}
 		return "";
 	}

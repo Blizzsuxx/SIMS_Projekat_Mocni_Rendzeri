@@ -109,6 +109,10 @@ public class GlasanjeProzor extends MojDialog {
 			for (Glasanje g : glasanjeMenadzer.getGlasovi()) {
 				g.setBrojGlasova(0);
 			}
+			JOptionPane.showMessageDialog(null, "Pokrenuto je novo glasanje.");
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "Zaustavljeno je glasanje.");
 		}
 		sesija.setGlasanjeMenadzer(glasanjeMenadzer);
 	}
@@ -143,6 +147,7 @@ public class GlasanjeProzor extends MojDialog {
 			}
 		}
 		sesija.setGlasanjeMenadzer(gm);
+		JOptionPane.showMessageDialog(null, "Glasao si za " + nazivDela);
 	}
 	
 	private String validacijaGlasanja() {

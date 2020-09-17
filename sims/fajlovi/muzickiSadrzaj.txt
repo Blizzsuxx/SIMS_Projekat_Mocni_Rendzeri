@@ -8,3 +8,4 @@ Bon Jovi;miki1;17.05.2002.;Ariana Grande;miki1;true;rock,;true
 AAAAAAAAAAAAAAAAAAAA;AAAAAAAAAAAAAAAAAAAAAAAAAA;10.09.2020.;Hurricane;pPeric;true;Pop,Dance,;true
 EEEEEEEEEE;EEEEEEEEEE;10.09.2020.;Aqua;pPeric;true;rock,hip-hop,;0.0;0.0
 ariana album;album ariana;10.09.2020.;Ariana Grande;pPeric;true;Pop,Dance,;true
+AAAAAAAAAA;AAAAAAAAAAAAA;10.09.2020.;Aqua;pPeric;true;Pop,Dance,;false

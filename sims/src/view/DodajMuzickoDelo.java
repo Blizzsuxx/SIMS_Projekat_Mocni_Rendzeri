@@ -38,7 +38,7 @@ public class DodajMuzickoDelo extends MojDialog {
 	public String naslov, opisDela, datumIzdavanja;
 	public JButton btnNazad, btnNapravi;
 	public int br; //ako se ovo poziva iz pravljenja albuma onda je 0, tj ima Izvodjaca, ako je 1 nema i ide combo
-	private JXTable zanrovi;
+	private ComboZanr cmbZanr;
 	private JLabel lblZanrovi;
 	private JDatePickerImpl dtDop;
 	private SpringLayout sl_dtDop;
@@ -56,7 +56,7 @@ public class DodajMuzickoDelo extends MojDialog {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle(title);
 		
-		MigLayout mig =  new MigLayout("wrap 2", "[grow]10[grow]", "[]10[]10[21.00]10[67.00,grow][][][][][]");
+		MigLayout mig =  new MigLayout("wrap 2", "[grow]10[grow]", "[]10[]10[39.00]10[12.00,grow][][][][][][]");
 		getContentPane().setLayout(mig);
 		getContentPane().add(new JLabel("Naziv: "), "cell 0 0");
 		naziv = new JTextField(50);
@@ -80,17 +80,13 @@ public class DodajMuzickoDelo extends MojDialog {
 		sl_dtDop.putConstraint(SpringLayout.EAST, dtDop.getJFormattedTextField(), 211, SpringLayout.WEST, dtDop);
 		sl_dtDop = (SpringLayout) dtDop.getLayout();
 		getContentPane().add(dtDop, "cell 1 2,grow");
-		
-		ZanroviMenadzer zm = sesija.getZanroviMenadzer();
-		TableModelWrapper tmw = zm.getTabelaZanrova();
-		
+			
 		lblZanrovi = new JLabel("Zanrovi:");
 		getContentPane().add(lblZanrovi, "cell 0 3");
 		
-		zanrovi = new JXTable();
-		zanrovi.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		getContentPane().add(zanrovi, "cell 1 3,grow");
-		zanrovi.setModel(tmw);
+		cmbZanr = new ComboZanr();
+		cmbZanr.kreirajSadrzaj(sesija.getZanroviMenadzer().getZanrovi());
+		getContentPane().add(cmbZanr, "cell 1 3");
 		
 		lblIzvodjac = new JLabel("Izvodjac:");
 		getContentPane().add(lblIzvodjac, "cell 0 4");
@@ -155,20 +151,12 @@ public class DodajMuzickoDelo extends MojDialog {
 		if (br == 1) {
 			izv = (sesija.getIzvodjac((String) izvodjaci.getSelectedItem()));
 		}
-		ZanroviMenadzer zm = sesija.getZanroviMenadzer();
-		ArrayList<Zanr> listaZanrova = new ArrayList<Zanr>();
-		int[] redovi = zanrovi.getSelectedRows();
-		for (int i = 0; i < redovi.length; i++) {
-			for (Zanr z : zm.getSviZanrovi()) {
-				if (zanrovi.getValueAt(redovi[i], 0).equals(z.getNazivZanra())) {
-					listaZanrova.add(z);
-				}
-			}
-		}
-		boolean validno = sesija.napraviDelo(datumIzdavanja2, naslov, opisDela, izv, listaZanrova);
+		ArrayList<Zanr> zanrovi =  (ArrayList<Zanr>) cmbZanr.vratiSelektovaneZanrove();
+		boolean validno = sesija.napraviDelo(datumIzdavanja2, naslov, opisDela, izv, zanrovi);
 		if (!validno) {
 			JOptionPane.showMessageDialog(DodajMuzickoDelo.this, "Datum nije ispravan.");
 		}
+		JOptionPane.showMessageDialog(null, "Dodato je muzicko delo.");
 	}
 	
 	private String validiraj() {
@@ -176,8 +164,6 @@ public class DodajMuzickoDelo extends MojDialog {
 			return "Naziv je obavezno polje.";
 		if (dtDop.getJFormattedTextField().getText().isEmpty()) 
 			return "Morate uneti datum izdavanja.";
-		if (zanrovi.getSelectionModel().isSelectionEmpty()) 
-			return "Morate odabrati bar jedan zanr.";
 		return "";
 	}
 }

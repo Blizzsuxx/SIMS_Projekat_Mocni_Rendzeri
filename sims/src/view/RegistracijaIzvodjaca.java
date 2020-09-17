@@ -363,6 +363,8 @@ public class RegistracijaIzvodjaca extends JDialog {
 		}
 			if (!sesija.addUmetnici(pi))
 				JOptionPane.showMessageDialog(null, "Izvodjac vec postoji.");
+			
+		JOptionPane.showMessageDialog(null, "Registrovan je pojedinacan izvodjac " + umetnickoIme);
 	}
 	
 	private void registrujGrupu(String umetnickoIme, ArrayList<Zanr> zanr, int brojClanova, String dof, String dor) throws ParseException
@@ -385,6 +387,8 @@ public class RegistracijaIzvodjaca extends JDialog {
 		}
 		if (!sesija.addGrupe(g))
 			JOptionPane.showMessageDialog(null, "Grupa vec postoji");
+		
+		JOptionPane.showMessageDialog(null, "Registrovana je grupa " + umetnickoIme);
 	}
 	
 	private String validirajPojedinacnogIzvodjaca() {

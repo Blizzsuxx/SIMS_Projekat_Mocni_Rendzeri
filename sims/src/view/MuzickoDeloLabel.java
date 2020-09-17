@@ -3,6 +3,7 @@ package view;
 import javax.swing.ImageIcon;
 
 import model.MuzickoDelo;
+import model.Slikovit;
 
 public class MuzickoDeloLabel extends ImageLabel {
 

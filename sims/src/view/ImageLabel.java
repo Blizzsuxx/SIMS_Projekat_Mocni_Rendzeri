@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.event.MouseInputAdapter;
 
 import controler.CitacDatoteka;
+import model.Slikovit;
 import net.miginfocom.swing.MigLayout;
 
 public class ImageLabel extends JPanel {

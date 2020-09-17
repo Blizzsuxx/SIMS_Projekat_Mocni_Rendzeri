@@ -7,6 +7,7 @@ package model;
 import java.awt.image.BufferedImage;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -14,12 +15,11 @@ import controler.Constants;
 
 /** @pdOid d7b7dd3e-6a5f-4c47-ad28-32c0171650d0 */
 public class Urednik extends FrontEndKorisnik implements DeljivPoZanrovima{
-   /** @pdRoleInfo migr=no name=Recenzija assc=association9 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
-   public java.util.Collection<Recenzija> istorijaRecenzija;
+
    /** @pdRoleInfo migr=no name=ZakazanaRecenzija assc=association10 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
-   public java.util.Collection<ZakazanaRecenzija> zakazaneRecenzije;
+   private java.util.Collection<ZakazanaRecenzija> zakazaneRecenzije;
    /** @pdRoleInfo migr=no name=RecezijaZaIzmenu assc=association41 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
-   public java.util.Collection<RecezijaZaIzmenu> recezijaZaIzmenu;
+   private java.util.Collection<RecezijaZaIzmenu> recezijaZaIzmenu;
    
    
    private List<Zanr> zanrovi;
@@ -27,14 +27,14 @@ public class Urednik extends FrontEndKorisnik implements DeljivPoZanrovima{
    public Urednik(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, String sifra,
 			String korisnickoIme, Date datum, boolean status) {
 		super(ime, prezime, eMail, pol, datumRodjenja, sifra, korisnickoIme, datum, status);
-		   this.istorijaRecenzija = new ArrayList<>();
+		   this.setUtisci(new ArrayList<Utisak>());
 		   this.zakazaneRecenzije = new ArrayList<>();
 		   this.recezijaZaIzmenu = new ArrayList<>();
 		   this.zanrovi = new ArrayList<>();
 	}
 
    public Urednik() {
-	   this.istorijaRecenzija = new ArrayList<>();
+	   this.setUtisci(new ArrayList<Utisak>());
 	   this.zakazaneRecenzije = new ArrayList<>();
 	   this.recezijaZaIzmenu = new ArrayList<>();
 	   this.zanrovi = new ArrayList<>();
@@ -68,22 +68,17 @@ public class Urednik extends FrontEndKorisnik implements DeljivPoZanrovima{
    
    /** @pdGenerated default getter */
    public java.util.Collection<Recenzija> getIstorijaRecenzija() {
-      if (istorijaRecenzija == null)
-         istorijaRecenzija = new java.util.HashSet<Recenzija>();
-      return istorijaRecenzija;
+      if (this.getUtisci() == null)
+          this.setUtisci(new java.util.ArrayList<Utisak>());
+      return (Collection<Recenzija>) (Collection<?>) this.getUtisci();
    }
    
-   /** @pdGenerated default iterator getter */
-   public java.util.Iterator<Recenzija> getIteratorIstorijaRecenzija() {
-      if (istorijaRecenzija == null)
-         istorijaRecenzija = new java.util.HashSet<Recenzija>();
-      return istorijaRecenzija.iterator();
-   }
+
    
    /** @pdGenerated default setter
      * @param newIstorijaRecenzija */
    public void setIstorijaRecenzija(java.util.Collection<Recenzija> newIstorijaRecenzija) {
-      removeAllIstorijaRecenzija();
+      this.getUtisci().clear();
       for (java.util.Iterator<Recenzija> iter = newIstorijaRecenzija.iterator(); iter.hasNext();)
          addIstorijaRecenzija((Recenzija)iter.next());
    }
@@ -93,14 +88,14 @@ public class Urednik extends FrontEndKorisnik implements DeljivPoZanrovima{
    public void addIstorijaRecenzija(Recenzija newRecenzija) {
       if (newRecenzija == null)
          return;
-      if (this.istorijaRecenzija == null)
-         this.istorijaRecenzija = new java.util.HashSet<Recenzija>();
-      for (Recenzija r : istorijaRecenzija) {
-    	  if (r.getNaslov().equals(newRecenzija.getNaslov())) {
+      if (this.getUtisci() == null)
+         this.setUtisci(new java.util.ArrayList<Utisak>());
+      for (Utisak r : this.getUtisci()) {
+    	  if (((Recenzija) r).getNaslov().equals(newRecenzija.getNaslov())) {
     		  return;
     	  }
       }
-      this.istorijaRecenzija.add(newRecenzija);
+      this.getUtisci().add(newRecenzija);
       newRecenzija.setUrednik(this);      
    }
    
@@ -109,27 +104,15 @@ public class Urednik extends FrontEndKorisnik implements DeljivPoZanrovima{
    public void removeIstorijaRecenzija(Recenzija oldRecenzija) {
       if (oldRecenzija == null)
          return;
-      if (this.istorijaRecenzija != null)
-         if (this.istorijaRecenzija.contains(oldRecenzija))
+      if (this.getUtisci() != null)
+         if (this.getUtisci().contains(oldRecenzija))
          {
-            this.istorijaRecenzija.remove(oldRecenzija);
+        	this.getUtisci().remove(oldRecenzija);
             oldRecenzija.setUrednik((Urednik)null);
          }
    }
    
-   /** @pdGenerated default removeAll */
-   public void removeAllIstorijaRecenzija() {
-      if (istorijaRecenzija != null)
-      {
-         Recenzija oldRecenzija;
-         for (java.util.Iterator<Recenzija> iter = getIteratorIstorijaRecenzija(); iter.hasNext();)
-         {
-            oldRecenzija = (Recenzija)iter.next();
-            iter.remove();
-            oldRecenzija.setUrednik((Urednik)null);
-         }
-      }
-   }
+
    /** @pdGenerated default getter */
    public java.util.Collection<ZakazanaRecenzija> getZakazaneRecenzije() {
       if (zakazaneRecenzije == null)

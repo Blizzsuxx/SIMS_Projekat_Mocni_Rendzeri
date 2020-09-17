@@ -10,7 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import controler.Constants;
-import view.Slikovit;
 
 /** @pdOid 821f1adf-c3a0-4478-9680-7e8b2f65437c */
 public abstract class Korisnik implements Slikovit {

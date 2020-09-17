@@ -23,6 +23,7 @@ import model.Grupa;
 import model.Izvodjac;
 import model.MuzickiSadrzaj;
 import model.Sesija;
+import model.Slikovit;
 import model.Urednik;
 import model.Zanr;
 

@@ -15,6 +15,7 @@ import model.Izvodjac;
 import model.Korisnik;
 import model.KorisnikAplikacije;
 import model.Sesija;
+import model.Slikovit;
 import model.Zanr;
 
 public abstract class IzvodjacView extends MojDialog {

@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import controler.Constants;
-import view.Slikovit;
 
 public abstract class MuzickiSadrzaj implements Slikovit, DeljivPoZanrovima {
 	protected String naslov;

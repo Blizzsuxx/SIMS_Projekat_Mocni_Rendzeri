@@ -4,6 +4,7 @@ import javax.swing.ImageIcon;
 
 import model.Grupa;
 import model.Pojedinacanizvodjac;
+import model.Slikovit;
 
 public class IzvodjacLabel extends ImageLabel {
 

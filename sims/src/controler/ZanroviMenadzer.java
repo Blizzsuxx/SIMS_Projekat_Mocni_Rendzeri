@@ -12,9 +12,9 @@ import java.util.List;
 
 import model.DeljivPoZanrovima;
 import model.Korisnik;
+import model.Slikovit;
 import model.Urednik;
 import model.Zanr;
-import view.Slikovit;
 import view.TableModelWrapper;
 
 public class ZanroviMenadzer { //ovu klasu ili treba da ima sesija ili da bude prosledjena instanca klase IzvestajViseIzvodjaca

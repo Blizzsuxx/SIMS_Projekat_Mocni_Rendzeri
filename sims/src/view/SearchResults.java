@@ -11,6 +11,7 @@ import javax.swing.JTextArea;
 import model.Album;
 import model.Izvodjac;
 import model.MuzickoDelo;
+import model.Slikovit;
 import model.Urednik;
 import net.miginfocom.swing.MigLayout;
 

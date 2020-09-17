@@ -22,6 +22,7 @@ import org.jdesktop.swingx.JXTable;
 import model.Album;
 import model.MuzickiSadrzaj;
 import model.MuzickoDelo;
+import model.Slikovit;
 import model.TipMuzickogSadrzaja;
 import model.Zanr;
 import net.miginfocom.swing.MigLayout;

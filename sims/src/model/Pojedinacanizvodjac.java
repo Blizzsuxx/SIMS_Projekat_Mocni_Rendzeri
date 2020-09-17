@@ -71,6 +71,11 @@ public class Pojedinacanizvodjac extends Izvodjac {
 	public void setPol(Pol pol) {
 		this.pol = pol;
 	}
+	
+	public Pojedinacanizvodjac() {
+		super();
+	}
+	
 	public Pojedinacanizvodjac(boolean odobrenost, String umetnickoIme, ArrayList<Zanr> zanr, boolean status, LinkedList<KorisnikAplikacije> prati, String ime, String prezime,
 			Date datumRodjenja, Date datumSmrti, String opis, Pol pol) {
 		super(umetnickoIme, zanr, status, prati, odobrenost);

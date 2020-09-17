@@ -90,7 +90,7 @@ public class UtisakMenadzer {
 
 
 
-	private MuzickoDelo pronadiDelo(Collection<MuzickoDelo> muzickaDela, String string) {
+	public MuzickoDelo pronadiDelo(Collection<MuzickoDelo> muzickaDela, String string) {
 		for(MuzickoDelo md:muzickaDela) {
 			if(md.getNaslov().equals(string)) {
 				return md;

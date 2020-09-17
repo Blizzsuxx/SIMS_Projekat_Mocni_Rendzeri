@@ -58,7 +58,7 @@ public class ZakazanaRecenzijaMenadzer {
 	}
 
 
-	private Recenzija pronadiRecenziju(String trim, ArrayList<Recenzija> recenzije) {
+	public Recenzija pronadiRecenziju(String trim, ArrayList<Recenzija> recenzije) {
 		for(Recenzija r:recenzije) {
 			if(r.getNaslov().equals(trim)) {return r;}
 		}

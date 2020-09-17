@@ -147,7 +147,7 @@ public class MuzickiSadrzajMenadzer {
 	}
 	
 	public MuzickiSadrzaj vratiNaOsnovuNazive(String naziv) {
-		for (MuzickiSadrzaj ms: this.muzickiSadrzaj)
+		for (MuzickiSadrzaj ms: this.muzickiSadrzaj) 
 			if (ms.getNaslov().equals(naziv))
 				return ms;
 		return null;

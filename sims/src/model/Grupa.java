@@ -47,6 +47,11 @@ public class Grupa extends Izvodjac {
 	public void setDatumRaspada(Date datumRaspada) {
 		this.datumRaspada = datumRaspada;
 	}
+	
+	public Grupa() {
+		super();
+	}
+	
 	public Grupa(String umetnickoIme, ArrayList<Zanr>  zanr, boolean status, LinkedList<KorisnikAplikacije> prati, int brojClanova, Date datumOsnivanja,
 			Date datumRaspada) {
 		super(umetnickoIme, zanr, status, prati);

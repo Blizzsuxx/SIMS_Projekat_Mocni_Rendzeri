@@ -11,6 +11,9 @@ public class Album extends MuzickiSadrzaj {
 	private List<MuzickoDelo> listaPesama;
 	private boolean odobreno;
 	
+	public Album() {
+		super();
+	}
 	
 	public Album(String naslov, String opis, Date datumIzadavanja, Izvodjac izvodjac, Urednik urednik, boolean status) {
 		super(naslov, opis, datumIzadavanja, izvodjac, urednik, status);

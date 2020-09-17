@@ -13,6 +13,9 @@ public class Administrator extends Korisnik {
    /** @pdRoleInfo migr=no name=RecezijaZaIzmenu assc=association39 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
    private java.util.Collection<RecezijaZaIzmenu> recenzijeZaIzmene;
    
+   public Administrator() {
+	   super();
+   }
    
    public Administrator(String ime, String prezime, String eMail, Pol pol, Date datumRodjenja, String sifra,
 			String korisnickoIme, Date datum, boolean status) {

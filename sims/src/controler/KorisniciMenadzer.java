@@ -32,6 +32,11 @@ import view.TableModelWrapper;
 public class KorisniciMenadzer {
    /** @pdRoleInfo migr=no name=Korisnik assc=association25 mult=1 type=Aggregation */
    private HashMap<String, Korisnik> korisnici;
+   
+   public KorisniciMenadzer() {
+	   this.korisnici = new HashMap<String, Korisnik>();
+   }
+   
 	public KorisniciMenadzer(List<String[]> readAll) {
 	// TODO Auto-generated constructor stub
 	   korisnici = new HashMap<String, Korisnik>();

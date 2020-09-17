@@ -48,8 +48,8 @@ public KorisnikAplikacije(String ime, String prezime, String eMail, Pol pol, Dat
 
 
 /** @pdOid 570b1cab-dcf3-4bfc-a491-be5540c78efd */
-   public void komentarisi() {
-      // TODO: implement
+   public void komentarisi(Utisak utisak) {
+      
    }
    
    /** @pdOid 979144ce-362b-4f8e-86d4-21c79429d6c5 */

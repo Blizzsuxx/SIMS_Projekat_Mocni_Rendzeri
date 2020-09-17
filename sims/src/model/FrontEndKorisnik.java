@@ -17,7 +17,6 @@ public abstract class FrontEndKorisnik extends Korisnik {
       this.istorija = new ArrayList<>();
       this.pratilac = new ArrayList<>();
       this.preferiraniZanrovi = new ArrayList<>();
-
    }
 
 
@@ -82,7 +81,7 @@ public abstract class FrontEndKorisnik extends Korisnik {
    }
    
    /** @pdOid ab3d2968-fc86-43fb-a9b3-2a1f1e7ad4fe */
-   public void komentarisi() {
+   public void komentarisi(Utisak utisak) {
       // TODO: implement
    }
    

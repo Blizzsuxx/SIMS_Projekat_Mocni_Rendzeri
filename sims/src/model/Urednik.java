@@ -46,8 +46,8 @@ public class Urednik extends FrontEndKorisnik implements DeljivPoZanrovima{
    }
    
    /** @pdOid fe820a8c-9476-42ec-94d4-036123592bda */
-   public void komentarisi() {
-      // TODO: implement
+   public void komentarisi(Utisak utisak) {
+      istorijaRecenzija.add((Recenzija)utisak);
    }
    
    /** @pdOid 5c48f2d8-0ee6-4ba4-8b51-131ade50e7b3 */

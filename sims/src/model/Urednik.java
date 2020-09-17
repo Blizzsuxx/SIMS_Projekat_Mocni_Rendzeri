@@ -45,11 +45,6 @@ public class Urednik extends FrontEndKorisnik implements DeljivPoZanrovima{
       // TODO: implement
    }
    
-   /** @pdOid fe820a8c-9476-42ec-94d4-036123592bda */
-   public void komentarisi() {
-
-   }
-   
    /** @pdOid 5c48f2d8-0ee6-4ba4-8b51-131ade50e7b3 */
    public void oceni() {
       // TODO: implement

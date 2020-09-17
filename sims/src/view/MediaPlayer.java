@@ -245,6 +245,7 @@ public class MediaPlayer extends MojDialog {
     	{
     		Komentar kom = new Komentar(poljeKomentar.getText(), new Date(), true, delo, (FrontEndKorisnik)trenutniKorisnik);
     		komentari.addKomentar(kom);
+    		System.out.println(trenutniKorisnik);
     		((KorisnikAplikacije)trenutniKorisnik).komentarisi(kom);
     		JOptionPane.showMessageDialog(MediaPlayer.this, "Uspesno ste dodali komentar", "Komentar", JOptionPane.INFORMATION_MESSAGE);
     		poljeKomentar.setText("");

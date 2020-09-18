@@ -154,7 +154,8 @@ public class DodajMuzickoDelo extends MojDialog {
 		ArrayList<Zanr> zanrovi =  (ArrayList<Zanr>) cmbZanr.vratiSelektovaneZanrove();
 		boolean validno = sesija.napraviDelo(datumIzdavanja2, naslov, opisDela, izv, zanrovi);
 		if (!validno) {
-			JOptionPane.showMessageDialog(DodajMuzickoDelo.this, "Datum nije ispravan.");
+			JOptionPane.showMessageDialog(DodajMuzickoDelo.this, "Muzicko delo vec postoji.");
+			return;
 		}
 		JOptionPane.showMessageDialog(null, "Dodato je muzicko delo.");
 	}

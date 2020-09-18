@@ -17,6 +17,7 @@ public class TableMouseListener extends MouseAdapter {
     public void mousePressed(MouseEvent event) {
         Point point = event.getPoint();
         int currentRow = table.rowAtPoint(point);
+        if (currentRow != -1)
         table.setRowSelectionInterval(currentRow, currentRow);
     }
 }

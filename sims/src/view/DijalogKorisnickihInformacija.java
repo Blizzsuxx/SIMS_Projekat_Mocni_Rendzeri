@@ -75,6 +75,8 @@ public class DijalogKorisnickihInformacija extends MojDialog {
 		muski.setSelected(true);
 		this.add(muski);
 		this.add(zenski, "wrap");
+		
+		
 
 		JButton registruj = new JButton("Registruj se");
 		registruj.addActionListener(new ActionListener(){

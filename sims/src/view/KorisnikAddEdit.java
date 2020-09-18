@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -142,6 +143,10 @@ public class KorisnikAddEdit extends JDialog {
 		rbZensko = new JRadioButton("Zensko");
 		rbZensko.setBounds(125, 150, 109, 23);
 		panelBase.add(rbZensko);
+		
+		ButtonGroup poloviGroup = new ButtonGroup();
+		poloviGroup.add(rbMusko);
+		poloviGroup.add(rbZensko);
 		
 		JPanel pnlKorisnik = new JPanel();
 		pnlKorisnik.setBounds(10, 203, 402, 106);

@@ -123,6 +123,30 @@ public class DijalogRadSaNalogom extends MojDialog {
 		userInfo.getContent().add(sifraLabela); userInfo.getContent().add(poljeSifra, "wrap");
 		
 		userInfo.getContent().add(potvrdiBtn);
+		
+		if(korisnik instanceof FrontEndKorisnik) {
+			JButton izbrisiNalog =new JButton("Izbrisi nalog");
+			userInfo.getContent().add(izbrisiNalog);
+			izbrisiNalog.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					if(JOptionPane.showConfirmDialog(null, 
+							"Jeste sigurni da zelite izaci iz aplikacije?", "IZLAZ", JOptionPane.YES_NO_OPTION,
+							JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+						
+						
+						korisnik.setStatus(false);
+						if(Sesija.getTrenutniKorisnik().equals(korisnik)) {
+							Sesija.setTrenutniKorisnik(null);
+						}
+						DijalogRadSaNalogom.this.dispose();
+					}
+					
+					
+				}
+			});
+		}
 
 		this.add(userInfo, "growx, spanx, wrap");
 

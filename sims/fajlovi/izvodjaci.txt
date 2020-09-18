@@ -9,3 +9,5 @@ true;Jon Bon Jovi;rock;true;Jon;Bon Jovi;02.03.1962.;/;great singer;muski
 true;David Bryan;Pop,Dance,rock;true;David;Bryan;07.02.1962.;/;is an American musician and songwriter, best known as the keyboard player for the rock band Bon Jovi;muski
 true;Tico Torres;Pop,Dance,rock;true;Hector;Samuel Juan;07.10.1953.;/;nista;muski
 true;Richard Stephen Sambora;rock;true;Richard Stephen;Sambora;11.07.1959.;/;nista;muski
+false;aasd;Pop,rock;true;asd;asd;08.09.2020.;/;das;muski
+false;aasd;Pop,rock;true;asd;asd;08.09.2020.;/;das;muski

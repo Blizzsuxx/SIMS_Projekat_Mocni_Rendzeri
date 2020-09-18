@@ -1,67 +1,81 @@
 package view;
 
-import javax.swing.JTable;
-import javax.swing.JButton;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
-import javax.swing.ScrollPaneLayout;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.TableRowSorter;
+
+import org.jdesktop.swingx.JXTextField;
 
 import controler.ZakazanaRecenzijaMenadzer;
 import model.Sesija;
-import java.awt.event.ActionListener;
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
 
 public class UvidUZavrseneRecenzije extends MojDialog {
 	private static final long serialVersionUID = 1L;
 	private JTable zavrseneRecenzije;
-	private JTextField txtSearch;
-	private JButton btnRefresh;
-	public Sesija sesija;
-	private String title;
+	private JXTextField txtSearch;
+
+	private Sesija sesija;
+
 	
-	public UvidUZavrseneRecenzije(Sesija sesija, String title, int dim1, int dim2) throws Exception {
+	public UvidUZavrseneRecenzije(Sesija sesija, String title, int dim1, int dim2)  {
 		super(title, dim1, dim2);
 		this.sesija = sesija;
-		this.title = title;
 		setTitle(title);
 		setResizable(false);
-		getContentPane().setLayout(null);
 		
 		zavrseneRecenzije = new JTable();
-		zavrseneRecenzije.setBorder(null);
 		zavrseneRecenzije.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		zavrseneRecenzije.getTableHeader().setReorderingAllowed(false);
-		zavrseneRecenzije.getTableHeader().setResizingAllowed(false);
 		zavrseneRecenzije.setAutoCreateRowSorter(true);
 		
 		JScrollPane scrollPaneGrid = new JScrollPane(zavrseneRecenzije);
-		scrollPaneGrid.setViewportBorder(null);
-		scrollPaneGrid.setBounds(10, 11, 587, 224);
-		scrollPaneGrid.setLayout(new ScrollPaneLayout());
-		getContentPane().add(scrollPaneGrid, BorderLayout.CENTER);
-		zavrseneRecenzije.setFillsViewportHeight(true);
+		getContentPane().add(scrollPaneGrid, "dock center");
 		
-		JButton btnFilter = new JButton("Filtriraj");
-		btnFilter.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TableRowSorter<TableModelWrapper> sorter = new TableRowSorter<TableModelWrapper>((TableModelWrapper)zavrseneRecenzije.getModel()); 
-			    sorter.setRowFilter(RowFilter.regexFilter(txtSearch.getText()));
-			    zavrseneRecenzije.setRowSorter(sorter);
-			}
-		});
-		btnFilter.setBounds(508, 251, 89, 32);
-		getContentPane().add(btnFilter);
+		txtSearch = new JXTextField("pretraga");
+		getContentPane().add(txtSearch, "dock south");
+		try {
+			ucitajZavrseneRecenzije();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
-		txtSearch = new JTextField();
-		txtSearch.setBounds(10, 252, 488, 31);
-		getContentPane().add(txtSearch);
-		txtSearch.setColumns(10);
+		TableRowSorter<TableModelWrapper> sorter = new TableRowSorter<TableModelWrapper>((TableModelWrapper)zavrseneRecenzije.getModel());
+		this.zavrseneRecenzije.setRowSorter(sorter);
+		
+		
+		txtSearch.getDocument().addDocumentListener(new DocumentListener() {
 
-		ucitajZavrseneRecenzije();
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				
+				changedUpdate(e); 
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				
+				changedUpdate(e);
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				
+				String sSerch = txtSearch.getText().trim();
+				if (sSerch.isEmpty()) {
+					sorter.setRowFilter(null);
+				}
+				else {
+					sorter.setRowFilter(RowFilter.regexFilter("(?i)"+sSerch));
+				}
+				
+			}
+			
+		});
+		
 		
 		setVisible(true);
 	}

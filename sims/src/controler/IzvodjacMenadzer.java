@@ -207,7 +207,7 @@ public class IzvodjacMenadzer {
 		// TODO Auto-generated method stub
 		ArrayList<Grupa> rezultat = new ArrayList<>();
 		for(Grupa g : grupe) {
-			if(g.Ime().contains(textZaSearch)) {
+			if(g.Ime().contains(textZaSearch) && g.isStatus() && g.isOdobrenost()) {
 				rezultat.add(g);
 			}
 		}
@@ -217,7 +217,7 @@ public class IzvodjacMenadzer {
 	public Collection<Izvodjac> traziSoloIzvodjace(String textZaSearch) {
 		Collection<Izvodjac> rezultat = new ArrayList<>();
 		for(Pojedinacanizvodjac g : this.solo) {
-			if(g.Ime().contains(textZaSearch)) {
+			if(g.Ime().contains(textZaSearch) && g.isOdobrenost() && g.isStatus()) {
 				rezultat.add(g);
 			}
 		}

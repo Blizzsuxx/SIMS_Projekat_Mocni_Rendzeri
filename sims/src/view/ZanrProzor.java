@@ -93,7 +93,7 @@ public class ZanrProzor extends MojDialog implements ActionListener{
 			String nazivZanra = table.getModel().getValueAt(rIndex, 0).toString();
 			Zanr z = ((AdminHomepage)parent).getSesija().getZanroviMenadzer().trazi(nazivZanra);
 			String nazivNovi =JOptionPane.showInputDialog(null,"Unesi novi naziv zanra:");
-			if (!nazivNovi.isEmpty() && ((AdminHomepage)parent).getSesija().getZanroviMenadzer().trazi(nazivNovi) == null) {
+			if (nazivNovi != null && !nazivNovi.isEmpty() && ((AdminHomepage)parent).getSesija().getZanroviMenadzer().trazi(nazivNovi) == null) {
 				z.setNazivZanra(nazivNovi);
 			}
 		}

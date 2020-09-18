@@ -43,7 +43,7 @@ public class ZanrModel extends ApstraktniModel {
     {
         Zanr row = zanrovi.get(rowIndex);
         if (columnIndex == 1 && !(Boolean)aValue) {
-        	row.setStatus(false);
+        	row.setStatus((Boolean) aValue);
         }
    
     }

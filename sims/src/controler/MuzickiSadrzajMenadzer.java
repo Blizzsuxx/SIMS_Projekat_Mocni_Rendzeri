@@ -263,7 +263,7 @@ public class MuzickiSadrzajMenadzer {
 	public Collection<MuzickiSadrzaj> traziMuzickaDela(String substring) {
 		Collection<MuzickiSadrzaj> delaKojaSadzeString = new ArrayList<>();
 		for(MuzickoDelo delo : this.muzickaDela) {
-			if(delo.Ime().contains(substring)) delaKojaSadzeString.add(delo);
+			if(delo.Ime().contains(substring) && delo.isStatus()) delaKojaSadzeString.add(delo);
 		}
 		return delaKojaSadzeString;
 	}
@@ -272,7 +272,7 @@ public class MuzickiSadrzajMenadzer {
 	public Collection<Album> traziAlbume(String textZaSearch) { // da se razliku od gornje funkcije
 		Collection<Album> rezultat = new ArrayList<>();
 		for(Album a : this.albumi) {
-			if(a.Ime().contains(textZaSearch)) {
+			if(a.Ime().contains(textZaSearch) && a.isOdobreno() && a.isStatus()) {
 				rezultat.add(a);
 			}
 		}

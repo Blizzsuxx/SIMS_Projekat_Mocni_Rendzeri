@@ -197,7 +197,7 @@ public List<Korisnik> vratiSveAktivneKorisnike() {
 public Collection<Urednik> traziZaSearch(String textZaSearch) {
 	Collection<Urednik> rezultat = new ArrayList<>();
 	for(Korisnik a : this.vratiUrednike()) {
-		if(a.Ime().contains(textZaSearch)) {
+		if(a.Ime().contains(textZaSearch) && a.isStatus()) {
 			rezultat.add((Urednik) a);
 		}
 	}

@@ -91,7 +91,9 @@ public class Urednik extends FrontEndKorisnik implements DeljivPoZanrovima{
     	  }
       }
       this.getUtisci().add(newRecenzija);
-      newRecenzija.setUrednik(this);      
+      if(newRecenzija.getUrednik() == null){
+    	  newRecenzija.setUrednik(this);
+      }
    }
    
    /** @pdGenerated default remove

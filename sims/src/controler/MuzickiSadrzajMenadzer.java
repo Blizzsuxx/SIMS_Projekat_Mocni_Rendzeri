@@ -317,5 +317,21 @@ public class MuzickiSadrzajMenadzer {
 		this.muzickaDela = muzickaDela;
 	}
 	
+	public boolean postojiDelo(MuzickoDelo muzickoDelo) {
+		for (MuzickoDelo md : muzickaDela) {
+			if (md.getNaslov().equals(muzickoDelo.getNaslov()))
+				return true;
+		}
+		return false;
+	}
+	
+	public boolean postojiAlbum(Album album) {
+		for (Album a : albumi) {
+			if (a.getNaslov().equals(album.getNaslov()))
+				return true;
+		}
+		return false;
+	}
+	
 	
 }

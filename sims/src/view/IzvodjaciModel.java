@@ -2,7 +2,9 @@ package view;
 
 import java.util.List;
 
+import model.Administrator;
 import model.Izvodjac;
+import model.Sesija;
 
 public class IzvodjaciModel extends ApstraktniModel {
 	private static final long serialVersionUID = 1L;
@@ -14,6 +16,7 @@ public class IzvodjaciModel extends ApstraktniModel {
 		super(columnNames);
 		this.izvodjaci = izvodjaci;
 		this.indikator = indikator;
+		
 	}
 
 	@Override
@@ -36,6 +39,8 @@ public class IzvodjaciModel extends ApstraktniModel {
 				temp = i.getMuzickaDela().size();
 			} else if (col == 4) {
 				temp = i.isOdobrenost();
+			} else if(col == 5) {
+				temp = i.isStatus();
 			}
 		}
 		return temp;
@@ -45,6 +50,7 @@ public class IzvodjaciModel extends ApstraktniModel {
 	public boolean isCellEditable(int row, int col) {
 		if (col == 4 && indikator)
 			return true;
+		if(Sesija.getTrenutniKorisnik() instanceof Administrator && col == 5) return true; 
 	    return false;
 	}
 	
@@ -54,6 +60,8 @@ public class IzvodjaciModel extends ApstraktniModel {
         Izvodjac row = izvodjaci.get(rowIndex);
         if (columnIndex == 4 && (Boolean)aValue) {
         	row.setOdobrenost((Boolean)aValue);
+        } else if(columnIndex == 5) {
+        	row.setStatus((Boolean)aValue);
         }
    
     }

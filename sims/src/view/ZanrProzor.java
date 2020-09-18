@@ -76,7 +76,7 @@ public class ZanrProzor extends MojDialog implements ActionListener{
 	
 	private void dodaj() {
 		String naziv =JOptionPane.showInputDialog(null,"Unesi novi zanr:");
-		if (!naziv.isEmpty() && ((AdminHomepage)parent).getSesija().getZanroviMenadzer().trazi(naziv) == null) {
+		if (naziv != null && !naziv.isEmpty() && ((AdminHomepage)parent).getSesija().getZanroviMenadzer().trazi(naziv) == null) {
 			Zanr z = new Zanr(naziv, true);
 			zanrovi.add(z);
 			((AdminHomepage)parent).getSesija().getZanroviMenadzer().getSviZanrovi().add(z);

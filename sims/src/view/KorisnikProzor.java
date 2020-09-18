@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import org.jdesktop.swingx.JXTable;
@@ -31,7 +32,7 @@ public class KorisnikProzor extends MojDialog implements ActionListener{
 	private Uloga indikator;
 	
 	private JFrame parent;
-	private JXTable table;
+	private JTable table;
 	private JButton info;
 	
 	private ImageIcon addI = new ImageIcon("slike/add.gif");

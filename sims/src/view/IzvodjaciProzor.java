@@ -16,14 +16,16 @@ import javax.swing.table.DefaultTableModel;
 
 import org.jdesktop.swingx.JXTable;
 
+import model.Grupa;
 import model.Izvodjac;
+import model.Pojedinacanizvodjac;
 import net.miginfocom.swing.MigLayout;
 
 public class IzvodjaciProzor extends MojDialog {
 	private static final long serialVersionUID = 1L;
 
 	private List<Izvodjac> izvodjaci;
-	private String[] imeKolona = {"Umjetnicko Ime", "Ime Zanra", "Broj Izdatih Albuma", "Broj Muzickih Djela", "Dozvola"};
+	private String[] imeKolona = {"Umjetnicko Ime", "Ime Zanra", "Broj Izdatih Albuma", "Broj Muzickih Djela", "Dozvola", "Status"};
 	
 	private JXTable table;
 	// dugme koje prikaze detaljan prikaz informacija o izabranom izvodjacu
@@ -40,7 +42,7 @@ public class IzvodjaciProzor extends MojDialog {
 
 	public IzvodjaciProzor(JFrame parent, String ime, int dim1, int dim2, 
 			List<Izvodjac> izvodjaci) {
-		super(ime, dim1, dim2);
+		super(ime, dim1, dim2+100);
 		this.parent = parent;
 		this.ime = ime;
 		
@@ -93,7 +95,14 @@ public class IzvodjaciProzor extends MojDialog {
 					JOptionPane.showMessageDialog(IzvodjaciProzor.this, "Morate selektovati nekog od izvodjaca.",
 							 "Info", JOptionPane.INFORMATION_MESSAGE);
 				} else {
-					
+					Izvodjac izvodjac = izvodjaci.get(rIndex);
+					IzvodjacView prikazIzvodjaca = null;
+					if(izvodjac instanceof Grupa) {
+						prikazIzvodjaca = new GrupaView(null, (Grupa) izvodjac);
+					} else {
+						prikazIzvodjaca = new PojedinacanIzvodjacView(null, (Pojedinacanizvodjac) izvodjac);
+					}
+					prikazIzvodjaca.setVisible(true);
 				}
 				
 			}

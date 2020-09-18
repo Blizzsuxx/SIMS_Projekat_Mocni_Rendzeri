@@ -23,7 +23,6 @@ import model.Korisnik;
 import model.KorisnikAplikacije;
 import model.Pol;
 import model.Sesija;
-import model.Slikovit;
 import model.Urednik;
 import view.TableModelWrapper;
 

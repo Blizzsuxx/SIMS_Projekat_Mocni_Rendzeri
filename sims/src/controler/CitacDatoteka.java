@@ -24,6 +24,7 @@ import model.Korisnik;
 import model.KorisnikAplikacije;
 import model.MuzickoDelo;
 import model.Recenzija;
+import view.UtisakView;
 
 public class CitacDatoteka {
 
@@ -148,7 +149,8 @@ public class CitacDatoteka {
 		Constants.UREDNIK_IKONA = procitajSliku("fajlovi/urednik.png");
 		Constants.POJEDINACAN_IZVODJAC_IKONA = procitajSliku("fajlovi/solo_izvodjac.png");
 		Constants.GRUPA_IKONA = procitajSliku("fajlovi/grupa.png");
-
+		
+		UtisakView.setUtisakMenadzer(utisakmenadzer);
 	}
 
 

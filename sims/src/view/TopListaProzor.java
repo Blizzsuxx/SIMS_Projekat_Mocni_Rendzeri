@@ -4,11 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -16,6 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
+import model.Korisnik;
 import model.MuzickiSadrzaj;
 import model.Sesija;
 import model.Slikovit;
@@ -84,9 +83,15 @@ public class TopListaProzor extends MojDialog implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String trenutniUser = Sesija.getTrenutniKorisnik().getNalog().getKorisnickoIme();
-				Urednik u = (Urednik) parent.getSesija().getKorisnici().trazi(trenutniUser);
-				List<MuzickiSadrzaj> temp = parent.getSesija().getMuzickiSadrzajMenadzer().
-						vratiMuzickiSadrzajUrednika(u.getZanrovi());
+				Korisnik u = parent.getSesija().getKorisnici().trazi(trenutniUser);
+				List<MuzickiSadrzaj> temp;
+				if (u instanceof Urednik) {
+					temp = parent.getSesija().getMuzickiSadrzajMenadzer().
+							vratiMuzickiSadrzajUrednika(((Urednik)u).getZanrovi());
+				} else {
+					temp = ((Homepage)parent).getSesija().getMuzickiSadrzajMenadzer().vratiAktivanMuzickiSadrzaj();
+				}
+			
 				TopListeProzor tlp = new TopListeProzor
 						(parent, "Kreiranje Top Liste", 1200, 500,
 								temp
@@ -108,9 +113,14 @@ public class TopListaProzor extends MojDialog implements ActionListener {
 							 "Info", JOptionPane.INFORMATION_MESSAGE);
 				} else {
 					String trenutniUser = Sesija.getTrenutniKorisnik().getNalog().getKorisnickoIme();
-					Urednik u = (Urednik) parent.getSesija().getKorisnici().trazi(trenutniUser);
-					List<MuzickiSadrzaj> temp = parent.getSesija().getMuzickiSadrzajMenadzer().
-							vratiMuzickiSadrzajUrednika(u.getZanrovi());
+					Korisnik u = parent.getSesija().getKorisnici().trazi(trenutniUser);
+					List<MuzickiSadrzaj> temp;
+					if (u instanceof Urednik) {
+						temp = parent.getSesija().getMuzickiSadrzajMenadzer().
+								vratiMuzickiSadrzajUrednika(((Urednik)u).getZanrovi());
+					} else {
+						temp = ((Homepage)parent).getSesija().getMuzickiSadrzajMenadzer().vratiAktivanMuzickiSadrzaj();
+					}
 					String imeTabele = table.getModel().getValueAt(rIndex, 0).toString();
 					TopLista tp = ((Homepage)parent).getSesija().getToplisteMenadzer().vratiTopListuNaOsnovuImena(imeTabele);
 					TopListeProzor tlp = new TopListeProzor

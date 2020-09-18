@@ -28,6 +28,13 @@ public Recenzija(String text, Date datumUpisa, boolean status, FrontEndKorisnik 
 	this.naslov = naslov;
 }
 
+public Recenzija(Urednik urednik, String naslov, MuzickoDelo delo)
+{
+	super();
+	this.setPisac(urednik);
+	this.setDelo(delo);
+}
+
 
 public String getNaslov() {
 	return naslov;

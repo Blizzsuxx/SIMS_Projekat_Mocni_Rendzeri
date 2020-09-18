@@ -14,6 +14,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import controler.UtisakMenadzer;
 import model.Sesija;
 import model.Utisak;
 import net.miginfocom.layout.CC;
@@ -25,6 +26,8 @@ public class UtisakView extends JPanel{
      *
      */
     private static final long serialVersionUID = 1L;
+    
+    private static UtisakMenadzer utisakMenadzer;
     
     private int brojUtisaka=1;//Dodaj izmenjenu recenziju u utiske
 
@@ -87,6 +90,7 @@ public class UtisakView extends JPanel{
 				invpodesiRecenzije();
 				UtisakView.this.setVisible(true);
 				kom.getDelo().getUtisci().remove(kom);
+				utisakMenadzer.getRecenzije().remove(kom);
 			}
 		});
 		
@@ -165,5 +169,14 @@ public class UtisakView extends JPanel{
 
         }
     }
+
+	public static void setUtisakMenadzer(UtisakMenadzer utisakmenadzer2) {
+		utisakMenadzer = utisakmenadzer2;
+	}
+	
+	public static UtisakMenadzer getUtisakMenadzer()
+	{
+		return utisakMenadzer;
+	}
     
 }

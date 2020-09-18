@@ -39,8 +39,8 @@ public class MediaPlayer extends MojDialog {
      */
     private static final long serialVersionUID = 1L;
     
-    UtisakView komentari, recenzije;
-    MuzickoDelo delo;
+    private UtisakView komentari, recenzije;
+    private MuzickoDelo delo;
     
     private JButton dugmeKomentar, dugmeRecenzija; //dugmeIzbrisiRecenziju;
     private Korisnik trenutniKorisnik;
@@ -133,6 +133,7 @@ public class MediaPlayer extends MojDialog {
                 mediaPlayer.stop();
             }
         });
+        
 
 
         //////////////////////////////
@@ -173,6 +174,9 @@ public class MediaPlayer extends MojDialog {
         JScrollPane scroll = new JScrollPane(this.getContentPane());
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.setContentPane(scroll);
+        
+        ucitajRecenzije();
+        
         }
     
     public void setListeners()
@@ -271,6 +275,26 @@ public class MediaPlayer extends MojDialog {
     	JOptionPane.showMessageDialog(MediaPlayer.this, "Uspesno ste dodali recenziju", "Recenzija", JOptionPane.INFORMATION_MESSAGE);
         poljeRecenzija.setText("");
         ((FrontEndKorisnik)trenutniKorisnik).addIstorija(delo);
+    }
+    
+    private void ucitajRecenzije()
+    {
+    	
+    	for(Recenzija recenzija : UtisakView.getUtisakMenadzer().getRecenzije())
+    	{
+    		if(recenzija.getDelo().getNaslov().equals(delo.getNaslov()))
+    		{
+    			recenzije.addKomentar(recenzija);
+    		}
+    	}
+    	for(Komentar komentar : UtisakView.getUtisakMenadzer().getKomentari())
+    	{
+    		if(komentar.getDelo().getNaslov().equals(delo.getNaslov()))
+    		{
+    			komentari.addKomentar(komentar);
+    		}
+    	}
+    	
     }
 
         

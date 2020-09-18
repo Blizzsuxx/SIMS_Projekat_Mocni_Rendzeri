@@ -8,10 +8,8 @@ package model;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-
 
 import controler.CitacDatoteka;
 import controler.Constants;
@@ -396,6 +394,9 @@ public boolean napraviDelo(String datumIzdavanja, String naslov, String opis, Iz
 				break;
 			}
 		}
+		if (muzickiSadrzajMenadzer.postojiDelo(md))
+			return false;
+		
 		this.muzickiSadrzajMenadzer.getMuzickiSadrzaj().add(md);
 		this.muzickiSadrzajMenadzer.getMuzickaDela().add(md);
 		return true;
@@ -436,7 +437,8 @@ public ArrayList<Grupa> getGrupe() {
 
 public boolean addUmetnici(Pojedinacanizvodjac pi) {
 	for(Pojedinacanizvodjac s : this.izvodjacMenadzer.getSolo()) {
-		if(pi.equals(s)) return false;
+		if(pi.getUmetnickoIme().equals(s.getUmetnickoIme())) 
+			return false;
 	}
 	this.izvodjacMenadzer.dodaj(pi);
 	return true;
@@ -445,7 +447,8 @@ public boolean addUmetnici(Pojedinacanizvodjac pi) {
 
 public boolean addGrupe(Grupa pi) {
 	for(Grupa s : this.izvodjacMenadzer.getGrupe()) {
-		if(pi.equals(s)) return false;
+		if(pi.getUmetnickoIme().equals(s.getUmetnickoIme())) 
+			return false;
 	}
 	this.izvodjacMenadzer.dodaj(pi);
 	return true;

@@ -361,8 +361,10 @@ public class RegistracijaIzvodjaca extends JDialog {
 			pi = new Pojedinacanizvodjac(false, umetnickoIme, zanr, true, ime, prezime, Constants.NATASIN_FORMAT_ZA_DATUM.parse(dob2),
 					null, opis, p);
 		}
-			if (!sesija.addUmetnici(pi))
+			if (!sesija.addUmetnici(pi)) {
 				JOptionPane.showMessageDialog(null, "Izvodjac vec postoji.");
+				return;
+			}
 			
 		JOptionPane.showMessageDialog(null, "Registrovan je pojedinacan izvodjac " + umetnickoIme);
 	}
@@ -386,7 +388,10 @@ public class RegistracijaIzvodjaca extends JDialog {
 					null);
 		}
 		if (!sesija.addGrupe(g))
+		{
 			JOptionPane.showMessageDialog(null, "Grupa vec postoji");
+			return;
+		}
 		
 		JOptionPane.showMessageDialog(null, "Registrovana je grupa " + umetnickoIme);
 	}

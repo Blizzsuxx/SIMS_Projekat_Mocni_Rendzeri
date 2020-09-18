@@ -222,6 +222,11 @@ public class RegistarcijaAlbuma extends MojDialog {
 		ArrayList<Zanr> zanrovi =  (ArrayList<Zanr>) cmbZanr.vratiSelektovaneZanrove();
 		Album noviAlbum = new Album(naziv, opis, danRegistracije,  izvodjac, (Urednik)Sesija.getTrenutniKorisnik(), true, zanrovi, dela, false); // NA OVO SE VRATITI
 		//Album noviAlbum = new Album(txtRegistracije2, txtRegistracije2, danRegistracije, izvodjac, urednik, rootPaneCheckingEnabled);
+		if (sesija.getMuzickiSadrzajMenadzer().postojiAlbum(noviAlbum))
+		{
+			JOptionPane.showMessageDialog(null, "Album vec postoji.");
+			return;
+		}
 		sesija.getMuzickiSadrzajMenadzer().getMuzickiSadrzaj().add(noviAlbum);
 		JOptionPane.showMessageDialog(null, "Album je registrovan.");
 	}

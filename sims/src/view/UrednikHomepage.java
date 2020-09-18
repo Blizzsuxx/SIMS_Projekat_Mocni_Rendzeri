@@ -1,32 +1,35 @@
 package view;
 
 
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import controler.Constants;
+import controler.UtisakMenadzer;
+import controler.ZakazanaRecenzijaMenadzer;
 import model.MuzickiSadrzaj;
+import model.Recenzija;
 import model.Sesija;
+import model.Slikovit;
 import model.TopLista;
 import model.Uloga;
 import model.Urednik;
+import model.ZakazanaRecenzija;
 
 public class UrednikHomepage extends Homepage {
 	 private static final long serialVersionUID = 1L;
 
 	 private JMenu recenzijeMenu, korisniciMenu, listeMenu, glasanjeMenu, muzickaSadrzajMenu;
-	 private JMenuItem recenzijeItem2, recenzijeItem3, recenzijeItem4,
+	 private JMenuItem recenzijeItem2, recenzijeItem3,
 	 korisniciItem1, korisniciItem2, korisniciItem3, korisniciItem4, korisniciItem5, korisniciItem6,
 	 korisniciItem7, listeItem1, listeItem2, glasanjeItem1, muzickiSadrzajItem1, muzickiSadrzajItem2;
 	 
@@ -56,8 +59,8 @@ public class UrednikHomepage extends Homepage {
 		recenzijeMenu.add(recenzijeItem2);
 		recenzijeItem3 = new JMenuItem("Zakazane recenzije");
 		recenzijeMenu.add(recenzijeItem3);
-		recenzijeItem4 = new JMenuItem("Dodeljene recenzije");
-		recenzijeMenu.add(recenzijeItem4);
+		//recenzijeItem4 = new JMenuItem("Dodeljene recenzije");
+		//recenzijeMenu.add(recenzijeItem4);
 		menubar.add(recenzijeMenu);
 		    	
 		korisniciMenu = new JMenu("Korisnici");
@@ -107,9 +110,16 @@ public class UrednikHomepage extends Homepage {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 					MojDialog recenzije = new MojDialog(UrednikHomepage.this, "Moje Recenzije");
-					//Search-u se prosledjuju dela za koje je trenutni korisnik - urednik napisao recenziju
-					//Ovde koriscena hardkodovana konstanta Dela
-					SearchResults mojeRecenzije = new SearchResults(Constants.DELA);
+					ArrayList<Slikovit> dela = new ArrayList<Slikovit>();
+					UtisakMenadzer menadzerUtisaka = getSesija().getUtisakMenadzer();
+					for(Recenzija recenzija : menadzerUtisaka.getRecenzije())
+					{
+						if(recenzija.getPisac().equals(Sesija.getTrenutniKorisnik()))
+						{
+							dela.add(recenzija.getDelo());
+						}
+					}
+					SearchResults mojeRecenzije = new SearchResults(dela);
 					recenzije.setContentPane(mojeRecenzije);
 					recenzije.setVisible(true);
 			}
@@ -121,15 +131,21 @@ public class UrednikHomepage extends Homepage {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				MojDialog recenzije = new MojDialog(UrednikHomepage.this, "Zakazane Recenzije");
-				//Search-u se prosledjuju dela za koje je recenzija zakazana
-				//Koriscena hardkodovana konstanta Dela2
-				SearchResults mojeRecenzije = new SearchResults(Constants.DELA2);
+				ArrayList<Slikovit> dela = new ArrayList<Slikovit>();
+				ZakazanaRecenzijaMenadzer menadzerZakazanih = getSesija().getZakazanaRecenzijaMenadzer();
+				for (ZakazanaRecenzija zakazana : menadzerZakazanih.getSve()) {
+					if(zakazana.getUrednik().equals(Sesija.getTrenutniKorisnik()))
+					{
+						dela.add(zakazana.getRecenzija().getDelo());
+					}
+				}
+				SearchResults mojeRecenzije = new SearchResults(dela);
 				recenzije.setContentPane(mojeRecenzije);
 				recenzije.setVisible(true);
 			}
 	    	
 	    });
-		
+		/*
 		recenzijeItem4.addActionListener(new ActionListener() {
 			
 			@Override
@@ -142,7 +158,7 @@ public class UrednikHomepage extends Homepage {
 				recenzije.setVisible(true);
 			}
 		});
-	    
+	    */
 	    
 	    korisniciItem1.addActionListener(new ActionListener() {
 

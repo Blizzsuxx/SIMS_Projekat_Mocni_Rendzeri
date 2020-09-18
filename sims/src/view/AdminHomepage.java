@@ -95,8 +95,8 @@ public class AdminHomepage extends Homepage implements ActionListener{
 		recenzijeMenu = new JMenu("Recenzije");
 		recenzijeItem1 = new JMenuItem("Narucivanje recenzija");
 		recenzijeMenu.add(recenzijeItem1);
-		recenzijeItem2 = new JMenuItem("Dodela recenzija");
-		recenzijeMenu.add(recenzijeItem2);
+		//recenzijeItem2 = new JMenuItem("Dodela recenzija");
+		//recenzijeMenu.add(recenzijeItem2);
 		recenzijeItem3 = new JMenuItem("Uvid u zavrsene recenzije");
 		recenzijeMenu.add(recenzijeItem3);
 		menubar.add(recenzijeMenu);
@@ -305,17 +305,23 @@ public class AdminHomepage extends Homepage implements ActionListener{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				DijalogZakazivanjeRecenzija dijalogZakazivanje = new DijalogZakazivanjeRecenzija(AdminHomepage.this, "Zakazivanje recenzija",
+						700, 350, AdminHomepage.this.getSesija(), AdminHomepage.this.getSesija().getMuzickiSadrzajMenadzer().vratiAktivnaMuzickaDjelaSadrzaja(), AdminHomepage.this.koloneMuzickogSadrzaja, TipMuzickogSadrzaja.MUZICKO_DELO);
+				dijalogZakazivanje.setVisible(true);
+				/*
 				try {
 					new DodavanjeZakRecIRecZaIzemnu(AdminHomepage.this.getSesija(), "Narucivanje recenzija", 430, 500);
 				} 
 				catch (Exception e1) {
 					e1.printStackTrace();
 				}
+				*/
 			}
 			
 		});
 		
-		recenzijeItem2.addActionListener(new ActionListener(){
+		/*recenzijeItem2.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -328,7 +334,7 @@ public class AdminHomepage extends Homepage implements ActionListener{
 			}
 			
 		});
-		
+		*/
 		recenzijeItem3.addActionListener(new ActionListener(){
 
 			@Override

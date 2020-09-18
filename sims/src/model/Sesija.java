@@ -8,10 +8,8 @@ package model;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-
 
 import controler.CitacDatoteka;
 import controler.Constants;
